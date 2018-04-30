@@ -1,0 +1,8 @@
+# These stars will have using the respective DSSTs. These stars will NOT use their own dsst.
+# Star    DSST                                          BCin   variable
+k00674          /mir3/files/dsst137778ad_rj189.dat      1       1 
+k01894          /mir3/files/dsst23249ad_rj63.dat        1       1
+epic211818569   /mir3/files/dssthip25220ad_rj61.dat     1       1
+epic201357835   /mir3/files/dsst56274ad_rj187.dat       50000   0
+hats537-004    /mir3/files/dsstgl570bad_rj55.dat        1       1
+hats537-015   /mir3/files/dssthip19165ad_rj137.dat      1       1

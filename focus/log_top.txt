@@ -1,0 +1,11 @@
+                 HIRES Spectrograph Observing Log 
+__________________________________________________________________________
+Observer: Morton, Howard, Isaacson    Tape: j150 Telescope: KeckI
+UT Date 26 May 2012            Chip: LincolnLab 4096x3, 15micron
+Windowing:   Cols: 4096        Rows: 2048 (binned)    Binning: 3r x 1c
+Ech: -0.0082  X-Dis: -0.0995   Slit: B5/C2 (0.86 x 3.5/14 arcsec)
+CAFRAW: 7        COFRAW: 70482   low gain     Filter: clear,KV370 out
+Red Collimator in.   --> FWHM=2.377 (used Th-Ar#2, 10sec, kv370 OUT)
+--------------------------------------------------------------------------
+nn.fits   Object     I2   Mid-Time  Exp.   Comment  
+number    Name     (y/n)   (UT)     time

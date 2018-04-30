@@ -1,0 +1,208 @@
+;*********************************************************************
+;       HIRES Echelle CCD Image Reduction Batch File                 *
+;*********************************************************************
+; For Keck/HIRES reductions on Cadence, template as of Jan 2018.     *
+;*********************************************************************
+;UT Date: 26 March 2012  : j150-1
+;1. Raw CCD-Image Input Directory Path, where Raw Images are stored
+indir="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/raw_data/"
+
+;2.  OUTPUT Directory Path for reduced spectra (Defined in .bashrc)
+;Out directory determined via environment variables.
+outdir = getenv('RAW_BLU_OUT')
+preprefix = 'b'
+
+;3. Prefix to FITS files:  'k#'nnnn.fits  . i.e., 'k68' or 'hires' (string)
+prefix = 'j150'
+
+;4. Record Numbers of Stellar spectra to reduce  here:
+startrec = 78
+endrec = 100
+
+;5. List ThAr, Iodine, and any spectra which get no sky subtraction or
+;cosmic ray removal ([-1] for no exceptions): 
+threc = [indgen(22)+5]
+;threc = [-1]
+
+;6. Record Numbers to AVOID REDUCING, i.e, to skip (junk, flats, tests).
+;   List in brackets, e.g., [35,52], and [-1] for none.
+skip_rec = [-1]          ; 
+
+;7. Record number of Well-Exposed Iodine or Any Spectrum Well-Exposed
+ord_finder_rec = 80                     ;   HR3134
+
+;8. WIDE FLAT INFORMATION (crashes if flat_set1 not defined).
+numsets = 1
+flat_set1 = [29,      76]
+
+;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+;		DO NOT CHANGE ANY LINES BELOW THIS LINE
+;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+; Determine which directory to store files in based on what directory you are in.
+
+batchdir=getenv("MIR3_REDUCE")
+middir = getenv("RAW_MID")
+bludir = getenv("RAW_BLU")
+reddir = getenv("RAW_RED")
+
+middir_out = getenv("RAW_MID_OUT")
+reddir_out = getenv("RAW_RED_OUT")
+bludir_out = getenv("RAW_BLU_OUT")
+
+spawn,'pwd',current_dir
+current_dir = strcompress(current_dir,/remove_all)+'/'
+print,'current dir',current_dir
+print,'middir',middir
+
+;if current_dir eq middir then outdir = middir_out
+;if current_dir eq reddir then outdir = reddir_out
+;if current_dir eq bludir then outdir = bludir_out
+print,'Output Directory = ',outdir
+
+;preprefix (looks for 'blu', 'red', or 'iod' in OUTDIR string).
+;if (strpos(outdir,'blu') ne -1) then preprefix = 'b'
+;if (strpos(outdir,'iod') ne -1) then preprefix = 'r'
+;if (strpos(outdir,'red') ne -1) then preprefix = 'i'
+
+!error=0
+
+;Error Checking
+  if n_elements(flat_set1) ne 2 then print,'Flat-Fields Spec is Wrong' 
+  if n_elements(flat_set1) ne 2 then stop
+  if endrec lt startrec then print,'Record numbers are screwed up' 
+  if endrec lt startrec then stop
+  if n_elements(skip_rec) eq 0 then skip_rec = [-1] 
+  if n_elements(threc) eq 0 then threc = [-1]
+  if threc(0) ne -1 and skip_rec(0) eq -1 then skip_rec=[threc]
+  if threc(0) ne -1 and skip_rec(0) eq -1 then skip_rec=[skip_rec,threc]
+  if startrec eq -1 then endrec=-1  ;to ensure no reductions of stars
+  if startrec eq -1 and threc(0) eq -1 then print,'Nothing to Reduce!'
+  if startrec eq -1 and threc(0) eq -1 then stop
+
+
+;Flat-Field Exposures
+    nrec = flat_set1(1) - flat_set1(0) + 1
+    recint = flat_set1(0) + indgen(nrec)     ;array of record #'s to reduce
+    if numsets eq 2 then nrec2 = flat_set2(1) - flat_set2(0) + 1 
+    if numsets eq 2 then recint2 = flat_set2(0) + indgen(nrec2)   
+    if numsets eq 2 then recint = [recint,recint2]         
+
+    nffrec = n_elements(recint)
+    recnums = strtrim(string(recint),2)  ;convert to strings
+    recnums = '000'+recnums              ;add many leading zeros for HIRES format
+    ;Trim to last 4 characters, i.e. '0026' for record 26.
+    for i=0,nffrec-1 do recnums(i) = strmid(recnums(i),strlen(recnums(i))-4,4) 
+    widefnums = prefix + recnums
+    widefnames = indir + prefix + recnums + '.fits'  ;array of Wide Flat files 
+    if (numsets gt 0) then widerec = recint
+
+;Spectral Exposures to Reduce
+    nrec = endrec-startrec+1
+    ;recint is the arrays of records - drives input and output names
+    recint = startrec + indgen(nrec)  ;array of record #'s to reduce
+    nskip = n_elements(skip_rec)
+
+    if skip_rec(0) ge 0 then $
+      for j=0,nskip-1 do begin &$
+	skip = where(recint eq skip_rec(j),n) &$
+	if n gt 0 then remove,skip,recint &$
+      end
+    nrec = n_elements(recint)
+
+    nwr = n_elements(widerec)  ;number of wideflats
+    if nwr gt 0 then $
+     for j=0,nwr-1 do begin &$
+	skip=where(recint eq widerec(j),n) &$
+     	if n gt 0 then print,'Wideflats among the stellar spectra?!?' &$
+	if n gt 0 then print,'Fix startrec, endrec, or widflats.' &$
+	if n gt 0 then stop  &$
+     endfor
+
+    recnums = strtrim(string(recint),2) ;convert to strings
+    recnums = '000'+recnums             ;add many leading zeros for HIRES format
+    ;Trim to last 4 characters, i.e. '0026' for record 26.
+    for i=0,nrec-1 do recnums(i) = strmid(recnums(i),strlen(recnums(i))-4,4) 
+    spnums = prefix + recnums           ;for printout late
+    suffix = 'fits'         ;suffix to all FITS filenames.
+    spfnames = indir + prefix + recnums + '.' +suffix   ;string ARRAY of spectrum file names
+    outprefix = preprefix + prefix  ;preprefix defined at program beginning.
+
+    
+    outsuffix = strtrim(string(recint),2)  ;string ARRAY, record numbers (no zeros)
+    outfnames =  outprefix + '.' + outsuffix      ;ARRAY of output file names
+
+;Order-Finding Exposure: strong exposure, such as iodine or bright star
+    recint = ord_finder_rec
+    recnums = strtrim(string(recint),2) ;convert to strings
+    recnums = '000'+recnums             ;add many leading zeros
+    ;Trim to last 4 characters, i.e. '0026' for record 26.
+    recnums = strmid(recnums,strlen(recnums)-4,4) 
+    ordfnums = prefix + recnums
+    ordfname = indir + prefix + recnums + '.' + suffix   ;order-locating filename
+
+;THORIUMS:  Insert record numbers to reduce  here:
+    thnrec = n_elements(threc)
+    threcnums = strtrim(string(threc),2) ;convert to strings
+    threcnums = '000'+threcnums             ;add many leading zeros for HIRES format
+    for i=0,thnrec-1 do threcnums(i) = strmid(threcnums(i),strlen(threcnums(i))-4,4) 
+    thspnums = prefix + threcnums           ;for printout late
+    thspfnames = indir + prefix + threcnums + '.' +suffix   ;string ARRAY of spectrum file names
+    thoutsuffix = strtrim(string(threc),2)  ;string ARRAY, record numbers (no zeros)
+    thoutfnames =  outprefix + '.' + thoutsuffix      ;ARRAY of output file names
+
+;See comments in HAMSET procedure for descriptions of global variables.
+;   id=29 implies Keck data:  causes trimming of cols; wide order spacing expected.
+  hamset,id=29,trace=25,xwid=0.,bin=1,dord=2
+
+  print,''
+  print,'    ****ECHOING PARAMETER VALUES FROM HAMRED****'
+  print,'If values are incorrect stop program and reset in HAMRED.'
+  print,' '
+  print,'SPECTRA ('+strtrim(string(n_elements(spnums)),2)+'):'
+  print,spnums
+  print,' '
+  print,'WIDE FLATS ('+strtrim(string(n_elements(widefnums)),2)+'):'
+  print,widefnums
+  wait,5
+  print,' '
+  print,'DEFAULT ORDER FILE:'
+  print,ordfnums
+  print,' '
+
+;FIND DEFAULT ORDER LOCATIONS (for red & iodine chip reductions, not blue).
+if (preprefix ne 'b') then begin $
+  if keyword_set(ordfname) then HAMDORD,prefix,ordfname,orc & $
+endif
+
+;WIDE FLATS
+w = widefnums[0]
+flatnum = strtr(fix(strmid(w,strpos(w,prefix)+strlen(prefix))))
+if (n_elements(cp_flats) ne 0) then begin $   ; Is cp_flats defined?
+  if (keyword_set(cp_flats)) then begin $     ; Is cp_flats=1?
+    ; Define directory to copy from. &$
+    if (n_elements(main_dir) eq 0) then $
+       main_dir='/mir3/reduce' &$
+    ; Spawn the symlink job.   &$
+    print,'Symlinking grouped flats from '+main_dir+' to local dir.'&$
+    spawn,'ln -s '+main_dir+'/'+prefix+'.'+flatnum+'.flat*.fits .' &$
+  endif &$
+endif
+
+if (n_elements(numsets) ne 0) then if numsets eq 0 then $
+	print,'Using previously stored WIDE FLAT' $
+  else $
+	ADDWF,widefnames,prefix , totwf
+
+;REDUCE SPECTRA (stars and iodines)
+   nspec = n_elements(spfnames)			;number of spectra to reduce
+   if startrec ge 0 then $
+
+FOR i=0,nspec-1 do $
+	HIRSPEC,prefix,spfnames(i),outfnames(i), orc, totwf, /cosmics 
+
+;REDUCE ThAr, Iodines
+  numthar = n_elements(threc)
+  if threc(0) gt -1 then $
+     FOR i=0,numthar-1 do HIRSPEC,prefix,thspfnames(i),thoutfnames(i), orc, totwf,/thar,/nosky
+

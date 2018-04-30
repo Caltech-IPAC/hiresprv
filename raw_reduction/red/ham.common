@@ -1,0 +1,16 @@
+;All Hamilton global variables are contained in the following common block.
+;To access the variables in a routine or at the IDL prompt: use "@ham.common"
+;Here's how to add a global variable to the list:
+;  1) Choose a descriptive name that begins with "ham_". This prefix
+;	is conceptually reserved for globals, so don't give your local
+;	variables this prefix.
+;  2) Add the variable to the list below.
+;  3) Add code to handle the new variable in the routine hamset.pro.
+;  4) Make sure "@ham.common" appears in the routine in which you want
+;	to access the global variable.
+;02-May-92 JAV	Create.
+;06-May-92 JAV	Added ham_obase to variable list.
+;12-Jun-01 JTW  Added cosmic_sig, pbg, and gain, removed bg, clip, spike and bg
+
+common ham	,ham_trace ,ham_image ,ham_dord  ,ham_id    ,ham_xwid $
+		,ham_bin   ,ham_obase, ham_cosmic_sig, ham_pbg, ham_gain

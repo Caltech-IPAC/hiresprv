@@ -1,0 +1,23 @@
+;precompile programs to run S-value program hk2_keck.pro
+.compile /mir3/sval/sigfig.pro
+.compile /mir3/sval/hk2_keck.pro
+.compile /mir3/sval/pros/contf.pro
+.compile /mir3/sval/contf_hk.pro
+.compile /mir3/sval/pros/mpfitfun.pro
+.compile /mir3/sval/pros/mpfit.pro
+.compile /mir3/sval/pros/rdnso.pro
+.compile /mir3/sval/pros/rdsk.pro
+.compile /mir3/sval/pros/shfour.pro
+.compile /mir3/sval/pros/xcorlb.pro
+.compile /mir3/sval/pros/fspline.pro
+.compile /mir3/sval/pros/spline.pro
+.compile /mir3/sval/pros/first_el.pro
+.compile /mir3/bary/barystruct.pro
+.compile /mir3/sval/contf_hk.pro
+.compile /mir3/sval/filter_image.pro
+.compile /mir3/sval/jzap.pro
+.compile /mir3/sval/gaussian.pro
+.compile /mir3/sval/psf_gaussian.pro
+.compile /mir3/sval/convolve.pro
+.compile /mir3/sval/filter_image.pro
+.compile /mir3/sval/marq.pro

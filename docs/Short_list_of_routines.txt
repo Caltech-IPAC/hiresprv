@@ -1,0 +1,45 @@
+Chronological order of routines, starting from raw files:
+
+     This program is used when setting up the telescope.
+dir: focus: nexsci_dopcode/raw_data
+            IDL> foc,inpdir='/mir3/raw/','j1500006.fits',/mark,/plt
+
+     The program mtfits prints out the lines that end up in the logsheet.
+      mtfits.pro   to generate the logsheet lines:
+            IDL> mtfits,inpdir='/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/raw_data/','j1500022',n=5
+
+dir: keckbary/
+       kbarylog.pro to generate the barycentric correction log. Interactive program
+            IDL> kbarylog,'j151.logsheet1'
+                  Follow prompts to confirm that the date is correct.
+
+Make hamred file and run it.
+dir nexsci_dopcode/raw_reduction/HIRES_raw_reduce_mid/create_hamred/
+        IDL>make_hamred,'j150.logsheet1_part'      
+        OR edit hamred-template file and save as new name: hamred-j150-1 
+
+dir: /nexsci_dopcode/raw_reduction/HIRES_raw_reduce_mid/  Once for each of 3 CCDs
+	IDL>@hamred-j150-1_
+
+-----
+
+dir: /nexsci_dopcode/raw_reduction/HIRES_raw_reduce_red/create_hamred/  Once for each of 3 CCDs
+        IDL>make_hamred,'j150.logsheet1_part'      
+
+dir: /nexsci_dopcode/raw_reduction/HIRES_raw_reduce_red/  Once for each of 3 CCDs
+	IDL>@hamred-j150-1_
+-----
+
+dir: /nexsci_dopcode/raw_reduction/HIRES_raw_reduce_blue/create_hamred/  Once for each of 3 CCDs
+        IDL>make_hamred,'j150.logsheet1_part'      
+dir: /nexsci_dopcode/raw_reduction/HIRES_raw_reduce_blue/  Once for each of 3 CCDs
+	IDL>@hamred-j150-1_
+
+
+Doppler code:
+dir dopcode/dopcode/
+        I have test the code with 'aa', Feel free to repeat with 'ab' or anything else.
+        IDL>make_vdiod,'rj150.80',tag='aa',/noprint
+        IDL>make_dsst,'k01439','aa','rj174',vdtag='aa'
+        IDL>dop_driver,'k01439','aa',vdtag='aa',dsstname='dsstk01439aa_rj174.dat',/noprint,bcin=1
+        IDL>jjvank,'k01439','aa'

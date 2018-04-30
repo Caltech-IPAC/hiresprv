@@ -1,0 +1,108 @@
+# IDL start file and path ----------------------------------------------------
+# HTI: The default path is set in idl_startup.pro
+#      The doppler code path is set in dop_driver.pro, make_dsst.pro, make_vdiod.pro
+# export IDL_STARTUP="~/idl/idl_startup.pro"
+# export IDL_PATH="."
+# export IDL_PATH="/data/user/doppler/berkeley_homedir/dopcode/:$IDL_PATH"
+# export IDL_PATH="/data/user/doppler/berkeley_homedir/dopcode/pros:$IDL_PATH"
+# export IDL_PATH="/data/user/doppler/berkeley_homedir/dopcode/markwardt:$IDL_PATH"
+
+# export IDL_STARTUP="~/idl/idl_startup.pro"
+# export IDL_PATH="."
+export IDL_PATH="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/dopcode/dopcode/markwardt/" 
+export IDL_PATH="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/dopcode/dopcode/pros/:$IDL_PATH_DOP"
+export IDL_PATH="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/dopcode/dopcode/dopcode/:$IDL_PATH_DOP"
+
+# Try to setup dopcode path here:---------------------------------
+# All code should be in IDL_PATH_DOP, all other files in IDL_PATH_DOP_BASE
+# OLD ----------------------------------
+# export IDL_PATH_DOP="/home/doppler/dopcode/markwardt/:/home/doppler/dopcode/pros/:/home/doppler/dopcode/" 
+# export IDL_PATH_DOP_BASE="/home/doppler/"
+
+# NEW ----------------------------------
+export IDL_PATH_DOP="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/dopcode/dopcode/markwardt/:/home/doppler/dopcode/pros/:/home/doppler/dopcode/" 
+export IDL_PATH_DOP="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/dopcode/dopcode/pros/:$IDL_PATH_DOP"
+export IDL_PATH_DOP="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/dopcode/dopcode/dopcode/:$IDL_PATH_DOP"
+export IDL_PATH_DOP_BASE="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/dopcode/dopcode/"
+
+
+# The below commands are not yet folded into the doppler code.
+
+#  Static files outside of doppler code direcotry
+# OLD ----------------------------------
+# export DOP_I2_ATLAS_PATH="/mir1/atlas/"
+# export DOP_I2_ATLAS="ftskeck50.bin"
+# export DOP_BARYFILE="/mir3/bary/kbcvel.ascii"
+# export DOP_BARYFILE_STRUC="/mir3/bary/kbcvel.dat"
+# export DOP_DSST_OVERRIDE="/home/doppler/dopcode/dsst_override.txt"
+# export DOP_NSO_ATLAS="/mir1/atlas/nso.bin"
+# export DOP_IPGUESS_K2="/home/doppler/dopcode/ipguess_k2.dat"
+# export DOP_VD_EXAMPLE="/mir3/files/vdiod3314_rj13.2275.j"
+# export DOP_KECK_STRUC="/mir3/keck_st.dat"
+# export DOP_JJHIP="/home/doppler/dopcode/jjhip_v2.dat"
+
+# NEW ----------------------------------
+export DOP_I2_ATLAS_PATH="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/dopcode_control_data/static_files/"
+export DOP_I2_ATLAS="ftskeck50.bin"
+export DOP_BARYFILE="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/output/bary/kbcvel.ascii"
+export DOP_BARYFILE_STRUC="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/output/bary/kbcvel.dat"
+export DOP_DSST_OVERRIDE="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/dopcode/dopcode/dsst_override.txt" #not needed for nexsci
+export DOP_NSO_ATLAS="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/dopcode_control_data/static_files/nso.bin"
+export DOP_IPGUESS_K2="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/dopcode_control_data/static_files/ipguess_k2.dat"
+export DOP_VD_EXAMPLE="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/dopcode_control_data/static_files/vdiod3314_rj13.2275.j"
+export DOP_KECK_STRUC="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/dopcode_control_data/static_files/keck_st.dat"
+export DOP_JJHIP="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/dopcode/dopcode/jjhip_v2.dat"
+
+#   Directory structure for input/output files.
+# OLD ----------------------------------
+# export DOP_PLANETS_DIR="/home/doppler/planets/" # planets holds the cf structures and temporary velocity structures.
+# export DOP_FILES_DIR="/mir3/files/"
+# export DOP_RV_OUTDIR="/mir3/vel/"
+# export DOP_SPEC_DIR="/mir3/iodspec/"
+# export DOP_SPEC_DB_DIR="/mir3/iodfitsdb/"
+# export DOP_RK_VEL_DIR="/mir3/rk_vel/"
+# export DOP_DIR="/home/doppler/dopcode/"
+
+# NEW ----------------------------------
+export DOP_PLANETS_DIR="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/output/files/" # planets holds the cf structures and temporary velocity structures.
+export DOP_FILES_DIR="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/output/files/"
+export DOP_RV_OUTDIR="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/output/rvs/"
+export DOP_SPEC_DIR="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/output/fits/"
+export DOP_SPEC_DB_DIR="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/output/deblazed/"
+export DOP_RK_VEL_DIR="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/output/files/"
+export DOP_DIR="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/dopcode/dopcode/"
+
+# Raw reduction paths, middle red and blu chips -----------
+# OLD ----------------------------------
+# export RAW_RAW="/mir3/raw/"
+# export RAW_MID="/mir3/reduce/"
+# export RAW_MID_OUT="/mir3/iodspec/"
+# export RAW_MID_OUT_FITS="/mir3/iodfits/"
+# export RAW_MID_OUT_FITS_DB="/mir3/iodfitsdb/"
+
+# NEW ----------------------------------
+export RAW_RAW="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/raw_data/"
+export RAW_MID="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/raw_reduction/HIRES_raw_reduce_mid/"
+export RAW_ALL_OUT="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/output/fits/"
+export RAW_ALL_OUT_FITS="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/output/fits/"
+export RAW_ALL_OUT_FITS_DB="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/output/deblazed/"
+
+# OLD ----------------------------------
+# export RAW_RED="/mir3/reduce_red/"
+# export RAW_RED_OUT="/mir3/redspec/"
+# export RAW_BLU="/mir3/reduce_blue/"
+# export RAW_BLU_OUT="/mir3/bluespec/"
+
+# NEW ----------------------------------
+export RAW_RED="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/raw_reduction/HIRES_raw_reduce_red/"
+export RAW_RED_OUT="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/output/fits/"
+export RAW_BLU="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/raw_reduction/HIRES_raw_reduce_blue/"
+export RAW_BLU_OUT="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/output/fits/"
+
+# Needed ro run barylog:
+export MIR3_LOG="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/output/logsheets/"
+export MIR3_BARY="/Users/howard/Dropbox/cps_data_share/nexsci_dopcode/output/bary/"
+
+
+# ---------------------------------------------------------
+

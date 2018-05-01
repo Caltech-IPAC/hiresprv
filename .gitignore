@@ -8,3 +8,4 @@ output/bary/kbcvel.ascii
 input_data/reduction/logs/j150.logsheet1
 input_data/raw_data/*fits
 output/logsheets/*
+test

@@ -1,3 +1,8 @@
 *~
 *.DS_Store
 input_data/dopcode/*.dat
+input_data/dopcode/JPLEPH.405
+input_data/reduction/*.fits
+input_data/reduction/*.dat
+output/bary/kbcvel.ascii
+input_data/reduction/logs/j150.logsheet1_part

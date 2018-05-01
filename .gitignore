@@ -5,4 +5,6 @@ input_data/dopcode/JPLEPH.405
 input_data/reduction/*.fits
 input_data/reduction/*.dat
 output/bary/kbcvel.ascii
-input_data/reduction/logs/j150.logsheet1_part
+input_data/reduction/logs/j150.logsheet1
+input_data/raw_data/*fits
+output/logsheets/*

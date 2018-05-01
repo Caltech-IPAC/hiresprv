@@ -1,4 +1,4 @@
-pro make_logsheet, verbose=verbose
+pro make_logsheet;, logname;,verbose=verbose
 
 ; PURPOSE: Create a logsheet based on one nights' worrth of observations.
 ;          The only input should be the raw files.
@@ -6,14 +6,19 @@ pro make_logsheet, verbose=verbose
 ; 
 ; Keyword: Set verbose to see output on screen. Default is to write to a file.
 
+; Todo:  Somesort of error handling is still needed. Do we need to specificy the lognme?
+;        Is logname even needed?
 
-run = ''
+;run = strmid(logname,0,4) ; requires format: d001.logsheet1
 raw_dir = getenv('RAW_RAW') ; Location of 2D Echellograms
 log_dir = getenv('MIR3_LOG')
 
 ;file_list = file_search(raw_dir+run+'*fits') ; if using a run name
-file_list = file_search(raw_dir + '*fits'); if generating a log for all of the files
-nf = n_elements(file_list)
+file_list = file_search(raw_dir + '*fits',count=nf); if generating a log for all of the files
+if nf eq 0 then begin
+  print,'MAKE_LOGSHEET: No raw files found.'
+  print,'   Check environment variables RAW_RAW'
+endif
 files = strarr(nf)
 
 fname1 =strsplit(file_list[0],'/',/extract); [-1]
@@ -115,5 +120,7 @@ endfor
 
 
 close,1
-stop
+
+print, 'MAKE_LOGSHEET.PRO: COMPELTE'
+print, '   New logsheet created: ',logname
 end ; program

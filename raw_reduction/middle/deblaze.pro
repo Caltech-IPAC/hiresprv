@@ -26,7 +26,9 @@ trace,5,'DEBLAZE: Starting the deblazing process for ' + file
 ioddir = getenv("RAW_ALL_OUT_FITS")     ; same for all chips
 savedir = getenv("RAW_ALL_OUT_FITS_DB") ;same for all chips 
 reduce_dir = getenv("RAW_MID")
-prefix = 'j'
+fits_in = getenv("RAW_FITS_IN")
+;prefix = 'j'
+prefix = strmid(file,0,1)
 
 bgain = 1.95  ; blue ccd low gain (http://www2.keck.hawaii.edu/inst/hires/ccdgain.html)
 rgain = 2.09  ; green ccd low gain (http://www2.keck.hawaii.edu/inst/hires/ccdgain.html)
@@ -36,9 +38,9 @@ pos1 = strpos(file,prefix)
 chip = strmid(file,pos1-1,1)
 filename = strmid(file,pos1-1,strlen(file))
 
-if chip eq 'b' then bbstar = readfits(reduce_dir+'bluebstar.fits')
-if chip eq 'r' then rbstar = readfits(reduce_dir+'iodbstar.fits')
-if chip eq 'i' then ibstar = readfits(reduce_dir+'redbstar.fits')
+if chip eq 'b' then bbstar = readfits(fits_in+'bluebstar.fits')
+if chip eq 'r' then rbstar = readfits(fits_in+'iodbstar.fits')
+if chip eq 'i' then ibstar = readfits(fits_in+'redbstar.fits')
 
 if chip eq 'b' then begin
     bdum = size(bbstar)

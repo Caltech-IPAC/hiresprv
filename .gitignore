@@ -9,3 +9,7 @@ input_data/reduction/logs/j150.logsheet1
 input_data/raw_data/*fits
 output/logsheets/*
 test
+output/fits/*
+raw_reduction/middle/hamred-j150-1
+raw_reduction/red/hamred-j150-1
+raw_reduction/blue/hamred-j150-1

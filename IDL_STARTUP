@@ -1,0 +1,5 @@
+; IDL_STARTUP. Use this file to define the IDL STARTUP file
+
+device,retain=2 , decomposed=0, set_character_size=[10, 12] ; retain window contents for when they reappear. see backing store
+
+device, true=24

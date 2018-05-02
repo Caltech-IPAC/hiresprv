@@ -16,8 +16,8 @@ pro rf,data,file,N,nocull=nocull,skip=skip,filter=filter,silent=silent,$
 ; 11/00: Added HEAD keyword
 
 if n_elements(filt) eq 0 then filt = ''
-if  n_elements(file) eq 0 then  file  = pickfile(filter=filter)
-if file(0) eq '' then  message,'Give me a real file'
+;if  n_elements(file) eq 0 then  file  = pickfile(filter=filter)
+;if file(0) eq '' then  message,'Give me a real file'
 
 if keyword_set(nocull) then keep = 1 else keep = 0
 if keyword_set(keep) then keep = 1 else keep = 0

@@ -109,7 +109,7 @@ print,'MAKE_HAMRED: :'
 outfile = outdir_hamred + 'hamred-'+run+'-'+night
 ;	rf, dont, '/mir3/automate/bottom_j.txt' ;current as of jan 2010
 rf, dont, bottom_file ;current as of apr 2012
-stop
+
 openw,1,outfile
 
 print,'outdir=',outfile

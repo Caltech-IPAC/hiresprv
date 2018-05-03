@@ -1,20 +1,26 @@
 # Master setup script for environment variables.
 
-export DOP_DIR=${DOP_DIR}"
-export DOP_WORK=${DOP_WORK}""
+# Basecamp for this Doppler code Repository.
+export DOP_WORK="/Users/howard/Dropbox/cps_data_share/hires-pipeline/"
 
-export IDL_PATH_DOP_BASE=${DOP_DIR}"
+# Override the normal IDL_START file with this file
+export IDL_STARTUP=${DOP_WORK}"IDL_STARTUP"  
 
+
+export DOP_DIR=${DOP_WORK}"dopcode/"
+export IDL_PATH_DOP_BASE=${DOP_DIR}
 
 # Define paths to include all of Doppler Code.
-export IDL_PATH=${DOP_DIR}"$IDL_PATH"
-export IDL_PATH=${DOP_DIR}"markwardt/" 
-export IDL_PATH=${DOP_DIR}"pros/:$IDL_PATH"
+export IDL_PATH="."
+export IDL_PATH=${DOP_WORK}":$IDL_PATH"
+#export IDL_PATH=${DOP_WORK}"markwardt/:${IDL_PATH}"
+export IDL_PATH=${DOP_WORK}"dopcode/:${IDL_PATH}"
+export IDL_PATH=${DOP_WORK}"dopcode/pros/:${IDL_PATH}"
 
 
 # All code should be in IDL_PATH_DOP, all other files in IDL_PATH_DOP_BASE
 
-export IDL_PATH_DOP=${DOP_DIR}"markwardt/:/home/doppler/dopcode/pros/:/home/doppler/dopcode/" 
+export IDL_PATH_DOP=${DOP_DIR}"markwardt/" 
 export IDL_PATH_DOP=${DOP_DIR}"pros/:$IDL_PATH_DOP"
 export IDL_PATH_DOP=${DOP_DIR}"dopcode/:$IDL_PATH_DOP"
 
@@ -40,15 +46,16 @@ export DOP_RK_VEL_DIR=${DOP_WORK}"output/files/"
 
 # Raw reduction paths, middle red and blu chips -----------
 export RAW_RAW=${DOP_WORK}"input_data/raw_data/"
-export RAW_MID=${DOP_WORK}"raw_reduction/HIRES_raw_reduce_mid/"
+export RAW_FITS_IN=${DOP_WORK}"input_data/reduction/"
+export RAW_MID=${DOP_WORK}"raw_reduction/middle/"
 export RAW_ALL_OUT=${DOP_WORK}"output/fits/"
 export RAW_ALL_OUT_FITS=${DOP_WORK}"output/fits/"
 export RAW_ALL_OUT_FITS_DB=${DOP_WORK}"output/deblazed/"
-export RAW_HAMRED_BOTTOM=${DOP_WORK}"raw_reduction/HIRES_raw_reduce_mid/create_hamred/bottom_j.txt"
+export RAW_HAMRED_BOTTOM=${DOP_WORK}"raw_reduction/middle/create_hamred/bottom_j.txt"
 
-export RAW_RED=${DOP_WORK}"raw_reduction/HIRES_raw_reduce_red/"
+export RAW_RED=${DOP_WORK}"raw_reduction/red/"
 export RAW_RED_OUT=${DOP_WORK}"output/fits/"
-export RAW_BLU=${DOP_WORK}"raw_reduction/HIRES_raw_reduce_blue/"
+export RAW_BLU=${DOP_WORK}"raw_reduction/blue/"
 export RAW_BLU_OUT=${DOP_WORK}"output/fits/"
 
 # Needed to run barylog:

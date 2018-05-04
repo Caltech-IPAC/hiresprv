@@ -24,16 +24,16 @@ export IDL_PATH_DOP=${DOP_DIR}"markwardt/"
 export IDL_PATH_DOP=${DOP_DIR}"pros/:$IDL_PATH_DOP"
 export IDL_PATH_DOP=${DOP_DIR}"dopcode/:$IDL_PATH_DOP"
 
-export DOP_I2_ATLAS_PATH=${DOP_WORK}"dopcode_control_data/static_files/"
+export DOP_I2_ATLAS_PATH=${DOP_WORK}"input_data/dopcode/"
 export DOP_I2_ATLAS="ftskeck50.bin"
 export DOP_BARYFILE=${DOP_WORK}"output/bary/kbcvel.ascii"
 export DOP_BARYFILE_STRUC=${DOP_WORK}"output/bary/kbcvel.dat"
 export DOP_DSST_OVERRIDE=${DOP_DIR}"dsst_override.txt" #not needed for nexsci
-export DOP_NSO_ATLAS=${DOP_WORK}"dopcode_control_data/static_files/nso.bin"
-export DOP_IPGUESS_K2=${DOP_WORK}"dopcode_control_data/static_files/ipguess_k2.dat"
-export DOP_VD_EXAMPLE=${DOP_WORK}"dopcode_control_data/static_files/vdiod3314_rj13.2275.j"
+export DOP_NSO_ATLAS=${DOP_WORK}"input_data/dopcode/nso.bin"
+export DOP_IPGUESS_K2=${DOP_WORK}"input_data/dopcode/ipguess_k2.dat"
+export DOP_VD_EXAMPLE=${DOP_WORK}"input_data/dopcode/vdiod3314_rj13.2275.j"
 export DOP_KECK_STRUC=${DOP_WORK}"input_data/dopcode/keck_st.dat"
-export DOP_JJHIP=${DOP_WORK}"input_data/jjhip_v2.dat"
+export DOP_JJHIP=${DOP_WORK}"input_data/dopcode/jjhip_v2.dat"
 
 #   Directory structure for input/output files.
 export DOP_PLANETS_DIR=${DOP_WORK}"output/files/" # planets holds the cf structures and temporary velocity structures.

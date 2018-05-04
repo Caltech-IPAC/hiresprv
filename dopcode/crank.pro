@@ -100,7 +100,7 @@ files = getenv("DOP_FILES_DIR")
 vel_dir = getenv("DOP_RV_OUTDIR")
 fa = getenv("DOP_I2_ATLAS") ; FTS iodine spectrum
 atlas_dir =getenv("DOP_I2_ATLAS_PATH")
-
+static_dir = getenv("DOP_I2_ATLAS_PATH")
 
 frzpar = frzparin ;;;JJ: protect FZ
 cf=cfst
@@ -120,13 +120,13 @@ if 1-keyword_set(absolute_noprint) then begin
 endif
 
 ;List of initial guess VD files. opens as ipguess
- restore,act_dir+'ipguess_k2_2015.dat' ; default tag: 'ae' 
+ restore,static_dir+'ipguess_k2_2015.dat' ; default tag: 'ae' 
   
 ipcfnm0 = files
 ftsdsk  = atlas_dir
 ;HTI OPEN THIS WHEN TESTING INITIAL GUESSES, 9/2014
 ; This file has the structure of a VD.	Variable is named after file.
-restore,act_dir+'median_bstar_b5_c2_pars.dat'
+restore,static_dir+'median_bstar_b5_c2_pars.dat'
 
 ; HTI 6/2014, restrict all input guesses to 'ad'  and 'ac' tag names.
 ; HTI 10/2015. Only use vdtags: 'ae' ; contained in ipguess_k2_2015.dat

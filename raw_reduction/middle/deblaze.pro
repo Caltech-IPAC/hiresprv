@@ -34,9 +34,14 @@ bgain = 1.95  ; blue ccd low gain (http://www2.keck.hawaii.edu/inst/hires/ccdgai
 rgain = 2.09  ; green ccd low gain (http://www2.keck.hawaii.edu/inst/hires/ccdgain.html)
 igain = 2.09  ; red ccd low gain (http://www2.keck.hawaii.edu/inst/hires/ccdgain.html)
 
-pos1 = strpos(file,prefix)
-chip = strmid(file,pos1-1,1)
-filename = strmid(file,pos1-1,strlen(file))
+;pos1 = strpos(file,prefix)
+;chip = strmid(file,pos1-1,1)
+;filename = strmid(file,pos1-1,strlen(file))
+
+pos_sl = strpos(file,'/',/reverse_search)
+filename = strmid(file,pos_sl+1,20)
+chip = strmid(filename,0,1)
+
 
 if chip eq 'b' then bbstar = readfits(fits_in+'bluebstar.fits')
 if chip eq 'r' then rbstar = readfits(fits_in+'iodbstar.fits')

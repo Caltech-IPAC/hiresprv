@@ -119,6 +119,7 @@ pro  Stargrind, obs, dsst, vd $
 act_dir = getenv("IDL_PATH_DOP_BASE") ; /home/doppler/
 files_dir = getenv("DOP_FILES_DIR")
 dfd = getenv("DOP_I2_ATLAS_PATH") ; FTS iodine spectrum path
+static_dir = getenv("DOP_I2_ATLAS_PATH");Static files directory
 
 if 1-keyword_set(test) then test = ''
 rossiter = stregex(test, 'ross', /bool)
@@ -347,7 +348,7 @@ infoarr = replicate(ptr_new(), nchunkall) ;JJ create pointer array for info stru
 ;HTI TEST END:
 
 ;, restore saved psf distributions. ;	opens as bstar_all_pars_c2_b5
-restore,act_dir+'bstar_all_pars_c2_b5_jan2015.dat';[942,20,718],
+restore,static_dir+'bstar_all_pars_c2_b5_jan2015.dat';[942,20,718],
 
 FOR cur_ord = start_order, order(n_order-1) do begin ;cycle thru orders
     if 1-keyword_set(noprint) then begin

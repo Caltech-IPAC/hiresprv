@@ -13,3 +13,6 @@ output/fits/*
 raw_reduction/middle/hamred-j150-1
 raw_reduction/red/hamred-j150-1
 raw_reduction/blue/hamred-j150-1
+output/files/*
+input_data/dopcode/ftskeck50.bin
+input_data/dopcode/vdiod3314_rj13.2275.j

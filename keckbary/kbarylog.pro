@@ -407,8 +407,8 @@ endif else begin
 ;    endelse
 endelse
 free_lun,logune 
-if strupcase(ans) eq 'Y' and ~keyword_set(devel) $
-    then barystruct,observatory='keck' 
+;if strupcase(ans) eq 'Y' and ~keyword_set(devel) $
+;    then barystruct,observatory='keck' 
 
 end
 

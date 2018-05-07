@@ -77,6 +77,14 @@ dum =  mrdfits(spfname, 0, head)  ;hires mosaic
 ;target = sxpar(head,'targname'); added hti, nov2009
 ;exptime = sxpar(head,'elaptime');added hti, nov2009
 decker  = strcompress(sxpar(head,'deckname'),/remove_all) ; added hti, Nov 2009
+; check binning, if not 3x1, then return
+binning = strcompress(sxpar(head,'binning'),/remove_all)
+if binning ne '3,1' then begin
+  print,'HIRESPEC: Binning is not 3x1.'
+  print,    "binning for ",spfname," is:",binning
+  print,    "Returning..."
+  return
+endif
 
 im = double(im)
 
@@ -188,8 +196,10 @@ trace,10,'%HIRSPEC: Saving extracted fits file: '+fitsfile
 
 ; Save the .fits file with gain included, and blaze function removed.
 print,'fitsfile=',fitsfile
-deblaze,file=fitsfile
-
-
+; deblaze.pro requires fits name with no directory information.
+pos1 = strpos(fitsfile,'/',/reverse_search)
+fitsfile_db = strmid(fitsfile,pos1+1,15)
+deblaze,file=fitsfile_db
+print,'fitsfile_db=',fitsfile_db
 return
 end

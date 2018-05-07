@@ -74,6 +74,7 @@ if n_elements(logfile) eq 0 then begin
     read,' Enter logfile name (eg j999.logsheet1): ',logfile
 endif 
 
+logname=logfile
 ; first assume file is in present directory
 if (findfile(logfile))(0) eq ''  then logfile=logdir+logfile 
 if (findfile(logfile))(0) eq ''  then $
@@ -82,13 +83,15 @@ if (findfile(logfile))(0) eq ''  then $
 rf,data,logfile                 
 ; 'data' is the text of the logsheet, string array.
 
-pos1 = strpos(logfile,'j')
-pos2 = strpos(logfile,'.')
-run = strmid(logfile,pos1,pos2-pos1)
+;pos1 = strpos(logfile,'j')
+;pos2 = strpos(logfile,'.')
+pos1 = 0
+pos2 = 4
+run = strmid(logname,pos1,pos2-pos1)
 print,"run  = ",run
 
-night =strmid(logfile,pos2+9,2) ; good for 1-99
-
+;night =strmid(logfile,pos2+9,2) ; good for 1-99
+night = str(1); always
 lin = where(strmid(data,0,4) eq '----' or strmid(data,0,4) eq '____')
 Nlin = n_elements(lin) 
 

@@ -23,11 +23,11 @@ best =  (where(firstchar(stars,2) eq 'HR' $
 ;use 2nd instance of a b star if available.
 if nHr ge 2 then best = (where(firstchar(stars,2) eq 'HR' or $
  			                   firstchar(stars,2) eq 'hr',nHR))(1)
-
 if nHR eq 0 then begin
 
-bst=getiodine(body)
-
+;bst=getiodine(body)
+print,"No Star with HR prefix found. Returning. "
+return
 
 bst=fix(bst)
 return,txt+string(bst)

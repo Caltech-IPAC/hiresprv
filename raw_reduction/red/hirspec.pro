@@ -74,6 +74,14 @@ outdir_fits_db = getenv("RAW_ALL_OUT_FITS_DB")
 hiraw,im,spfname,chip=3  ;hires mosaic
 dum =  mrdfits(spfname, 0, head)  ;hires mosaic
 decker  = strcompress(sxpar(head,'deckname'),/remove_all) 
+; check binning, if not 3x1, then return
+binning = strcompress(sxpar(head,'binning'),/remove_all)
+if binning ne '3,1' then begin
+  print,'HIRESPEC: Binning is not 3x1.'
+  print,    "binning for ",spfname," is:",binning
+  print,    "Returning..."
+  return
+endif
 
 im = double(im) ; is this needed?
 
@@ -186,7 +194,10 @@ trace,10,'%HIRSPEC: Saving extracted file with writefits'
 
 ; Save the .fits file with gain included, and blaze function removed.
 print,'fitsfile=',fitsfile
-deblaze,file=fitsfile
-
+; deblaze.pro requires fits name with no directory information.
+pos1 = strpos(fitsfile,'/',/reverse_search)
+fitsfile_db = strmid(fitsfile,pos1+1,15)
+deblaze,file=fitsfile_db
+print,'fitsfile_db=',fitsfile_db
 return
 end

@@ -26,7 +26,8 @@ trace,5,'DEBLAZE: Starting the deblazing process for ' + file
 ioddir = getenv("RAW_ALL_OUT_FITS")     ; same for all chips
 savedir = getenv("RAW_ALL_OUT_FITS_DB") ;same for all chips 
 reduce_dir = getenv("RAW_MID")
-fits_in = getenv("RAW_FITS_IN")
+fits_in = getenv("RAW_FITS_IN") ; input dir of wavelength solution.
+
 ;prefix = 'j'
 prefix = strmid(file,0,1)
 
@@ -797,20 +798,20 @@ if chip eq 'r' then begin
   if chip eq 'b' then begin
     writefits,savedir + filename,bluespec,bh
     writefits,savedir + filename,berrspec,/append
-    bwav = readfits(reduce_dir+'keck_bwav.fits')
+    bwav = readfits(fits_in+'keck_bwav.fits')
     writefits,savedir + filename,bwav,/append
  
   ENDIF
   if chip eq 'r' then begin
     writefits,savedir + filename,iodspec,rh
     writefits,savedir + filename,rerrspec,/append
-    rwav = readfits(reduce_dir+'keck_rwav.fits')
+    rwav = readfits(fits_in+'keck_rwav.fits')
     writefits,savedir + filename,rwav,/append
   endif 
   if chip eq 'i' then begin
     writefits,savedir + filename,redspec,ih
     writefits,savedir + filename,ierrspec,/append
-    iwav = readfits(reduce_dir+'keck_iwav.fits')
+    iwav = readfits(fits_in+'keck_iwav.fits')
     writefits,savedir + filename,iwav,/append
   endif
   

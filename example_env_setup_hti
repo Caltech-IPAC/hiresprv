@@ -45,7 +45,7 @@ export DOP_RK_VEL_DIR=${DOP_WORK}"output/files/"
 
 
 # Raw reduction paths, middle red and blu chips -----------
-export RAW_RAW=${DOP_WORK}"input_data/raw_data/"
+export RAW_RAW=${DOP_WORK}"../hires-pipeline_rawdata/"
 export RAW_FITS_IN=${DOP_WORK}"input_data/reduction/"
 export RAW_MID=${DOP_WORK}"raw_reduction/middle/"
 export RAW_ALL_OUT=${DOP_WORK}"output/fits/"

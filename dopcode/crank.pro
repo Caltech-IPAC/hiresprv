@@ -231,7 +231,7 @@ for n=0,(bnum-1) do begin       ;bnum = # of observations
 ;         endrep until check_file(ipguess[datind[qq]].name)
 ;         print,'% CRANK.PRO: Using only ae tag input guesses.' ; not working
 ;         ipcfnm = ipguess[datind[qq]].name ; what is this used for???
-        ipcfnm = files+'vdiod3314_rj13.2275.j'
+        ipcfnm = static_dir+'vdiod3314_rj13.2275.j'
 
         if 1-keyword_set(absolute_noprint) then print,' Obs IPCF: '+ipcfnm
         restore,ipcfnm          ;get input guess VD from IPCF

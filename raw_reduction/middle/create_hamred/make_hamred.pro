@@ -171,7 +171,7 @@ printf,1,";6. Record Numbers to AVOID REDUCING, i.e, to skip (junk, flats, tests
 printf,1,";   List in brackets, e.g., [35,52], and [-1] for none."
 printf,1,avoidtxt
 printf,1,''
-stop
+
 printf,1,";7. Record number of Well-Exposed Iodine or Any Spectrum Well-Exposed"
 printf,1,findordfind(body)
 

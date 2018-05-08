@@ -24,15 +24,6 @@ best =  (where(firstchar(stars,2) eq 'HR' $
 if nHr ge 2 then best = (where(firstchar(stars,2) eq 'HR' or $
  			                   firstchar(stars,2) eq 'hr',nHR))(1)
 
-if nHR eq 0 then begin
-
-bst=getiodine(body)
-
-
-bst=fix(bst)
-return,txt+string(bst)
-
-endif
 
 if nHR ge 1 then begin
     cmt = "                     ;   " + stars(best)  ; comment line

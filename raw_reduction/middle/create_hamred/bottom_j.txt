@@ -89,7 +89,7 @@ print,'Output Directory = ',outdir
     spnums = prefix + recnums           ;for printout late
     suffix = 'fits'         ;suffix to all FITS filenames.
     spfnames = indir + prefix + recnums + '.' +suffix   ;string ARRAY of spectrum file names
-    outprefix = preprefix + prefix  ;preprefix defined at program beginning.
+    outprefix = preprefix + strmid(prefix,0,8)  ;preprefix defined at program beginning.
 
     
     outsuffix = strtrim(string(recint),2)  ;string ARRAY, record numbers (no zeros)

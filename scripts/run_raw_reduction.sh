@@ -29,35 +29,28 @@ fi
 #Notes to Howard:  NO SPACES. Quotes only for variables with spaces.
 #Extract run and night number. Todo: Allow j11 or j111.
 log=$1
-run=${log:0:4}
-nt=${log:13:1}
+run=${log:0:8}
+nt=${log:17:1}
 export IDL_PATH_IN=$IDL_PATH
 
-## Generate the Raw Reduction Scripts
-echo $'\n CPS-PIPELINE-RREDUCE Running Raw reduction for ' $1  $'\n'
-export IDL_PATH=/mir3/reduce/create_hamred/:$IDL_PATH_IN
-cd /mir3/reduce/create_hamred/
-idl -e endofnight_hires -arg $1
-
-## Run the Raw Reduction
+### Middle chip
 echo $'\n CPS-PIPELINE-RREDUCE Running Middle Chip Raw reduction for ' $1 $'\n'
-cd /mir3/reduce/
-export IDL_PATH=/mir3/reduce/:$IDL_PATH
-idl -e @hamred-$run-$nt
-mv hamred-$run-$nt /mir3/reduce/old_hamreds/ #Clean up repo
+export IDL_PATH=${RAW_MID}:${RAW_MID}/create_hamred/:${IDL_PATH_IN}
+idl -e endofnight_hires -arg $1
+idl -e @${RAW_HAMRED_OUTDIR}/hamred-${run}-mid-${nt}
 
-## Run the Raw Reduction
+### Blue chip
 echo $'\n CPS-PIPELINE-RREDUCE Running blue Chip Raw reduction for ' $1 $'\n'
-cd /mir3/reduce_blue/
-export IDL_PATH=/mir3/reduce_blue/:$IDL_PATH
-idl -e @hamred-$run-$nt
+export IDL_PATH=${RAW_BLU}:${RAW_BLU}/create_hamred/:${IDL_PATH_IN}
+idl -e endofnight_hires -arg $1
+idl -e @${RAW_HAMRED_OUTDIR}/hamred-${run}-blue-${nt}
 
-## Run the Raw Reduction
+### Red chip
 echo $'\n CPS-PIPELINE-RREDUCE Running Red Chip Raw reduction for ' $1 $'\n'
-cd /mir3/reduce_red/
-export IDL_PATH=/mir3/reduce_red/:$IDL_PATH
-idl -e @hamred-$run-$nt
-
+export IDL_PATH=${RAW_RED}:${RAW_RED}/create_hamred/:${IDL_PATH_IN}
+idl -e endofnight_hires -arg $1
+idl -e @${RAW_HAMRED_OUTDIR}/hamred-${run}-red-${nt}
+#
 echo 'Raw Reduction complete'
-cd $HOME
-export IDL_PATH=$PATH_IN
+#cd $HOME
+#export IDL_PATH=$PATH_IN

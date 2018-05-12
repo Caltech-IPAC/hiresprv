@@ -55,18 +55,9 @@ bludir_out = getenv("RAW_ALL_OUT")
 bottom_file = getenv("RAW_HAMRED_BOTTOM")
 
 ; Choose which directory to write the output files.
-;spawn,'pwd',current_dir
-;current_dir = strcompress(current_dir,/remove_all)+'/'
-;print,'current dir',current_dir
-;if current_dir eq middir then $
-   outdir_hamred = bludir
-   outdir = bludir_out
-   preprefix = "'b'"
-
-;if current_dir eq reddir then $
-;   outdir = reddir_out
-;if current_dir eq bludir then $
-;   outdir = bludir_out
+outdir_hamred = getenv("RAW_HAMRED_OUTDIR")
+outdir = bludir_out
+preprefix = "'b'"
 
 
 if n_elements(logfile) eq 0 then begin
@@ -86,7 +77,7 @@ rf,data,logfile
 ;pos1 = strpos(logfile,'j')
 ;pos2 = strpos(logfile,'.')
 pos1 = 0 ; beginning of string.
-pos2 = 4 ; X001 is default format
+pos2 = 8 ; YYYYMMDD is default format
 run = strmid(logname,pos1,pos2-pos1)
 print,"run  = ",run
 
@@ -110,7 +101,7 @@ print,'MAKE_HAMRED: :'
 
 ;file=1
 ;if keyword_set(file) then begin
-outfile = outdir_hamred + 'hamred-'+run+'-'+night
+outfile = outdir_hamred + 'hamred-'+run+'-blue-'+night
 ;	rf, dont, '/mir3/automate/bottom_j.txt' ;current as of jan 2010
 rf, dont, bottom_file ;current as of apr 2012
 
@@ -150,7 +141,7 @@ printf,1,'outdir = "'+outdir+'"'
 printf,1,''
 
 printf,1,";3. Prefix to FITS files:  'k#'nnnn.fits  . i.e., 'k68' or 'hires' (string)"
-printf,1,"prefix = '"+run+"'"
+printf,1,"prefix = '"+run+"_'"
 printf,1,"preprefix = "+preprefix
 printf,1,''
 

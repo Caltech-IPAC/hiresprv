@@ -283,7 +283,7 @@ trace,10,'%HIRSPEC: Saving extracted file with writefits'
 print,'fitsfile=',fitsfile
 ; deblaze.pro requires fits name with no directory information.
 pos1 = strpos(fitsfile,'/',/reverse_search)
-fitsfile_db = strmid(fitsfile,pos1+1,15)
+fitsfile_db = strmid(fitsfile,pos1+1,24)
 deblaze,file=fitsfile_db
 print,'fitsfile_db=',fitsfile_db
 return

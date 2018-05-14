@@ -105,7 +105,7 @@ if 1-keyword_set(ngrid) then begin
 	if n_elements(jjhip) eq 0 then restore,jjhip_file
     star = strlowcase(star)
     if strmid(star,0,3) eq 'hip' then begin
-        num = strmid(star,3,10)
+        num = strmid(star,3,20)
         let = where(stregex(num, '[a-b]', /bool), nlet)
         if nlet gt 0 then num = strmid(num, 0, strlen(num)-1)
         w = where(jjhip.num eq num, nw)
@@ -169,10 +169,11 @@ if keyword_set(maxchi_in) then maxchi=maxchi_in
 print,'MAKE_DSST.PRO: '
 print,'  Templates obs for DSST creation:'
 ; lines will print with barylook call.
+
 barylook, star $  ; This call to barylook replaces 4 old calls below.
 		,lines = lines $
 		, grep = run $
-		, /temp 
+		, /temp
 
 ;;; Use barylook to find template observations, grep = run
 if keyword_set(specin) then begin
@@ -208,14 +209,14 @@ endif else begin
             endif else narrow = 0
     endif else begin ; else is for obnm keyword NOT set.
         if n_elements(lines) gt 10 then lines = lines[0:10]
-        tape = str(strmid(lines[0], 0, 12))
+        tape = str(strmid(lines[0], 0, 20))
         ;;; Send lines to JJ_ADDSPEC
         if lines[0] eq '' then begin
             print, 'No template observation found for '+str(star)
             return
         endif
         if keyword_set(keck2) then begin
-            rdsk, header, iodspec+str(strmid(lines[0], 0, 10)), 2
+            rdsk, header, iodspec+str(strmid(lines[0], 0, 20)), 2
             decker = str(fxpar(header,'DECKNAME'))
             if decker eq 'B5' or decker eq 'C2' then begin
                 b5 = 1
@@ -240,7 +241,7 @@ endif else begin
 				; if consecutive observations were taken, add them together.
             spec = jj_addspec(lines, bc=bc, /noadd)
         endif else begin
-            obnm = str(strmid(lines, 0, 12))
+            obnm = str(strmid(lines, 0, 20))
             rdsi, spec, obnm
         endelse ; n_elements(lines) gt 1
     endelse 
@@ -300,7 +301,7 @@ print,' MAKE_DSST: Cosmic rays fixed: ',str(num_fixed)
 
 if n_elements(obnm) gt 0 then dsstinfo.obnm = strjoin(obnm,', ')
 if n_elements(lines) gt 0 then begin
-    obnm = str(strmid(lines,0,10))
+    obnm = str(strmid(lines,0,20))
     dsstinfo.obnm = strjoin(obnm,', ')
 endif
 
@@ -360,7 +361,7 @@ if 1-keyword_set(vdarr) then begin
         if keyword_set(vdtag) then vtag = vdtag else vtag = 'ac'
         if keyword_set(quawav) then vtag = 'q'
         for i = 0, nvd-1 do begin
-            bname = str(strmid(hrlines[i], 0, 12))
+            bname = str(strmid(hrlines[i], 0, 20))
             cmd = 'ls '+files+'vdiod*'+bname+'.'+vtag
             spawn, cmd, result
             vobnm = bname

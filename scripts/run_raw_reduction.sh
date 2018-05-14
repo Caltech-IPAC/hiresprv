@@ -53,4 +53,4 @@ idl -e @${RAW_HAMRED_OUTDIR}/hamred-${run}-red-${nt}
 #
 echo 'Raw Reduction complete'
 #cd $HOME
-#export IDL_PATH=$PATH_IN
+export IDL_PATH=$PATH_IN

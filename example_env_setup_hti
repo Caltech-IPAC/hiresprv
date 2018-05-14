@@ -58,7 +58,10 @@ export RAW_RED_OUT=${DOP_WORK}"output/fits/"
 export RAW_BLU=${DOP_WORK}"raw_reduction/blue/"
 export RAW_BLU_OUT=${DOP_WORK}"output/fits/"
 
+export RAW_HAMRED_LOC=${DOP_WORK}"output/hamreds/"
+
 # Needed to run barylog:
 export MIR3_LOG=${DOP_WORK}"output/logsheets/"
 export MIR3_BARY=${DOP_WORK}"output/bary/"
 export BARY_JEPHEM=${DOP_WORK}"input_data/dopcode/JPLEPH.405"
+

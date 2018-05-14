@@ -54,12 +54,14 @@ middir_out = getenv("RAW_ALL_OUT")
 
 bottom_file = getenv("RAW_HAMRED_BOTTOM")
 
+
 ; Choose which directory to write the output files.
 ;spawn,'pwd',current_dir
 ;current_dir = strcompress(current_dir,/remove_all)+'/'
 ;print,'current dir',current_dir
 ;if current_dir eq middir then $
    outdir_hamred = middir
+   outdir_hamred = getenv("RAW_HAMRED_LOC")
    outdir = middir_out
    preprefix="'r'"
 ;if current_dir eq reddir then $
@@ -100,7 +102,7 @@ times = getwrds(body,3)
 
 ;file=1
 ;if keyword_set(file) then begin
-outfile = outdir_hamred + 'hamred-'+run+'-'+night
+outfile = outdir_hamred + 'hamred-'+run+'-'+night +'_m'
 ;	rf, dont, '/mir3/automate/bottom_j.txt' ;current as of jan 2010
 rf, dont, bottom_file ;current as of apr 2012
 

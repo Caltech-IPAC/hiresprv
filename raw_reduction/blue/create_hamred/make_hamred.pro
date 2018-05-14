@@ -59,7 +59,9 @@ bottom_file = getenv("RAW_HAMRED_BOTTOM")
 ;current_dir = strcompress(current_dir,/remove_all)+'/'
 ;print,'current dir',current_dir
 ;if current_dir eq middir then $
-   outdir_hamred = bludir
+;   outdir_hamred = bludir
+   outdir_hamred = getenv("RAW_HAMRED_LOC")
+
    outdir = bludir_out
    preprefix = "'b'"
 
@@ -110,7 +112,7 @@ print,'MAKE_HAMRED: :'
 
 ;file=1
 ;if keyword_set(file) then begin
-outfile = outdir_hamred + 'hamred-'+run+'-'+night
+outfile = outdir_hamred + 'hamred-'+run+'-'+night +'_b'
 ;	rf, dont, '/mir3/automate/bottom_j.txt' ;current as of jan 2010
 rf, dont, bottom_file ;current as of apr 2012
 

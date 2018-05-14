@@ -269,8 +269,8 @@ if keyword_set(kvel) then begin
       save,file=vstnm,cf1,cf3,cf5,cfj,cfk
 endif
 
-velplot,cf3,1./12,d1,v1,e1,tit=catalog+strupcase(strtrim(strnm,2)),$ 
-	errcut=errcut,/yrs,noplot=noplot
+;velplot,cf3,1./12,d1,v1,e1,tit=catalog+strupcase(strtrim(strnm,2)),$ 
+;	errcut=errcut,/yrs,noplot=noplot
 
 ;postscript to laser printer?
 if keyword_set(ps) then begin

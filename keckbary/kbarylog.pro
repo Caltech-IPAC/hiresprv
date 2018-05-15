@@ -348,7 +348,7 @@ WHILE eof(logune) eq 0 do begin ;check for end of file (eof = 1)
         k = (strlen(infoline))[0]-1
         dashln = '-'
          dashln  = '-----------------------------------------------------------'
-        forinfo = '(A10, A1,   A14,   A1,  A1, A1, A8, A1, D12.6, A1, F9.2)'
+        forinfo = '(A14, A1,   A14,   A1,  A1, A1, A8, A1, D12.6, A1, F9.2)'
         print, format = forinfo, filename , ' ', obj , ' ', celltest, ' ', strtime, ' ', bjd, ' ', stcz
 
 ;Store results to Structure
@@ -376,7 +376,7 @@ if strupcase(ans) eq 'Y' then begin
     get_lun,une                 ;get Logical Unit Number
     openu,une,bcfile,/append    ;open bcvel file for writing
 ;    form = '(A10,3X,A20,1X,D11.3,1X,D12.6,1X,F7.3,1X,A1,1x,D12.6)' ; changed length of obnm for j100, AWH 28sep2010
-    form = '(A10,3X,A19,1X,D11.3,1X,D12.6,1X,F7.3,1X,A1)' ; changed length of  ob to fit singlge line ; HTI 19Oct2011
+    form = '(A14,3X,A19,1X,D11.3,1X,D12.6,1X,F7.3,1X,A1)' ; changed length of  ob to fit singlge line ; HTI 19Oct2011
     print,'Printing results to '+bcfile+' ...'
     for j=0,num-1 do begin
         fn = temp[j].filename

@@ -27,7 +27,7 @@ dsst_tag = 'ae'
 print(dop_dir)
 
 names1=['obs', 'star', 'bc', 'hjd', 'ha', 'type','junk']
-kbc = np.genfromtxt(kbc_file, dtype=None, invalid_raise=False, skip_header=21051, 
+kbc = np.genfromtxt(kbc_file, dtype=None, invalid_raise=False, skip_header=3,
                     names=names1,usecols=(0,1,2,3,4,5))
 fullkbc = kbc.copy()
 adf = pd.DataFrame(kbc)

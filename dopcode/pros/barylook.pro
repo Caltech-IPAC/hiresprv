@@ -19,7 +19,7 @@ baryfile = getenv("DOP_BARYFILE")
 case 1 of
     keyword_set(template): begin
         if keyword_set(grep) then begin
-            spawn,'grep -i '+str(num)+' '+baryfile+ " | grep '[0-9]* t' | grep '"+str(grep)+"'",lines 
+            spawn,'grep -i '+str(num)+' '+baryfile+ " | grep '[0-9]* t' | grep '"+str(grep)+"'",lines
         endif else begin
             spawn,'grep -i '+str(num)+' '+baryfile+ ' | grep "[0-9] t"',lines 
         endelse

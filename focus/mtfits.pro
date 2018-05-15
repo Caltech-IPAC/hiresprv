@@ -276,9 +276,8 @@ len = strlen(deltat)
 if len eq 2 then deltat = '  '+deltat  ;add space
 if len eq 3 then deltat = ' '+deltat
 
-;len=strlen(fitsnm)
-len = strlen(fitsnm)-6 ; 2018: added -3 because input filename changed.
-rec=strmid(fitsnm,4,len-3)   ;remove the leading "knn" from filename
+underscore_loc = strpos(fitsnm, "_")
+rec=strmid(fitsnm, underscore_loc+1, 4)   ;remove the leading "knn" from filename
 ;;; JJ CHANGE: 09/25/2010, added a digit for J100 era
 for j=0,2 do begin           ;remove the leading zeros
   len=strlen(rec)

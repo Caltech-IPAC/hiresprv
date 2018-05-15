@@ -2,7 +2,7 @@ pro make_logsheet;, logname;,verbose=verbose
 
 ; PURPOSE: Create a logsheet based on one nights' worrth of observations.
 ;          The only input should be the raw files.
-; CREADED: Apr 2018 
+; CREADED: Apr 2018
 ; 
 ; Keyword: Set verbose to see output on screen. Default is to write to a file.
 
@@ -16,6 +16,7 @@ log_dir = getenv('MIR3_LOG')
 ;file_list = file_search(raw_dir+run+'*fits') ; if using a run name
 file_list = file_search(raw_dir + '*fits',count=nf); if generating a log for all of the files
 if nf eq 0 then begin
+  print, raw_dir
   print,'MAKE_LOGSHEET: No raw files found.'
   print,'   Check environment variables RAW_RAW'
 endif
@@ -24,7 +25,7 @@ files = strarr(nf)
 fname1 =strsplit(file_list[0],'/',/extract); [-1]
 nchar_f1 = n_elements(fname1)
 fname2 = fname1[nchar_f1-1]
-run = strmid(fname2,0,4)
+run = strmid(fname2,0,8)
 logname = log_dir+run+'.logsheet1'
 
 hiraw,raw,file_list[0],header,chip=1 ; any chip works

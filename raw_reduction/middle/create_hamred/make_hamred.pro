@@ -54,11 +54,11 @@ middir_out = getenv("RAW_ALL_OUT")
 
 bottom_file = getenv("RAW_HAMRED_BOTTOM")
 
+
 ; Choose which directory to write the output files.
-outdir_hamred = getenv("RAW_HAMRED_OUTDIR")
+outdir_hamred = getenv("RAW_HAMRED_LOC")
 outdir = middir_out
 preprefix = "'r'"
-
 
 if n_elements(logfile) eq 0 then begin
     logfile = ''

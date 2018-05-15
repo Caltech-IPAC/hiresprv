@@ -56,7 +56,7 @@ reddir_out = getenv("RAW_ALL_OUT")
 bottom_file = getenv("RAW_HAMRED_BOTTOM")
 
 ; Choose which directory to write the output files.
-outdir_hamred = getenv("RAW_HAMRED_OUTDIR")
+outdir_hamred = getenv("RAW_HAMRED_LOC")
 outdir = reddir_out
 preprefix = "'i'"
 

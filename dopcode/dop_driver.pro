@@ -683,4 +683,7 @@ if keyword_set(vank) then begin
             , run=run       $
             , meta=meta
 endif
+
+print, "completed successfully"
+
 end

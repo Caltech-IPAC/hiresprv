@@ -50,6 +50,6 @@ export IDL_PATH=${RAW_RED}:${RAW_RED}/create_hamred/:${IDL_PATH_IN}
 idl -e endofnight_hires -arg $1
 idl -e @${RAW_HAMRED_OUTDIR}/hamred-${run}-red-1
 #
-echo 'Raw Reduction complete'
+# echo 'Raw Reduction completed successfully'
 #cd $HOME
 export IDL_PATH=$PATH_IN

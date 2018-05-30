@@ -243,4 +243,7 @@ for i = 0, nb-1 do begin
         endif
     endif
 endfor
+
+print, "completed successfully"
+
 end

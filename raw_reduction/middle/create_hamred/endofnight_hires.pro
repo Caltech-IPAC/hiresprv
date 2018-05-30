@@ -39,5 +39,7 @@ make_hamred, logsheet;,run ;, night, /file ; run, night are outputs
 ;spawn,cmd
 ;stop
 
+print, "completed successfully"
+
 return
 end

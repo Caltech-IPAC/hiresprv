@@ -169,3 +169,4 @@ FOR i=0,nspec-1 do $
   if threc(0) gt -1 then $
      FOR i=0,numthar-1 do HIRSPEC,prefix,thspfnames(i),thoutfnames(i), orc, totwf,/thar,/nosky
 
+print, "completed successfully"

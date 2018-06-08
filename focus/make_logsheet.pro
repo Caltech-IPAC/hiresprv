@@ -59,10 +59,19 @@ tape = strcompress(sxpar(header,'OUTFILE'),/remove_all)
 l3 = 'Observer: '+observer+ ' Tape:'+tape+' Telescope: KeckI'
 
 ; line4 requires the date.
-date1 = sxpar(header,'DATE-OBS')
-d1 = strsplit(date1,'-',/extract)
-d2 = reverse(d1)
-d3 = strjoin(d2,' ')
+for i=0, nf-1 do begin
+    head = headfits(file_list[i])
+    cts = hdrdr(head,'EXM0SSUM')
+    IF cts GT 0 THEN BEGIN
+        print, file_list[i]
+        date1 = sxpar(head,'DATE-OBS')
+        d1 = strsplit(date1,'-',/extract)
+        d2 = reverse(d1)
+        d3 = strjoin(d2,' ')
+        BREAK
+    ENDIF
+ENDFOR
+
 l4 = 'UT Date '+d3 + '        Chip: LincolnLab 4096x3, 15micron '
 
 ; line 6 has the echelle and X-disp. This is only defined after the focus is complete
@@ -98,7 +107,7 @@ for i=0,nf-1 do begin
      obj   = getwrd(outstring,1)
      if wf1 eq '' then wf1 = obsnm
      ; open the next file and see if that one is a wideflat
-     temp1 = strsplit(file_list[i+1],'/',/extract); [-1]
+     IF i LT nf-1 THEN temp1 = strsplit(file_list[i+1],'/',/extract); [-1]
      nt1 = n_elements(temp1)
      file1 = temp1[nt1-1]
      mtfits,inpdir=dir,file1,outstring=outstring1;,/verbose
@@ -124,4 +133,5 @@ close,1
 
 print, 'MAKE_LOGSHEET.PRO: COMPELTE'
 print, '   New logsheet created: ',logname
+print, "completed successfully"
 end ; program

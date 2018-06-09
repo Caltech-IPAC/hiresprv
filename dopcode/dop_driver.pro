@@ -443,7 +443,7 @@ if nfiles eq 1 and variable eq 0 then begin
     endif
 endif
 
-;;; this is set up for CK00254 and other low-s/n
+;;; this is set up for  low-s/n
 if keyword_set(force_third) then begin 
     t0 = systime(/sec)
     ncf1 = n_elements(cf)

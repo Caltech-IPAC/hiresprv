@@ -59,9 +59,6 @@ pro  jjvank,strnmin,tmptp,lbl,cf1,cf3 $
 ;			; jjvank,'10700','ad'
 ; MODIFICATION HISTORY:
 ;
-; This is the call to do the detrending:
-; The python scripts should be appropriately setup on the Doppler account. 
-; path+rvdetrend.py path + vstk01925.dat
 ;-
 ;          HTI 8/2014  If statement added for KOI-157.
 ; 			HTI 8/2014 special maxchi for gl570b.dat hardwired.

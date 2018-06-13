@@ -69,7 +69,6 @@ act_dir = getenv("IDL_PATH_DOP_BASE") ;
 vel_dir = getenv("DOP_RV_OUTDIR")
 planets_dir= getenv("DOP_PLANETS_DIR")
 files_dir = getenv("DOP_FILES_DIR")
-keck_st = getenv("DOP_KECK_STRUC")
 strnm = strlowcase(strnmin)
 
 if n_elements(lbl) eq 0 and n_elements(tmptp) gt 0 then lbl = 'vd'+tmptp
@@ -99,10 +98,6 @@ endif else begin
 endelse
 
 vstdsk1 = planets_dir
-kecklist = keck_st
-
-restore,kecklist                ;get Keck List Data Structure
-keckst=dum                      ;rename Keck List Data Structure 
 
 ;HD Star Catalog
 catalog = 'HD '  

@@ -24,12 +24,8 @@ pro klookup,name,coords,epoch,pm,prlax,radvel,raarr, decarr,hip=hip,$
 ;     cat      cat         Catalog, ie keck_st.dat cat = dum 
 ;ONCE STAR IS FOUND, SET FOUND = 1 AND JUMP TO END
 
-; EQUINOX 2000 is now assumed.  
-; LOOKUP PROGRAM REVISED: So that coordinates for bary are the same as
-; those we are pointing to, ie from <obs>_st.dat, as a first
-; priority.  Failing that, stars can be looked up in HIPPARCOS, or in
-; other.ascii.  
-; Modified to look in Tycho Catalog also
+; EQUINOX 2000 is assumed.
+
 
 if n_params() eq 0  then begin
     print,'klookup,name,coords,epoch,pm,prlax,radvel,hip=hip,barydir=barydir,'
@@ -53,9 +49,6 @@ catfile = strucfile
 
 digits = strtrim(sindgen(10),2) ; 0,1,...
 
-;altcat  = 'hj_st.dat'           ; Put alternate catalogs in the bary directory
-;altcatvar = 'HJ'                ; this is the *variable name* for each alternate catalog
-
 lastchar=' ' & found = 0 
 radvel = 0 & absmag= -99        ; These could be improved
 bv = 0
@@ -73,10 +66,7 @@ comm = 'no comment.'
 
 ind = where(strupcase(cat.name) eq name,cnt)
 if cnt gt 1 then begin
-;    message,'********WARNING',/info
     print,'Note: There  were ',strtrim(string(cnt),2),' entries in the target structure for ',name
-;    print,'using the last one for now.  This should be looked into!'
-;    print,'********WARNING'
     ind = ind(cnt-1)
 endif
 
@@ -85,7 +75,6 @@ if  ind(0) ne -1 then begin     ;its in our cat
     epoch = cat(ind).epoch
     spt = cat(ind).sptype+cat(ind).spclass
     pm = [cat(ind).pmr,cat(ind).pmd]
-;    prlax = cat(ind).plx
     prlax = cat(ind).par
     vmag = cat(ind).V
     bv = cat(ind).bv
@@ -102,32 +91,6 @@ if  ind(0) ne -1 then begin     ;its in our cat
 endif 
 
 
-;; NEXT CHECK TO SEE IF IT IS IN  THE alternate catalog
-;if not found and (findfile(altcat))(0) ne '' then begin
-;    restore,altcat
-;    cmd = 'cat = '+altcatvar(0) ; just one cat for now.
-;    dummy = execute(cmd)
-;    
-;    ind = where(strupcase(cat.name) eq name)
-;    if  ind(0) ne -1 then begin ;its in our cat
-;        coords = [cat(ind).ra,cat(ind).dec ] 
-;        epoch = cat(ind).epoch
-;        spt = cat(ind).sptype+cat(ind).spclass
-;        pm = [cat(ind).pmr,cat(ind).pmd]
-;        prlax = cat(ind).par    ;    prlax = cat(ind).plx
-;        vmag = cat(ind).V
-;        bv = cat(ind).bv
-;        radvel = cat(ind).radvel
-;        absmag = vmag-(5.*alog10(1./prlax) - 5.)
-;
-;        decarr = sixty(coords(1)) ; these are not really used
-;        rag = sixty(coords(0))
-;        raarr = [fix(rag(0:1)),rag(2)]
-;        comm = cat(ind).comments
-;        found = 1
-;    endif 
-;endif
- 
 ; THEN CHECK TO SEE IF ITS BEEN DUMPED
 
 if not found and  n_elements(dump) ne 0 then begin  
@@ -138,8 +101,7 @@ if not found and  n_elements(dump) ne 0 then begin
         pm = [dump(ind).pmr,dump(ind).pmd]
         if  memberof(tag_names(keck),'plx') then prlax = dump(ind).plx  else $
           prlax = dump(ind).par
-;        radvel = dump(ind).radvel
-        vmag = dump(ind).V        
+        vmag = dump(ind).V
         decarr = fix(sixty(coords(1))) ; these are not really used
         rag = sixty(coords(0))
         raarr = [fix(rag(0:1)),rag(2)]
@@ -152,7 +114,6 @@ endif
 
  ;  SEE IF IT LOOKS LIKE A TYCHO STAR (eg SIM ref. star) & lookup in TYCHO
 
-;if not found then begin  
 if not found and name ne '133P-ELST' then begin  ; Kludge for 133p-elst, added for j183 run.
     fixcnt = 0
     TYCRENAME:
@@ -192,7 +153,6 @@ endif
 ; CHECK TO SEE IF IT'S IN HIPPARCOS
 ;
 if not found then begin
-;    if not silent then print,'Star not found in keck_st.dat: ',name
     if n_elements(hip) eq 0 then begin
         print,'Restoring Hipparcos Catalog...'
         restore,hipfile
@@ -271,10 +231,6 @@ if not found then begin
        return
     endif
 
-;print
-;print,name,data[othind]
-;print
-;stop 
    if othind eq -1 then begin  ;Check for star not found
         if not keyword_set(silent) then begin
             print 
@@ -289,8 +245,6 @@ if not found then begin
         prlax = 0.d0 & pm = [0.d0,0.d0]
         return
     endif else begin            ; Star WAS found in kother.ascii
-;        if not silent then print,'Found star in  ', otherfile
-;        if not silent then print,'NOTE: Assuming equinox=2000 reading EPOCH from kother.ascii'
         rah = double(getwrd(data(othind),1))
         ram = double(getwrd(data(othind),2))
         ras = double(getwrd(data(othind),3))

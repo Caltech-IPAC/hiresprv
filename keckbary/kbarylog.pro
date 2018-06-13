@@ -70,7 +70,6 @@ skylist = ['SKY', 'DARK','BIAS','narrflat','NARROWFLAT']
 ;DEFINE STRUCTURES
 maxsize = 9000                  ;  ;was 5000
 log = {log, object: '', hour: '', min: '', sec: '', type: ''}
-;temp = {bcvel, filename:'', object:'', cz:0.d0, mjd:0.d0, ha:0.d0, type:''} ;Temporary structure for results
 temp = {bcvel, filename:'', object:'', cz:0.d0, mjd:0.d0, bjd:0.d0, ha:0.d0, type:''} ;Temp struct for results;add BJD gm 1Jan2009
 temp = replicate(temp[0],maxsize)
 
@@ -78,7 +77,6 @@ temp = replicate(temp[0],maxsize)
 logdir = getenv("MIR3_LOG")
 barydir = getenv("MIR3_BARY")
 bary_log = getenv("DOP_BARYFILE") ; full path
-strucfile = getenv("DOP_KECK_STRUC")
 
 ;bf='kbcvel.ascii'  ; this is the normal filename
 bf = bary_log
@@ -121,12 +119,6 @@ print,'     *************************************************************'
 print,' '
 ;GETLOGSHEET:
 
-;if  logfile[0] eq '' then begin
-;    print,''
-;    print,'Enter the logsheet filename (i.e., j73.logsheetn)'
-;    print,'(Do not include path.)'
-;    read,logfile
-;endif
 print,'Finding logfile automatically'
 
 
@@ -137,13 +129,6 @@ if nlog eq 0 then begin
 endif
 
 logfileorig = logfile
-; Apr 2018. Removing this safeguard
-;if strmid(logfile,0,1) ne 'k' and strmid(logfile,0,1) ne 'j' then begin
-;    print,' '
-;    print,'Dummy!  You entered a non-Keck logsheet filename!: ',logfile
-;    logfile = ''
-;    goto, GETLOGSHEET
-;end
 
 period = strpos(logfile,'.')
 if period[0] ne -1 then tpname = strmid(logfile,0,period) ; u100 is OK now.
@@ -152,52 +137,10 @@ if period[0] ne -1 then tpname = strmid(logfile,0,period) ; u100 is OK now.
 ;READ LOGSHEET
 print,'reading: ',logfile
 
-restore,strucfile & cat = dum   ;RESTORE COORD. STRUCTURE
-
 spawn, 'cat ' + logdir + logfile , output
 output = cull(output)           ; remove any blank lines
 logline = (output(where(getwrds(output,0) eq 'UT')))[0] ; 1 element
 firstlogline = strmid(logline,0,26) ; first part of line contains UT date
-
-
-; April 2018: Removing manual intervention. Relying on pure automation.
-;PROMPT FOR DATE IN UNIVERSAL TIME.
-;repeat begin
-;    Print,'Here is the UT date from the log:'
-;    print & print,firstlogline  &   print;
-;
-;    daterite=0
-;    print,''
-;    print,'Enter the UT date of the observation:'
-;    repeat begin
-;        noerror=1
-;        read, 'Give UT Date [1-31]:', day
-;        read, 'Give Month [1-12]:', month
-;        read, 'Give the Year, i.e., 2016 or 2017:', year
-;        if (year gt 2018 or year lt 1980) then noerror=0 
-;        if (month gt 12) or (month lt 1) then noerror=0
-;        if (day gt 31) or (day lt 1) then noerror=0
-;        if noerror eq 0 then print, 'Error in the date. Please re-enter.'
-;        print,''
-;    endrep until noerror
-;
-;;CONFIRM DATE ENTERED
-;;    strdate = strcompress(month)+'/'+strcompress(day)+'/'+strcompress(year)
-;    strdate = strcompress(day)+'/'+strcompress(month)+'/'+strcompress(year)
-;    print,'You entered date (day/month/year): '+strdate
-;    read,'Is your date correct (y or n)? ',chk
-;    if select(['Y'],strupcase(chk)) then daterite=1
-;endrep until daterite
-
-
-; Apr 2018. Remove creation of backup.
-;Save Backup copy of bcvel.ascii
-;if bf eq 'kbcvel.ascii' and ~KEYWORD_SET(devel) then begin
-;    strdate =strtrim(strcompress(day),2)+'_'+strtrim(strcompress(month),2)+$
-;      '_'+strtrim(strcompress(year),2)
-;    command = 'cp '+barydir+'kbcvel.ascii '+barydir+'kbcvel_backup/kbcvel.ascii_'+strdate
-;    spawn,command
-;endif  else print,'NOT Backing up!  Since this version of kbary is in test mode!'
 
 ;Apr 2018 need to pull year, mon, day out of the logsheet
 day    = getwrd(logline,2)
@@ -207,7 +150,6 @@ year   = getwrd(logline,4)
 
 num = 0
 skip = 0                        ;Reset to NOT skip
-;strindgen = strtrim(string(indgen(2000)),2)
 strindgen = strtrim(string(indgen(maxsize)),2)
 print,' '
 print,'Filename     Object    I2?  UT      BJD        Bary Corr (m/s)'
@@ -220,7 +162,6 @@ WHILE eof(logune) eq 0 do begin ;check for end of file (eof = 1)
 
 ;Read the first four entries on the line.
     recnum = strtrim(getwrd(logline[0],0),2) ;record number
-;print,recnum
     log.object = strtrim(strupcase(getwrd(logline,1)),2) ;object name
     first2 = strmid(log.object,0,2)
     celltest = strtrim(strupcase(getwrd(logline,2)),2) ;Was cell in?
@@ -231,16 +172,12 @@ WHILE eof(logune) eq 0 do begin ;check for end of file (eof = 1)
 ;Construct reduced filename
     filename = tpname + '.' + recnum
 
-
 ;Guarantee that this is really an observation of something useful
     IF ((celltest eq 'Y' or celltest eq 'N') and $ ;Was cell specified?
         (select(skiplist,log.object) ne 1) and $ ;Not wide flat nor skiplist?
         select(strindgen,recnum)) and $ ;No multiple #'s on line
       (linelen gt 1)  THEN BEGIN ;guarantee some log there 
 
-; HTI commented these lines as a bug reported by J. Brewer.
-;        if (strmid(log.object,0,2) eq 'HD') then $
-;          log.object = strmid(log.object,2,strlen(log.object)-2)
         if first2 eq 'HD' then $
           log.object = strmid(log.object,2,strlen(log.object)-2)
         if (celltest eq 'Y') then log.type='o' else log.type='t'
@@ -300,26 +237,28 @@ WHILE eof(logune) eq 0 do begin ;check for end of file (eof = 1)
         IF select(['o','t'],log.type) then begin ;need barycentric correction
 
 ;       LOOKUP COORDINATES: lookup.pro takes starname (log.object) and finds
-;         coords, equinox, proper motion, parallax 
-;         coords=[ra,dec], pm=[ra_motion, dec_motion]
 
-;            if first2 ne 'HR' then begin ; SKIP B STARS (no B.C. for B*s)
-            if first2 ne 'HR' AND first2 ne 'BR' then begin ; SKIP B STARS (no B.C. for B*s)
-                klookup,log.object,coords,epoch,pm,parlax,radvel,hip=hip,$
-                  barydir=barydir,cat=cat,tyc=tyc
-                if coords(0) eq 0 or coords(1) eq 0 or abs(coords(0)) gt 24 $
-                  or abs(coords(1)) gt 90 then begin
-                    print,'Your coords for ',log.object,' look bad: ('+$
-                      strmid(coords(0),2)+','+ strmid(coords(1),2)+')'
-                    print,'If you continue, WRONG barycentric corrections could be '+$
-                      'entered into ',bcfile
-                    if no('Do you really want to do that?') then  stop
-                endif
 
-                if abs( coords(0)) eq 99.d0 then begin ;Logsheet star not found
+        if first2 ne 'HR' AND first2 ne 'BR' then begin ; SKIP B STARS (no B.C. for B*s)
+                specfile = getenv("RAW_ALL_OUT_FITS") + filename + ".fits"
+                head = headfits(specfile)
+                ra_sex = hdrdr(head, "RA")
+                dec_sex = hdrdr(head, "DEC")
+                ra_sex = strsplit(ra_sex, "'", /extract)
+                dec_sex = strsplit(dec_sex, "'", /extract)
+                ra_split = strsplit(ra_sex, ':', /extract)
+                dec_split = strsplit(dec_sex, ':', /extract)
+                inp_ra = ten(ra_split) * 15
+                inp_dec = ten(dec_split)
+                inpcoords = [inp_ra, inp_dec]
+
+                gaialookup, log.object, inpcoords, coords, epoch, pm, parlax, radvel
+
+                if abs( coords(0)) eq -99.d0 then begin ;Logsheet star not found
                     coords = [0.d0,0.d0] ;force ra and dec = 0. :no object found
                     pm     = [0.d0,0.d0] ;dummy proper motion
                     epoch = 2000.d0 ;dummy epoch
+                    cz = -99d.0
                 endif else begin 
                     kbary,jdUTC,coords,epoch,czi,obs='CFHT',pm = pm,$
                       barydir=barydir, ha=ha
@@ -367,15 +306,12 @@ END                             ;while
 if ~keyword_set(devel) then begin
     temp = temp[0:num-1]            ;trim temp structure array
     print,' '
-;    ans = ' '
-;    read,'Did all the printed results (above) look OK? (y or n)?',ans
     ans = 'Y'
 endif else ans = 'N'
 
 if strupcase(ans) eq 'Y' then begin
     get_lun,une                 ;get Logical Unit Number
     openu,une,bcfile,/append    ;open bcvel file for writing
-;    form = '(A10,3X,A20,1X,D11.3,1X,D12.6,1X,F7.3,1X,A1,1x,D12.6)' ; changed length of obnm for j100, AWH 28sep2010
     form = '(A14,3X,A19,1X,D11.3,1X,D12.6,1X,F7.3,1X,A1)' ; changed length of  ob to fit singlge line ; HTI 19Oct2011
     print,'Printing results to '+bcfile+' ...'
     for j=0,num-1 do begin
@@ -386,7 +322,6 @@ if strupcase(ans) eq 'Y' then begin
         bjd = temp[j].bjd
         ha = temp[j].ha
         type = temp[j].type
-;        printf,une,format=form,fn,ob,cz,bjd,ha,type,mjd  ; put bjd where mjd was.
         printf,une,format=form,fn,ob,cz,bjd,ha,type  ;  removed mjd
     end
     free_lun,une
@@ -397,18 +332,12 @@ if strupcase(ans) eq 'Y' then begin
     print,' '
     print,'It''s been a long night. Go to sleep! Nighty!'
 endif else begin
-;    if keyword_set(devel) then BEGIN
-        print,'BCVEL Development Mode.'
-        print,'   Not updating kbcvel.ascii'
-;    endif ;else begin
-;        print,' '
-;        print,'Make necessary changes (to logsheet?) and start again.'
-;        print,'The file ',bcfile,' was not affected. Exiting ...'
-;    endelse
+    print,'BCVEL Development Mode.'
+    print,'   Not updating kbcvel.ascii'
 endelse
 free_lun,logune 
-;if strupcase(ans) eq 'Y' and ~keyword_set(devel) $
-;    then barystruct,observatory='keck' 
+
+print, "completed successfully"
 
 end
 

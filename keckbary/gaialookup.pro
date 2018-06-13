@@ -39,27 +39,27 @@ IF typename(query) EQ "LONG" THEN BEGIN
 ENDIF
 IF typename(query) EQ "LONG" THEN BEGIN
     print, "ERROR: no matches found at coordinates" + str(ira) + " " + str(idec)
-    stop
-ENDIF
+    coords = [-99.d0, -99d.0]
+ENDIF ELSE BEGIN
+    dim = n_elements(query)
+    IF dim GT 1 THEN BEGIN
+        IF verbose THEN print, "WARNING: "+str(dim, format="(I2)")+" matches found within +"+str(searchrad, format="(F5.2)")+"' for target " + str(name)
+        IF verbose THEN print, "selecting brightest match"
+        mags = query.GMAG
+        pos = where(mags EQ min(mags))
+        query = query[pos]
+    ENDIF
 
-dim = n_elements(query)
-IF dim GT 1 THEN BEGIN
-    IF verbose THEN print, "WARNING: "+str(dim, format="(I2)")+" matches found within +"+str(searchrad, format="(F5.2)")+"' for target " + str(name)
-    IF verbose THEN print, "selecting brightest match"
-    mags = query.GMAG
-    pos = where(mags EQ min(mags))
-    query = query[pos]
-ENDIF
-
-ra = query.RA_ICRS / 15.0
-dec = query.DE_ICRS
-coords = [ra, dec]
-epoch = query.epoch
-pm_ra = query.PMRA / 1000.
-pm_dec = query.PMDE / 1000.
-pm = [pm_ra, pm_dec]
-prlax = query.plx / 1000.
-radvel = query.RV * 1000.
+    ra = query.RA_ICRS / 15.0
+    dec = query.DE_ICRS
+    coords = [ra, dec]
+    epoch = query.epoch
+    pm_ra = query.PMRA / 1000.
+    pm_dec = query.PMDE / 1000.
+    pm = [pm_ra, pm_dec]
+    prlax = query.plx / 1000.
+    radvel = query.RV * 1000.
+ENDELSE
 
 if n_elements(prlax) ge 2 then prlax = prlax(0)
 ;Determine secular acceleration

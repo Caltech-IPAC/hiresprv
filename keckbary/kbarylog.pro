@@ -239,36 +239,26 @@ WHILE eof(logune) eq 0 do begin ;check for end of file (eof = 1)
 ;       LOOKUP COORDINATES: lookup.pro takes starname (log.object) and finds
 
 
-            if first2 ne 'HR' AND first2 ne 'BR' then begin ; SKIP B STARS (no B.C. for B*s)
-;                klookup,log.object,coords,epoch,pm,parlax,radvel,hip=hip,$
-;                  barydir=barydir,cat=cat,tyc=tyc
-
-            specfile = getenv("RAW_ALL_OUT_FITS") + filename + ".fits"
-            head = headfits(specfile)
-            ra_sex = hdrdr(head, "RA")
-            dec_sex = hdrdr(head, "DEC")
-            ra_sex = strsplit(ra_sex, "'", /extract)
-            dec_sex = strsplit(dec_sex, "'", /extract)
-            ra_split = strsplit(ra_sex, ':', /extract)
-            dec_split = strsplit(dec_sex, ':', /extract)
-            inp_ra = ten(ra_split) * 15
-            inp_dec = ten(dec_split)
-            inpcoords = [inp_ra, inp_dec]
+        if first2 ne 'HR' AND first2 ne 'BR' then begin ; SKIP B STARS (no B.C. for B*s)
+                specfile = getenv("RAW_ALL_OUT_FITS") + filename + ".fits"
+                head = headfits(specfile)
+                ra_sex = hdrdr(head, "RA")
+                dec_sex = hdrdr(head, "DEC")
+                ra_sex = strsplit(ra_sex, "'", /extract)
+                dec_sex = strsplit(dec_sex, "'", /extract)
+                ra_split = strsplit(ra_sex, ':', /extract)
+                dec_split = strsplit(dec_sex, ':', /extract)
+                inp_ra = ten(ra_split) * 15
+                inp_dec = ten(dec_split)
+                inpcoords = [inp_ra, inp_dec]
 
                 gaialookup, log.object, inpcoords, coords, epoch, pm, parlax, radvel
-                if coords(0) eq 0 or coords(1) eq 0 or abs(coords(0)) gt 24 $
-                  or abs(coords(1)) gt 90 then begin
-                    print,'Your coords for ',log.object,' look bad: ('+$
-                      strmid(coords(0),2)+','+ strmid(coords(1),2)+')'
-                    print,'If you continue, WRONG barycentric corrections could be '+$
-                      'entered into ',bcfile
-                    if no('Do you really want to do that?') then  stop
-                endif
 
-                if abs( coords(0)) eq 99.d0 then begin ;Logsheet star not found
+                if abs( coords(0)) eq -99.d0 then begin ;Logsheet star not found
                     coords = [0.d0,0.d0] ;force ra and dec = 0. :no object found
                     pm     = [0.d0,0.d0] ;dummy proper motion
                     epoch = 2000.d0 ;dummy epoch
+                    cz = -99d.0
                 endif else begin 
                     kbary,jdUTC,coords,epoch,czi,obs='CFHT',pm = pm,$
                       barydir=barydir, ha=ha

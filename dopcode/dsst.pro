@@ -160,9 +160,6 @@ bigpad = (tlen - len)/2
 new_chisq = fltarr(n_lines)
 dsst_test = dsst ; fill in with experimental version
 shft_init_ang = 0.35; Ang for KOI-157
-;shft_init_ang = 0.31;-0.055; Ang for KIC8410697
-;shft_init_ang = 0.8 ; 12846t, 60k obs
-;shft_init_ang = -0.12 ; k00072, j80 template
 shft_init_ang = 0.8; Ang for KOI-351 ??? don't know which value is correct.
 
 ;;; STITCH is used in DSTITCH later to put DST together again

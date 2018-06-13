@@ -117,14 +117,14 @@ if 1-keyword_set(ngrid) then begin
     endelse
     if nw gt 0 then bv = jjhip[w].bv ; HTI 20/2014 moved from below
 
-    if strmid(star,0,2) eq 'k0' or strmid(star,0,3) eq 'ck0' then begin
-      restore,keck_st ; use Keck structure to find B-V.
-	  keck.name = strlowcase(keck.name)
-	  w=where(keck.name eq star,nw)
-	  if nw gt 0 then bv = keck[w[0]].bv
-	  if ~keyword_set(bv) then bv = 0.6 ; Near Solar B-V is now default.
-	  print,'Using B-V value of : ', str(bv), ' for star: ',str(star) 
-	endif
+;    if strmid(star,0,2) eq 'k0' or strmid(star,0,3) eq 'ck0' then begin
+;      restore,keck_st ; use Keck structure to find B-V.
+;	  keck.name = strlowcase(keck.name)
+;	  w=where(keck.name eq star,nw)
+;	  if nw gt 0 then bv = keck[w[0]].bv
+;	  if ~keyword_set(bv) then bv = 0.6 ; Near Solar B-V is now default.
+;	  print,'Using B-V value of : ', str(bv), ' for star: ',str(star) 
+;	endif
 
     if nw gt 0 then begin
         case 1 of 

@@ -77,7 +77,6 @@ temp = replicate(temp[0],maxsize)
 logdir = getenv("MIR3_LOG")
 barydir = getenv("MIR3_BARY")
 bary_log = getenv("DOP_BARYFILE") ; full path
-strucfile = getenv("DOP_KECK_STRUC")
 
 ;bf='kbcvel.ascii'  ; this is the normal filename
 bf = bary_log

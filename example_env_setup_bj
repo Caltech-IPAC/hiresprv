@@ -1,64 +1,68 @@
 # Master setup script for environment variables.
 
 # Basecamp for this Doppler code Repository.
-export DOP_WORK="$HOME/analysis/hires-pipeline/"
+export DOP_WORK="$HOME/code/hires-pipeline/"
+
+# Where raw files live
+export RAW_RAW=${HOME}"/data/hires-data/raw/"
+
+export RESULT_DIR=${HOME}"/data/hires-data/"
 
 # Override the normal IDL_START file with this file
-export IDL_STARTUP=${DOP_WORK}"IDL_STARTUP"  
-
+export IDL_STARTUP=${DOP_WORK}"IDL_STARTUP"
 
 export DOP_DIR=${DOP_WORK}"dopcode/"
 export IDL_PATH_DOP_BASE=${DOP_DIR}
 
-# Define paths to include all of Doppler Code.
+# Define paths to include all of Doppler and reduction code.
 export IDL_PATH="."
 export IDL_PATH=${DOP_WORK}":$IDL_PATH"
 #export IDL_PATH=${DOP_WORK}"markwardt/:${IDL_PATH}"
 export IDL_PATH=${DOP_WORK}"dopcode/:${IDL_PATH}"
 export IDL_PATH=${DOP_WORK}"dopcode/pros/:${IDL_PATH}"
-
+export IDL_PATH=${DOP_WORK}"focus/:${IDL_PATH}"
+export IDL_PATH=${DOP_WORK}"keckbary/:${IDL_PATH}"
 
 # All code should be in IDL_PATH_DOP, all other files in IDL_PATH_DOP_BASE
 
 export IDL_PATH_DOP=${DOP_DIR}"markwardt/" 
 export IDL_PATH_DOP=${DOP_DIR}"pros/:$IDL_PATH_DOP"
-export IDL_PATH_DOP=${DOP_DIR}"dopcode/:$IDL_PATH_DOP"
+export IDL_PATH_DOP=${DOP_DIR}":$IDL_PATH_DOP"
 
-export DOP_I2_ATLAS_PATH=${DOP_WORK}"input_data/dopcode/"
+export DOP_I2_ATLAS_PATH=${RESULT_DIR}"/dopcode/"
 export DOP_I2_ATLAS="ftskeck50.bin"
-export DOP_BARYFILE=${DOP_WORK}"output/bary/kbcvel.ascii"
-export DOP_BARYFILE_STRUC=${DOP_WORK}"output/bary/kbcvel.dat"
-export DOP_DSST_OVERRIDE=${DOP_DIR}"dsst_override.txt" #not needed for nexsci
-export DOP_NSO_ATLAS=${DOP_WORK}"input_data/dopcode/nso.bin"
-export DOP_IPGUESS_K2=${DOP_WORK}"input_data/dopcode/ipguess_k2.dat"
-export DOP_VD_EXAMPLE=${DOP_WORK}"input_data/dopcode/vdiod3314_rj13.2275.j"
-export DOP_KECK_STRUC=${DOP_WORK}"input_data/dopcode/keck_st.dat"
-export DOP_JJHIP=${DOP_WORK}"input_data/dopcode/jjhip_v2.dat"
+export DOP_BARYFILE=${RESULT_DIR}"/bary/kbcvel.ascii"
+export DOP_BARYFILE_STRUC=${RESULT_DIR}"/bary/kbcvel.dat"
+# export DOP_DSST_OVERRIDE=${DOP_DIR}"dsst_override.txt" #not needed for nexsci
+export DOP_NSO_ATLAS=${RESULT_DIR}"/dopcode/nso.bin"
+export DOP_IPGUESS_K2=${RESULT_DIR}"/dopcode/ipguess_k2.dat"
+export DOP_VD_EXAMPLE=${RESULT_DIR}"/dopcode/vdiod3314_rj13.2275.j"
+export DOP_JJHIP=${RESULT_DIR}"/dopcode/jjhip_v2.dat"
 
 #   Directory structure for input/output files.
-export DOP_PLANETS_DIR=${DOP_WORK}"output/files/" # planets holds the cf structures and temporary velocity structures.
-export DOP_FILES_DIR=${DOP_WORK}"output/files/"
-export DOP_RV_OUTDIR=${DOP_WORK}"output/rvs/"
-export DOP_SPEC_DIR=${DOP_WORK}"output/fits/"
-export DOP_SPEC_DB_DIR=${DOP_WORK}"output/deblazed/"
-export DOP_RK_VEL_DIR=${DOP_WORK}"output/files/"
+export DOP_PLANETS_DIR=${RESULT_DIR}"/files/" # planets holds the cf structures and temporary velocity structures.
+export DOP_FILES_DIR=${RESULT_DIR}"/files/"
+export DOP_RV_OUTDIR=${RESULT_DIR}"/rvs/"
+export DOP_SPEC_DIR=${RESULT_DIR}"/spectra/"
+export DOP_SPEC_DB_DIR=${RESULT_DIR}"/deblazed/"
+export DOP_RK_VEL_DIR=${RESULT_DIR}"/files/"
 
 
 # Raw reduction paths, middle red and blu chips -----------
-export RAW_RAW=${DOP_WORK}"input_data/raw/"
-export RAW_FITS_IN=${DOP_WORK}"input_data/reduction/"
-export RAW_MID=${DOP_WORK}"raw_reduction/middle/"
-export RAW_ALL_OUT=${DOP_WORK}"output/fits/"
-export RAW_ALL_OUT_FITS=${DOP_WORK}"output/fits/"
-export RAW_ALL_OUT_FITS_DB=${DOP_WORK}"output/deblazed/"
 export RAW_HAMRED_BOTTOM=${DOP_WORK}"raw_reduction/middle/create_hamred/bottom_j.txt"
+export RAW_FITS_IN=${RESULT_DIR}"/reduction/"
+export RAW_MID=${DOP_WORK}"raw_reduction/middle/"
+export RAW_ALL_OUT=${RESULT_DIR}"/spectra/"
+export RAW_ALL_OUT_FITS=${RESULT_DIR}"/spectra/"
+export RAW_ALL_OUT_FITS_DB=${RESULT_DIR}"/deblazed/"
+export RAW_HAMRED_LOC=${RESULT_DIR}"/hamreds/"
 
 export RAW_RED=${DOP_WORK}"raw_reduction/red/"
-export RAW_RED_OUT=${DOP_WORK}"output/fits/"
+export RAW_RED_OUT=${RESULT_DIR}"/fits/"
 export RAW_BLU=${DOP_WORK}"raw_reduction/blue/"
-export RAW_BLU_OUT=${DOP_WORK}"output/fits/"
+export RAW_BLU_OUT=${RESULT_DIR}"/fits/"
 
 # Needed to run barylog:
-export MIR3_LOG=${DOP_WORK}"output/logsheets/"
-export MIR3_BARY=${DOP_WORK}"output/bary/"
-export BARY_JEPHEM=${DOP_WORK}"input_data/dopcode/JPLEPH.405"
+export MIR3_LOG=${RESULT_DIR}"/logsheets/"
+export MIR3_BARY=${RESULT_DIR}"/bary/"
+export BARY_JEPHEM=${RESULT_DIR}"/dopcode/JPLEPH.405"

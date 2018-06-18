@@ -61,7 +61,8 @@ m = [dxdt,dydt,dzdt]    ;  Velocity in Radians/ year
 ;
 jd2yr,jdnow,yearnow             ; convert JDnow to Years
 T =  yearnow - Epoch0           ; Lapse in years
-P = q + T*m                     ; X1 = X0 + V* dt (barycentric position)
+tm = [T*m[0], T*m[1], T*m[2]]
+P = q + tm                     ; X1 = X0 + V* dt (barycentric position)
 p = unit(P)                     ; Insure p is a unit vector
 radecp = polar(p)                               ; Convert to polar coords (radians)
 

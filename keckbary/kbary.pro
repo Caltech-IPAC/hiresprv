@@ -116,7 +116,7 @@ xyzp = xyz                      ; initialize [x,y,z]
 covecp = covec                  ; init. [ra,dec]
 
 ;		CORRECT STAR POSITION FOR PROPER MOTION
-if n_elements(pm) ne 0 then begin
+if n_elements(pm) ne 0 AND total(abs(pm)) GT 0 then begin
     covecAD = advance(covecp,EPOCH,jdt,pm)
     raAD  = covecAD(0) * dtor * 15d0 ; 'Advanced' position
     decAD = covecAD(1) * dtor        ;  ( in RADIANS)

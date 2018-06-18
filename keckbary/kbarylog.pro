@@ -258,8 +258,8 @@ WHILE eof(logune) eq 0 do begin ;check for end of file (eof = 1)
                     coords = [0.d0,0.d0] ;force ra and dec = 0. :no object found
                     pm     = [0.d0,0.d0] ;dummy proper motion
                     epoch = 2000.d0 ;dummy epoch
-                    cz = -99d.0
-                endif else begin 
+                    cz = -99.d0
+                endif else begin
                     kbary,jdUTC,coords,epoch,czi,obs='CFHT',pm = pm,$
                       barydir=barydir, ha=ha
                     cz = rm_secacc(czi,pm,parlax,mjd)

@@ -178,8 +178,8 @@ if mindd gt 10200 and mindd lt 2440000 then begin
 endif
 
 tape = strmid(cff[0].obnm,0,2)
-rdsi,testspec,cff[0].obnm
-ncol = (size(testspec,/dim))[0]
+; rdsi,testspec,cff[0].obnm
+; ncol = (size(testspec,/dim))[0]
 
 ;if tape eq '' then begin	; post-upgrade. now only post-upgrade is supported.
 ordr=[0, 14]
@@ -260,6 +260,10 @@ if keyword_set(kvel) then begin
     if keyword_set(meta) then save,file=vstnm,cf1,cf3,cf5,cfj,cfk,meta else $
       save,file=vstnm,cf1,cf3,cf5,cfj,cfk
 endif
+
+csvfile = repstr(vstnm, '.dat', '.csv')
+write_csv, csvfile, cfj.jd, cfj.mnvel, cfj.errvel, cfj.bc, cfj.cts, cfj.mdchi, $
+    header=['BJD_TDB', 'RV', 'RV_ERR', 'BC', 'ADU', 'CHI2']
 
 ;velplot,cf3,1./12,d1,v1,e1,tit=catalog+strupcase(strtrim(strnm,2)),$ 
 ;	errcut=errcut,/yrs,noplot=noplot

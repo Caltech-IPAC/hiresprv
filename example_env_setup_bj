@@ -33,11 +33,13 @@ export DOP_I2_ATLAS_PATH=${RESULT_DIR}"/dopcode/"
 export DOP_I2_ATLAS="ftskeck50.bin"
 export DOP_BARYFILE=${RESULT_DIR}"/bary/kbcvel.ascii"
 export DOP_BARYFILE_STRUC=${RESULT_DIR}"/bary/kbcvel.dat"
-# export DOP_DSST_OVERRIDE=${DOP_DIR}"dsst_override.txt" #not needed for nexsci
+export DOP_DSST_OVERRIDE=${DOP_DIR}"dsst_override.txt" #not needed for nexsci
 export DOP_NSO_ATLAS=${RESULT_DIR}"/dopcode/nso.bin"
 export DOP_IPGUESS_K2=${RESULT_DIR}"/dopcode/ipguess_k2.dat"
 export DOP_VD_EXAMPLE=${RESULT_DIR}"/dopcode/vdiod3314_rj13.2275.j"
+export DOP_KECK_STRUC=${RESULT_DIR}"/dopcode/keck_st.dat"
 export DOP_JJHIP=${RESULT_DIR}"/dopcode/jjhip_v2.dat"
+export DOP_BSTARS={$DOP_DIR}"bstars.csv"
 
 #   Directory structure for input/output files.
 export DOP_PLANETS_DIR=${RESULT_DIR}"/files/" # planets holds the cf structures and temporary velocity structures.
@@ -55,7 +57,7 @@ export RAW_MID=${DOP_WORK}"raw_reduction/middle/"
 export RAW_ALL_OUT=${RESULT_DIR}"/spectra/"
 export RAW_ALL_OUT_FITS=${RESULT_DIR}"/spectra/"
 export RAW_ALL_OUT_FITS_DB=${RESULT_DIR}"/deblazed/"
-export RAW_HAMRED_LOC=${RESULT_DIR}"/hamreds/"
+export RAW_HAMRED_OUTDIR=${RESULT_DIR}"/hamreds/"
 
 export RAW_RED=${DOP_WORK}"raw_reduction/red/"
 export RAW_RED_OUT=${RESULT_DIR}"/fits/"

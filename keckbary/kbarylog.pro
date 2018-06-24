@@ -164,6 +164,7 @@ WHILE eof(logune) eq 0 do begin ;check for end of file (eof = 1)
     recnum = strtrim(getwrd(logline[0],0),2) ;record number
     log.object = strtrim(strupcase(getwrd(logline,1)),2) ;object name
     first2 = strmid(log.object,0,2)
+    first5 = strmid(log.object, 0, 5)
     celltest = strtrim(strupcase(getwrd(logline,2)),2) ;Was cell in?
     strtime = strtrim(getwrd(logline,3),2) ;time from logsheet
     linelen = (strlen(logline))[0] ; first element only
@@ -173,10 +174,25 @@ WHILE eof(logune) eq 0 do begin ;check for end of file (eof = 1)
     filename = tpname + '.' + recnum
 
 ;Guarantee that this is really an observation of something useful
+
     IF ((celltest eq 'Y' or celltest eq 'N') and $ ;Was cell specified?
         (select(skiplist,log.object) ne 1) and $ ;Not wide flat nor skiplist?
         select(strindgen,recnum)) and $ ;No multiple #'s on line
       (linelen gt 1)  THEN BEGIN ;guarantee some log there 
+
+        specfile = getenv("RAW_ALL_OUT_FITS") + "r" + filename + ".fits"
+        head = headfits(specfile)
+        ra_sex = hdrdr(head, "RA")
+        dec_sex = hdrdr(head, "DEC")
+        ra_sex = strsplit(ra_sex, "'", /extract)
+        dec_sex = strsplit(dec_sex, "'", /extract)
+        ra_split = strsplit(ra_sex, ':', /extract)
+        dec_split = strsplit(dec_sex, ':', /extract)
+        inp_ra = ten(ra_split) * 15
+        inp_dec = ten(dec_split)
+        inpcoords = [inp_ra, inp_dec]
+
+        check_bstar, inp_ra, inp_dec, isbstar
 
         if first2 eq 'HD' then $
           log.object = strmid(log.object,2,strlen(log.object)-2)
@@ -193,7 +209,11 @@ WHILE eof(logune) eq 0 do begin ;check for end of file (eof = 1)
         if select(skylist,log.object) then begin
             log.type = 'u'            
         endif
-                                ;
+        IF first2 eq "HR" or first5 eq "BSTAR" or isbstar EQ 1 then begin
+            log.type = "b"
+        ENDIF
+
+
         if temptest[0] ne -1 and log.type ne 't' then begin ; Error Trap
             print,'****WARNING:  Possible Template Detected: '
             print,logline
@@ -240,17 +260,6 @@ WHILE eof(logune) eq 0 do begin ;check for end of file (eof = 1)
 
 
         if first2 ne 'HR' AND first2 ne 'BR' then begin ; SKIP B STARS (no B.C. for B*s)
-                specfile = getenv("RAW_ALL_OUT_FITS") + filename + ".fits"
-                head = headfits(specfile)
-                ra_sex = hdrdr(head, "RA")
-                dec_sex = hdrdr(head, "DEC")
-                ra_sex = strsplit(ra_sex, "'", /extract)
-                dec_sex = strsplit(dec_sex, "'", /extract)
-                ra_split = strsplit(ra_sex, ':', /extract)
-                dec_split = strsplit(dec_sex, ':', /extract)
-                inp_ra = ten(ra_split) * 15
-                inp_dec = ten(dec_split)
-                inpcoords = [inp_ra, inp_dec]
 
                 gaialookup, log.object, inpcoords, coords, epoch, pm, parlax, radvel
 

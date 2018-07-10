@@ -48,8 +48,6 @@ if n_elements(parlax) eq 0 then parlax = 0
 N = reform([1.d0,0,0,0,1.d,0,0,0,1d],3,3) ; Identity Matrix
 Ndot = dblarr(3,3) & eqeq = 0.d0 
 
-if epoch lt 1900 or epoch gt 2050 then message,$ ; This should never happen
-  'Error in epoch date: '+epoch ; Just a precaution
 if keyword_set(slow) then slow = 1 else slow = 0 ; Can Reduce # of Ephem Calls
 if n_elements(barydir) eq 0 then barydir = getenv("MIR3_BARY")
 

@@ -1,7 +1,7 @@
 PRO checkother, name, otherfile, coords, epoch, pm, prlax, radvel, raarr, decarr, found
 
 
-rdfile,otherfile, 0,10999,data
+rdfile,otherfile, 1,109999,data
 absmag = -99 & vmag = -99
 othnames = getwrds(data,0)  ;       if lastchar eq 'A' or lastchar eq 'B' then name = name+lastchar
 othind = where(strupcase(othnames) eq name)
@@ -22,7 +22,7 @@ IF othind NE -1 then begin
     ENDIF
     if decD eq 0 and decm eq 0 then begin
         ; print, "Using -00 declination patch addded by BJ on 01/21/2017"
-        dstr = getwrd(data(othind,5))
+        dstr = getwrd(data(othind),5)
         IF strmid(dstr,0,1) eq '-' then decs = -1 * abs(decs)
     endif
     ; end section added by BJ

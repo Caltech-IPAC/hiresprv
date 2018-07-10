@@ -75,7 +75,7 @@ filename = dir+fitsnm ; HTI changed 20 apr 2018
       (deck eq 'B5' or deck eq 'B1') $
       then obj_name = 'thar'
    if I2in eq 0 and I2out eq 1 and lamp eq 'quartz' and deck eq 'C1' $
-      then obj_name = 'wideflat'
+      then obj_name = ' wideflat'
    if I2in eq 0 and I2out eq 1 and lamp eq 'quartz' $
       and (deck eq 'C5' or deck eq 'B5' or deck eq 'B1')  $
       then obj_name = 'flat'

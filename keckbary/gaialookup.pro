@@ -48,7 +48,7 @@ IF NOT found THEN BEGIN
     ENDIF
     IF typename(query) EQ "LONG" THEN BEGIN
         print, "ERROR: no matches found at coordinates" + str(ira) + " " + str(idec)
-        coords = [-99.d0, -99.d0]
+        coords = [00.d0, 00.d0]
         pm_ra = 0.0
         pm_dec = 0.0
         pm = [pm_ra, pm_dec]

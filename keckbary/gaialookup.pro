@@ -40,11 +40,11 @@ checkother, name, otherfile, coords, epoch, pm, prlax, radvel, raarr, decarr, fo
 ; query Gaia DR2 from Vizier if not in otherfile
 IF NOT found THEN BEGIN
     IF verbose EQ 1 THEN print, "Querying Gaia DR2"
-    query = QueryVizier("I/345/gaia2", name, searchrad, constraint="Gmag<18", /cfa, /allcolumns)
+    query = QueryVizier("I/345/gaia2", name, searchrad, constraint="Gmag<18", /allcolumns)
 
     IF typename(query) EQ "LONG" THEN BEGIN
         IF verbose EQ 1 THEN print, "Querying by coordinates"
-        query = QueryVizier("I/345/gaia2", inpcoords, searchrad, constraint="Gmag<18", /cfa, /allcolumns)
+        query = QueryVizier("I/345/gaia2", inpcoords, searchrad, constraint="Gmag<18", /allcolumns)
     ENDIF
     IF typename(query) EQ "LONG" THEN BEGIN
         print, "ERROR: no matches found at coordinates" + str(ira) + " " + str(idec)

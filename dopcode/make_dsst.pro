@@ -298,7 +298,10 @@ endif
 if n_elements(decker) gt 0 then dsstinfo.decker = decker
 
 ;;; grep for HR obs during that run to find nearby Bstar/iodines
-spawn, 'grep -i hr '+baryfile+' | grep '+run+' | grep o', hrlines
+; spawn, 'grep -i hr '+baryfile+' | grep '+run+' | grep o', hrlines
+search_string = '"b"'
+cmd = 'grep -i '+run+' '+baryfile+" | awk '($6=="+search_string+"){print $0}'"
+spawn, cmd, hrlines
 ;;; parse and find closest bstars within Delta_t of observation
 if 1-keyword_set(vdarr) then begin
     nl = n_elements(hrlines)

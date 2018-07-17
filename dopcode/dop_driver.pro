@@ -253,11 +253,11 @@ if 1-keyword_set(dsstpath) then begin
             com = 'ls '+dsstfiles+'dsst'+sn+dssttag+'_'+dsstobnm+'*.dat'
             spawn, com, lines
             dum = where(lines ne '', nlines)
-            ;;; JJ: modified next lines to locate the latest DSST obnm 
+            ;;; JJ: modified next lines to locate the latest DSST obnm
             if nlines gt 0 then begin
                 dobnm = strarr(nlines)
                 for i = 0, nlines-1 do begin
-                    dobnm[i] = $ 
+                    dobnm[i] = $
                       (strsplit((strsplit(lines[i],'_',/ext))[1], '.', /ext))[0]
                 endfor
                 srt = sort(tape(dobnm,/float))
@@ -283,7 +283,7 @@ if 1-keyword_set(dsstpath) then begin
             print,"%DOP_DRIVER:  Using Shoe-horn DSST:"
             print,  " For "+starname+" Template="+dsstpath
         ENDIF
-        ;hti end show-horn template selection        
+        ;hti end show-horn template selection
     endelse
 endif
 ;stop

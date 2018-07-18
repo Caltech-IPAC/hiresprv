@@ -11,6 +11,7 @@ nel = n_elements(cf)
 rdsi, ob, cf[0].obnm, filter, fdsk;, nik=nik
 vdfiles = fdsk+vdname+'_'+cf.obnm
 spawn, 'ls '+fdsk+vdname+'_*', ondisk
+
 if ondisk[0] eq '' then begin
     ind = indgen(nel)
     return
@@ -29,9 +30,18 @@ endif else begin
         return
     endif else begin
         match, vdfiles, ondisk, a, b, count=count
-        if count eq nel then ind = -1 else begin
+        if count eq nel then begin
+            ind = -1
+            return
+        endif
+        if n_elements(vdfiles) eq 1 then begin
+            ind = 0
+            return
+        endif
+        if n_elements(vdfiles) gt 1 then begin
             ind = where(1-histogram(a, bin=1, min=0, max=nel-1), nw)
-        endelse
+            return
+        endif
     endelse
 endelse
 

@@ -588,7 +588,8 @@ FOR n = 0, n_lines-1 do begin                 ;Cycle through chunks
         print,'|--------------------------------------------------------|'
     ENDIF
     if keyword_set(noprint) then begin
-        counter, n+1, n_lines, 'Chunk # ',/timeleft,starttime=stt,/clear
+        counter, n+1, n_lines, 'Chunk # ',/timeleft,starttime=stt
+        print, ""
     endif else begin
         fmt = '(I5,I6,F10.3,F9.5,F8.3,F8.2,I6)'
         print,format=fmt,ordr,place,lambda,dispersion,0,dsst(n).weight,nip

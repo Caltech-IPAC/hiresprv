@@ -310,16 +310,17 @@ if cond then begin
 ;    if check_file(morphname) then begin
 ;        restore, morphname
 ;        bccor = obs[0].bary
-;    endif else begin
-        if dsstobnm eq '' then begin
-;orig       dsstobnm = (strsplit((strsplit(dsstpath,'_',/ext))[1],'.',/ex))[0]
-;HTI added next 5 lines to fix strsplit for starnames containing '_'
-;		   examples: hii_1101, hii_152, hii_514
-           dsstobnm = $
-             (strsplit((strsplit(dsstpath,'_',/ext,count=cnt))[1],'.',/ex))[0]
-            if cnt eq 3 then dsstobnm = $
-                       (strsplit((strsplit(dsstpath,'_',/ext))[2],'.',/ex))[0]
-        endif ; end HTI addition 6/2014
+;    endif else begin 
+
+        if dsstobnm eq '' then begin ; JCG modification 7/2018
+           subdirs  = strsplit(dsstpath, '/', /EXTRACT, count=cnt)
+           lastarg  = subdirs[cnt-1]
+           stripped = strsplit(lastarg, '.', /EXTRACT)
+           stripped = stripped[0]
+           dsstobnm = strsplit(stripped, '_', /EXTRACT, count=cnt)
+           dsstobnm = dsstobnm[cnt - 1]
+        endif ; end JCG modification 7/2018
+
         com = 'grep -i '+starname+' '+baryfile+' | grep t | grep '+dsstobnm
         spawn, com, lines
         dum = where(lines ne '', nlines)

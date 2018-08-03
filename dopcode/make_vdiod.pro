@@ -244,6 +244,6 @@ for i = 0, nb-1 do begin
     endif
 endfor
 
-print, "completed successfully"
+print, "MAKE_VDIOD completed successfully"
 
 end

@@ -22,13 +22,14 @@ pro make_hamred, logfile_in;, run, star=star
 logfile_arg = command_line_args(count=nargs)
 if nargs ne 1 then begin
     print,"This program must be run from the command line"
-    print," The required input is a logshet name"
+    print," The required input is a logsheet name"
     logfile = logfile_in
 ;    return
 endif else BEGIN
     logfile=logfile_arg
 
 endelse
+
 ;if ~keyword_set(logfile)  then begin
 ;	print,'Syntax: make_hamred, logfile, /file'
 ;	print,' logfile eg: j222.logsheet1,' 

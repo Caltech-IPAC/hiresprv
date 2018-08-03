@@ -346,7 +346,7 @@ endif else begin
 endelse
 free_lun,logune 
 
-print, "completed successfully"
+print, "KBARYLOG completed successfully"
 
 end
 

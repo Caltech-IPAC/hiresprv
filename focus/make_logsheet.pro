@@ -133,5 +133,5 @@ close,1
 
 print, 'MAKE_LOGSHEET.PRO: COMPELTE'
 print, '   New logsheet created: ',logname
-print, "completed successfully"
+print, "MAKE_LOGSHEET completed successfully"
 end ; program

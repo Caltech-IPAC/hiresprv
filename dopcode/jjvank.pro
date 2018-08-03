@@ -278,7 +278,7 @@ if keyword_set(ps) then begin
     psclose
 endif
 
-print, "completed successfully"
+print, "JJVANK completed successfully"
 
 return
 end

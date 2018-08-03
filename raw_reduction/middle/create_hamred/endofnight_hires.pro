@@ -39,7 +39,7 @@ make_hamred, logsheet;,run ;, night, /file ; run, night are outputs
 ;spawn,cmd
 ;stop
 
-print, "completed successfully"
+print, "ENDOFNIGHT_HIRES completed successfully"
 
 return
 end

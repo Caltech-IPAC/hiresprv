@@ -138,6 +138,8 @@ print,'Output Directory = ',outdir
   print,'    ****ECHOING PARAMETER VALUES FROM HAMRED****'
   print,'If values are incorrect stop program and reset in HAMRED.'
   print,' '
+  print,'THORIUMS ('+strtrim(string(n_elements(thspnums)),2)+')'
+  print,' '
   print,'SPECTRA ('+strtrim(string(n_elements(spnums)),2)+'):'
   print,spnums
   print,' '

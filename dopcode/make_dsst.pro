@@ -452,7 +452,7 @@ if cond then begin
     save,dsst,sdst,sdstwav,stitch,dsstinfo,file=outfile
 endif else save, dsst, file=outfile
 print, 'Wrote: '+outfile
-print, "completed successfully"
+print, "MAKE_DSST completed successfully"
 
 end
 

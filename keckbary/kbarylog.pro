@@ -61,7 +61,7 @@ if n_elements(logfile) eq 0 then logfile=''
 skiplist= ['WIDEFLAT','WIDE','WF','W','WIDE-FLAT','WIDE/FLAT','W/F', $
            'WIDEFLATS','WIDES','WFS','WIDE-FLATS','WIDE/FLATS', $
            'WIDE_FLAT','FLAT','JUNK', 'WIDEFLAT_E4','WIDEFLAT_D5', $
-           'WIDEFLAT_C2','WIDEFLAT_C5','FLATFIELD','SATURATED','SKIP','TEST']
+           'WIDEFLAT_C2','WIDEFLAT_C5','FLATFIELD','SATURATED','SKIP','TEST', 'BIAS', 'DARK']
 iodlist = ['IODINE','I','I2','IOD','IODINE-B1','I2-B1']
 thorlist = ['TH-AR','TH_AR','THAR','TH/AR','THORIUM','THORIUM-ARGON','THNE','TH_NE','TH-NE','FOCUS','THAR_C5']
 daylist = ['DAY','DS','DAYSKY','DAY-SKY','DAY_SKY']

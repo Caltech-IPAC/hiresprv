@@ -1,0 +1,120 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>hiresprv.idldriver &#8212; HIRES PRV  documentation</title>
+    <link rel="stylesheet" href="../../_static/graphite.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">HIRES PRV  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for hiresprv.idldriver</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The principle processing of the HIRES PRV pipeline is done by a</span>
+<span class="sd">set of IDL scripts developed over several decades.  This processing</span>
+<span class="sd">is quite intensive and takes a long time and so is run in the </span>
+<span class="sd">background.</span>
+
+<span class="sd">The HIRES PRV idlDriver class provides functionality that allows</span>
+<span class="sd">the user to submit radial velocity data reduction scripts that </span>
+<span class="sd">get sent to a sequence of these IDL scripts.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="idlDriver"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.idldriver.idlDriver">[docs]</a><span class="k">class</span> <span class="nc">idlDriver</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The idlDriver class intialization checks for cookie indicating a previous</span>
+<span class="sd">    login that connects to the user to a PRV pipeline workspace.  This</span>
+<span class="sd">    workspace is populated with data from the KOA Archive using Archive class</span>
+<span class="sd">    methods.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="idlDriver.run"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.idldriver.idlDriver.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">script</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The HIRES PRV idlDriver class run method is given a script of steps to</span>
+<span class="sd">        run on the data in a workspace.  These steps include creating a</span>
+<span class="sd">        template spectrum for a sky target, reducing a specific radial velocity</span>
+<span class="sd">        measurement using such a template, and creating an RV curve from a set</span>
+<span class="sd">        of reduced RV measurements.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Processing PRV script.&quot;</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/hiresprv.jpg" alt="Logo"/>
+            </a></p>
+<h3><a href="../../index.html">HIRES PRV</a></h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../science_overview.html">Science Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_reduction_overview.html">Data Reduction Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hiresprv.html">HIRES PRV Python library</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">HIRES PRV  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, CALTECH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.7.
+    </div>
+  </body>
+</html>

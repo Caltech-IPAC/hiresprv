@@ -181,6 +181,7 @@ WHILE eof(logune) eq 0 do begin ;check for end of file (eof = 1)
       (linelen gt 1)  THEN BEGIN ;guarantee some log there 
 
         specfile = getenv("RAW_ALL_OUT_FITS") + "r" + filename + ".fits"
+        IF not FILE_TEST(specfile) THEN continue
         head = headfits(specfile)
         ra_sex = hdrdr(head, "RA")
         dec_sex = hdrdr(head, "DEC")

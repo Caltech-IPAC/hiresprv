@@ -39,16 +39,16 @@ idl -e endofnight_hires -arg $1
 idl -e @${RAW_HAMRED_OUTDIR}/hamred-${run}-mid-1
 
 ### Blue chip
-echo $'\n CPS-PIPELINE-RREDUCE Running blue Chip Raw reduction for ' $1 $'\n'
-export IDL_PATH=${RAW_BLU}:${RAW_BLU}/create_hamred/:${IDL_PATH_IN}
-idl -e endofnight_hires -arg $1
-idl -e @${RAW_HAMRED_OUTDIR}/hamred-${run}-blue-1
+# echo $'\n CPS-PIPELINE-RREDUCE Running blue Chip Raw reduction for ' $1 $'\n'
+# export IDL_PATH=${RAW_BLU}:${RAW_BLU}/create_hamred/:${IDL_PATH_IN}
+# idl -e endofnight_hires -arg $1
+# idl -e @${RAW_HAMRED_OUTDIR}/hamred-${run}-blue-1
 
 ### Red chip
-echo $'\n CPS-PIPELINE-RREDUCE Running Red Chip Raw reduction for ' $1 $'\n'
-export IDL_PATH=${RAW_RED}:${RAW_RED}/create_hamred/:${IDL_PATH_IN}
-idl -e endofnight_hires -arg $1
-idl -e @${RAW_HAMRED_OUTDIR}/hamred-${run}-red-1
+# echo $'\n CPS-PIPELINE-RREDUCE Running Red Chip Raw reduction for ' $1 $'\n'
+# export IDL_PATH=${RAW_RED}:${RAW_RED}/create_hamred/:${IDL_PATH_IN}
+# idl -e endofnight_hires -arg $1
+# idl -e @${RAW_HAMRED_OUTDIR}/hamred-${run}-red-1
 #
 # echo 'Raw Reduction completed successfully'
 #cd $HOME

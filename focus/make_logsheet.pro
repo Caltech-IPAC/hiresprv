@@ -120,6 +120,7 @@ for i=0,nf-1 do begin
        newnum = str(wf1) + '-'+ str(wf2)
        strput,outstring,str(newnum)
        printf,1,outstring
+       wf1 = ''
      endif
       
     endif else printf,1,outstring

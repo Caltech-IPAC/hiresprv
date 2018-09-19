@@ -61,7 +61,7 @@ class Idldriver:
     
         if self.debug:
             logging.debug ('')
-            logging.debug ('xxx Enter idldriver.init:')
+            logging.debug ('DEBUG> Enter idldriver.init:')
             logging.debug ('cookiepath= [%s]' % cookiepath)
             logging.debug ('debug= [%d] debugfname= [%s]' 
                 % (self.debug, self.debugfname))

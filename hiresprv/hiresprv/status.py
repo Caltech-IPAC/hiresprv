@@ -186,8 +186,13 @@ class Status:
         if self.debug:
             logging.debug ('status= %s msg= %s' % (self.status, self.msg))
 
-        print (self.msg)
-        return;
+#        print (self.msg)
+
+        retval = {}
+        retval['status'] = self.status
+        retval['msg'] = self.msg
+
+        return retval
 
     
     def cancel (self):
@@ -220,8 +225,13 @@ class Status:
         if self.debug:
             logging.debug ('status= %s msg= %s' % (self.status, self.msg))
 
-        print (self.msg)
-        return;
+#        print (self.msg)
+        
+        retval = {}
+        retval['status'] = self.status
+        retval['msg'] = self.msg
+
+        return retval
 
 
     def __send_get (self):
@@ -251,7 +261,7 @@ class Status:
                 logging.debug ('exception: e= %s' % e)
 
             self.status = 'error'
-            self.msg = 'Failed to reach PRV server'
+            self.msg = 'Error: failed to reach PRV server'
             return            
         
         return

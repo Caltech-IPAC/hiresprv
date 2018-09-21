@@ -33,7 +33,7 @@ class Database:
     cookiestr = ''
 
     target = ''
-    sqlite = ''
+    cmd = ''
    
     sql = ''
     format = 'html'
@@ -64,8 +64,15 @@ class Database:
         self.cookiepath = cookiepath
 
         if (len(self.cookiepath) == 0):
-            print ('Failed to find required parameter: cookiepath')
-            return
+            
+            self.status = 'error'
+            self.msg = 'Failed to find required parameter: cookiepath.'
+            
+            retval = {}
+            retval['status'] = self.status
+            retval['msg'] = self.msg
+
+            return retval
 
         if (len(kwargs) > 0):
        
@@ -140,6 +147,7 @@ class Database:
 
         return
 
+    
     def search (self, **kwargs):
         
         """
@@ -170,10 +178,7 @@ class Database:
 
         filepath='full path filename' (string): the filepath to save
         the data on the disk; if not provided, the data will be displayed
-        in the browser if it is in html/ipac format, and saved in
-        a local file './db.csv' file if it is csv format.
-
-        disp (1/0): to display returned file in a browser window; default is 1 
+        in the browser.
         """
         
         if self.debug:
@@ -191,17 +196,12 @@ class Database:
         self.format = 'html'
         if ((len(kwargs) > 0) and ('format' in kwargs.keys())):
             self.format = kwargs['format']
-            
-        self.disp = 1
-        disp = '1'  
-        if ((len(kwargs) > 0) and ('disp' in kwargs.keys())):
-            disp = kwargs['disp']
         
-        if (disp == '1'):
-            self.disp = 1
+        if (len(self.filepath) > 0):
+            self.disp = 0;
         else:
-            self.disp = 0 
-
+            self.disp = 1;
+ 
         if self.debug:
             logging.debug ('')
             logging.debug ('sql= %s' % self.sql)
@@ -209,38 +209,31 @@ class Database:
             logging.debug ('filepath= %s' % self.filepath)
             logging.debug ('disp= %d' % self.disp)
         
-        
+        url = self.url 
         if (len(self.filepath) > 0): 
-            self.url = self.url + '&filepath=' + self.filepath
+            url = url + '&filepath=' + self.filepath
 
         if (len(self.format) > 0): 
-            self.url = self.url + '&format=' + self.format
+            url = url + '&format=' + self.format
             
         if (len(self.sql) > 0): 
-            self.url = self.url + '&sql=' + self.sql
+            url = url + '&sql=' + self.sql
 
         if self.debug:
             logging.debug ('')
-            logging.debug ('self.url= [%s]' % self.url)
+            logging.debug ('url= [%s]' % url)
 
-        if (len(self.filepath) == 0): 
+        if (self.disp == 1): 
             
-            if (self.format == 'html' or self.format == 'ipac'):
-                
-                # try:
-                #     webbrowser.open (self.url)
-                #  
-                # except:
-                #     pass
-                #  
-                #     if self.debug:
-                #         logging.debug ('')
-                #         logging.debug ('local display exception: e= %s' 
-                #             % str(e))
+#            try:
+#                webbrowser.open (url)
+#            except:
+#                pass
+ 
+            return url
 
-                return self.url
-          
-        self.__submit_request()
+                
+        self.__submit_request(url)
         
         if self.debug:
             logging.debug ('')
@@ -261,25 +254,11 @@ class Database:
                 logging.debug ('self.status= [%s]' % self.status)
                 logging.debug ('self.msg= [%s]' % self.msg)
        
-            if (self.status == 'error'):
-                print (self.msg)
-                return
+        retval = {}
+        retval['status'] = self.status
+        retval['msg'] = self.msg
 
-#
-#    display in browser
-#
-            if ((self.disp == 1) and \
-                (self.format == 'html' or self.format == 'ipac')):
-                
-                url = 'file:' + self.filepath 
-            
-                if self.debug:
-                    logging.debug ('')
-                    logging.debug ('url= [%s]' % url)
-                
-                webbrowser.open (url)
-                return
-        return;
+        return retval
 
     
     def target_list (self, **kwargs):
@@ -295,10 +274,7 @@ class Database:
 
         filepath='full path filename' (string): the filepath to save
         the data on the disk; if not provided, the data will be displayed
-        in the browser if it is in html/ipac format, and saved in
-        a local file './db.csv' file if it is csv format.
-
-        disp (1/0): to display returned file in a browser window; default is 1 
+        in the browser.
         """
         
         if self.debug:
@@ -313,19 +289,14 @@ class Database:
         if ((len(kwargs) > 0) and ('format' in kwargs.keys())):
             self.format = kwargs['format']
             
-        self.disp = 1
-        disp = '1' 
-        if ((len(kwargs) > 0) and ('disp' in kwargs.keys())):
-            disp = kwargs['disp']
-      
-        if (disp == '1'):
-            self.disp = 1
-        else:
+        if (len(self.filepath) > 0): 
             self.disp = 0 
+        else:
+            self.disp = 1;
   
-        self.sql = 'select target from FILES;'
+        self.sql = 'select distinct target from FILES;'
 
-        self.url = self.url + '&format=' + self.format + '&sql=' + self.sql
+        url = self.url + '&format=' + self.format + '&sql=' + self.sql
 
         if self.debug:
             logging.debug ('')
@@ -333,15 +304,14 @@ class Database:
             logging.debug ('filepath= %s' % self.filepath)
             logging.debug ('format= %s' % self.format)
             logging.debug ('disp= %d' % self.disp)
-            logging.debug ('self.url= [%s]' % self.url)
+            logging.debug ('url= [%s]' % url)
 
-        if (len(self.filepath) == 0): 
+        if (self.disp == 1): 
             
-            if (self.format == 'html' or self.format == 'ipac'):
-                webbrowser.open (self.url)
-                return
+#            webbrowser.open (url)
+            return (url)
           
-        self.__submit_request()
+        self.__submit_request(url)
         
         if self.debug:
             logging.debug ('')
@@ -362,25 +332,11 @@ class Database:
                 logging.debug ('self.status= [%s]' % self.status)
                 logging.debug ('self.msg= [%s]' % self.msg)
        
-            if (self.status == 'error'):
-                print (self.msg)
-                return
+        retval = {}
+        retval['status'] = self.status
+        retval['msg'] = self.msg
 
-#
-#    display in browser
-#
-            if ((self.disp == 1) and \
-                (self.format == 'html' or self.format == 'ipac')):
-                
-                url = 'file:' + self.filepath 
-            
-                if self.debug:
-                    logging.debug ('')
-                    logging.debug ('url= [%s]' % url)
-                
-                webbrowser.open (url)
-                return
-        return;
+        return retval
 
 
     def target_info (self, target, **kwargs):
@@ -399,10 +355,7 @@ class Database:
 
         filepath='full path filename' (string): the filepath to save
         the data on the disk; if not provided, the data will be displayed
-        in the browser if it is in html/ipac format, and saved in
-        a local file './db.csv' file if it is csv format.
-
-        disp (1/0): to display returned file in a browser window; default is 1 
+        in the browser.
         """
        
         if self.debug:
@@ -418,22 +371,18 @@ class Database:
         if ((len(kwargs) > 0) and ('format' in kwargs.keys())):
             self.format = kwargs['format']
             
-        self.disp = 1
-        disp = '1' 
-        if ((len(kwargs) > 0) and ('disp' in kwargs.keys())):
-            disp = kwargs['disp']
-      
-        if (disp == '1'):
-            self.disp = 1
-        else:
+        if (len(self.filepath) > 0):
             self.disp = 0 
+        else:
+            self.disp = 1;
+  
         
         self.sql = "select * from FILES where target like '%" + target + "%';"
 
 #        self.sql = "select * from FILES where upper(target) = upper('" + target + "');"
 
 
-        self.url = self.url + '&format=' + self.format + '&sql=' + self.sql
+        url = self.url + '&format=' + self.format + '&sql=' + self.sql
 
         if self.debug:
             logging.debug ('')
@@ -441,16 +390,15 @@ class Database:
             logging.debug ('filepath= %s' % self.filepath)
             logging.debug ('format= %s' % self.format)
             logging.debug ('disp= %d' % self.disp)
-            logging.debug ('self.url= [%s]' % self.url)
+            logging.debug ('url= [%s]' % url)
 
 
-        if (len(self.filepath) == 0): 
+        if (self.disp == 1): 
             
-            if (self.format == 'html' or self.format == 'ipac'):
-                webbrowser.open (self.url)
-                return
+#            webbrowser.open (url)
+            return (url)
 
-        self.__submit_request()
+        self.__submit_request(url)
         
         if self.debug:
             logging.debug ('')
@@ -471,20 +419,11 @@ class Database:
                 logging.debug ('self.status= [%s]' % self.status)
                 logging.debug ('self.msg= [%s]' % self.msg)
        
-            if (self.status == 'error'):
-                print (self.msg)
-                return
+        retval = {}
+        retval['status'] = self.status
+        retval['msg'] = self.msg
 
-#
-#    display in browser
-#
-            if ((self.disp == 1) and \
-                (self.format == 'html' or self.format == 'ipac')):
-                
-                url = 'file:' + self.filepath 
-                webbrowser.open (url)
-                return
-        return;
+        return retval
 
 
     def sqlite(self, filepath):
@@ -499,6 +438,7 @@ class Database:
         """
         
         self.filepath = filepath
+        self.cmd = 'sqlite'
 
         if self.debug:
             logging.debug ('')
@@ -506,19 +446,25 @@ class Database:
                 % self.filepath)
        
         if (len (self.filepath) == 0):
-            print ('Input argument filepath is required.')
-            return
+            
+            self.status = 'error'
+            self.msg = 'Input argument filepath is required.'
+            
+            retval = {}
+            retval['status'] = self.status
+            retval['msg'] = self.msg
 
-        self.sqlite = 'yes' 
+            return retval
 
-        self.url = self.url + '&sqlite=' + self.sqlite
+
+        url = self.url + '&cmd=' + self.cmd
 
         if self.debug:
             logging.debug ('')
             logging.debug ('sqlite= %s' % self.sqlite)
             logging.debug ('self.url= [%s]' % self.url)
 
-        self.__submit_request()
+        self.__submit_request(url)
         
         if self.debug:
             logging.debug ('')
@@ -540,12 +486,14 @@ class Database:
                 logging.debug ('self.status= [%s]' % self.status)
                 logging.debug ('self.msg= [%s]' % self.msg)
         
-        print ('status: %s' % status)
-        print ('msg: %s' % msg)
-        return;
+        retval = {}
+        retval['status'] = self.status
+        retval['msg'] = self.msg
+
+        return retval
 
 
-    def __submit_request(self):
+    def __submit_request(self, url):
 
         if self.debug:
             logging.debug ('')
@@ -553,11 +501,11 @@ class Database:
             logging.debug ('sql= %s' % self.sql)
             logging.debug ('sqlite= %s' % self.sqlite)
             logging.debug ('format= %s' % self.format)
-            logging.debug ('self.url= [%s]' % self.url)
+            logging.debug ('url= [%s]' % url)
 
         
         try:
-            self.response =  requests.get (self.url, stream=True)
+            self.response =  requests.get (url, stream=True)
 
             if self.debug:
                 logging.debug ('')
@@ -630,7 +578,6 @@ class Database:
 
             self.status = 'error'
             self.msg = 'Failed to save returned data to file: %s' % filepath
-            
             return
 
         self.status = 'ok'

@@ -150,11 +150,6 @@ class Archive:
 
         """
         
-        self.debug = 0
-        if self.debug:
-            print ('Enter by_dates: dates= %s' % dates)
-            print ('self.debug= %d' % self.debug)
-
         self.dates = dates
 
         if self.debug:
@@ -238,12 +233,6 @@ class Archive:
 
         len_date = len(dates)
 
-#        if self.debug:
-#             logging.debug ('len_date= %d' % len_date)
-#             logging.debug ('dates[len_date-1]=')
-#             logging.debug (dates[len_date-1])
-#             logging.debug (dates[:(len_date-1)])
-
         self.dates = dates[:(len_date-1)]  
 
         if self.debug:
@@ -268,6 +257,13 @@ class Archive:
             logging.debug ('status= %s' % self.status)
             logging.debug ('msg= %s' % self.msg)
   
+        retval = {}
+
+        retval['status'] = self.status
+        retval['msg'] = self.msg
+
+        return retval
+
         return
 
 

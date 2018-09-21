@@ -88,8 +88,7 @@ def login (cookie_path):
 #
 #  url for login
 #
-    url = 'http://hiresprv.ipac.caltech.edu:8000/cgi-bin/PrvPython' \
-        + '/nph-prvLogin.py?'
+    url = 'http://hiresprv.ipac.caltech.edu:8000/cgi-bin/PrvPython/nph-prvLogin.py?'
     url = url + 'userid=' + userid + '&' 
     url = url + 'password=' + password 
 

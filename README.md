@@ -1,6 +1,16 @@
-# hiresprv
-Keck HIRES PRV pipeline service access
+# Keck HIRES PRV Pipeline Service Access
 
-This repository will eventually contain the Python library astronomers will use to interact with the Keck HIRES PRV pipeline web services.  To start with we will use it as a place to host priliminary documentation.  The code in the hiresprv directory is a set of stubs for that purpose and will be replaced shortly.
+This repository contains all the software necessary to run the HIRES PRV pipeline remotely from Python
+and reduce astronomical radial velocity measurements from that instrument.
 
-See: https://caltech-ipac.github.io/hiresprv/hiresprv.html
+The "hiresprv" directory contains the software itself, though most users will normally install it using
+PyPI ("pip install hiresprv").
+
+The "doc" directory contains documentation, including the library documents generated from in-line
+Python docstrings, as a Sphinx document set.
+
+The "Jupyter" directory contains a Jupyter page that illustrated the end-to-end process of using the
+Python tools for reduction.  This page has not been tested and inferring anything from it is done
+at your own risk.
+
+For a rendering of the Sphinx documentation, see: https://caltech-ipac.github.io/hiresprv/hiresprv.html

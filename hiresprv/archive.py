@@ -83,7 +83,7 @@ class Archive:
             logging.debug ('Enter Search.init:')
             logging.debug ('cookiepath= %s' % self.cookiepath)
     
-        self.url = 'http://hiresprv.ipac.caltech.edu:8000/cgi-bin/PrvPython/' \
+        self.url = 'http://hiresprv.ipac.caltech.edu/cgi-bin/PrvPython/' \
             +  'nph-prvSearch.py?'
     
         if self.debug:
@@ -273,7 +273,7 @@ class Archive:
             logging.debug ('')
             logging.debug ('Enter send_post:')
    
-        self.url = 'http://hiresprv.ipac.caltech.edu:8000/cgi-bin/PrvPython/nph-prvSearch.py'
+        self.url = 'http://hiresprv.ipac.caltech.edu/cgi-bin/PrvPython/nph-prvSearch.py'
 
         if self.debug:
             logging.debug ('url= %s' % self.url)

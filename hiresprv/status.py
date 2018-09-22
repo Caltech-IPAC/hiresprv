@@ -127,7 +127,7 @@ class Status:
             logging.debug ('userid= %s workspace= %s' 
                 % (self.userid, self.workspace))
        
-        self.url = 'http://hiresprv.ipac.caltech.edu:8000/cgi-bin/prvMonitor/nph-prvStatus?workspace=' + self.workspace
+        self.url = 'http://hiresprv.ipac.caltech.edu/cgi-bin/prvMonitor/nph-prvStatus?workspace=' + self.workspace
 
         return
 

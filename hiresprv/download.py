@@ -136,7 +136,7 @@ class Download:
             logging.debug ('userid= %s workspace= %s' 
                 % (self.userid, self.workspace))
        
-        self.url = 'http://hiresprv.ipac.caltech.edu:8000/cgi-bin/idlDriver/nph-prvDownload?workspace=' + self.workspace
+        self.url = 'http://hiresprv.ipac.caltech.edu/cgi-bin/idlDriver/nph-prvDownload?workspace=' + self.workspace
 
         return
 

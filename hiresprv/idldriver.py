@@ -188,7 +188,7 @@ class Idldriver:
 #
 #   construct URL 
 #
-        url = "http://hiresprv.ipac.caltech.edu:8000/cgi-bin/idlDriver/nph-idlDriver"
+        url = "http://hiresprv.ipac.caltech.edu/cgi-bin/idlDriver/nph-idlDriver"
 
         if debug:
             logging.debug ('')

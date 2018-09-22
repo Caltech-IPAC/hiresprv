@@ -1,0 +1,364 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>HIRES PRV Python library &#8212; HIRES PRV  documentation</title>
+    <link rel="stylesheet" href="_static/graphite.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Data Reduction Overview" href="data_reduction_overview.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="data_reduction_overview.html" title="Data Reduction Overview"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">HIRES PRV  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="hires-prv-python-library">
+<h1>HIRES PRV Python library<a class="headerlink" href="#hires-prv-python-library" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>These modules are arranged here in roughly the order they are normally used.
+For instance, the first step always has to be a KOA login.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<span class="target" id="module-hiresprv"></span><p>The HIRES PRV pipeline is used to retrieve user-specified radial velocity 
+data from the KOA archive to a user-specific pipeline server workspace, 
+automatically perform raw data reduction (converting the 2D spectral files 
+to 1D spectra) and then run user-defined reduction scripts to ultimately
+generate RV curves for specific sky objects.</p>
+<p>The data is retrieved a day at a time (a full night’s data is needed for
+the raw reduction).  Metadata for all the files retrieved is stored in a
+workspace/user-specific database table, which is user-searchable and 
+provides the information needed to construct reduction scripts.</p>
+<p>Both the archive retrieval and reduction steps can be quite length 
+(often hours), so this is done in background and there are tools for
+monitoring the state of the processing.</p>
+<span class="target" id="module-hiresprv.auth"></span><dl class="function">
+<dt id="hiresprv.auth.login">
+<code class="descclassname">hiresprv.auth.</code><code class="descname">login</code><span class="sig-paren">(</span><em>cookie_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/auth.html#login"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.auth.login" title="Permalink to this definition">¶</a></dt>
+<dd><p>The login function prompts for an authorized KOA user ID and password, 
+then sets up a workspace (or connects to an existing workspace) on 
+the PRV pipeline server for that user.</p>
+<p>Args:</p>
+<blockquote>
+<div><p>userid     (string): a valid user id exists in the KOA’s user table.</p>
+<p>password   (string): a valid password in the KOA’s user table.</p>
+<dl class="docutils">
+<dt>cookiepath (string): a file path provided by the user to save </dt>
+<dd>returned cookie which is needed for the 
+subsequent PRV operations.</dd>
+</dl>
+</div></blockquote>
+<p>Calling synopsis:</p>
+<blockquote>
+<div><p>import hiresprv.auth</p>
+<p>login (cookiepath): program will prompt for userid and password</p>
+</div></blockquote>
+</dd></dl>
+
+<span class="target" id="module-hiresprv.archive"></span><dl class="class">
+<dt id="hiresprv.archive.Archive">
+<em class="property">class </em><code class="descclassname">hiresprv.archive.</code><code class="descname">Archive</code><span class="sig-paren">(</span><em>cookiepath</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/archive.html#Archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.archive.Archive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Archive class provides KOA archive access functions for the HIRES PRV 
+pipeline reduction service.</p>
+<p>The user’s KOA credentials (given at login) are used to search the
+Keck On-line Archive (KOA).  Matching data are copied to the user’s
+workspace and raw reduction (conversion to 1D spectra, barycentric
+correction, etc.) is performed.  Results are logged in the workspace
+database table.  All this is done in background; the search functions 
+return almost immediately with an acknowledgement.</p>
+<p>Because of pipeline requirements, data is always processed a full 
+night at a time.</p>
+<blockquote>
+<div><p>import hiresprv.archive</p>
+<p>srch = Search (cookiepath)</p>
+<p>srch.by_dates (multi_date_string), or</p>
+<p>srch.by_datefile (datepath)</p>
+</div></blockquote>
+<p>Initialize the class with cookiepath</p>
+<p>cookiepath: a full cookie file path saved from auth.Login.</p>
+<dl class="method">
+<dt id="hiresprv.archive.Archive.by_dates">
+<code class="descname">by_dates</code><span class="sig-paren">(</span><em>dates</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/archive.html#Archive.by_dates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.archive.Archive.by_dates" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>‘by_dates’ method constructs and submits the URL to server for
+processing.  It receives an acknowlegement upon successful submission
+which means it has successfully authenticated the KOA user and
+allow to start data search and download.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>dates (string): a date string or multiple date strings separated</dt>
+<dd>by comman or ‘</dd>
+</dl>
+</div></blockquote>
+</div></blockquote>
+<dl class="docutils">
+<dt>‘; each date should adhere to </dt>
+<dd><blockquote class="first">
+<div><blockquote>
+<div>‘yyyy-mm-dd’ format.</div></blockquote>
+<p>e.g.</p>
+<blockquote>
+<div>dates = ‘2013-09-12</div></blockquote>
+<p>2013-06-29
+2017-10-11
+2014-04-24’</p>
+</div></blockquote>
+<blockquote class="last">
+<div><p>JSON structure with status (‘ok’ or ‘error’) and a message string
+e.g., {‘status’:’error’, ‘msg’:’Failed to connect to KOA’}</p>
+<p>When the submission is successful, it returns:</p>
+<p>{status’:’ok’, ‘msg’:’Processing dates in background.’}</p>
+</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hiresprv.archive.Archive.by_datefile">
+<code class="descname">by_datefile</code><span class="sig-paren">(</span><em>datefile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/archive.html#Archive.by_datefile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.archive.Archive.by_datefile" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method operates the same as by_dates method except it reads
+the dates string from an inputs a file containing a list of dates</p>
+<dl class="docutils">
+<dt>datefile: a file containing large number of dates; each date </dt>
+<dd>in the ‘yyyy-mm-dd’ format and separated by new line.</dd>
+</dl>
+<p>e.g. 
+2013-09-12
+2013-06-29
+2017-10-11
+2014-04-24</p>
+<p>Same status and msg as ‘by_dates’ method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-hiresprv.status"></span><dl class="class">
+<dt id="hiresprv.status.Status">
+<em class="property">class </em><code class="descclassname">hiresprv.status.</code><code class="descname">Status</code><span class="sig-paren">(</span><em>cookiepath</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/status.html#Status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.status.Status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The HIRES PRV processing involves moving and reducing quite a lot of
+data and can be quite lengthy.  Most of this processing is therefore
+done in background.</p>
+<p>The PRV Status class is used to check the state of the processing,
+either in detail to watch progress or simply to check whether the 
+workspace is ‘busy’.  New processing will be rejected until the 
+workspace is ready.</p>
+<p>The PRV Status class initialization checks for the existence 
+of a login cookie and connects the user to their workspace.  
+Methods of this class return information on the current state.</p>
+<p>cookiepath: a full cookie file path saved from auth.Login.</p>
+<dl class="method">
+<dt id="hiresprv.status.Status.processing_status">
+<code class="descname">processing_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/status.html#Status.processing_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.status.Status.processing_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The processing_status method returns a summary of the progress of 
+the current processing steps in a browser.  For archive retrieval 
+this includes each file transfer and each raw reduction operation.  
+For data reduction scripts, this includes the various steps in the 
+IDL processing.</p>
+<p>An attempt has been made to update the processing status every few 
+seconds to a minute but a few operations will run longer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hiresprv.status.Status.is_busy">
+<code class="descname">is_busy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/status.html#Status.is_busy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.status.Status.is_busy" title="Permalink to this definition">¶</a></dt>
+<dd><p>(TBD) Documentation on Status.is_busy</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hiresprv.status.Status.cancel">
+<code class="descname">cancel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/status.html#Status.cancel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.status.Status.cancel" title="Permalink to this definition">¶</a></dt>
+<dd><p>(TBD) Documentation on Status.cancel</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-hiresprv.database"></span><dl class="class">
+<dt id="hiresprv.database.Database">
+<em class="property">class </em><code class="descclassname">hiresprv.database.</code><code class="descname">Database</code><span class="sig-paren">(</span><em>cookiepath</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/database.html#Database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.database.Database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Each workspace in HIRES PRV pipeline server contains a database
+of all the HIRES radial velocity data retrieved from KOA for
+the user.</p>
+<p>The HIRES PRV database class provides methods for querying that
+database.  This information is primarily used to plan reduction
+and analysis processing for specific sky targets.</p>
+<p>The initialization of database class loads the cookie file saved
+from HIRES PRV pipelone login, parse the cookie to look up the 
+users workspace.</p>
+<p>cookiepath (string): a full cookie file path saved from auth.Login.</p>
+<dl class="method">
+<dt id="hiresprv.database.Database.search">
+<code class="descname">search</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/database.html#Database.search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.database.Database.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>The search method is the most general mechanism for querying 
+a workspace database.  The user has the freedom to provide a
+general SQL SELECT statement (specifying both the database columns 
+to be retrieved and constraints on the records returned.</p>
+<p>When the sql is blank (i.e.: ‘’), the entire database will be 
+returned.</p>
+<p>The user can also select an output format (html, csv or IPAC ASCII).</p>
+<p>The output will be saved to a disk file and/or display in a browser 
+depending on the format:</p>
+<p>‘cvs’ format: save to disk,
+‘html’ format: save to disk and display in browser,
+‘IPAC’ ASCII format: save to disk and display in browser.</p>
+<p>sql=’fully qualified sql statement’ (string):
+if not specified, the whole database table will be returned.</p>
+<p>format=’csv/html/ipac’ (string): specifies the format of the 
+returned file; the default is html.</p>
+<p>filepath=’full path filename’ (string): the filepath to save
+the data on the disk; if not provided, the data will be displayed
+in the browser.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hiresprv.database.Database.target_list">
+<code class="descname">target_list</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/database.html#Database.target_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.database.Database.target_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>The target_list method returns a list of targets currently in
+the database.</p>
+<p>format=’csv/html/ipac’ (string): specifies the format of the 
+returned file; the default is html.</p>
+<p>filepath=’full path filename’ (string): the filepath to save
+the data on the disk; if not provided, the data will be displayed
+in the browser.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hiresprv.database.Database.target_info">
+<code class="descname">target_info</code><span class="sig-paren">(</span><em>target</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/database.html#Database.target_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.database.Database.target_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>The target_info method retrieves the data pertaining to a specific
+target.</p>
+<p>Args: there is on required argument (target), 
+keyword/value pair arguments are all optional.
+———————————————-
+target: target name,</p>
+<p>format=’csv/html/ipac’ (string): specifies the format of the 
+returned file; the default is html.</p>
+<p>filepath=’full path filename’ (string): the filepath to save
+the data on the disk; if not provided, the data will be displayed
+in the browser.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hiresprv.database.Database.sqlite">
+<code class="descname">sqlite</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/database.html#Database.sqlite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.database.Database.sqlite" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sqlite method downloads the sqlite database file.</p>
+<p>filepath (string): full path filename to save the database file 
+on the disk.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-hiresprv.idldriver"></span><dl class="class">
+<dt id="hiresprv.idldriver.Idldriver">
+<em class="property">class </em><code class="descclassname">hiresprv.idldriver.</code><code class="descname">Idldriver</code><span class="sig-paren">(</span><em>cookiepath</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/idldriver.html#Idldriver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.idldriver.Idldriver" title="Permalink to this definition">¶</a></dt>
+<dd><p>The principle processing of the HIRES PRV pipeline is done by a
+set of IDL scripts developed over several decades.  This processing
+is quite intensive and takes a long time and so is run in the 
+background.</p>
+<p>The HIRES PRV idldriver class provides functionality that allows
+the user to submit radial velocity data reduction scripts that 
+get sent to a sequence of these IDL scripts.</p>
+<p>The idldriver class intialization checks for cookie indicating 
+a previous login that connects to the user to a PRV pipeline 
+workspace.  This workspace is populated with data from the KOA 
+Archive using Archive class methods.</p>
+<p>cookiepath: a full cookie file path saved from auth.Login.</p>
+<dl class="method">
+<dt id="hiresprv.idldriver.Idldriver.run_script">
+<code class="descname">run_script</code><span class="sig-paren">(</span><em>script</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/idldriver.html#Idldriver.run_script"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.idldriver.Idldriver.run_script" title="Permalink to this definition">¶</a></dt>
+<dd><p>The HIRES PRV idldriver class run method is given a script of steps to
+run on the data in the user’s workspace.  These steps include creating 
+a template spectrum for a sky target, reducing a specific radial 
+velocity measurement using such a template, and creating an RV curve 
+from a set of reduced RV measurements.</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p><a class="reference internal" href="index.html#mastertoc"><span class="std std-ref">Return Home</span></a></p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/hiresprv.jpg" alt="Logo"/>
+            </a></p>
+<h3><a href="index.html">HIRES PRV</a></h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="science_overview.html">Science Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_reduction_overview.html">Data Reduction Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">HIRES PRV Python library</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="data_reduction_overview.html" title="Data Reduction Overview"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">HIRES PRV  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, CALTECH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.7.
+    </div>
+  </body>
+</html>

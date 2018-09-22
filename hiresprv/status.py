@@ -19,11 +19,9 @@ class Status:
 
     The PRV Status class is used to check the state of the processing,
     either in detail to watch progress or simply to check whether the 
-    workspace is 'busy'.  New processing will be rejected until the 
+    workspace is busy.  New processing will be rejected until the 
     workspace is ready.
-    """
 
-    """
     prvStatus.py class validates user information (via cookie file), then
     contacts PRV Server to get the current processing status.
     """    
@@ -54,8 +52,9 @@ class Status:
         Methods of this class return information on the current state.
 
         Args:
-        ----------------
-        cookiepath: a full cookie file path saved from auth.Login.
+
+            cookiepath: a full cookie file path saved from auth.Login.
+
         """
 
         self.cookiepath = cookiepath

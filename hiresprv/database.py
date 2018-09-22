@@ -20,9 +20,7 @@ class Database:
     The HIRES PRV database class provides methods for querying that
     database.  This information is primarily used to plan reduction
     and analysis processing for specific sky targets.
-    """
-
-    """
+    
     prvState.py class validates user information (via cookie file), then
     contacts PRV Server to get the current metadatas file.
     """    
@@ -57,9 +55,10 @@ class Database:
         users workspace. 
         
         Args:
-        ----------------
-        cookiepath (string): a full cookie file path saved from auth.Login.
+   
+            cookiepath (string): a full cookie file path saved from auth.Login.
         """
+
 
         self.cookiepath = cookiepath
 
@@ -169,16 +168,17 @@ class Database:
         'IPAC' ASCII format: save to disk and display in browser.
         
         Args: keyword/value pair arguments are all optional.
-        ----------------
-        sql='fully qualified sql statement' (string):
-        if not specified, the whole database table will be returned.
+        
+            sql='fully qualified sql statement' (string):
+            if not specified, the whole database table will be returned.
 
-        format='csv/html/ipac' (string): specifies the format of the 
-        returned file; the default is html.
+            format='csv/html/ipac' (string): specifies the format of the 
+            returned file; the default is html.
 
-        filepath='full path filename' (string): the filepath to save
-        the data on the disk; if not provided, the data will be displayed
-        in the browser.
+            filepath='full path filename' (string): the filepath to save
+            the data on the disk; if not provided, the data will be displayed
+            in the browser.
+
         """
         
         if self.debug:
@@ -268,13 +268,14 @@ class Database:
         the database.
         
         Args: keyword/value pair arguments are all optional.
-        ----------------
-        format='csv/html/ipac' (string): specifies the format of the 
-        returned file; the default is html.
+        
+            format='csv/html/ipac' (string): specifies the format of the 
+            returned file; the default is html.
 
-        filepath='full path filename' (string): the filepath to save
-        the data on the disk; if not provided, the data will be displayed
-        in the browser.
+            filepath='full path filename' (string): the filepath to save
+            the data on the disk; if not provided, the data will be displayed
+            in the browser.
+
         """
         
         if self.debug:
@@ -347,15 +348,16 @@ class Database:
         
         Args: there is on required argument (target), 
         keyword/value pair arguments are all optional.
-        ----------------------------------------------
-        target: target name, 
+        
+            target: target name, 
 
-        format='csv/html/ipac' (string): specifies the format of the 
-        returned file; the default is html.
+            format='csv/html/ipac' (string): specifies the format of the 
+            returned file; the default is html.
 
-        filepath='full path filename' (string): the filepath to save
-        the data on the disk; if not provided, the data will be displayed
-        in the browser.
+            filepath='full path filename' (string): the filepath to save
+            the data on the disk; if not provided, the data will be displayed
+            in the browser.
+
         """
        
         if self.debug:
@@ -432,9 +434,10 @@ class Database:
         The sqlite method downloads the sqlite database file.
         
         Args: 
-        ---- 
-        filepath (string): full path filename to save the database file 
-        on the disk.
+        
+            filepath (string): full path filename to save the database file 
+            on the disk.
+
         """
         
         self.filepath = filepath

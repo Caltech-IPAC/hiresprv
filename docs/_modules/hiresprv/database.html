@@ -58,9 +58,7 @@
 <span class="sd">    The HIRES PRV database class provides methods for querying that</span>
 <span class="sd">    database.  This information is primarily used to plan reduction</span>
 <span class="sd">    and analysis processing for specific sky targets.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    </span>
 <span class="sd">    prvState.py class validates user information (via cookie file), then</span>
 <span class="sd">    contacts PRV Server to get the current metadatas file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>    
@@ -95,9 +93,10 @@
 <span class="sd">        users workspace. </span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
-<span class="sd">        ----------------</span>
-<span class="sd">        cookiepath (string): a full cookie file path saved from auth.Login.</span>
+<span class="sd">   </span>
+<span class="sd">            cookiepath (string): a full cookie file path saved from auth.Login.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
 
         <span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span> <span class="o">=</span> <span class="n">cookiepath</span>
 
@@ -207,16 +206,17 @@
 <span class="sd">        &#39;IPAC&#39; ASCII format: save to disk and display in browser.</span>
 <span class="sd">        </span>
 <span class="sd">        Args: keyword/value pair arguments are all optional.</span>
-<span class="sd">        ----------------</span>
-<span class="sd">        sql=&#39;fully qualified sql statement&#39; (string):</span>
-<span class="sd">        if not specified, the whole database table will be returned.</span>
+<span class="sd">        </span>
+<span class="sd">            sql=&#39;fully qualified sql statement&#39; (string):</span>
+<span class="sd">            if not specified, the whole database table will be returned.</span>
 
-<span class="sd">        format=&#39;csv/html/ipac&#39; (string): specifies the format of the </span>
-<span class="sd">        returned file; the default is html.</span>
+<span class="sd">            format=&#39;csv/html/ipac&#39; (string): specifies the format of the </span>
+<span class="sd">            returned file; the default is html.</span>
 
-<span class="sd">        filepath=&#39;full path filename&#39; (string): the filepath to save</span>
-<span class="sd">        the data on the disk; if not provided, the data will be displayed</span>
-<span class="sd">        in the browser.</span>
+<span class="sd">            filepath=&#39;full path filename&#39; (string): the filepath to save</span>
+<span class="sd">            the data on the disk; if not provided, the data will be displayed</span>
+<span class="sd">            in the browser.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
@@ -306,13 +306,14 @@
 <span class="sd">        the database.</span>
 <span class="sd">        </span>
 <span class="sd">        Args: keyword/value pair arguments are all optional.</span>
-<span class="sd">        ----------------</span>
-<span class="sd">        format=&#39;csv/html/ipac&#39; (string): specifies the format of the </span>
-<span class="sd">        returned file; the default is html.</span>
+<span class="sd">        </span>
+<span class="sd">            format=&#39;csv/html/ipac&#39; (string): specifies the format of the </span>
+<span class="sd">            returned file; the default is html.</span>
 
-<span class="sd">        filepath=&#39;full path filename&#39; (string): the filepath to save</span>
-<span class="sd">        the data on the disk; if not provided, the data will be displayed</span>
-<span class="sd">        in the browser.</span>
+<span class="sd">            filepath=&#39;full path filename&#39; (string): the filepath to save</span>
+<span class="sd">            the data on the disk; if not provided, the data will be displayed</span>
+<span class="sd">            in the browser.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
@@ -385,15 +386,16 @@
 <span class="sd">        </span>
 <span class="sd">        Args: there is on required argument (target), </span>
 <span class="sd">        keyword/value pair arguments are all optional.</span>
-<span class="sd">        ----------------------------------------------</span>
-<span class="sd">        target: target name, </span>
+<span class="sd">        </span>
+<span class="sd">            target: target name, </span>
 
-<span class="sd">        format=&#39;csv/html/ipac&#39; (string): specifies the format of the </span>
-<span class="sd">        returned file; the default is html.</span>
+<span class="sd">            format=&#39;csv/html/ipac&#39; (string): specifies the format of the </span>
+<span class="sd">            returned file; the default is html.</span>
 
-<span class="sd">        filepath=&#39;full path filename&#39; (string): the filepath to save</span>
-<span class="sd">        the data on the disk; if not provided, the data will be displayed</span>
-<span class="sd">        in the browser.</span>
+<span class="sd">            filepath=&#39;full path filename&#39; (string): the filepath to save</span>
+<span class="sd">            the data on the disk; if not provided, the data will be displayed</span>
+<span class="sd">            in the browser.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
        
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
@@ -470,9 +472,10 @@
 <span class="sd">        The sqlite method downloads the sqlite database file.</span>
 <span class="sd">        </span>
 <span class="sd">        Args: </span>
-<span class="sd">        ---- </span>
-<span class="sd">        filepath (string): full path filename to save the database file </span>
-<span class="sd">        on the disk.</span>
+<span class="sd">        </span>
+<span class="sd">            filepath (string): full path filename to save the database file </span>
+<span class="sd">            on the disk.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">filepath</span>

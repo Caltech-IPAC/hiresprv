@@ -26,7 +26,6 @@ class Archive:
     night at a time.
 
     Calling Synopsis:
-    ----------------
        
         import hiresprv.archive
 
@@ -52,8 +51,8 @@ class Archive:
         Initialize the class with cookiepath
 
         Args:
-        ----------------
-        cookiepath: a full cookie file path saved from auth.Login.
+      
+            cookiepath: a full cookie file path saved from auth.Login.
 
         """
 
@@ -126,21 +125,17 @@ class Archive:
         allow to start data search and download.  
 
         Args:
-        ------
 
             dates (string): a date string or multiple date strings separated
-                            by comman or '\n'; each date should adhere to 
-                            'yyyy-mm-dd' format.
+            by comma or newline. Each date should be in to 'yyyy-mm-dd' format:
 
-            e.g. 
-                
-                dates = '2013-09-12
-            2013-06-29
-            2017-10-11
-            2014-04-24'
+                dates = \'2013-09-12
+                2013-06-29
+                2017-10-11
+                2014-04-24\'
         
         Returns:
-        -------
+        
             JSON structure with status ('ok' or 'error') and a message string
             e.g., {'status':'error', 'msg':'Failed to connect to KOA'}
         
@@ -192,21 +187,19 @@ class Archive:
         the dates string from an inputs a file containing a list of dates
 
         Args:
-        -----    
 
-        datefile: a file containing large number of dates; each date 
-            in the 'yyyy-mm-dd' format and separated by new line.
+            datefile: a file containing large number of dates; each date 
+                in the 'yyyy-mm-dd' format and separated by new line.
 
-        e.g. 
-        2013-09-12
-        2013-06-29
-        2017-10-11
-        2014-04-24
+            e.g. 
+            2013-09-12
+            2013-06-29
+            2017-10-11
+            2014-04-24
         
         Returns:
-        -------
         
-        Same status and msg as 'by_dates' method.
+            Same status and msg as 'by_dates' method.
         """
         
         self.debug = 1

@@ -42,8 +42,9 @@ class Idldriver:
         Archive using Archive class methods.
         
         Args:
-        ----------------
-        cookiepath: a full cookie file path saved from auth.Login.
+
+            cookiepath: a full cookie file path saved from auth.Login.
+
         """
 
         self.cookiepath = cookiepath

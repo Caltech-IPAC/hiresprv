@@ -64,7 +64,6 @@
 <span class="sd">    night at a time.</span>
 
 <span class="sd">    Calling Synopsis:</span>
-<span class="sd">    ----------------</span>
 <span class="sd">       </span>
 <span class="sd">        import hiresprv.archive</span>
 
@@ -90,8 +89,8 @@
 <span class="sd">        Initialize the class with cookiepath</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">        ----------------</span>
-<span class="sd">        cookiepath: a full cookie file path saved from auth.Login.</span>
+<span class="sd">      </span>
+<span class="sd">            cookiepath: a full cookie file path saved from auth.Login.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -164,21 +163,17 @@
 <span class="sd">        allow to start data search and download.  </span>
 
 <span class="sd">        Args:</span>
-<span class="sd">        ------</span>
 
 <span class="sd">            dates (string): a date string or multiple date strings separated</span>
-<span class="sd">                            by comman or &#39;\n&#39;; each date should adhere to </span>
-<span class="sd">                            &#39;yyyy-mm-dd&#39; format.</span>
+<span class="sd">            by comma or newline. Each date should be in to &#39;yyyy-mm-dd&#39; format:</span>
 
-<span class="sd">            e.g. </span>
-<span class="sd">                </span>
-<span class="sd">                dates = &#39;2013-09-12</span>
-<span class="sd">            2013-06-29</span>
-<span class="sd">            2017-10-11</span>
-<span class="sd">            2014-04-24&#39;</span>
+<span class="sd">                dates = \&#39;2013-09-12</span>
+<span class="sd">                2013-06-29</span>
+<span class="sd">                2017-10-11</span>
+<span class="sd">                2014-04-24\&#39;</span>
 <span class="sd">        </span>
 <span class="sd">        Returns:</span>
-<span class="sd">        -------</span>
+<span class="sd">        </span>
 <span class="sd">            JSON structure with status (&#39;ok&#39; or &#39;error&#39;) and a message string</span>
 <span class="sd">            e.g., {&#39;status&#39;:&#39;error&#39;, &#39;msg&#39;:&#39;Failed to connect to KOA&#39;}</span>
 <span class="sd">        </span>
@@ -230,21 +225,19 @@
 <span class="sd">        the dates string from an inputs a file containing a list of dates</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">        -----    </span>
 
-<span class="sd">        datefile: a file containing large number of dates; each date </span>
-<span class="sd">            in the &#39;yyyy-mm-dd&#39; format and separated by new line.</span>
+<span class="sd">            datefile: a file containing large number of dates; each date </span>
+<span class="sd">                in the &#39;yyyy-mm-dd&#39; format and separated by new line.</span>
 
-<span class="sd">        e.g. </span>
-<span class="sd">        2013-09-12</span>
-<span class="sd">        2013-06-29</span>
-<span class="sd">        2017-10-11</span>
-<span class="sd">        2014-04-24</span>
+<span class="sd">            e.g. </span>
+<span class="sd">            2013-09-12</span>
+<span class="sd">            2013-06-29</span>
+<span class="sd">            2017-10-11</span>
+<span class="sd">            2014-04-24</span>
 <span class="sd">        </span>
 <span class="sd">        Returns:</span>
-<span class="sd">        -------</span>
 <span class="sd">        </span>
-<span class="sd">        Same status and msg as &#39;by_dates&#39; method.</span>
+<span class="sd">            Same status and msg as &#39;by_dates&#39; method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="mi">1</span>

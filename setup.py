@@ -6,7 +6,7 @@ reqs = ['ijson']
 
 setup(
     name="hiresprv",
-    version="1.0",
+    version="1.0.0",
     author="Mihseh Kong, John Good, BJ Fulton",
     packages=find_packages(),
     data_files=[],

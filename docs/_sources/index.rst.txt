@@ -9,11 +9,8 @@ to that pipeline as a web service.
 
 |
 
-These Python functions are an easy way to interact with the service.
-
-|
-
-The source code is available `here <https://github.com/Caltech-IPAC/hiresprv>`_.
+These Python functions provide an easy way to interact with the service.  The 
+source code is available `here <https://github.com/Caltech-IPAC/hiresprv>`_.
 
 |
 

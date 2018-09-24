@@ -4,7 +4,7 @@ Instrument Configuration Instructions
 =====================================
 
 Afternoon Setup
-===============
++++++++++++++++
 
 HIRES must be configured in a very specific way in order for the pipeline to function and produce reliable PRVs.
 Carefully follow these instructions in order to ensure the pipeline is able to reduce your data.
@@ -63,9 +63,9 @@ Carefully follow these instructions in order to ensure the pipeline is able to r
 * Guide camera configuration:
     * Filters: BG38 + ND0.01 (BG38 is important, ND up to OA)
 
-
+|
 Spectrograph Alignment and Focus
-================================
+++++++++++++++++++++++++++++++++
 
 We must ensure that specific spectral lines fall on specific pixels on the detector and that the spectral lines are
 as well-focused as possible.
@@ -90,9 +90,9 @@ as well-focused as possible.
     * Vertical: +0.002 deg of X-disp rot moves lines down by 1 row
     * As a last resort change cafraw or cofraw on command line to focus (using m cafraw= and m cofraw=). Try cafraw first; steps of ~10,000 are needed in cafraw to make any appreciable difference in focus.
 
-
+|
 Required Calibrations
-=====================
++++++++++++++++++++++
 
 The pipeline requires a very specific set of calibration data.
 
@@ -138,9 +138,9 @@ The pipeline requires a very specific set of calibration data.
     * check saturation: < 20,000 counts on middle chip?
     * Check I2 line depth. In center of chip, it should be ~30%
 
-
+|
 Observations of Stars
-=====================
++++++++++++++++++++++
 
 Instrumental configuration, considerations, and best practices for observing stars during the night.
 
@@ -182,9 +182,9 @@ Instrumental configuration, considerations, and best practices for observing sta
     * From the south wrap, moving through the west, the north limit is an azimuth of 325 degrees.
     * From the north wrap, moving through the west, the south limit is an azimuth of 235 degrees.
 
-
+|
 Target Lists
-============
+++++++++++++
 
 Create your target list during the day and upload to the Keck computers. Your SA can help you upload.
 
@@ -192,9 +192,9 @@ Create your target list during the day and upload to the Keck computers. Your SA
 * Once the OA has loaded the list, click on 'Map OA starlist' from dropdown on MAGIQ (Useful for planning observations.)
 * Use the middle mouse button to highlight the next target to observe.
 
-
+|
 Partial Nights
-==============
+++++++++++++++
 
 The instrumental configuration is very sensitive. The focus and alignment should be rechecked in the event you recieve a
 handoff from a non HIRES PRV user during the night.
@@ -206,9 +206,9 @@ handoff from a non HIRES PRV user during the night.
     * Run alignment and focus procedure
 * Run through the HIRES setup instructions to ensure correct configuration
 
-
+|
 End of Night
-============
+++++++++++++
 
 You may leave the instrument set up during multi-night runs.
 
@@ -222,10 +222,9 @@ You may leave the instrument set up during multi-night runs.
 * If last night of run:
     * From background pulldown, HIRES control menu > End of Night Shutdown
 
-
+|
 Tips, Tricks, & Troubleshooting
-===============================
-
++++++++++++++++++++++++++++++++
 * Cross-disperser oscillations:
     * If cross-disperser values are oscillating, reset by right-clicking  blue background and going to HIRES Control Menu > Stop Cross-disperser Oscillation.
     * Avoid moving cross-disperser by increments > 0.5 to help prevent oscillations. Move in multiple steps if needed.

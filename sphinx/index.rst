@@ -40,31 +40,37 @@ The HIRES-PRV Python library can be installed from PyPy:
     $ pip install hiresprv
 
 
-Planning Your Observations
-==========================
+Planning and Conducting Observations
+====================================
 * :ref:`setup`
 
 
+Data Reduction Tutorial
+=======================
+* :ref:`data_reduction_overview`
 
 
-Indices and tables
-==================
+Understanding the Outputs
+=========================
+* :ref:`outputs`
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
+Table of Contents
+=================
 
 .. toctree::
    :maxdepth: 2
    :name: mastertoc
    :caption: Contents:
 
-   data_reduction_overview
-   science_overview
-   hiresprv
    setup
+   data_reduction_overview
+   outputs
+   performance
+   hiresprv
 
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
 
 
 This documentation was last updated on |today|.

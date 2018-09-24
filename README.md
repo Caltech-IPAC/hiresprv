@@ -2,7 +2,7 @@
 
 <b>Note:</b> If you just want to use the library, you can install it with "<i>pip install hiresprv</i>".
 The example Jupyter page can be downloaded from http://hiresprv.ipac.caltech.edu/Jupyter/HIRES_PRV_Service.ipynb 
-and viewed <a href="http://hiresprv.ipac.caltech.edu/Jupyter/HIRES_PRV_Service.html">here</a>.
+and viewed <a href="http://hiresprv.ipac.caltech.edu/Jupyter/index.html">here</a>.
 
 This repository contains all the software necessary to run the HIRES PRV pipeline remotely from Python
 and reduce astronomical radial velocity measurements from that instrument.

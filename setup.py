@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 extensions = []
 
-reqs = ['ijson']
+reqs = ['ijson', 'requests']
 
 setup(
     name="hiresprv",

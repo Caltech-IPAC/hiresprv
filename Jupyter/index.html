@@ -12101,14 +12101,14 @@ Successful login as prvtest_jcgnb
 <span class="n">idl</span> <span class="o">=</span> <span class="n">Idldriver</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
 
 <span class="n">rtn</span> <span class="o">=</span> <span class="n">idl</span><span class="o">.</span><span class="n">run_script</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">template HD185144 20091231</span>
-<span class="s2">rv HD185144 r2R0091231.72</span>
-<span class="s2">rv HD185144 r20091231.73</span>
-<span class="s2">rv HD185144 r20091231.74</span>
-<span class="s2">rv HD185144 r20150606.145</span>
-<span class="s2">rv HD185144 r20150606.146</span>
-<span class="s2">rv HD185144 r20150606.147</span>
-<span class="s2">rvcurve HD185144</span>
+<span class="s2">template 185144 20091231</span>
+<span class="s2">rv 185144 r20091231.72</span>
+<span class="s2">rv 185144 r20091231.73</span>
+<span class="s2">rv 185144 r20091231.74</span>
+<span class="s2">rv 185144 r20150606.145</span>
+<span class="s2">rv 185144 r20150606.146</span>
+<span class="s2">rv 185144 r20150606.147</span>
+<span class="s2">rvcurve 185144</span>
 <span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">rtn</span><span class="p">)</span>
@@ -12164,8 +12164,12 @@ Successful login as prvtest_jcgnb
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">Download</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
 
-<span class="n">rvdata</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">rvcurve</span><span class="p">(</span><span class="s2">'HD185144'</span><span class="p">)</span><p/>
-<span class="nb">print</span><span class="p">(</span><span class="n">rvcurve</span><span class="p">)</span>
+<span class="n">rtn</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">rvcurve</span><span class="p">(</span><span class="s2">'185144'</span><span class="p">)</span><p/>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;vst185144.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
 </pre></div>
 
 </div>

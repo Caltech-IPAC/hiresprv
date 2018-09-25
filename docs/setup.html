@@ -1,0 +1,559 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Instrument Configuration Instructions &#8212; HIRES PRV  documentation</title>
+    <link rel="stylesheet" href="_static/graphite.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Data Reduction Tutorial" href="data_reduction_overview.html" />
+    <link rel="prev" title="Welcome to the HIRES PRV Reduction Service Documentation" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="data_reduction_overview.html" title="Data Reduction Tutorial"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to the HIRES PRV Reduction Service Documentation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">HIRES PRV  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="instrument-configuration-instructions">
+<span id="setup"></span><h1>Instrument Configuration Instructions<a class="headerlink" href="#instrument-configuration-instructions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="afternoon-setup">
+<h2>Afternoon Setup<a class="headerlink" href="#afternoon-setup" title="Permalink to this headline">¶</a></h2>
+<p>HIRES must be configured in a very specific way in order for the pipeline to function and produce reliable PRVs.
+Carefully follow these instructions in order to ensure the pipeline is able to reduce your data.</p>
+<ul class="simple">
+<li>Start up the HIRES VNC sessions on the observing computer</li>
+<li><dl class="first docutils">
+<dt>Start HIRES GUIs</dt>
+<dd><ul class="first last">
+<li>Left-click on tan background</li>
+<li>Select HIRES CONTROL MENU</li>
+<li>Drag over to: START all HIRES GUIs w/ hexpocon</li>
+<li><dl class="first docutils">
+<dt>Respond to the prompts:</dt>
+<dd><ul class="first last">
+<li>“Do you want to continue running the setup script?” type y and return</li>
+<li>Enter observer names</li>
+<li><dl class="first docutils">
+<dt>Confirm data directory (e.g. /s/sdata125/hires1/20??monDD/)</dt>
+<dd><ul class="first last">
+<li>Use the current UT date. (typically one day later than local calendar date), hit enter.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>Set starting observation number at 1</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Now appearing on the 3 screens:</dt>
+<dd><ol class="first last arabic">
+<li>HIRES dashboard, exposure meter dashboard, terminal</li>
+<li>XHIRES GUI, dewar level window</li>
+<li>SAO image: ds9</li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Start the iodine cell:</dt>
+<dd><ul class="first last">
+<li>Select from desktop pulldown: “HIRES control menu &gt; Iodine cell menu &gt; Start Iodine Cell”</li>
+<li><dl class="first docutils">
+<dt>Cell takes 45 minutes to warm up fully. A warm cell reads:</dt>
+<dd><ul class="first last">
+<li>tempiod1 | 65 degrees</li>
+<li>tempiod2 | 50 degrees  (+/- 0.1 degree)</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Check dewar level:</dt>
+<dd><ul class="first last">
+<li>In a terminal type: ln2</li>
+<li>The dewar level is also visible when using “START all HIRES GUIs” in the window with the XHIRES GUI.</li>
+<li><dl class="first docutils">
+<dt>Top off dewar (if level is below 70%)</dt>
+<dd><ul class="first last">
+<li>right-click on tan background,</li>
+<li>drag to “HIRES Control Menu”  and  “Initiate HIRES Dewar Fill”</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>dewar evaporation rate is 5% per hour and auto-refills at 10%. Always try avoid an auto refill.</li>
+<li>If the dewar is filled after ~2 pm Hawaii Time, then it does not need refilled near sunset.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Open the Mirror Covers</dt>
+<dd><ul class="first last">
+<li>From XHIRES GUI &gt; click ETC &gt; Click OPEN RED</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Set up file names:</dt>
+<dd><ul class="first last">
+<li>On HIRES dashboard, click on yellow “Start Here” button.</li>
+<li>Click on “retrieve” to install directory for raw data and frame number.</li>
+<li>Update “Filename root” with current date and underscore. (e.g. <cite>20180201_</cite>)</li>
+<li>Click on “Commit” to set values.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Set CCD parameters</dt>
+<dd><ul class="first last">
+<li>CCD Binning: Enter in the left box: X = 3 , Y = 1 or click on “Binning” and pull down to “X3Y1”.</li>
+<li>Check/Set OUTDIR: directory for raw data</li>
+<li>Check/Set OUTFILE: prefix of filenames, i.e. <cite>20180201_</cite></li>
+<li>Check CCD readout mode:</li>
+<li>Gain = “low” (default)</li>
+<li>Speed = “fast” (default)</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Spectrograph configuration:</dt>
+<dd><ul class="first last">
+<li>Slit should read 14.08” (m slitname = opened)</li>
+<li>Filter1 = clear (m fil1name = clear; using gui okay) (Formerly KV370)</li>
+<li>Filter2 = clear (m fil2name = clear; using gui okay)</li>
+<li>Collimator = red (This should always be set by SA)</li>
+<li><dl class="first docutils">
+<dt>In a terminal:</dt>
+<dd><ul class="first last">
+<li>Set collimator focus: m cofraw = +70000; Use ‘s cofraw’ to show value</li>
+<li>Set camera focus: m cafraw = 0; Use ‘s cafraw to show value’</li>
+<li>Move echelle and cross disperser angles with “A” button to positions from last HIRESprv night (get these values from your SA)</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Guide camera configuration:</dt>
+<dd><ul class="first last">
+<li>Filters: BG38 + ND0.01 (BG38 is important, ND up to OA)</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="spectrograph-alignment-and-focus">
+<h2>Spectrograph Alignment and Focus<a class="headerlink" href="#spectrograph-alignment-and-focus" title="Permalink to this headline">¶</a></h2>
+<p>We must ensure that specific spectral lines fall on specific pixels on the detector and that the spectral lines are
+as well-focused as possible.</p>
+<ul class="simple">
+<li>Turn OFF Exposure meter</li>
+<li>Lamp: Th-Ar #2</li>
+<li>Lamp Filter: NG3 filter</li>
+<li>In terminal window: ‘m deckname = D5 (in lehoula window)’</li>
+<li>Iodine: Out</li>
+<li>ObsType = Object</li>
+<li>Texp: 10 sec (in brown “CCD” window, enter exposure time. Click “UpdateCCD” )</li>
+<li>Set x-disperser and echelle to values from previous HIRESprv night.</li>
+<li>Click “EXPOSE”</li>
+<li><dl class="first docutils">
+<dt>Run focus and alignment analysis in IDL:  <code class="docutils literal notranslate"><span class="pre">IDL&gt;</span> <span class="pre">foc,inpfile='20180201_0001.fits'</span></code></dt>
+<dd><ul class="first last">
+<li>Check instructions from focus program and move echelle and cross-disperser as needed.</li>
+<li>If focus program crashes, you may need to move echelle or cross disperser manually.</li>
+<li>If note regarding ‘Counts in lines too low’ appears. Re-position lines manually.</li>
+<li>Check fwhm focus value returned by the focus program. It should be in the range 2.28-2.40.</li>
+<li>If the fwhm is greater than 2.40, try changing the cafraw (add 10,000 to the current value). Use the terminal command: m cafraw = 10000. Keep changing the cafraw value in steps of 10,000 until you observe a minimum in the fwhm values. (This should need to be done only rarely.)</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>If manual grating moves are needed:</dt>
+<dd><ul class="first last">
+<li>Horizontal: +0.001 deg of echelle rot moves lines left by 1 column</li>
+<li>Vertical: +0.002 deg of X-disp rot moves lines down by 1 row</li>
+<li>As a last resort change cafraw or cofraw on command line to focus (using m cafraw= and m cofraw=). Try cafraw first; steps of ~10,000 are needed in cafraw to make any appreciable difference in focus.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="required-calibrations">
+<h2>Required Calibrations<a class="headerlink" href="#required-calibrations" title="Permalink to this headline">¶</a></h2>
+<p>The pipeline requires a very specific set of calibration data.</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>Thorium-Argon exposures w/ B5</dt>
+<dd><ul class="first last">
+<li>Turn OFF Exposure meter</li>
+<li>Lamp: Th-Ar #2</li>
+<li>Lamp Filter: ng3</li>
+<li><code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">deckname</span> <span class="pre">=</span> <span class="pre">B5</span></code> (0.85 x 3.5 arcsec, ==&gt; 4.0 pixel projected slit)</li>
+<li>WARNING: use <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">deckname=B5</span></code>, NOT the HIRES GUI. Using the GUI will adjust cofraw/cafraw and the focus and alignment process will need to be repeated.</li>
+<li>Iodine: Out</li>
+<li>Exposure: 1 sec (take 1 or 2 at beginning and end of night)</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Thorium-Argon exposures w/ B1</dt>
+<dd><ul class="first last">
+<li>Turn OFF Exposure meter</li>
+<li>Lamp: Th-Ar #2</li>
+<li>Lamp Filter: ng3</li>
+<li><code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">deckname</span> <span class="pre">=</span> <span class="pre">B5</span></code> (0.85 x 3.5 arcsec, ==&gt; 4.0 pixel projected slit)</li>
+<li>WARNING: use <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">deckname=B5</span></code>, NOT the HIRES GUI. Using the GUI will adjust cofraw/cafraw and the focus and alignment process will need to be repeated.</li>
+<li>Iodine: Out</li>
+<li>Exposure: 2 sec (take 1 or 2 at beginning and end of night)</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Iodine cell calibrations w/ B1</dt>
+<dd><ul class="first last">
+<li>Make sure cell is fully warmed up (see p.1) before taking these.</li>
+<li>Turn OFF Exposure meter.</li>
+<li>Lamp: Quartz2</li>
+<li>Lamp Filter: ng3</li>
+<li>Aperture: B1 (0.57 x 3.5 arcsec, ==&gt; 3.0 pixel projected slit)</li>
+<li>WARNING: use <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">deckname=B1</span></code>, NOT the HIRES GUI.</li>
+<li>Iodine: In</li>
+<li>Exposure: 3 secs</li>
+<li>check saturation: &lt; 20,000 counts on middle chip?</li>
+<li>Check I2 line depth. In center of chip, it should be ~30%</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Iodine cell calibrations w/ B5</dt>
+<dd><ul class="first last">
+<li>Make sure cell is fully warmed up (see p.1) before taking these.</li>
+<li>Turn OFF Exposure meter.</li>
+<li>Lamp: Quartz2</li>
+<li>Lamp Filter: ng3</li>
+<li>Aperture: B1 (0.57 x 3.5 arcsec, ==&gt; 3.0 pixel projected slit)</li>
+<li>WARNING: use <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">deckname=B1</span></code>, NOT the HIRES GUI.</li>
+<li>Iodine: In</li>
+<li>Exposure: 2 secs</li>
+<li>check saturation: &lt; 20,000 counts on middle chip?</li>
+<li>Check I2 line depth. In center of chip, it should be ~30%</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="observations-of-stars">
+<h2>Observations of Stars<a class="headerlink" href="#observations-of-stars" title="Permalink to this headline">¶</a></h2>
+<p>Instrumental configuration, considerations, and best practices for observing stars during the night.</p>
+<ul class="simple">
+<li>Check iodine temperature (should be 50C)</li>
+<li>Top off LN  dewar ~30 min before sunset</li>
+<li><dl class="first docutils">
+<dt>Open telescope monitoring GUIs from within <code class="docutils literal notranslate"><span class="pre">kvnctel</span></code> session</dt>
+<dd><ul class="first last">
+<li>From blue background click and select K1 Guider Eavesdropping &gt; Start Observer UI (MAGIQ)</li>
+<li>From blue background click and select K1 Telescope Status  Menu &gt; FACSUM</li>
+<li>From blue background click and select K1 Telescope Status  Menu &gt; XMET</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Start exposure meter</dt>
+<dd><ul class="first last">
+<li>Click on the upper left button “System Start” on exposure meter.</li>
+<li>Click on “Arm” in upper left of right panel to start target monitoring.</li>
+<li>Default exposure level is 250000, equivalent to SNR ~200</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Set max exposure time as appropriate (in HIRES Dashboard CCD ExpTime)</dt>
+<dd><ul class="first last">
+<li>Expected Exposure time: At V=8, S/N=300 in 300 seconds</li>
+<li>Allow for longer than nominal exposure times in case of clouds</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>Open HIRES hatch</li>
+<li>Check with OA that “slit guiding algorithm” is being used</li>
+<li>Once exposing on first star add a “fiducial mark” at the position of the star by right clicking the magic guider snapshot at the desired location</li>
+<li><dl class="first docutils">
+<dt>During the night, continue to check:</dt>
+<dd><ul class="first last">
+<li>Iodine temperature is 50/65C, and iodine is running</li>
+<li>vertical angle mode is on and set to 0.</li>
+<li>Filter #1 is “clear”</li>
+<li>Filter #2 is “clear”</li>
+<li>TV filters are “bg38” and “nd_0.01”</li>
+<li>Iodine IN/OUT as appropriate</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Start observing bright stars up to 20 min before 12 degree twilight:</dt>
+<dd><ul class="first last">
+<li><code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">deckname</span> <span class="pre">=</span> <span class="pre">C2</span></code> (0.85 x 14.0 arcsec)</li>
+<li>If seeing is &gt; 2.0”, then begin observing only 10 minutes before 12 deg twilight and use B5.</li>
+<li>Likewise if seeing &gt; 2.0” at the end of the night, use B5 in twilight and end 10 minutes after 12deg</li>
+<li>WARNING: use command line to change deckers, NOT HIRES GUI</li>
+<li>Generally, do not observe stars fainter than V~11 in twilight(morning or evening).</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>During/after -12-degree twilight:</dt>
+<dd><ul class="first last">
+<li><code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">deckname</span> <span class="pre">=</span> <span class="pre">B5</span></code> (0.85 x 3.5 arcsec, ==&gt; 4.0 pixel projected slit)</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>In case of poor seeing (&gt;2 arcsec)</dt>
+<dd><ul class="first last">
+<li>Stick to V &lt; 10 stars (throughput)</li>
+<li>Use B5 decker. Sky subtraction does not work well when stellar PSF fills the slit (seeing &gt; 2.5”).</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Telescope wrap limits</dt>
+<dd><ul class="first last">
+<li>From the south wrap, moving through the west, the north limit is an azimuth of 325 degrees.</li>
+<li>From the north wrap, moving through the west, the south limit is an azimuth of 235 degrees.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="target-lists">
+<h2>Target Lists<a class="headerlink" href="#target-lists" title="Permalink to this headline">¶</a></h2>
+<p>Create your target list during the day and upload to the Keck computers. Your SA can help you upload.</p>
+<ul class="simple">
+<li>Inform the operator of the path to your script you will use and ask them to load it into MAGIQ.</li>
+<li>Once the OA has loaded the list, click on ‘Map OA starlist’ from dropdown on MAGIQ (Useful for planning observations.)</li>
+<li>Use the middle mouse button to highlight the next target to observe.</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="partial-nights">
+<h2>Partial Nights<a class="headerlink" href="#partial-nights" title="Permalink to this headline">¶</a></h2>
+<p>The instrumental configuration is very sensitive. The focus and alignment should be rechecked in the event you recieve a
+handoff from a non HIRES PRV user during the night.</p>
+<ul class="simple">
+<li>Setup HIRES as normal in the afternoon</li>
+<li><dl class="first docutils">
+<dt>At the handoff:</dt>
+<dd><ul class="first last">
+<li>Check the filename prefix and frame number</li>
+<li>Set cofraw, cafraw, echelle and cross disperser to the correct positions.</li>
+<li>Run alignment and focus procedure</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>Run through the HIRES setup instructions to ensure correct configuration</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="end-of-night">
+<h2>End of Night<a class="headerlink" href="#end-of-night" title="Permalink to this headline">¶</a></h2>
+<p>You may leave the instrument set up during multi-night runs.</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>If not the last night of the run:</dt>
+<dd><ul class="first last">
+<li>Turn off exposure meter.</li>
+<li>Close the hatch</li>
+<li>Take B1/B5 iodine exposures.</li>
+<li>Take B1/B5 thorium exposures.</li>
+<li>Turn off lamps, but leave everything else open</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>If last night of run:</dt>
+<dd><ul class="first last">
+<li>From background pulldown, HIRES control menu &gt; End of Night Shutdown</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="tips-tricks-troubleshooting">
+<h2>Tips, Tricks, &amp; Troubleshooting<a class="headerlink" href="#tips-tricks-troubleshooting" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>Cross-disperser oscillations:</dt>
+<dd><ul class="first last">
+<li>If cross-disperser values are oscillating, reset by right-clicking  blue background and going to HIRES Control Menu &gt; Stop Cross-disperser Oscillation.</li>
+<li>Avoid moving cross-disperser by increments &gt; 0.5 to help prevent oscillations. Move in multiple steps if needed.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>Useful link with extra HIRES info: <a class="reference external" href="http://www2.keck.hawaii.edu/inst/hires/startup.html">http://www2.keck.hawaii.edu/inst/hires/startup.html</a></li>
+<li>In ds9, if the mouse, clicking and dragging is zooming, instead of drawing a cross section, choose Edit→Pointer</li>
+<li>When using the C2 decker, always be careful to center the star on the slit.</li>
+<li><dl class="first docutils">
+<dt>Useful directories:</dt>
+<dd><ul class="first last">
+<li>data: /s/sdata125/hires1/2011apr31/ (insert proper date)</li>
+<li>guider snapshots: /s/nightly1/11/08/30 (where 11/08/30 is yr/mo/dy)</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/hiresprv.jpg" alt="Logo"/>
+            </a></p>
+<h3><a href="index.html">HIRES PRV</a></h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Instrument Configuration Instructions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#afternoon-setup">Afternoon Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#spectrograph-alignment-and-focus">Spectrograph Alignment and Focus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#required-calibrations">Required Calibrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#observations-of-stars">Observations of Stars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#target-lists">Target Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#partial-nights">Partial Nights</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#end-of-night">End of Night</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tips-tricks-troubleshooting">Tips, Tricks, &amp; Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data_reduction_overview.html">Data Reduction Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="outputs.html">Output Data Products</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Velocity Precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hiresprv.html">HIRES PRV Python library</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="data_reduction_overview.html" title="Data Reduction Tutorial"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to the HIRES PRV Reduction Service Documentation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">HIRES PRV  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, CALTECH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.
+    </div>
+  </body>
+</html>

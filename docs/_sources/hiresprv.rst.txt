@@ -13,6 +13,7 @@ For instance, the first step always has to be a KOA login.
 .. automodule:: hiresprv.status
 .. automodule:: hiresprv.database
 .. automodule:: hiresprv.idldriver
+.. automodule:: hiresprv.download
 
 |
 

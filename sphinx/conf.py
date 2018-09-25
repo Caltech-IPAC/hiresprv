@@ -52,7 +52,7 @@ templates_path = ['_templates']
 # -- Define and configure non-default extensions ----------------------------------------------------------------------
 
 # You can find a list of available extension here: http://www.sphinx-doc.org/en/master/extensions.html
-extensions = ['sphinx.ext.todo', 'sphinx.ext.viewcode', 'sphinx.ext.autodoc', 'sphinx.ext.imgmath']
+extensions = ['sphinx.ext.todo', 'sphinx.ext.viewcode', 'sphinx.ext.autodoc', 'sphinx.ext.imgmath', 'nbsphinx']
 
 # Above extensions explanation and configurations:
 

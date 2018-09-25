@@ -15,7 +15,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Data Reduction Overview" href="data_reduction_overview.html" /> 
+    <link rel="prev" title="Velocity Precision" href="performance.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -27,7 +27,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="data_reduction_overview.html" title="Data Reduction Overview"
+          <a href="performance.html" title="Velocity Precision"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">HIRES PRV  documentation</a> &#187;</li> 
       </ul>
@@ -318,6 +318,38 @@ from a set of reduced RV measurements.</p>
 
 </dd></dl>
 
+<span class="target" id="module-hiresprv.download"></span><dl class="class">
+<dt id="hiresprv.download.Download">
+<em class="property">class </em><code class="descclassname">hiresprv.download.</code><code class="descname">Download</code><span class="sig-paren">(</span><em>cookiepath</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/download.html#Download"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.download.Download" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Download class provides methods for users to download the 
+individual file from their workspace in HIRES PRV pipeline server.</p>
+<p>It validates user information (via cookie file), then contacts PRV 
+Server to get the requested file.</p>
+<p>The initialization of database class loads the cookie file saved
+from HIRES PRV pipelone login, parse the cookie to look up the 
+users workspace.</p>
+<p>cookiepath (string): a full cookie file path saved from auth.Login.</p>
+<dl class="method">
+<dt id="hiresprv.download.Download.rvcurve">
+<code class="descname">rvcurve</code><span class="sig-paren">(</span><em>objname</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/download.html#Download.rvcurve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.download.Download.rvcurve" title="Permalink to this definition">¶</a></dt>
+<dd><p>The rvcurve method downloads a rvcurve csv file from the user’s 
+workspace.</p>
+<p>objname (string): the object name of the rvcurve.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hiresprv.download.Download.spectrum">
+<code class="descname">spectrum</code><span class="sig-paren">(</span><em>fileid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/download.html#Download.spectrum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.download.Download.spectrum" title="Permalink to this definition">¶</a></dt>
+<dd><p>The spectrum method downloads one or more spectrum FITS files 
+from the user’s workspace. The downloaded file will be a FITS file 
+if ‘fileids’ is a single file name and a GZIP file if multiple 
+files are requested.</p>
+<p>spec_fileid (string): one or more spectrum file names separated by
+comma or new line.</p>
+</dd></dl>
+
+</dd></dl>
+
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -331,13 +363,15 @@ from a set of reduced RV measurements.</p>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="index.html">
-              <img class="logo" src="_static/hiresprv.jpg" alt="Logo"/>
+              <img class="logo" src="_static/hiresprv_logo.png" alt="Logo"/>
             </a></p>
 <h3><a href="index.html">HIRES PRV</a></h3>
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="science_overview.html">Science Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_reduction_overview.html">Data Reduction Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Instrument Configuration Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_reduction_overview.html">Data Reduction Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="outputs.html">Output Data Products</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Velocity Precision</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">HIRES PRV Python library</a></li>
 </ul>
 
@@ -367,7 +401,7 @@ from a set of reduced RV measurements.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="data_reduction_overview.html" title="Data Reduction Overview"
+          <a href="performance.html" title="Velocity Precision"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">HIRES PRV  documentation</a> &#187;</li> 
       </ul>

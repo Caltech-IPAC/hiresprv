@@ -23,7 +23,7 @@ We reccomend users first install `Anaconda Python <https://www.anaconda.com/down
 
 Python 3.6 or greater is required.
 
-The HIRES-PRV Python library can be installed from PyPy:
+The HIRES-PRV Python library can be installed from PyPI:
 
 .. code-block:: bash
 

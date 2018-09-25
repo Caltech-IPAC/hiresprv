@@ -15,7 +15,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Science Overview" href="science_overview.html" /> 
+    <link rel="next" title="Instrument Configuration Instructions" href="setup.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -27,7 +27,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="science_overview.html" title="Science Overview"
+          <a href="setup.html" title="Instrument Configuration Instructions"
              accesskey="N">next</a> |</li>
         <li class="nav-item nav-item-0"><a href="#">HIRES PRV  documentation</a> &#187;</li> 
       </ul>
@@ -40,40 +40,87 @@
             
   <div class="section" id="welcome-to-the-hires-prv-reduction-service-documentation">
 <h1>Welcome to the HIRES PRV Reduction Service Documentation<a class="headerlink" href="#welcome-to-the-hires-prv-reduction-service-documentation" title="Permalink to this headline">¶</a></h1>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>The HIRES PRV pipeline can be used to reduce radial velocity data from the Keck
-HIRES instrument.  We provide access to the Keck Online Archive (KOA) data and
-to that pipeline as a web service.</p>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>These Python functions provide an easy way to interact with the service.  The
+<p>This is a radial velocity processing environment that can be used to transform raw spectra into
+publication-ready precision radial velocities (PRVs) from Keck/HIRES spectra.</p>
+<p>HIRES is now available in a dedicated precision radial velocity configuration.
+Data collected in the prescribed HIRES-PRV configuration will be compatible with this radial velocity
+processing environment which will produce wavelength-calibrated 1D spectra and
+time-series of relative PRVs.</p>
+<p>There are several important considerations for observers wishing to utilize the HIRES PRV configuration;
+only data collected in the specified HIRES-PRV configuration and data collected according to the recommendations
+summarized below can be processed properly within the NExScI HIRES processing environment.</p>
+<ul class="simple">
+<li>The echelle and cross disperser angles must be set at specific angles as part of the HIRES-PRV afternoon setup and must not be changed during the night.</li>
+<li>A minimum of 3 PRV observations with the iodine cell inserted for a given target are required. The minimum signal-to-noise ratio per pixel for each of these observations must be at least 70 with the optimal SNR being 200.</li>
+<li>One high SNR (at least 100 per pixel) template observation of the target with the iodine cell removed from the optical path. The optimal SNR for the iodine-out template is 2x the typical iodine-in observation. Several consecutive observations may be stacked to increase the SNR.</li>
+<li>Each iodine-out template observation must be bracketed by 2-5 exposures of bright, rapidly-rotating B stars with the iodine cell in for calibration. These stars should be as near as possible on the sky to the target star.</li>
+<li>Individual exposure times should be no longer than 1 hour and iodine-out template observations should span no more than 1.5 hours.</li>
+<li>Observers new to the HIRES-PRV configuration should treat this configuration as a “new” instrument.</li>
+</ul>
+<p>A Python API provides an easy way to interact with the service. The
 source code is available <a class="reference external" href="https://github.com/Caltech-IPAC/hiresprv">here</a>.</p>
-<div class="line-block">
-<div class="line"><br /></div>
+<p>Please post any questions regarding the HIRES-PRV configuration or the NExScI PRV processing environment to the GitHub issue tracker.</p>
+<p>We reccomend users install Anaconda Python or a similar scientific computing environemnt for Python.</p>
 </div>
+<div class="section" id="installation-instructions">
+<h1>Installation Instructions<a class="headerlink" href="#installation-instructions" title="Permalink to this headline">¶</a></h1>
+<p>The HIRES-PRV Python library can be installed from PyPI:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install hiresprv
+</pre></div>
+</div>
+</div>
+<div class="section" id="planning-and-conducting-observations">
+<h1>Planning and Conducting Observations<a class="headerlink" href="#planning-and-conducting-observations" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="setup.html#setup"><span class="std std-ref">Instrument Configuration Instructions</span></a></li>
+</ul>
+</div>
+<div class="section" id="data-reduction-tutorial">
+<h1>Data Reduction Tutorial<a class="headerlink" href="#data-reduction-tutorial" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="data_reduction_overview.html#data-reduction-overview"><span class="std std-ref">Data Reduction Tutorial</span></a></li>
+</ul>
+</div>
+<div class="section" id="understanding-the-outputs">
+<h1>Understanding the Outputs<a class="headerlink" href="#understanding-the-outputs" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="outputs.html#outputs"><span class="std std-ref">Output Data Products</span></a></li>
+</ul>
+</div>
+<div class="section" id="table-of-contents">
+<h1>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound" id="mastertoc">
 <p class="caption"><span class="caption-text">Contents:</span><a class="headerlink" href="#mastertoc" title="Permalink to this toctree">¶</a></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="science_overview.html">Science Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_reduction_overview.html">Data Reduction Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Instrument Configuration Instructions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#afternoon-setup">Afternoon Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#spectrograph-alignment-and-focus">Spectrograph Alignment and Focus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#required-calibrations">Required Calibrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#observations-of-stars">Observations of Stars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#target-lists">Target Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#partial-nights">Partial Nights</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#end-of-night">End of Night</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#tips-tricks-troubleshooting">Tips, Tricks, &amp; Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data_reduction_overview.html">Data Reduction Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="outputs.html">Output Data Products</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="outputs.html#radial-velocity-timeseries">Radial Velocity Timeseries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="outputs.html#wavelength-solution">Wavelength Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="outputs.html#extracted-spectra">Extracted Spectra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="outputs.html#example-reading-spectrum">Example Reading Spectrum</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Velocity Precision</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hiresprv.html">HIRES PRV Python library</a></li>
 </ul>
 </div>
-</div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
 <li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
 <li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
 </ul>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>This documentation was last updated on Sep 24, 2018.</p>
+<p>This documentation was last updated on Sep 25, 2018.</p>
 </div>
 
 
@@ -83,13 +130,15 @@ source code is available <a class="reference external" href="https://github.com/
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="#">
-              <img class="logo" src="_static/hiresprv.jpg" alt="Logo"/>
+              <img class="logo" src="_static/hiresprv_logo.png" alt="Logo"/>
             </a></p>
 <h3><a href="#">HIRES PRV</a></h3>
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="science_overview.html">Science Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_reduction_overview.html">Data Reduction Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Instrument Configuration Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_reduction_overview.html">Data Reduction Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="outputs.html">Output Data Products</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Velocity Precision</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hiresprv.html">HIRES PRV Python library</a></li>
 </ul>
 
@@ -119,7 +168,7 @@ source code is available <a class="reference external" href="https://github.com/
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="science_overview.html" title="Science Overview"
+          <a href="setup.html" title="Instrument Configuration Instructions"
              >next</a> |</li>
         <li class="nav-item nav-item-0"><a href="#">HIRES PRV  documentation</a> &#187;</li> 
       </ul>

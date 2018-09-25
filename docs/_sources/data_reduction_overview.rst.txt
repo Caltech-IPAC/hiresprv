@@ -3,4 +3,6 @@
 Data Reduction Tutorial
 =======================
 
-TO DO: Jupyter notebook as static HTML goes here
+.. raw:: html
+
+    <iframe src="http://hiresprv.ipac.caltech.edu/Jupyter/index.html" height="5400px" width="100%" scrolling="no"></iframe>

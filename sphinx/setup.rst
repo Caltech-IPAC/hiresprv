@@ -3,7 +3,6 @@
 Observing Instructions
 ======================
 
-
 Afternoon Setup
 +++++++++++++++
 HIRES must be configured in a very specific way in order for the pipeline to function and produce reliable PRVs.

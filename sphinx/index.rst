@@ -44,7 +44,7 @@ summarized below can be processed properly within the NExScI HIRES processing en
 * Individual exposure times should be no longer than 1 hour and iodine-out template observations should span no more than 1.5 hours.
 * Observers new to the HIRES-PRV configuration should treat this configuration as a "new" instrument.
 
-See link below for detailed instrument configuration instructions.
+See link below for detailed instrument configuration and observing instructions.
    * :ref:`setup`
 
 

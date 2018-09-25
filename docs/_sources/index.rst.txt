@@ -33,7 +33,7 @@ We reccomend users install Anaconda Python or a similar scientific computing env
 Installation Instructions
 =========================
 
-The HIRES-PRV Python library can be installed from PyPy:
+The HIRES-PRV Python library can be installed from PyPI:
 
 .. code-block:: bash
 

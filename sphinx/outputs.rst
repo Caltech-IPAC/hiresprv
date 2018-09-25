@@ -114,6 +114,7 @@ Example python code to plot the order containing the Mg B triplet:
 
     In [11]: pl.show()
 
-.. image:: _static/sample_spec.png
-
-
+.. figure:: _static/sample_spec.png
+    :width: 50%
+    :align: center
+    :alt: plot of spectrum

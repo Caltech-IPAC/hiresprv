@@ -3,9 +3,9 @@
 Instrument Configuration Instructions
 =====================================
 
+
 Afternoon Setup
 +++++++++++++++
-
 HIRES must be configured in a very specific way in order for the pipeline to function and produce reliable PRVs.
 Carefully follow these instructions in order to ensure the pipeline is able to reduce your data.
 

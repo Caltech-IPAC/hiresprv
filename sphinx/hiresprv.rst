@@ -1,4 +1,4 @@
-HIRES PRV Python library
+Python API
 ========================
 |
 

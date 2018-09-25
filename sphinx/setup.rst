@@ -1,7 +1,7 @@
 .. _setup:
 
-Instrument Configuration Instructions
-=====================================
+Observing Instructions
+======================
 
 
 Afternoon Setup

@@ -57,7 +57,9 @@ The reduction of HIRES PRV data consists of four basic steps.
    4) Concatenate into an PRV timeseries.
 
 |
-We've provided a tutorial to walk you through the process for a typical dataset spanning several observing nights:
+We've provided a beta-release tutorial to walk you through the reduction process for a typical dataset spanning several observing nights.
+
+*WARNING: This tutorial is not part of the official v1.0 release. The code snippets presented within have not been tested. The project makes no guarantees the code within the tutorial will function exactly as presented. Use at your own risk.*
    * :ref:`data_reduction_overview`
 
 

@@ -71,7 +71,7 @@ static wavelength solution is good to ±1 pixel for any observed spectrum.
 
 :download:`keck_rwav.fits <_static/keck_rwav.fits>`
 
-See below for an example of reading and interpreting this wavelength solution.
+See below for an example of reading and interpreting this file.
 
 
 Extracted Spectra

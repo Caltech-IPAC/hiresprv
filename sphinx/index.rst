@@ -3,7 +3,7 @@ Welcome to the HIRES PRV Reduction Service Documentation
 ========================================================
 
 This is a radial velocity processing environment that can be used to transform raw spectra into
-publication-ready precision radial velocities (PRVs) from Keck/HIRES spectra.
+publication-ready precision radial velocities (PRVs) from `Keck/HIRES <https://www2.keck.hawaii.edu/inst/hires/>`_ spectra.
 
 HIRES is now available in a dedicated precision radial velocity configuration.
 Data collected in the prescribed HIRES-PRV configuration will be compatible with this radial velocity
@@ -13,7 +13,7 @@ time-series of relative PRVs.
 A Python API provides an easy way to interact with the service. The
 source code is available `here <https://github.com/Caltech-IPAC/hiresprv>`_.
 
-Please post any questions regarding the HIRES-PRV configuration or the NExScI PRV processing environment to the GitHub issue tracker.
+Please post any questions regarding the HIRES-PRV configuration or the `NExScI <http://nexsci.caltech.edu>`_ PRV processing environment to the `GitHub issue tracker <https://github.com/Caltech-IPAC/hiresprv/issues>`_.
 
 
 Installation Instructions
@@ -45,7 +45,7 @@ summarized below can be processed properly within the NExScI HIRES processing en
 * Observers new to the HIRES-PRV configuration should treat this configuration as a "new" instrument.
 
 See link below for detailed instrument configuration instructions.
-* :ref:`setup`
+   * :ref:`setup`
 
 
 Data Reduction Tutorial

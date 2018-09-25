@@ -106,7 +106,7 @@ html_static_path = ['_static']
 
 # Defining the static path allows me to add my own logo for the project:
 #   (make sure the theme of your choice support the use of logo.
-html_logo = '_static/hiresprv.jpg'
+html_logo = '_static/hiresprv_logo.png'
 
 # Custom sidebar templates, must be a dictionary that maps document names to template names.
 # In This project I chose to include in the sidebar:

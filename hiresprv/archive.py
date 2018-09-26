@@ -1,3 +1,8 @@
+"""
+The ``hiresprv.archive`` module handles data transfers from the Keck Observatory Archive (KOA) archive into the
+user workspace on the server and the reduction from 2D CCD images to 1D spectra.
+"""
+
 import os
 import sys
 import logging
@@ -9,32 +14,25 @@ import urllib
 import http.cookiejar
 
 class Archive:
-
     """
-    Archive class provides KOA archive access functions for the HIRES PRV 
+    The Archive class provides KOA archive access functions for the HIRES PRV
     pipeline reduction service.  
     
     
-    The user's KOA credentials (given at login) are used to search the
-    Keck On-line Archive (KOA).  Matching data are copied to the user's
+    The user's KOA credentials (given at login) are used to search KOA for nights
+    containing HIRES-PRV compatible data. Matching data are copied to the user's
     workspace and raw reduction (conversion to 1D spectra, barycentric
-    correction, etc.) is performed.  Results are logged in the workspace
+    correction, file organization, etc.) is performed.  Results are logged in the workspace
     database table.  All this is done in background; the search functions 
     return almost immediately with an acknowledgement.
     
     Because of pipeline requirements, data is always processed a full 
     night at a time.
 
-    Calling Synopsis:
-       
-        import hiresprv.archive
+    Args:
+        cookiepath: full path to a cookie file saved by :func:`hiresprv.auth.login()`
 
-        srch = Search (cookiepath) 
-
-        srch.by_dates (multi_date_string), or
-        
-        srch.by_datefile (datepath)
-    """    
+    """
 
     cookiepath = ''
     parampath = ''
@@ -46,16 +44,6 @@ class Archive:
     msg = ''
     
     def __init__ (self, cookiepath, **kwargs):
-
-        """
-        Initialize the class with cookiepath
-
-        Args:
-      
-            cookiepath: a full cookie file path saved from auth.Login.
-
-        """
-
         self.project = 'hiresprv' 
         self.instrument = 'hires' 
         self.param = dict()
@@ -117,32 +105,27 @@ class Archive:
 
 
     def by_dates (self, dates):
-        
         """
-        'by_dates' method constructs and submits the URL to server for
-        processing.  It receives an acknowlegement upon successful submission
+        Constructs and submits a URL to the server for processing
+
+        This method receives an acknowledgement upon successful submission
         which means it has successfully authenticated the KOA user and
-        allow to start data search and download.  
+        can start the data search, download, and reduction.
 
         Args:
+            dates (string): a date string or multiple date strings separated by comma or newline.
+                            Each date should be in to 'yyyy-mm-dd' format.
 
-            dates (string): a date string or multiple date strings separated
-            by comma or newline. Each date should be in to 'yyyy-mm-dd' format:
-
-                dates = \'2013-09-12
-                2013-06-29
-                2017-10-11
-                2014-04-24\'
-        
         Returns:
-        
-            JSON structure with status ('ok' or 'error') and a message string
-            e.g., {'status':'error', 'msg':'Failed to connect to KOA'}
-        
-            When the submission is successful, it returns:
+            JSON structure:  Status ('ok' or 'error') and a message string \n
+            "{status':'ok', 'msg':'Processing dates in background.'}" if successful \n
+            "{'status':'error', 'msg':'Failed to connect to KOA'}" if submission failed
 
-            {status':'ok', 'msg':'Processing dates in background.'}
-
+        Example:
+            >>> import hiresprv.archive
+            >>> srch = hiresprv.archive.Search(cookiepath)
+            >>> multi_date_string = "2013-09-23,2013-09-25,2013-10-01"
+            >>> srch.by_dates(multi_date_string)
         """
         
         self.dates = dates
@@ -181,25 +164,16 @@ class Archive:
 
 
     def by_datefile (self, datefile):
-        
         """
         This method operates the same as by_dates method except it reads
-        the dates string from an inputs a file containing a list of dates
+        the dates string from a file containing a list of dates.
 
         Args:
+            datefile (string): Path to a file containing more than one date. Each date
+                      sould be in the 'yyyy-mm-dd' format and separated by new line.
 
-            datefile: a file containing large number of dates; each date 
-                in the 'yyyy-mm-dd' format and separated by new line.
-
-            e.g. 
-            2013-09-12
-            2013-06-29
-            2017-10-11
-            2014-04-24
-        
         Returns:
-        
-            Same status and msg as 'by_dates' method.
+            JSON structure: Same status and msg as :meth:`hiresprv.archive.Archive.by_dates()` method
         """
         
         self.debug = 1

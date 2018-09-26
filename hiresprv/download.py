@@ -1,3 +1,7 @@
+"""
+Download data from the remote workspace
+"""
+
 import os
 import sys
 import logging
@@ -10,13 +14,20 @@ import http.cookiejar
 
 
 class Download:
-
     """
-    The Download class provides methods for users to download the 
-    individual file from their workspace in HIRES PRV pipeline server.
+    The Download class provides methods for users to download
+    individual files from their workspace in HIRES PRV pipeline server.
 
     It validates user information (via cookie file), then contacts PRV 
-    Server to get the requested file.
+    Server to retrieve the requested file.
+
+    The initialization of database class loads the cookie file saved
+    from HIRES PRV pipelone login, parse the cookie to look up the
+    users workspace.
+
+    Args:
+        cookiepath (string): a full cookie file path saved from auth.Login.
+
     """    
 
     cookiepath = ''
@@ -42,17 +53,6 @@ class Download:
     msg = ''
     
     def __init__ (self, cookiepath, **kwargs):
-
-        """
-        The initialization of database class loads the cookie file saved
-        from HIRES PRV pipelone login, parse the cookie to look up the 
-        users workspace. 
-        
-        Args:
-        ----------------
-        cookiepath (string): a full cookie file path saved from auth.Login.
-        """
-
         self.cookiepath = cookiepath
 
         if (len(self.cookiepath) == 0):
@@ -142,14 +142,15 @@ class Download:
 
 
     def rvcurve (self, objname):
-    
         """
-        The rvcurve method downloads a rvcurve csv file from the user's 
-        workspace. 
+        This method downloads a rvcurve csv file from the user's
+        workspace.
         
-        Args: 
-        ---- 
-        objname (string): the object name of the rvcurve.
+        Args:
+            objname (string): object name; must match an entry in the 'TARGET' column of the workspace database
+
+        Returns:
+            JSON structure: structure indicating the status of the submission
         """
         
         if self.debug:
@@ -206,17 +207,18 @@ class Download:
 
     
     def spectrum(self, fileid):
-    
         """
-        The spectrum method downloads one or more spectrum FITS files 
-        from the user's workspace. The downloaded file will be a FITS file 
-        if 'fileids' is a single file name and a GZIP file if multiple 
+        This method downloads one or more extracted spectrum FITS files
+        from the user's workspace. The downloaded file will be a single FITS file
+        if ``fileids`` is a single file name or a GZIP file if multiple
         files are requested.
         
-        Args: 
-        ---- 
-        spec_fileid (string): one or more spectrum file names separated by
-        comma or new line.
+        Args:
+            fileid (string): one or more spectrum file names separated by
+                             comma or new line; must match entries in the 'FILENAME' column in the workspace database
+
+        Returns:
+            JSON structure: structure indicating the status of the submission
         """
         
         if self.debug:

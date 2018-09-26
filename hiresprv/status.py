@@ -1,3 +1,7 @@
+"""
+Monitor the progress of active processing jobs.
+"""
+
 import os
 import sys
 import logging
@@ -11,20 +15,16 @@ import http.cookiejar
 import webbrowser
 
 class Status:
-
     """
-    The HIRES PRV processing involves moving and reducing quite a lot of
-    data and can be quite lengthy.  Most of this processing is therefore
+    The HIRES PRV processing involves transferring and reducing a large amount of
+    data and can be quite lengthy.  Therefore, most of this processing is
     done in background.
 
-    The PRV Status class is used to check the state of the processing,
-    either in detail to watch progress or simply to check whether the 
+    The ``hiresprv.status.Status`` class is used to check the state of the processing,
+    to watch progress, or simply to check whether the
     workspace is busy.  New processing will be rejected until the 
     workspace is ready.
-
-    prvStatus.py class validates user information (via cookie file), then
-    contacts PRV Server to get the current processing status.
-    """    
+    """
 
     cookiepath = ''
     userid = ''
@@ -45,15 +45,13 @@ class Status:
     msg = ''
     
     def __init__ (self, cookiepath, **kwargs):
-
         """
         The PRV Status class initialization checks for the existence 
         of a login cookie and connects the user to their workspace.  
         Methods of this class return information on the current state.
 
         Args:
-
-            cookiepath: a full cookie file path saved from auth.Login.
+            cookiepath (string): full path to cookie file saved from :func:`hiresprv.auth.login()`
 
         """
 
@@ -132,16 +130,18 @@ class Status:
 
     
     def processing_status (self):
-
         """
-        The processing_status method returns a summary of the progress of 
-        the current processing steps in a browser.  For archive retrieval 
+        This method returns a URL to a page displaying the progress of
+        the current processing step.  For archive retrieval
         this includes each file transfer and each raw reduction operation.  
         For data reduction scripts, this includes the various steps in the 
         IDL processing.
 
         An attempt has been made to update the processing status every few 
         seconds to a minute but a few operations will run longer.
+
+        Returns:
+            string: URL to a web page summarizing the progress of the current processing steps
         """
         
         self.url = self.url + '&format=html'
@@ -156,9 +156,11 @@ class Status:
 
 
     def is_busy (self):
-
         """ 
-        (TBD) Documentation on Status.is_busy 
+        Check if the workspace is currently busy processing.
+
+        Returns:
+            JSON structure
         """
 
         self.url = self.url + '&type=busy'
@@ -195,9 +197,11 @@ class Status:
 
     
     def cancel (self):
-
         """ 
-        (TBD) Documentation on Status.cancel 
+        Cancel the active job.
+
+        Returns:
+            JSON structure
         """
         
         self.url = self.url + '&type=cancel'

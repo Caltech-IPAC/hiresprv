@@ -12083,7 +12083,7 @@ Successful login as prvtest_jcgtest7
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="RV-Pipeline-Processing">RV Pipeline Processing<a class="anchor-link" href="#RV-Pipeline-Processing">&#182;</a></h3><p>This shows that on 12/31/2009 three separate RV observations were made of HD185144 followed by five template observations (which the pipeline will combine into a single template).  Five years later, another three RV observations were made.</p>
-<p>As with the data download, the further reduction steps in the pipeline can be quite lengthy (minutes to hours each), so rather than have the user monitor each one, we provide a scripting mechanism so complex reduction jobs can be submitted in on shot.</p>
+<p>As with the data download, the further reduction steps in the pipeline can be quite lengthy (minutes to hours each), so rather than have the user monitor each one, we provide a scripting mechanism so complex reduction jobs can be submitted in one shot.</p>
 <p>In order to turn any of the RV observations into an RV value, we need the template.  So we will generate that first.  Since it is possible to repeat the template observations on more than one day, we need to explicitly state which object and which day.  The script command for this is:</p>
 <pre>template HD185144 20091231</pre><p>To reduce an RV measurement, we have to refer to this template (the target name is enough) and specify which file to reduce.  For example:</p>
 <pre>rv HD185144 r20091231.7</pre><p>Finally, once we have a set of RV measurements for an object, we a generate an RV curve (the pipeline finds all the appropriate RV measurements):</p>

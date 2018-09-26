@@ -1,10 +1,10 @@
 .. _outputs:
 
 Output Data Products
-====================
+********************
 
 Radial Velocity Timeseries
-++++++++++++++++++++++++++
+==========================
 
 Radial velocity timeseries data can be downloaded in CSV format using the :meth:`hiresprv.download.Download.rvcurve` method.
 This table contains six columns:
@@ -64,7 +64,7 @@ This table contains six columns:
 
 
 Wavelength Solution
-+++++++++++++++++++
+===================
 
 Here we provide a standard wavelength solution. Due to the strict requirements on the instrument configuration, this
 static wavelength solution is good to ±1 pixel for any observed spectrum.
@@ -75,7 +75,7 @@ See below for an example of reading and interpreting this file.
 
 
 Extracted Spectra
-+++++++++++++++++
+=================
 Use the :mod:`hiresprv.download` module to access and download the 1D extracted spectra onto your local disk.
 
 The extracted spectra are available as single-extension FITS files. One file will be produced for each observation.
@@ -87,7 +87,7 @@ with a rough wavelength calibration.
 
 
 Example Reading Spectrum
-++++++++++++++++++++++++
+========================
 Example python code to plot the order containing the Mg B triplet:
 
 .. code-block:: python

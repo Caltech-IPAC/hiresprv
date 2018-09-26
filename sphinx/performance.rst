@@ -1,7 +1,7 @@
 .. _performance:
 
 Velocity Precision
-==================
+******************
 
 PRV measurements at the level of 1 m/s requires measuring the positions of stellar spectral lines to 1/1000th of a pixel
 and 10 parts-per-billion precision on the redshift of the target star. These extreme precision requirements make the pipeline
@@ -58,7 +58,6 @@ with the known orbital periods. We can successfully recover the correct velocity
 in `Howard et al. (2009) <http://adsabs.harvard.edu/cgi-bin/nph-data_query?bibcode=2009ApJ...696...75H&db_key=AST&link_type=ABSTRACT>`_. We also see suggestive evidence
 for planets c & d with less than 20% of the data analyzed in `Fulton et al. (2015) <http://adsabs.harvard.edu/cgi-bin/bib_query?arXiv:1504.06629>`_.
 
-|
 .. figure:: _static/hd7924.png
     :width: 35%
     :align: center

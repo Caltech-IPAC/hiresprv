@@ -108,6 +108,11 @@ html_static_path = ['_static']
 #   (make sure the theme of your choice support the use of logo.
 html_logo = '_static/hiresprv_logo.png'
 
+# If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
+# using the given strftime format.
+html_last_updated_fmt = '%b %d, %Y'
+
+
 # Custom sidebar templates, must be a dictionary that maps document names to template names.
 # In This project I chose to include in the sidebar:
 #   - Table of Contents: I chose globaltoc as it is less refined,

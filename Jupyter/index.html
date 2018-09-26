@@ -1,4 +1,4 @@
-<i!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
 <title>HIRES_PRV_Service</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
@@ -11784,11 +11784,10 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
- <p><i><b><font style="color: red;">This notebook is not part of the official release, not even for alpha testing.  The project found it useful for its own testing but makes no guarantees it will even work for anyone else.  Use, and even read, at your own risk.</font></b></i></p>
- 
+<p><i><b><font style="color: red;">WARNING: This tutorial is not part of the official v1.0 release. The code snippets presented within have not been tested. The project makes no guarantees the code shown here will function exactly as presented. Use at your own risk.</font></b></i></p>
 <p>This notebook introduces the Keck HIRES Precision Radial Velocity (PRV) pipeline service and works through one specific example. There are number of variations, mostly having to do with planning processing, which will be covered in more detail by other notebooks but here you will see all the basics.</p>
-
 <p>The notebook is kept with the HIRES PRV Python access toolkit in <a href="https://github.com/Caltech-IPAC/hiresprv">GitHub: https://github.com/Caltech-IPAC/hiresprv</a></p>
+
 </div>
 </div>
 </div>
@@ -11806,7 +11805,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="k">import</span> <span class="n">IFrame</span>
@@ -11829,9 +11828,9 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>KOA userid: prvtest_jcgnb
+<pre>KOA userid: prvtest_jcgtest7
 KOA Password: ········
-Successful login as prvtest_jcgnb
+Successful login as prvtest_jcgtest7
 </pre>
 </div>
 </div>
@@ -11852,7 +11851,7 @@ Successful login as prvtest_jcgnb
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">hiresprv.archive</span> <span class="k">import</span> <span class="n">Archive</span>
@@ -11862,7 +11861,7 @@ Successful login as prvtest_jcgnb
 <span class="n">rtn</span> <span class="o">=</span> <span class="n">koa</span><span class="o">.</span><span class="n">by_dates</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;2009-12-31</span>
 <span class="s2">2013-06-29</span>
 <span class="s2">2013-09-12</span>
-<span class="s2">2014-06-06&quot;&quot;&quot;</span><span class="p">)</span>
+<span class="s2">2015-06-06&quot;&quot;&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -11879,7 +11878,10 @@ Successful login as prvtest_jcgnb
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#39;status&#39;: &#39;ok&#39;, &#39;msg&#39;: &#39;Start HIRES data search. Consult monitor for status.&#39;}
+<pre>{
+    &#34;status&#34;: &#34;ok&#34;,
+    &#34;msg&#34;: &#34;Processing dates in background.&#34;
+}
 
 </pre>
 </div>
@@ -11910,7 +11912,7 @@ Successful login as prvtest_jcgnb
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">hiresprv.status</span> <span class="k">import</span> <span class="n">Status</span>
@@ -11919,7 +11921,7 @@ Successful login as prvtest_jcgnb
 
 <span class="n">url</span> <span class="o">=</span> <span class="n">monitor</span><span class="o">.</span><span class="n">processing_status</span><span class="p">()</span>
 
-<span class="n">IFrame</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">IFrame</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="mi">950</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -11932,14 +11934,14 @@ Successful login as prvtest_jcgnb
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[7]:</div>
+<div class="prompt output_prompt">Out[43]:</div>
 
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
         <iframe
-            width="1000"
+            width="950"
             height="500"
             src="prvStatus.html"
             frameborder="0"
@@ -11980,7 +11982,7 @@ Successful login as prvtest_jcgnb
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">hiresprv.database</span> <span class="k">import</span> <span class="n">Database</span>
@@ -11989,7 +11991,7 @@ Successful login as prvtest_jcgnb
 
 <span class="n">url</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">search</span><span class="p">()</span>
 
-<span class="n">IFrame</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span>  <span class="mi">500</span><span class="p">)</span>
+<span class="n">IFrame</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="mi">950</span><span class="p">,</span>  <span class="mi">500</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12002,14 +12004,14 @@ Successful login as prvtest_jcgnb
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[4]:</div>
+<div class="prompt output_prompt">Out[24]:</div>
 
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
         <iframe
-            width="1000"
+            width="950"
             height="500"
             src="prvState_all.html"
             frameborder="0"
@@ -12036,7 +12038,7 @@ Successful login as prvtest_jcgnb
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">sql</span><span class="o">=</span><span class="s2">&quot;select DATE, OBTYPE, FILENAME, TARGET, BJD, BCVEL from FILES where TARGET like &#39;HD185144&#39;;&quot;</span><span class="p">)</span>
@@ -12054,7 +12056,7 @@ Successful login as prvtest_jcgnb
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[5]:</div>
+<div class="prompt output_prompt">Out[45]:</div>
 
 
 
@@ -12093,7 +12095,7 @@ Successful login as prvtest_jcgnb
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">hiresprv.idldriver</span> <span class="k">import</span> <span class="n">Idldriver</span>
@@ -12128,7 +12130,9 @@ Successful login as prvtest_jcgnb
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#39;status&#39;: &#39;ok&#39;, &#39;msg&#39;: &#39;Script running in background. Consult monitor for status.&#39;}
+<pre>status= ok
+msg= Script running in background. Consult monitor for status.
+None
 </pre>
 </div>
 </div>
@@ -12157,19 +12161,18 @@ Successful login as prvtest_jcgnb
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">hiresprv.download</span> <span class="k">import</span> <span class="n">Download</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">Download</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
 
-<span class="n">rtn</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">rvcurve</span><span class="p">(</span><span class="s2">'185144'</span><span class="p">)</span><p/>
+<span class="n">rtn</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">rvcurve</span><span class="p">(</span><span class="s1">&#39;185144&#39;</span><span class="p">)</span>
 
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;vst185144.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-
+  <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12182,22 +12185,19 @@ Successful login as prvtest_jcgnb
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[3]:</div>
+<div class="prompt"></div>
 
 
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-
-        <iframe
-            width="700"
-            height="325"
-            src="HD185144.txt"
-            frameborder="0"
-            allowfullscreen
-        ></iframe>
-        
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>BJD_TDB,RV,RV_ERR,BC,ADU,CHI2
+15196.69208800001,-1.943826130732300,0.790838,-4620.095214843750,52469,1.04605
+15196.69270200003,0.9499493348483788,0.766279,-4620.210937500000,51810,1.04807
+15196.69329199987,2.105588684332027,0.793553,-4620.320800781250,49018,1.05613
+17180.10972899990,-4.082477614453012,0.879030,3189.794921875000,55280,1.10551
+17180.11030799989,2.432186318703896,0.808950,3189.327880859375,55894,1.10709
+17180.11088699987,0.2617517122871171,0.854971,3188.863037109375,49070,1.10138
+</pre>
 </div>
-
 </div>
 
 </div>

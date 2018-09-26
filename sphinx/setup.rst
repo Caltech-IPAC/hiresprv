@@ -143,6 +143,7 @@ Observations of Stars
 
 Instrumental configuration, considerations, and best practices for observing stars during the night.
 
+* Use the C2 (0.85x14 arcsec) decker for RV observations of stars fainter than V=10 or during twilight, otherwise use B5 (0.86x3.5 arcsec)
 * Check iodine temperature (should be 50C)
 * Top off LN  dewar ~30 min before sunset
 * Open telescope monitoring GUIs from within ``kvnctel`` session
@@ -180,6 +181,20 @@ Instrumental configuration, considerations, and best practices for observing sta
 * Telescope wrap limits
     * From the south wrap, moving through the west, the north limit is an azimuth of 325 degrees.
     * From the north wrap, moving through the west, the south limit is an azimuth of 235 degrees.
+
+
+Template observations
++++++++++++++++++++++
+* Templates should have 2-3x higher SNR than the iodine observations they will be used to analyze
+* Templates must be bracketed by iodine-in observations of rapidly rotating B stars.
+    * We recommend selecting B stars from this paper `<http://adsabs.harvard.edu/abs/2018RNAAS...2a..44C>`_
+    * B stars should be near in the sky as possible to the target
+    * Three consecutive exposures of two different B stars on either side of the target exposure(s) are recommended
+    * The B star observations should be collected using the same decker as the template observation
+* Always ask the OA to focus the telescope before a template sequence
+* Use the B3 decker for stars fainter than V=10, B1 for brighter stars, or E2 for very bright and very RV stable stars
+* Consecutive exposures of the target star between the B stars will be stacked together to maximize SNR
+* Total exposure time for the template exposure(s) should not exceed 1.5 hours
 
 |
 Target Lists

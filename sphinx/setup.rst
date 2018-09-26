@@ -187,7 +187,7 @@ Template observations
 +++++++++++++++++++++
 * Templates should have 2-3x higher SNR than the iodine observations they will be used to analyze
 * Templates must be bracketed by iodine-in observations of rapidly rotating B stars.
-    * We recommend selecting B stars from this paper `<http://adsabs.harvard.edu/abs/2018RNAAS...2a..44C>`_
+    * We recommend selecting B stars from `Clubb et al. (2018) <http://adsabs.harvard.edu/abs/2018RNAAS...2a..44C>`_
     * B stars should be near in the sky as possible to the target
     * Three consecutive exposures of two different B stars on either side of the target exposure(s) are recommended
     * The B star observations should be collected using the same decker as the template observation

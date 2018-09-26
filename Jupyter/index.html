@@ -11784,7 +11784,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><i><b><font style="color: red;">This notebook is not part of the official release, not even for alpha testing.  The project found it useful for its own testing but makes no guarantees it will even work for anyone else.  Use, and even read, at your own risk.</font></b></i></p>
+<p><i><b><font style="color: red;">WARNING: This tutorial is not part of the official v1.0 release. The code snippets presented within have not been tested. The project makes no guarantees the code shown here will function exactly as presented. Use at your own risk.</font></b></i></p>
 <p>This notebook introduces the Keck HIRES Precision Radial Velocity (PRV) pipeline service and works through one specific example. There are number of variations, mostly having to do with planning processing, which will be covered in more detail by other notebooks but here you will see all the basics.</p>
 <p>The notebook is kept with the HIRES PRV Python access toolkit in <a href="https://github.com/Caltech-IPAC/hiresprv">GitHub: https://github.com/Caltech-IPAC/hiresprv</a></p>
 
@@ -11943,7 +11943,7 @@ Successful login as prvtest_jcgtest7
         <iframe
             width="950"
             height="500"
-            src="http://hiresprv.ipac.caltech.edu/cgi-bin/prvMonitor/nph-prvStatus?workspace=prv_20180924_084557_7258&format=html"
+            src="prvStatus.html"
             frameborder="0"
             allowfullscreen
         ></iframe>
@@ -12013,7 +12013,7 @@ Successful login as prvtest_jcgtest7
         <iframe
             width="950"
             height="500"
-            src="http://hiresprv.ipac.caltech.edu/cgi-bin/idlDriver/nph-prvState?workspace=prv_20180924_084557_7258&format=html"
+            src="prvState_all.html"
             frameborder="0"
             allowfullscreen
         ></iframe>
@@ -12065,7 +12065,7 @@ Successful login as prvtest_jcgtest7
         <iframe
             width="700"
             height="325"
-            src="http://hiresprv.ipac.caltech.edu/cgi-bin/idlDriver/nph-prvState?workspace=prv_20180924_084557_7258&format=html&sql=select DATE, OBTYPE, FILENAME, TARGET, BJD, BCVEL from FILES where TARGET like 'HD185144';"
+            src="prvState_HD185144.html"
             frameborder="0"
             allowfullscreen
         ></iframe>
@@ -12083,7 +12083,7 @@ Successful login as prvtest_jcgtest7
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="RV-Pipeline-Processing">RV Pipeline Processing<a class="anchor-link" href="#RV-Pipeline-Processing">&#182;</a></h3><p>This shows that on 12/31/2009 three separate RV observations were made of HD185144 followed by five template observations (which the pipeline will combine into a single template).  Five years later, another three RV observations were made.</p>
-<p>As with the data download, the further reduction steps in the pipeline can be quite lengthy (minutes to hours each), so rather than have the user monitor each one, we provide a scripting mechanism so complex reduction jobs can be submitted in on shot.</p>
+<p>As with the data download, the further reduction steps in the pipeline can be quite lengthy (minutes to hours each), so rather than have the user monitor each one, we provide a scripting mechanism so complex reduction jobs can be submitted in one shot.</p>
 <p>In order to turn any of the RV observations into an RV value, we need the template.  So we will generate that first.  Since it is possible to repeat the template observations on more than one day, we need to explicitly state which object and which day.  The script command for this is:</p>
 <pre>template HD185144 20091231</pre><p>To reduce an RV measurement, we have to refer to this template (the target name is enough) and specify which file to reduce.  For example:</p>
 <pre>rv HD185144 r20091231.7</pre><p>Finally, once we have a set of RV measurements for an object, we a generate an RV curve (the pipeline finds all the appropriate RV measurements):</p>

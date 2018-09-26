@@ -4,12 +4,20 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Output Data Products &#8212; HIRES PRV  documentation</title>
     <link rel="stylesheet" href="_static/graphite.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -17,7 +25,8 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Velocity Precision" href="performance.html" />
     <link rel="prev" title="Data Reduction Tutorial" href="data_reduction_overview.html" /> 
-  </head><body>
+  </head>
+  <body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -46,7 +55,7 @@
 <span id="outputs"></span><h1>Output Data Products<a class="headerlink" href="#output-data-products" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="radial-velocity-timeseries">
 <h2>Radial Velocity Timeseries<a class="headerlink" href="#radial-velocity-timeseries" title="Permalink to this headline">¶</a></h2>
-<p>Radial velocity timeseries data can be downloaded in CSV format using the <a class="reference internal" href="hiresprv.html#hiresprv.download.Download.rvcurve" title="hiresprv.download.Download.rvcurve"><code class="xref py py-meth docutils literal notranslate"><span class="pre">hiresprv.download.Download.rvcurve()</span></code></a> method.
+<p>Radial velocity timeseries data can be downloaded in CSV format using the <a class="reference internal" href="hiresprv.html#hiresprv.download.Download.rvcurve" title="hiresprv.download.Download.rvcurve"><code class="xref py py-meth docutils literal"><span class="pre">hiresprv.download.Download.rvcurve()</span></code></a> method.
 This table contains six columns:</p>
 <table border="1" class="colwidths-given docutils" id="id1">
 <caption><span class="caption-text">RV Timeseries</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
@@ -122,15 +131,15 @@ This table contains six columns:</p>
 </div>
 <div class="section" id="wavelength-solution">
 <h2>Wavelength Solution<a class="headerlink" href="#wavelength-solution" title="Permalink to this headline">¶</a></h2>
-<p>Here we provide a standard wavelength solution. Due to the strict requirements on the instrument configuration, this
-static wavelength solution is good to ±1 pixel for any observed spectrum.</p>
-<p><a class="reference download internal" href="_downloads/keck_rwav.fits" download=""><code class="xref download docutils literal notranslate"><span class="pre">keck_rwav.fits</span></code></a></p>
+<p>Here we provide a standard wavelength solution. Due to the strict requirements on the <a class="reference internal" href="setup.html#setup"><span class="std std-ref">instrument configuration</span></a>, this
+static wavelength solution is good to ±1 pixel for any spectrum observed using the HIRES-PRV configuration.</p>
+<p><a class="reference download internal" href="_downloads/keck_rwav.fits" download=""><code class="xref download docutils literal"><span class="pre">keck_rwav.fits</span></code></a></p>
 <p>See below for an example of reading and interpreting this file.</p>
 </div>
 <div class="section" id="extracted-spectra">
 <h2>Extracted Spectra<a class="headerlink" href="#extracted-spectra" title="Permalink to this headline">¶</a></h2>
-<p>Use the <a class="reference internal" href="hiresprv.html#module-hiresprv.download" title="hiresprv.download"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hiresprv.download</span></code></a> module to access and download the 1D extracted spectra onto your local disk.</p>
-<p>The extracted spectra are available as single-extension FITS files. One file will be produced for each observation.
+<p>Use the <a class="reference internal" href="hiresprv.html#module-hiresprv.download" title="hiresprv.download"><code class="xref py py-mod docutils literal"><span class="pre">hiresprv.download</span></code></a> module to access and download the 1D extracted spectra onto your local disk.</p>
+<p>The extracted spectra are available as single-extension FITS files. One file is produced for each observation.
 The FITS file contains an array with dimensions 16 x 4021.
 Headers for these files are copied directly from the original echellegram images as downloaded from KOA.
 The value at each location in the array corresponds to the ADU counts summed over the spatial dimension of each
@@ -140,7 +149,7 @@ with a rough wavelength calibration.</p>
 <div class="section" id="example-reading-spectrum">
 <h2>Example Reading Spectrum<a class="headerlink" href="#example-reading-spectrum" title="Permalink to this headline">¶</a></h2>
 <p>Example python code to plot the order containing the Mg B triplet:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">hiresprv.download</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">hiresprv.download</span>
 
 <span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
 
@@ -196,14 +205,12 @@ with a rough wavelength calibration.</p>
 
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -230,7 +237,8 @@ with a rough wavelength calibration.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
+      Last updated on Sep 26, 2018.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
     </div>
   </body>
 </html>

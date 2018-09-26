@@ -45,7 +45,12 @@
           <div class="body" role="main">
             
   <h1>Source code for hiresprv.auth</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The ``hiresprv.login`` module initializes an account on the PRV pipeline</span>
+<span class="sd">server for reduction of radial velocity data.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span> 
 <span class="kn">import</span> <span class="nn">getpass</span> 
 <span class="kn">import</span> <span class="nn">logging</span>
@@ -55,36 +60,23 @@
 <span class="kn">import</span> <span class="nn">http.cookiejar</span>
 
 
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">The HIRES PRV login module initializes an account on the PRV pipeline</span>
-<span class="sd">server for reduction of radial velocity data.</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="login"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.auth.login">[docs]</a><span class="k">def</span> <span class="nf">login</span> <span class="p">(</span><span class="n">cookie_path</span><span class="p">):</span>
-
+<div class="viewcode-block" id="login"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.auth.login">[docs]</a><span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="n">cookiepath</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The login function prompts for an authorized KOA user ID and password, </span>
 <span class="sd">    then sets up a workspace (or connects to an existing workspace) on </span>
 <span class="sd">    the PRV pipeline server for that user.  </span>
 
 <span class="sd">    Args:</span>
-
-<span class="sd">        userid     (string): a valid user id exists in the KOA&#39;s user table.</span>
-<span class="sd">        </span>
-<span class="sd">        password   (string): a valid password in the KOA&#39;s user table. </span>
-
-<span class="sd">        cookiepath (string): a file path provided by the user to save </span>
+<span class="sd">        cookiepath (string): a file path provided by the user to save</span>
 <span class="sd">                             returned cookie which is needed for the </span>
 <span class="sd">                             subsequent PRV operations.</span>
 
-<span class="sd">    Calling synopsis: </span>
-<span class="sd">    </span>
-<span class="sd">        import hiresprv.auth</span>
-
-<span class="sd">        login (cookiepath): program will prompt for userid and password </span>
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; import hiresprv.auth</span>
+<span class="sd">        &gt;&gt;&gt; hiresprv.auth.login(cookiepath)</span>
+<span class="sd">        # program will prompt for userid and password</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">cookiepath</span> <span class="o">=</span> <span class="n">cookie_path</span> 
     <span class="n">userid</span><span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="n">password</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
    
@@ -324,6 +316,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
+      Last updated on Sep 26, 2018.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
     </div>
   </body>

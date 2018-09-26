@@ -45,7 +45,11 @@
           <div class="body" role="main">
             
   <h1>Source code for hiresprv.database</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Access and query a user&#39;s observation database.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">json</span>
@@ -58,19 +62,22 @@
 <span class="kn">import</span> <span class="nn">webbrowser</span>
 
 <div class="viewcode-block" id="Database"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.database.Database">[docs]</a><span class="k">class</span> <span class="nc">Database</span><span class="p">:</span>
-
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Each workspace in HIRES PRV pipeline server contains a database</span>
-<span class="sd">    of all the HIRES radial velocity data retrieved from KOA for</span>
-<span class="sd">    the user.</span>
+<span class="sd">    listing all the data retrieved from KOA for the user.</span>
 
-<span class="sd">    The HIRES PRV database class provides methods for querying that</span>
+<span class="sd">    The ``hiresprv.status.Database`` class provides methods for querying that</span>
 <span class="sd">    database.  This information is primarily used to plan reduction</span>
-<span class="sd">    and analysis processing for specific sky targets.</span>
-<span class="sd">    </span>
-<span class="sd">    prvState.py class validates user information (via cookie file), then</span>
-<span class="sd">    contacts PRV Server to get the current metadatas file.</span>
-<span class="sd">    &quot;&quot;&quot;</span>    
+<span class="sd">    and analysis processing.</span>
+
+<span class="sd">    The initialization of database class loads the cookie file saved</span>
+<span class="sd">    from HIRES PRV pipelone login, parse the cookie to look up the</span>
+<span class="sd">    users workspace.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        cookiepath (string): full path to a cookie file saved by :func:`hiresprv.auth.login()`</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">cookiepath</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="n">userid</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
@@ -95,18 +102,6 @@
     <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     
     <span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cookiepath</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The initialization of database class loads the cookie file saved</span>
-<span class="sd">        from HIRES PRV pipelone login, parse the cookie to look up the </span>
-<span class="sd">        users workspace. </span>
-<span class="sd">        </span>
-<span class="sd">        Args:</span>
-<span class="sd">   </span>
-<span class="sd">            cookiepath (string): a full cookie file path saved from auth.Login.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-
         <span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span> <span class="o">=</span> <span class="n">cookiepath</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
@@ -195,37 +190,33 @@
 
     
 <div class="viewcode-block" id="Database.search"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.database.Database.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The search method is the most general mechanism for querying </span>
 <span class="sd">        a workspace database.  The user has the freedom to provide a</span>
 <span class="sd">        general SQL SELECT statement (specifying both the database columns </span>
-<span class="sd">        to be retrieved and constraints on the records returned.  </span>
+<span class="sd">        to be retrieved and constraints on the records returned).</span>
 
 <span class="sd">        When the sql is blank (i.e.: &#39;&#39;), the entire database will be </span>
 <span class="sd">        returned.</span>
 
 <span class="sd">        The user can also select an output format (html, csv or IPAC ASCII).</span>
 <span class="sd">        </span>
-<span class="sd">        The output will be saved to a disk file and/or display in a browser </span>
+<span class="sd">        The output will be saved to a disk file and/or displayed in a browser</span>
 <span class="sd">        depending on the format:</span>
 <span class="sd">       </span>
 <span class="sd">        &#39;cvs&#39; format: save to disk,</span>
 <span class="sd">        &#39;html&#39; format: save to disk and display in browser,</span>
 <span class="sd">        &#39;IPAC&#39; ASCII format: save to disk and display in browser.</span>
 <span class="sd">        </span>
-<span class="sd">        Args: keyword/value pair arguments are all optional.</span>
-<span class="sd">        </span>
-<span class="sd">            sql=&#39;fully qualified sql statement&#39; (string):</span>
-<span class="sd">            if not specified, the whole database table will be returned.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            sql (string):    (optional) fully qualified sql statement</span>
+<span class="sd">                             if empty string or parameter not set, the whole database table will be returned.</span>
+<span class="sd">            format (string): (optional) string specifying the output format (&#39;html&#39;|&#39;csv&#39;|&#39;ipac&#39;); the default is html</span>
+<span class="sd">            filepath (string): (optional) full path where the file will be saved; if not provided,</span>
+<span class="sd">                               a URL string to an HTML view of the table.</span>
 
-<span class="sd">            format=&#39;csv/html/ipac&#39; (string): specifies the format of the </span>
-<span class="sd">            returned file; the default is html.</span>
-
-<span class="sd">            filepath=&#39;full path filename&#39; (string): the filepath to save</span>
-<span class="sd">            the data on the disk; if not provided, the data will be displayed</span>
-<span class="sd">            in the browser.</span>
-
+<span class="sd">        Returns:</span>
+<span class="sd">            string: URL to HTML table if filepath is not specified</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
@@ -309,20 +300,17 @@
 
     
 <div class="viewcode-block" id="Database.target_list"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.database.Database.target_list">[docs]</a>    <span class="k">def</span> <span class="nf">target_list</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The target_list method returns a list of targets currently in</span>
+<span class="sd">        Returns a list of all unique targets currently in</span>
 <span class="sd">        the database.</span>
 <span class="sd">        </span>
-<span class="sd">        Args: keyword/value pair arguments are all optional.</span>
-<span class="sd">        </span>
-<span class="sd">            format=&#39;csv/html/ipac&#39; (string): specifies the format of the </span>
-<span class="sd">            returned file; the default is html.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            format (string): (optional) string specifying the output format (&#39;html&#39;|&#39;csv&#39;|&#39;ipac&#39;); the default is html</span>
+<span class="sd">            filepath (string): (optional) full path where the file will be saved; if not provided,</span>
+<span class="sd">                               a URL string to an HTML view of the table.</span>
 
-<span class="sd">            filepath=&#39;full path filename&#39; (string): the filepath to save</span>
-<span class="sd">            the data on the disk; if not provided, the data will be displayed</span>
-<span class="sd">            in the browser.</span>
-
+<span class="sd">        Returns:</span>
+<span class="sd">            string: URL to HTML table if filepath is not specified</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
@@ -388,23 +376,18 @@
 
 
 <div class="viewcode-block" id="Database.target_info"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.database.Database.target_info">[docs]</a>    <span class="k">def</span> <span class="nf">target_info</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The target_info method retrieves the data pertaining to a specific</span>
+<span class="sd">        This method retrieves the database records for all data pertaining to a specific</span>
 <span class="sd">        target.</span>
 <span class="sd">        </span>
-<span class="sd">        Args: there is on required argument (target), </span>
-<span class="sd">        keyword/value pair arguments are all optional.</span>
-<span class="sd">        </span>
-<span class="sd">            target: target name, </span>
+<span class="sd">        Args:</span>
+<span class="sd">            target (string): target name</span>
+<span class="sd">            format (string): (optional) string specifying the output format (&#39;html&#39;|&#39;csv&#39;|&#39;ipac&#39;); the default is html</span>
+<span class="sd">            filepath (string): (optional) full path where the file will be saved; if not provided,</span>
+<span class="sd">                               a URL string to an HTML view of the table.</span>
 
-<span class="sd">            format=&#39;csv/html/ipac&#39; (string): specifies the format of the </span>
-<span class="sd">            returned file; the default is html.</span>
-
-<span class="sd">            filepath=&#39;full path filename&#39; (string): the filepath to save</span>
-<span class="sd">            the data on the disk; if not provided, the data will be displayed</span>
-<span class="sd">            in the browser.</span>
-
+<span class="sd">        Returns:</span>
+<span class="sd">            string: URL to HTML table if filepath is not specified</span>
 <span class="sd">        &quot;&quot;&quot;</span>
        
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
@@ -476,14 +459,12 @@
 
 
 <div class="viewcode-block" id="Database.sqlite"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.database.Database.sqlite">[docs]</a>    <span class="k">def</span> <span class="nf">sqlite</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
-        
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The sqlite method downloads the sqlite database file.</span>
+<span class="sd">        Downloads the sqlite database file</span>
 <span class="sd">        </span>
-<span class="sd">        Args: </span>
-<span class="sd">        </span>
-<span class="sd">            filepath (string): full path filename to save the database file </span>
-<span class="sd">            on the disk.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            filepath (string): path and filename to save the database file</span>
+<span class="sd">                               on the disk.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         
@@ -683,6 +664,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
+      Last updated on Sep 26, 2018.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
     </div>
   </body>

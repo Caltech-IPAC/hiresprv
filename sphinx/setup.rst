@@ -224,6 +224,7 @@ Target Lists
 Create your target list during the day and upload to the Keck computers. Your SA can help you upload.
 
 * Make a "script" for the full night of observations following the `Keck guidelines <https://www2.keck.hawaii.edu/observing/starlist.html>`_
+* Consult the plot on the :ref:`RV performance page <performance>` when considering exposure times and signal to noise ratios
 * Inform the operator of the path to your script you will use and ask them to load it into MAGIQ.
 * Once the OA has loaded the list, click on 'Map OA starlist' from dropdown on MAGIQ (Useful for planning observations.)
 * Use the middle mouse button to highlight the next target to observe.

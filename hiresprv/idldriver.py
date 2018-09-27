@@ -1,3 +1,7 @@
+"""
+Drive the underlying IDL code
+"""
+
 import os
 import sys
 import logging
@@ -9,16 +13,24 @@ import http.cookiejar
 
 
 class Idldriver:
-
     """
     The principle processing of the HIRES PRV pipeline is done by a
     set of IDL scripts developed over several decades.  This processing
-    is quite intensive and takes a long time and so is run in the 
+    is quite intensive, takes a long time, and is run in the
     background.
 
-    The HIRES PRV idldriver class provides functionality that allows
-    the user to submit radial velocity data reduction scripts that 
-    get sent to a sequence of these IDL scripts.
+    The ``hiresprv.idldriver.Idldriver`` class provides functionality that allows
+    the user to submit reduction scripts that
+    are parsed and sent to the appropriate IDL functions on the server.
+
+    The idldriver class intialization checks for cookie indicating
+    a previous login that connects to the user to a PRV pipeline
+    workspace.  This workspace is populated with data from the KOA
+    Archive using the :class:`hiresprv.archive.Archive` class methods.
+
+    Args:
+        cookiepath: a full path to cookie file saved from :func:`hiresprv.auth.login()`
+
     """
 
     cookiepath = ''
@@ -34,19 +46,6 @@ class Idldriver:
     debugfname = '' 
 
     def __init__ (self, cookiepath, **kwargs):
-
-        """
-        The idldriver class intialization checks for cookie indicating 
-        a previous login that connects to the user to a PRV pipeline 
-        workspace.  This workspace is populated with data from the KOA 
-        Archive using Archive class methods.
-        
-        Args:
-
-            cookiepath: a full cookie file path saved from auth.Login.
-
-        """
-
         self.cookiepath = cookiepath
 
         if ('debugfile' in kwargs): 
@@ -102,15 +101,29 @@ class Idldriver:
 
         return
 
-
-    def run_script (self, script):   
-
+    def run_script(self, script):
         """
-        The HIRES PRV idldriver class run method is given a script of steps to
+        This method is given a script of steps to
         run on the data in the user's workspace.  These steps include creating 
-        a template spectrum for a sky target, reducing a specific radial 
-        velocity measurement using such a template, and creating an RV curve 
+        a template spectrum for a sky target, reducing specific radial
+        velocity measurement(s) using such a template, and creating an RV curve
         from a set of reduced RV measurements.
+
+        Args:
+            script (string): script containing processing steps separated by newlines
+
+        Example:
+            >>> from hiresprv.idldriver import Idldriver
+            >>> idl = Idldriver('prv.cookies')
+            >>> rtn = idl.run_script(\"\"\"
+            template 185144 20091231
+            rv 185144 r20091231.72
+            rv 185144 r20091231.73
+            rv 185144 r20091231.74
+            rv 185144 r20150606.145
+            rv 185144 r20150606.146
+            rv 185144 r20150606.147
+            rvcurve 185144\"\"\")
         """
 
         self.script = script 
@@ -134,7 +147,15 @@ class Idldriver:
         return
 
 
-    def run_scriptfile (self, scriptfile):   
+    def run_scriptfile (self, scriptfile):
+        """
+        Same as :meth:`hiresprv.idldriver.Idldriver.run_script()` except takes a path to a file
+        containing the script lines.
+
+        Args:
+            scriptfile (string): path to plain text file that will be read as a continuous string
+                                 and used as input to the :meth:`hiresprv.idldriver.Idldriver.run_script()` method.
+        """
 
         self.scriptfile = scriptfile 
     

@@ -45,7 +45,11 @@
           <div class="body" role="main">
             
   <h1>Source code for hiresprv.download</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Download data from the remote workspace</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">json</span>
@@ -57,13 +61,20 @@
 
 
 <div class="viewcode-block" id="Download"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.download.Download">[docs]</a><span class="k">class</span> <span class="nc">Download</span><span class="p">:</span>
-
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The Download class provides methods for users to download the </span>
-<span class="sd">    individual file from their workspace in HIRES PRV pipeline server.</span>
+<span class="sd">    The Download class provides methods for users to download</span>
+<span class="sd">    individual files from their workspace in HIRES PRV pipeline server.</span>
 
 <span class="sd">    It validates user information (via cookie file), then contacts PRV </span>
-<span class="sd">    Server to get the requested file.</span>
+<span class="sd">    Server to retrieve the requested file.</span>
+
+<span class="sd">    The initialization of database class loads the cookie file saved</span>
+<span class="sd">    from HIRES PRV pipelone login, parse the cookie to look up the</span>
+<span class="sd">    users workspace.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        cookiepath (string): a full cookie file path saved from auth.Login.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>    
 
     <span class="n">cookiepath</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
@@ -89,17 +100,6 @@
     <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     
     <span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cookiepath</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The initialization of database class loads the cookie file saved</span>
-<span class="sd">        from HIRES PRV pipelone login, parse the cookie to look up the </span>
-<span class="sd">        users workspace. </span>
-<span class="sd">        </span>
-<span class="sd">        Args:</span>
-<span class="sd">        ----------------</span>
-<span class="sd">        cookiepath (string): a full cookie file path saved from auth.Login.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span> <span class="o">=</span> <span class="n">cookiepath</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
@@ -189,14 +189,15 @@
 
 
 <div class="viewcode-block" id="Download.rvcurve"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.download.Download.rvcurve">[docs]</a>    <span class="k">def</span> <span class="nf">rvcurve</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objname</span><span class="p">):</span>
-    
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The rvcurve method downloads a rvcurve csv file from the user&#39;s </span>
-<span class="sd">        workspace. </span>
+<span class="sd">        This method downloads a rvcurve csv file from the user&#39;s</span>
+<span class="sd">        workspace.</span>
 <span class="sd">        </span>
-<span class="sd">        Args: </span>
-<span class="sd">        ---- </span>
-<span class="sd">        objname (string): the object name of the rvcurve.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            objname (string): object name; must match an entry in the &#39;TARGET&#39; column of the workspace database</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            JSON structure: structure indicating the status of the submission</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
@@ -253,17 +254,18 @@
 
     
 <div class="viewcode-block" id="Download.spectrum"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.download.Download.spectrum">[docs]</a>    <span class="k">def</span> <span class="nf">spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fileid</span><span class="p">):</span>
-    
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The spectrum method downloads one or more spectrum FITS files </span>
-<span class="sd">        from the user&#39;s workspace. The downloaded file will be a FITS file </span>
-<span class="sd">        if &#39;fileids&#39; is a single file name and a GZIP file if multiple </span>
+<span class="sd">        This method downloads one or more extracted spectrum FITS files</span>
+<span class="sd">        from the user&#39;s workspace. The downloaded file will be a single FITS file</span>
+<span class="sd">        if ``fileids`` is a single file name or a GZIP file if multiple</span>
 <span class="sd">        files are requested.</span>
 <span class="sd">        </span>
-<span class="sd">        Args: </span>
-<span class="sd">        ---- </span>
-<span class="sd">        spec_fileid (string): one or more spectrum file names separated by</span>
-<span class="sd">        comma or new line.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            fileid (string): one or more spectrum file names separated by</span>
+<span class="sd">                             comma or new line; must match entries in the &#39;FILENAME&#39; column in the workspace database</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            JSON structure: structure indicating the status of the submission</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
@@ -539,6 +541,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
+      Last updated on Sep 26, 2018.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
     </div>
   </body>

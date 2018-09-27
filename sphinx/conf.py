@@ -52,7 +52,12 @@ templates_path = ['_templates']
 # -- Define and configure non-default extensions ----------------------------------------------------------------------
 
 # You can find a list of available extension here: http://www.sphinx-doc.org/en/master/extensions.html
-extensions = ['sphinx.ext.todo', 'sphinx.ext.viewcode', 'sphinx.ext.autodoc', 'sphinx.ext.imgmath', 'nbsphinx']
+extensions = ['sphinx.ext.todo',
+              'sphinx.ext.viewcode',
+              'sphinx.ext.autodoc',
+              'sphinx.ext.imgmath',
+              'sphinx.ext.napoleon',
+              'nbsphinx']
 
 # Above extensions explanation and configurations:
 
@@ -107,6 +112,11 @@ html_static_path = ['_static']
 # Defining the static path allows me to add my own logo for the project:
 #   (make sure the theme of your choice support the use of logo.
 html_logo = '_static/hiresprv_logo.png'
+
+# If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
+# using the given strftime format.
+html_last_updated_fmt = '%b %d, %Y'
+
 
 # Custom sidebar templates, must be a dictionary that maps document names to template names.
 # In This project I chose to include in the sidebar:

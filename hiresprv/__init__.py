@@ -10,7 +10,7 @@ the raw reduction).  Metadata for all the files retrieved is stored in a
 workspace/user-specific database table, which is user-searchable and 
 provides the information needed to construct reduction scripts.
 
-Both the archive retrieval and reduction steps can be quite length 
+Both the archive retrieval and reduction steps can be quite lengthy
 (often hours), so this is done in background and there are tools for
 monitoring the state of the processing.
 """

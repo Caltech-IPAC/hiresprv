@@ -1,3 +1,7 @@
+"""
+Access and query a user's observation database.
+"""
+
 import os
 import sys
 import logging
@@ -11,19 +15,22 @@ import http.cookiejar
 import webbrowser
 
 class Database:
-
     """
     Each workspace in HIRES PRV pipeline server contains a database
-    of all the HIRES radial velocity data retrieved from KOA for
-    the user.
+    listing all the data retrieved from KOA for the user.
 
-    The HIRES PRV database class provides methods for querying that
+    The ``hiresprv.status.Database`` class provides methods for querying that
     database.  This information is primarily used to plan reduction
-    and analysis processing for specific sky targets.
-    
-    prvState.py class validates user information (via cookie file), then
-    contacts PRV Server to get the current metadatas file.
-    """    
+    and analysis processing.
+
+    The initialization of database class loads the cookie file saved
+    from HIRES PRV pipelone login, parse the cookie to look up the
+    users workspace.
+
+    Args:
+        cookiepath (string): full path to a cookie file saved by :func:`hiresprv.auth.login()`
+
+    """
 
     cookiepath = ''
     userid = ''
@@ -48,18 +55,6 @@ class Database:
     msg = ''
     
     def __init__ (self, cookiepath, **kwargs):
-
-        """
-        The initialization of database class loads the cookie file saved
-        from HIRES PRV pipelone login, parse the cookie to look up the 
-        users workspace. 
-        
-        Args:
-   
-            cookiepath (string): a full cookie file path saved from auth.Login.
-        """
-
-
         self.cookiepath = cookiepath
 
         if (len(self.cookiepath) == 0):
@@ -148,37 +143,33 @@ class Database:
 
     
     def search (self, **kwargs):
-        
         """
         The search method is the most general mechanism for querying 
         a workspace database.  The user has the freedom to provide a
         general SQL SELECT statement (specifying both the database columns 
-        to be retrieved and constraints on the records returned.  
+        to be retrieved and constraints on the records returned).
 
         When the sql is blank (i.e.: ''), the entire database will be 
         returned.
 
         The user can also select an output format (html, csv or IPAC ASCII).
         
-        The output will be saved to a disk file and/or display in a browser 
+        The output will be saved to a disk file and/or displayed in a browser
         depending on the format:
        
         'cvs' format: save to disk,
         'html' format: save to disk and display in browser,
         'IPAC' ASCII format: save to disk and display in browser.
         
-        Args: keyword/value pair arguments are all optional.
-        
-            sql='fully qualified sql statement' (string):
-            if not specified, the whole database table will be returned.
+        Args:
+            sql (string):    (optional) fully qualified sql statement
+                             if empty string or parameter not set, the whole database table will be returned.
+            format (string): (optional) string specifying the output format ('html'|'csv'|'ipac'); the default is html
+            filepath (string): (optional) full path where the file will be saved; if not provided,
+                               a URL string to an HTML view of the table.
 
-            format='csv/html/ipac' (string): specifies the format of the 
-            returned file; the default is html.
-
-            filepath='full path filename' (string): the filepath to save
-            the data on the disk; if not provided, the data will be displayed
-            in the browser.
-
+        Returns:
+            string: URL to HTML table if filepath is not specified
         """
         
         if self.debug:
@@ -262,20 +253,17 @@ class Database:
 
     
     def target_list (self, **kwargs):
-        
         """
-        The target_list method returns a list of targets currently in
+        Returns a list of all unique targets currently in
         the database.
         
-        Args: keyword/value pair arguments are all optional.
-        
-            format='csv/html/ipac' (string): specifies the format of the 
-            returned file; the default is html.
+        Args:
+            format (string): (optional) string specifying the output format ('html'|'csv'|'ipac'); the default is html
+            filepath (string): (optional) full path where the file will be saved; if not provided,
+                               a URL string to an HTML view of the table.
 
-            filepath='full path filename' (string): the filepath to save
-            the data on the disk; if not provided, the data will be displayed
-            in the browser.
-
+        Returns:
+            string: URL to HTML table if filepath is not specified
         """
         
         if self.debug:
@@ -341,23 +329,18 @@ class Database:
 
 
     def target_info (self, target, **kwargs):
-        
         """
-        The target_info method retrieves the data pertaining to a specific
+        This method retrieves the database records for all data pertaining to a specific
         target.
         
-        Args: there is on required argument (target), 
-        keyword/value pair arguments are all optional.
-        
-            target: target name, 
+        Args:
+            target (string): target name
+            format (string): (optional) string specifying the output format ('html'|'csv'|'ipac'); the default is html
+            filepath (string): (optional) full path where the file will be saved; if not provided,
+                               a URL string to an HTML view of the table.
 
-            format='csv/html/ipac' (string): specifies the format of the 
-            returned file; the default is html.
-
-            filepath='full path filename' (string): the filepath to save
-            the data on the disk; if not provided, the data will be displayed
-            in the browser.
-
+        Returns:
+            string: URL to HTML table if filepath is not specified
         """
        
         if self.debug:
@@ -429,14 +412,12 @@ class Database:
 
 
     def sqlite(self, filepath):
-        
         """
-        The sqlite method downloads the sqlite database file.
+        Downloads the sqlite database file
         
-        Args: 
-        
-            filepath (string): full path filename to save the database file 
-            on the disk.
+        Args:
+            filepath (string): path and filename to save the database file
+                               on the disk.
 
         """
         

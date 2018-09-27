@@ -45,7 +45,11 @@
           <div class="body" role="main">
             
   <h1>Source code for hiresprv.status</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Monitor the progress of active processing jobs.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">json</span>
@@ -58,20 +62,16 @@
 <span class="kn">import</span> <span class="nn">webbrowser</span>
 
 <div class="viewcode-block" id="Status"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.status.Status">[docs]</a><span class="k">class</span> <span class="nc">Status</span><span class="p">:</span>
-
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The HIRES PRV processing involves moving and reducing quite a lot of</span>
-<span class="sd">    data and can be quite lengthy.  Most of this processing is therefore</span>
+<span class="sd">    The HIRES PRV processing involves transferring and reducing a large amount of</span>
+<span class="sd">    data and can be quite lengthy.  Therefore, most of this processing is</span>
 <span class="sd">    done in background.</span>
 
-<span class="sd">    The PRV Status class is used to check the state of the processing,</span>
-<span class="sd">    either in detail to watch progress or simply to check whether the </span>
+<span class="sd">    The ``hiresprv.status.Status`` class is used to check the state of the processing,</span>
+<span class="sd">    to watch progress, or simply to check whether the</span>
 <span class="sd">    workspace is busy.  New processing will be rejected until the </span>
 <span class="sd">    workspace is ready.</span>
-
-<span class="sd">    prvStatus.py class validates user information (via cookie file), then</span>
-<span class="sd">    contacts PRV Server to get the current processing status.</span>
-<span class="sd">    &quot;&quot;&quot;</span>    
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">cookiepath</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="n">userid</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
@@ -92,15 +92,13 @@
     <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     
     <span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cookiepath</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The PRV Status class initialization checks for the existence </span>
 <span class="sd">        of a login cookie and connects the user to their workspace.  </span>
 <span class="sd">        Methods of this class return information on the current state.</span>
 
 <span class="sd">        Args:</span>
-
-<span class="sd">            cookiepath: a full cookie file path saved from auth.Login.</span>
+<span class="sd">            cookiepath (string): full path to cookie file saved from :func:`hiresprv.auth.login()`</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -179,16 +177,18 @@
 
     
 <div class="viewcode-block" id="Status.processing_status"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.status.Status.processing_status">[docs]</a>    <span class="k">def</span> <span class="nf">processing_status</span> <span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The processing_status method returns a summary of the progress of </span>
-<span class="sd">        the current processing steps in a browser.  For archive retrieval </span>
+<span class="sd">        This method returns a URL to a page displaying the progress of</span>
+<span class="sd">        the current processing step.  For archive retrieval</span>
 <span class="sd">        this includes each file transfer and each raw reduction operation.  </span>
 <span class="sd">        For data reduction scripts, this includes the various steps in the </span>
 <span class="sd">        IDL processing.</span>
 
 <span class="sd">        An attempt has been made to update the processing status every few </span>
 <span class="sd">        seconds to a minute but a few operations will run longer.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            string: URL to a web page summarizing the progress of the current processing steps</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">+</span> <span class="s1">&#39;&amp;format=html&#39;</span>
@@ -203,9 +203,11 @@
 
 
 <div class="viewcode-block" id="Status.is_busy"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.status.Status.is_busy">[docs]</a>    <span class="k">def</span> <span class="nf">is_busy</span> <span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
         <span class="sd">&quot;&quot;&quot; </span>
-<span class="sd">        (TBD) Documentation on Status.is_busy </span>
+<span class="sd">        Check if the workspace is currently busy processing.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            JSON structure</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">+</span> <span class="s1">&#39;&amp;type=busy&#39;</span>
@@ -242,9 +244,11 @@
 
     
 <div class="viewcode-block" id="Status.cancel"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.status.Status.cancel">[docs]</a>    <span class="k">def</span> <span class="nf">cancel</span> <span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
         <span class="sd">&quot;&quot;&quot; </span>
-<span class="sd">        (TBD) Documentation on Status.cancel </span>
+<span class="sd">        Cancel the active job.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            JSON structure</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">+</span> <span class="s1">&#39;&amp;type=cancel&#39;</span>
@@ -362,6 +366,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
+      Last updated on Sep 26, 2018.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
     </div>
   </body>

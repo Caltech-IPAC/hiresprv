@@ -1,3 +1,8 @@
+"""
+The ``hiresprv.login`` module initializes an account on the PRV pipeline
+server for reduction of radial velocity data.
+"""
+
 import os
 import sys 
 import getpass 
@@ -8,36 +13,23 @@ import urllib
 import http.cookiejar
 
 
-"""
-The HIRES PRV login module initializes an account on the PRV pipeline
-server for reduction of radial velocity data.
-"""
-
-def login (cookie_path):
-
+def login(cookiepath):
     """
     The login function prompts for an authorized KOA user ID and password, 
     then sets up a workspace (or connects to an existing workspace) on 
     the PRV pipeline server for that user.  
 
     Args:
-
-        userid     (string): a valid user id exists in the KOA's user table.
-        
-        password   (string): a valid password in the KOA's user table. 
-
-        cookiepath (string): a file path provided by the user to save 
+        cookiepath (string): a file path provided by the user to save
                              returned cookie which is needed for the 
                              subsequent PRV operations.
 
-    Calling synopsis: 
-    
-        import hiresprv.auth
-
-        login (cookiepath): program will prompt for userid and password 
+    Example:
+        >>> import hiresprv.auth
+        >>> hiresprv.auth.login(cookiepath)
+        # program will prompt for userid and password
     """
 
-    cookiepath = cookie_path 
     userid= ''
     password = ''
    

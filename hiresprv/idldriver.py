@@ -2,13 +2,10 @@
 Drive the underlying IDL code
 """
 
-import os
-import sys
 import logging
 import json
 
 import requests
-import urllib 
 import http.cookiejar
 
 
@@ -45,59 +42,60 @@ class Idldriver:
     debug = 0
     debugfname = '' 
 
-    def __init__ (self, cookiepath, **kwargs):
+    def __init__(self, cookiepath, **kwargs):
         self.cookiepath = cookiepath
 
-        if ('debugfile' in kwargs): 
+        if 'debugfile' in kwargs:
             self.debugfname = kwargs.get('debugfile')
 
-        if (len(self.debugfname) > 0):
+        if len(self.debugfname) > 0:
     
-            self.debug = 1;
-            logging.basicConfig (filename=self.debugfname, level=logging.DEBUG)
-         
-            with open (self.debugfname, 'w') as fdebug:
+            self.debug = 1
+            logging.basicConfig(filename=self.debugfname, level=logging.DEBUG)
+
+            # TODO: fdebug unused
+            with open(self.debugfname, 'w') as fdebug:
                 pass
     
         if self.debug:
-            logging.debug ('')
-            logging.debug ('DEBUG> Enter idldriver.init:')
-            logging.debug ('cookiepath= [%s]' % cookiepath)
-            logging.debug ('debug= [%d] debugfname= [%s]' 
-                % (self.debug, self.debugfname))
+            logging.debug('')
+            logging.debug('DEBUG> Enter idldriver.init:')
+            logging.debug('cookiepath= [%s]' % cookiepath)
+            logging.debug('debug= [%d] debugfname= [%s]' % (self.debug, self.debugfname))
       
-        if (len(cookiepath) == 0):
-            print ('Required input cookie not found.')
+        if len(cookiepath) == 0:
+            print('Required input cookie not found.')
             return
         
 #
 #  load cookie
 #
-        self.cookiejar = http.cookiejar.MozillaCookieJar (self.cookiepath)
+        self.cookiejar = http.cookiejar.MozillaCookieJar(self.cookiepath)
         
         self.cookie = '' 
         try:
-            self.cookiejar.load (ignore_discard=True, ignore_expires=True)
+            self.cookiejar.load(ignore_discard=True, ignore_expires=True)
 
             for cookie in self.cookiejar:
 
-                if (cookie.name == 'HIPRV'):
+                if cookie.name == 'HIPRV':
                     self.cookie = cookie
+        # TODO: bare except clause
         except:
             pass
 
             if self.debug:
-                logging.debug ('')
-                logging.debug ('load cookie exception')
+                logging.debug('')
+                logging.debug('load cookie exception')
 
-        if (self.cookie != None):
+        if self.cookie is not None:
 
             if self.debug:
-                logging.debug ('')
-                logging.debug ('cookie= %s' % self.cookie)
-                logging.debug ('cookiename= %s' % self.cookie.name)
-                logging.debug ('cookievalue= %s' % self.cookie.value)
-                logging.debug ('cookiedomain= %s' % self.cookie.domain)
+                logging.debug('')
+                logging.debug('cookie= %s' % self.cookie)
+                logging.debug('cookiename= %s' % self.cookie.name)
+                logging.debug('cookievalue= %s' % self.cookie.value)
+                logging.debug('cookiedomain= %s' % self.cookie.domain)
 
         return
 
@@ -129,25 +127,23 @@ class Idldriver:
         self.script = script 
         
         if self.debug:
-            logging.debug ('')
-            logging.debug ('Enter idldriver.run_script:')
-            logging.debug ('script= %s' % self.script)
+            logging.debug('')
+            logging.debug('Enter idldriver.run_script:')
+            logging.debug('script= %s' % self.script)
     
         self.__submitScript()
 
         if self.debug:
-            logging.debug ('')
-            logging.debug ('returned submitScript: status= [%s]' 
-                % self.status)
-            logging.debug ('returned submitScript: msg= [%s]' % self.msg)
+            logging.debug('')
+            logging.debug('returned submitScript: status= [%s]' % self.status)
+            logging.debug('returned submitScript: msg= [%s]' % self.msg)
        
-        print ('status= %s' % self.status)
-        print ('msg= %s' % self.msg)
+        print('status= %s' % self.status)
+        print('msg= %s' % self.msg)
 
         return
 
-
-    def run_scriptfile (self, scriptfile):
+    def run_scriptfile(self, scriptfile):
         """
         Same as :meth:`hiresprv.idldriver.Idldriver.run_script()` except takes a path to a file
         containing the script lines.
@@ -160,52 +156,50 @@ class Idldriver:
         self.scriptfile = scriptfile 
     
         if self.debug:
-            logging.debug ('')
-            logging.debug ('Enter idldriver.run_scriptfile:')
-            logging.debug ('scriptfile= %s' % self.scriptfile)
+            logging.debug('')
+            logging.debug('Enter idldriver.run_scriptfile:')
+            logging.debug('scriptfile= %s' % self.scriptfile)
     
 #
 #  read file into a script
 #
-        with open (scriptfile, 'r') as fp:
+        with open(scriptfile, 'r') as fp:
             
             self.script = fp.read()
     
         if self.debug:
-            logging.debug ('')
-            logging.debug ('script read from file')
-            logging.debug ('script= %s' % self.script)
+            logging.debug('')
+            logging.debug('script read from file')
+            logging.debug('script= %s' % self.script)
     
         self.__submitScript()
 
         if self.debug:
-            logging.debug ('')
-            logging.debug ('returned submitScript: status= [%s]' 
-                % self.status)
-            logging.debug ('returned submitScript: msg= [%s]' % self.msg)
+            logging.debug('')
+            logging.debug('returned submitScript: status= [%s]' % self.status)
+            logging.debug('returned submitScript: msg= [%s]' % self.msg)
        
-        print ('status= %s' % self.status)
-        print ('msg= %s' % self.msg)
+        print('status= %s' % self.status)
+        print('msg= %s' % self.msg)
 
         return
 
-    
-    def __submitScript (self):
+    # TODO: Technically shouldn't use camel case in a function or method name
+    def __submitScript(self):
    
         debug = 0 
 
         if debug:
-            logging.debug ('')
-            logging.debug ('Enter idldriver.__submitScript')
-            logging.debug ('script= %s' % self.script)
-    
-        
-        scriptdict = {'script':self.script}
+            logging.debug('')
+            logging.debug('Enter idldriver.__submitScript')
+            logging.debug('script= %s' % self.script)
+
+        scriptdict = {'script': self.script}
     
         if debug:
-            logging.debug ('')
-            logging.debug ('format script to dictionary, scriptdict=')
-            logging.debug (scriptdict)
+            logging.debug('')
+            logging.debug('format script to dictionary, scriptdict=')
+            logging.debug(scriptdict)
 
 #
 #   construct URL 
@@ -213,31 +207,30 @@ class Idldriver:
         url = "http://hiresprv.ipac.caltech.edu/cgi-bin/idlDriver/nph-idlDriver"
 
         if debug:
-            logging.debug ('')
-            logging.debug ('url= %s' % url)
+            logging.debug('')
+            logging.debug('url= %s' % url)
 
-        self.response =  requests.post (url, files=scriptdict, \
-            cookies=self.cookiejar) 
+        self.response = requests.post(url, files=scriptdict, cookies=self.cookiejar)
 
         if debug:
-            logging.debug ('')
-            logging.debug ('response: %s' % self.response.text)
+            logging.debug('')
+            logging.debug('response: %s' % self.response.text)
         
-        jsonstr = json.loads (self.response.text)
+        jsonstr = json.loads(self.response.text)
 
         if debug:
-            logging.debug ('')
-            logging.debug ('jsonstr: %s' % jsonstr)
+            logging.debug('')
+            logging.debug('jsonstr: %s' % jsonstr)
 
         self.status = jsonstr["status"]
         self.msg = jsonstr["msg"]
 
         if debug:
-            logging.debug ('')
-            logging.debug ('status: %s' % self.status)
-            logging.debug ('msg: %s' % self.msg)
+            logging.debug('')
+            logging.debug('status: %s' % self.status)
+            logging.debug('msg: %s' % self.msg)
 
-        retval = {}
+        retval = dict()
 
         retval["status"] = self.status
         retval["msg"] = self.msg

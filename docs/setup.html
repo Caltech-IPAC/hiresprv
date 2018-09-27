@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Observing Instructions &#8212; HIRES PRV  documentation</title>
     <link rel="stylesheet" href="_static/graphite.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -25,8 +17,7 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Data Reduction Tutorial" href="data_reduction_overview.html" />
     <link rel="prev" title="Documentation for the HIRES Radial Velocity Processing Environment" href="index.html" /> 
-  </head>
-  <body>
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -71,9 +62,10 @@ pipeline to function and produce reliable PRVs.</p>
 <li>“Do you want to continue running the setup script?” type y and return</li>
 <li>Enter observer names</li>
 <li><dl class="first docutils">
-<dt>Confirm data directory (e.g. /s/sdata125/hires1/20??monDD/)</dt>
+<dt>Confirm data directory (e.g. /s/sdata125/hires?/20??monDD/)</dt>
 <dd><ul class="first last">
 <li>Use the current UT date. (typically one day later than local calendar date), hit enter.</li>
+<li>The ‘hires?’ part of the path corresponds to your HIRES user account given by the SA</li>
 </ul>
 </dd>
 </dl>
@@ -117,7 +109,7 @@ pipeline to function and produce reliable PRVs.</p>
 <li><dl class="first docutils">
 <dt>Check ln2 dewar level:</dt>
 <dd><ul class="first last">
-<li>In a terminal within the VNC session type: <code class="docutils literal"><span class="pre">ln2</span></code></li>
+<li>In a terminal within the VNC session type: <code class="docutils literal notranslate"><span class="pre">ln2</span></code></li>
 <li>The dewar level is also visible when using “START all HIRES GUIs” in the window with the XHIRES GUI.</li>
 <li><dl class="first docutils">
 <dt>Top off dewar (if level is below 70%)</dt>
@@ -166,12 +158,12 @@ pipeline to function and produce reliable PRVs.</p>
 <li><dl class="first docutils">
 <dt>Spectrograph configuration:</dt>
 <dd><ul class="first last">
-<li>Slit should read 14.08” (<code class="docutils literal"><span class="pre">m</span> <span class="pre">slitname</span> <span class="pre">=</span> <span class="pre">opened</span></code>)</li>
-<li>Filter1 = clear (<code class="docutils literal"><span class="pre">m</span> <span class="pre">fil1name</span> <span class="pre">=</span> <span class="pre">clear</span></code>; using gui okay)</li>
-<li>Filter2 = clear (<code class="docutils literal"><span class="pre">m</span> <span class="pre">fil2name</span> <span class="pre">=</span> <span class="pre">clear</span></code>; using gui okay)</li>
+<li>Slit should read 14.08” (<code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">slitname</span> <span class="pre">=</span> <span class="pre">opened</span></code>)</li>
+<li>Filter1 = clear (<code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">fil1name</span> <span class="pre">=</span> <span class="pre">clear</span></code>; using gui okay)</li>
+<li>Filter2 = clear (<code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">fil2name</span> <span class="pre">=</span> <span class="pre">clear</span></code>; using gui okay)</li>
 <li>Collimator = red (This should always be set by SA)</li>
-<li>Set collimator focus: <code class="docutils literal"><span class="pre">m</span> <span class="pre">cofraw</span> <span class="pre">=</span> <span class="pre">+70000</span></code>; Use <code class="docutils literal"><span class="pre">s</span> <span class="pre">cofraw</span></code> to show value</li>
-<li>Set camera focus: <code class="docutils literal"><span class="pre">m</span> <span class="pre">cafraw</span> <span class="pre">=</span> <span class="pre">0</span></code>; Use <code class="docutils literal"><span class="pre">s</span> <span class="pre">cafraw</span></code> to show value</li>
+<li>Set collimator focus: <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">cofraw</span> <span class="pre">=</span> <span class="pre">+70000</span></code>; Use <code class="docutils literal notranslate"><span class="pre">s</span> <span class="pre">cofraw</span></code> to show value (±2000 units is insignificant)</li>
+<li>Set camera focus: <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">cafraw</span> <span class="pre">=</span> <span class="pre">0</span></code>; Use <code class="docutils literal notranslate"><span class="pre">s</span> <span class="pre">cafraw</span></code> to show value (±2000 units is insignificant)</li>
 <li>Move echelle and cross disperser angles with “A” button to positions from last HIRES-PRV night (get these values from your SA)</li>
 </ul>
 </dd>
@@ -195,20 +187,22 @@ as well-focused as possible.</p>
 <li>Turn OFF Exposure meter</li>
 <li>Lamp: Th-Ar #2</li>
 <li>Lamp Filter: NG3 filter</li>
-<li>In terminal window: <code class="docutils literal"><span class="pre">m</span> <span class="pre">deckname</span> <span class="pre">=</span> <span class="pre">D5</span></code> (in a terminal window on lehoula)</li>
+<li>In terminal window: <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">deckname</span> <span class="pre">=</span> <span class="pre">D5</span></code> (in a terminal window on lehoula)</li>
 <li>Iodine: Out</li>
 <li>ObsType = Object</li>
 <li>Texp: 10 sec (in brown “CCD” window, enter exposure time. Click “UpdateCCD”)</li>
 <li>Set x-disperser and echelle to values from previous HIRES-PRV night.</li>
 <li>Click “EXPOSE”</li>
 <li><dl class="first docutils">
-<dt>Run focus and alignment analysis in IDL:  <code class="docutils literal"><span class="pre">IDL&gt;</span> <span class="pre">foc,inpfile='20180201_0001.fits'</span></code></dt>
+<dt>Run focus and alignment analysis in IDL:</dt>
 <dd><ul class="first last">
+<li>Have your SA direct you to the location of the IDL alignment code</li>
+<li>From within that directory launch IDL and run <code class="docutils literal notranslate"><span class="pre">foc</span></code> on the just-collected ThAr spectrum (e.g. <code class="docutils literal notranslate"><span class="pre">IDL&gt;</span> <span class="pre">foc,inpfile='20180201_0001.fits'</span></code>)</li>
 <li>Check instructions from focus program and move echelle and cross disperser as needed.</li>
 <li>If focus program crashes, you may need to move echelle or cross disperser manually.</li>
 <li>If note regarding ‘Counts in lines too low’ appears re-position lines manually.</li>
 <li>Check fwhm focus value returned by the focus program. It should be in the range 2.28-2.40.</li>
-<li>If the fwhm is greater than 2.40, try changing the cafraw (add 10,000 to the current value). Use the terminal command: <code class="docutils literal"><span class="pre">m</span> <span class="pre">cafraw</span> <span class="pre">=</span> <span class="pre">10000</span></code>. Keep changing the cafraw value in steps of 10,000 until you observe a minimum in the fwhm values. (this should need to be done only rarely)</li>
+<li>If the fwhm is greater than 2.40, try changing the cafraw (add 10,000 to the current value). Use the terminal command: <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">cafraw</span> <span class="pre">=</span> <span class="pre">10000</span></code>. Keep changing the cafraw value in steps of 10,000 until you observe a minimum in the fwhm values. (this should need to be done only rarely)</li>
 </ul>
 </dd>
 </dl>
@@ -216,7 +210,8 @@ as well-focused as possible.</p>
 <li><dl class="first docutils">
 <dt>If manual grating moves are needed:</dt>
 <dd><ul class="first last">
-<li>Run <code class="docutils literal"><span class="pre">foc.pro</span></code> with the <code class="docutils literal"><span class="pre">/mark</span></code> flag: <code class="docutils literal"><span class="pre">IDL&gt;</span> <span class="pre">foc,inpfile='20180201_0001.fits',</span> <span class="pre">/mark</span></code></li>
+<li>First double check that you are at the same echelle and cross disperser positions from the last HIRES-PRV run</li>
+<li>Run <code class="docutils literal notranslate"><span class="pre">foc.pro</span></code> with the <code class="docutils literal notranslate"><span class="pre">/mark</span></code> flag: <code class="docutils literal notranslate"><span class="pre">IDL&gt;</span> <span class="pre">foc,inpfile='20180201_0001.fits',</span> <span class="pre">/mark</span></code></li>
 <li>Note positions of bright lines relative to boxes drawn on echelle format</li>
 <li><dl class="first docutils">
 <dt>Estimate the appropriate moves to center the lines in the boxes. This may require some trial and error.</dt>
@@ -243,7 +238,7 @@ as well-focused as possible.</p>
 <li>Turn OFF Exposure meter</li>
 <li>Lamp: Th-Ar #2</li>
 <li>Lamp Filter: ng3</li>
-<li>Decker: B5 <code class="docutils literal"><span class="pre">m</span> <span class="pre">deckname</span> <span class="pre">=</span> <span class="pre">B5</span></code> (0.85 x 3.5 arcsec, ==&gt; 4.0 pixel projected slit) <em>WARNING: Never use the HIRES GUI to switch deckers! Using the GUI will adjust cofraw/cafraw and the</em> <a class="reference internal" href="#alignment"><span class="std std-ref">focus and alignment process</span></a> <em>will need to be repeated.</em></li>
+<li>Decker: B5 <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">deckname</span> <span class="pre">=</span> <span class="pre">B5</span></code> (0.85 x 3.5 arcsec, ==&gt; 4.0 pixel projected slit) <em>WARNING: Never use the HIRES GUI to switch deckers! Using the GUI will adjust cofraw/cafraw and the</em> <a class="reference internal" href="#alignment"><span class="std std-ref">focus and alignment process</span></a> <em>will need to be repeated.</em></li>
 <li>Iodine: Out</li>
 <li>Exposure: 1 sec (take 1 or 2 at beginning and end of night)</li>
 </ul>
@@ -256,7 +251,7 @@ as well-focused as possible.</p>
 <li>Turn OFF Exposure meter</li>
 <li>Lamp: Th-Ar #2</li>
 <li>Lamp Filter: ng3</li>
-<li>Decker: B5 <code class="docutils literal"><span class="pre">m</span> <span class="pre">deckname</span> <span class="pre">=</span> <span class="pre">B5</span></code> (0.85 x 3.5 arcsec, ==&gt; 4.0 pixel projected slit)</li>
+<li>Decker: B5 <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">deckname</span> <span class="pre">=</span> <span class="pre">B5</span></code> (0.85 x 3.5 arcsec, ==&gt; 4.0 pixel projected slit)</li>
 <li>Iodine: Out</li>
 <li>Exposure: 2 sec (take 1 or 2 at beginning and end of night)</li>
 </ul>
@@ -270,7 +265,7 @@ as well-focused as possible.</p>
 <li>Turn OFF Exposure meter.</li>
 <li>Lamp: Quartz2</li>
 <li>Lamp Filter: ng3</li>
-<li>Decker: B1 <code class="docutils literal"><span class="pre">m</span> <span class="pre">deckname=B1</span></code> (0.57 x 3.5 arcsec, ==&gt; 3.0 pixel projected slit)</li>
+<li>Decker: B1 <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">deckname=B1</span></code> (0.57 x 3.5 arcsec, ==&gt; 3.0 pixel projected slit)</li>
 <li>Iodine: In</li>
 <li>Exposure: 3 secs</li>
 <li>check saturation: &lt; 20,000 counts on middle chip?</li>
@@ -286,7 +281,7 @@ as well-focused as possible.</p>
 <li>Turn OFF Exposure meter.</li>
 <li>Lamp: Quartz2</li>
 <li>Lamp Filter: ng3</li>
-<li>Decker: B1 <code class="docutils literal"><span class="pre">m</span> <span class="pre">deckname=B1</span></code> (0.57 x 3.5 arcsec, ==&gt; 3.0 pixel projected slit)</li>
+<li>Decker: B1 <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">deckname=B1</span></code> (0.57 x 3.5 arcsec, ==&gt; 3.0 pixel projected slit)</li>
 <li>Iodine: In</li>
 <li>Exposure: 2 secs</li>
 <li>check saturation: &lt; 20,000 counts on middle chip?</li>
@@ -301,11 +296,11 @@ as well-focused as possible.</p>
 <li>Turn OFF Exposure meter</li>
 <li>Lamp: Quartz2</li>
 <li>Lamp Filter: ng3</li>
-<li>Decker: C1 <code class="docutils literal"><span class="pre">m</span> <span class="pre">deckname</span> <span class="pre">=</span> <span class="pre">C1</span></code> (0.85 x 7.0 arcsec, ==&gt; 4.0 pixel projected slit)</li>
+<li>Decker: C1 <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">deckname</span> <span class="pre">=</span> <span class="pre">C1</span></code> (0.85 x 7.0 arcsec, ==&gt; 4.0 pixel projected slit)</li>
 <li>Iodine: Out</li>
 <li>Exposure : 1 sec (check saturation: middle chip should have 10,000 &lt; counts &lt; 20,000)</li>
 <li><dl class="first docutils">
-<dt>Collect remaining exposures using the command <code class="docutils literal"><span class="pre">exp_acq</span> <span class="pre">49</span> <span class="pre">;</span> <span class="pre">m</span> <span class="pre">lampname=none</span> <span class="pre">;</span> <span class="pre">m</span> <span class="pre">deckname=C2</span></code>. This command will:</dt>
+<dt>Collect remaining exposures using the command <code class="docutils literal notranslate"><span class="pre">exp_acq</span> <span class="pre">49</span> <span class="pre">;</span> <span class="pre">m</span> <span class="pre">lampname=none</span> <span class="pre">;</span> <span class="pre">m</span> <span class="pre">deckname=C2</span></code>. This command will:</dt>
 <dd><ul class="first last">
 <li>Take 49 exposures with the current setup</li>
 <li>Turn off all lamps</li>
@@ -328,7 +323,7 @@ as well-focused as possible.</p>
 <li>Check iodine temperature (should be 50C)</li>
 <li>Top off ln2 dewar ~30 min before sunset</li>
 <li><dl class="first docutils">
-<dt>Open telescope monitoring GUIs from within <code class="docutils literal"><span class="pre">kvnctel</span></code> session</dt>
+<dt>Open telescope monitoring GUIs from within <code class="docutils literal notranslate"><span class="pre">kvnctel</span></code> session</dt>
 <dd><ul class="first last">
 <li>From a blue desktop background click and select: “K1 Guider Eavesdropping” &gt; “Start Observer UI (MAGIQ)”</li>
 <li>From a blue desktop background click and select: “K1 Telescope Status Menu” &gt; “FACSUM”</li>
@@ -368,6 +363,8 @@ as well-focused as possible.</p>
 <li>Filter #2 is “clear”</li>
 <li>TV filters are “bg38” and “nd_0.01”</li>
 <li>Iodine IN/OUT as appropriate</li>
+<li>Periodically check seeing by using the projection cut tool in DS9. The pixel scale in the spatial dimension is ~0.3”</li>
+<li>Ask the SA to run a telescope focus every ~3 hours or if you notice significant, unexplained degradation in your seeing estimates</li>
 </ul>
 </dd>
 </dl>
@@ -375,7 +372,7 @@ as well-focused as possible.</p>
 <li><dl class="first docutils">
 <dt>Start observing bright stars up to 20 min before 12 degree twilight:</dt>
 <dd><ul class="first last">
-<li><code class="docutils literal"><span class="pre">m</span> <span class="pre">deckname</span> <span class="pre">=</span> <span class="pre">C2</span></code> (0.85 x 14.0 arcsec)</li>
+<li><code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">deckname</span> <span class="pre">=</span> <span class="pre">C2</span></code> (0.85 x 14.0 arcsec)</li>
 <li>If seeing is &gt; 2.0”, then begin observing only 10 minutes before 12 deg twilight and use B5.</li>
 <li>Likewise if seeing &gt; 2.0” at the end of the night, use B5 in twilight and end 10 minutes after 12deg</li>
 <li><em>WARNING: use command line to change deckers, NOT HIRES GUI</em></li>
@@ -387,7 +384,7 @@ as well-focused as possible.</p>
 <li><dl class="first docutils">
 <dt>During/after -12-degree twilight:</dt>
 <dd><ul class="first last">
-<li><code class="docutils literal"><span class="pre">m</span> <span class="pre">deckname</span> <span class="pre">=</span> <span class="pre">B5</span></code> (0.85 x 3.5 arcsec, ==&gt; 4.0 pixel projected slit)</li>
+<li><code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">deckname</span> <span class="pre">=</span> <span class="pre">B5</span></code> (0.85 x 3.5 arcsec, ==&gt; 4.0 pixel projected slit)</li>
 </ul>
 </dd>
 </dl>
@@ -424,7 +421,7 @@ as well-focused as possible.</p>
 <li>We recommend selecting B stars from <a class="reference external" href="http://adsabs.harvard.edu/abs/2018RNAAS...2a..44C">Clubb et al. (2018)</a></li>
 <li>B stars should be near in the sky as possible to the target</li>
 <li>Three consecutive exposures of two different B stars on either side of the target exposure(s) are recommended</li>
-<li>The B star observations should be collected using the same decker as the template observation</li>
+<li>The B star observations should be collected using the same decker as the template observation and exposed to 250k on the exposure meter</li>
 </ul>
 </dd>
 </dl>
@@ -439,6 +436,8 @@ as well-focused as possible.</p>
 <h2>Target Lists<a class="headerlink" href="#target-lists" title="Permalink to this headline">¶</a></h2>
 <p>Create your target list during the day and upload to the Keck computers. Your SA can help you upload.</p>
 <ul class="simple">
+<li>Make a “script” for the full night of observations following the <a class="reference external" href="https://www2.keck.hawaii.edu/observing/starlist.html">Keck guidelines</a></li>
+<li>Consult the plot on the <a class="reference internal" href="performance.html#performance"><span class="std std-ref">RV performance page</span></a> when considering exposure times and signal to noise ratios</li>
 <li>Inform the operator of the path to your script you will use and ask them to load it into MAGIQ.</li>
 <li>Once the OA has loaded the list, click on ‘Map OA starlist’ from dropdown on MAGIQ (Useful for planning observations.)</li>
 <li>Use the middle mouse button to highlight the next target to observe.</li>
@@ -501,6 +500,7 @@ handoff from a non HIRES-PRV user during the night.</p>
 </dd>
 </dl>
 </li>
+<li>General tips about Keck observing: <a class="reference external" href="http://keckobservatory.org/about/observing/">http://keckobservatory.org/about/observing/</a></li>
 <li>Useful link with extra HIRES info: <a class="reference external" href="http://www2.keck.hawaii.edu/inst/hires/startup.html">http://www2.keck.hawaii.edu/inst/hires/startup.html</a></li>
 <li>In ds9, if the mouse, clicking and dragging is zooming, instead of drawing a cross section, choose Edit→Pointer</li>
 <li>When using the C2 decker, always be careful to center the star on the slit.</li>
@@ -549,12 +549,14 @@ handoff from a non HIRES-PRV user during the night.</p>
 
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -581,8 +583,8 @@ handoff from a non HIRES-PRV user during the night.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
-      Last updated on Sep 26, 2018.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+      Last updated on Sep 27, 2018.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
     </div>
   </body>
 </html>

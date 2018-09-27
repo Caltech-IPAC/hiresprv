@@ -9,6 +9,12 @@ very sensitive to details like the version of IDL and the machine architecture o
 a study comparing the velocities output by the NExScI HIRES-PRV pipeline to archival PRV analysis of the same spectra.
 
 
+Precision vs. Signal to Noise
+=============================
+
+Consult the plot below when considering
+
+
 RV Standard Stars
 =================
 

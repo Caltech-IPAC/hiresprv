@@ -2,16 +2,10 @@
 The ``hiresprv.archive`` module handles data transfers from the Keck Observatory Archive (KOA) archive into the
 user workspace on the server and the reduction from 2D CCD images to 1D spectra.
 """
-
-import os
-import sys
 import logging
-import json
-import ijson
-
 import requests
-import urllib
 import http.cookiejar
+
 
 class Archive:
     """
@@ -43,68 +37,64 @@ class Archive:
     status = ''
     msg = ''
     
-    def __init__ (self, cookiepath, **kwargs):
+    def __init__(self, cookiepath, **kwargs):
         self.project = 'hiresprv' 
         self.instrument = 'hires' 
         self.param = dict()
 
         self.cookiepath = cookiepath
-        if (len(self.cookiepath) == 0):
-            print ('Failed to find required parameter: cookiepath')
+        if len(self.cookiepath) == 0:
+            print('Failed to find required parameter: cookiepath')
             return
  
-        if ('debugfile' in kwargs): 
+        if 'debugfile' in kwargs:
             self.debugfile = kwargs.get('debugfile')
 
-        if (len(self.debugfile) > 0):
+        if len(self.debugfile) > 0:
             
             self.debug = 1
            
-            logging.basicConfig (filename=self.debugfile, level=logging.DEBUG)
-            
-            with open (self.debugfile, 'w') as fdebug:
+            logging.basicConfig(filename=self.debugfile, level=logging.DEBUG)
+
+            # TODO: do we need this? It doesn't look like fdebug is being used for anything
+            with open(self.debugfile, 'w') as fdebug:
                 pass
 
         if self.debug:
-            logging.debug ('')
-            logging.debug ('Enter Search.init:')
-            logging.debug ('cookiepath= %s' % self.cookiepath)
+            logging.debug('')
+            logging.debug('Enter Search.init:')
+            logging.debug('cookiepath= %s' % self.cookiepath)
     
-        self.url = 'http://hiresprv.ipac.caltech.edu/cgi-bin/PrvPython/' \
-            +  'nph-prvSearch.py?'
+        self.url = 'http://hiresprv.ipac.caltech.edu/cgi-bin/PrvPython/nph-prvSearch.py?'
     
         if self.debug:
-            logging.debug ('')
-            logging.debug ('url= [%s]' % self.url)
-       
+            logging.debug('')
+            logging.debug('url= [%s]' % self.url)
 
-        self.cookiejar = http.cookiejar.MozillaCookieJar (self.cookiepath)
+        self.cookiejar = http.cookiejar.MozillaCookieJar(self.cookiepath)
     
-        if (len(self.cookiepath) > 0):
-   
+        if len(self.cookiepath) > 0:
             try: 
-                self.cookiejar.load (ignore_discard=True, ignore_expires=True);
+                self.cookiejar.load(ignore_discard=True, ignore_expires=True)
             
                 if self.debug:
-                    logging.debug (
-                        'cookie loaded from %s' % self.cookiepath)
+                    logging.debug('cookie loaded from %s' % self.cookiepath)
         
                     for cookie in self.cookiejar:
-                        logging.debug ('cookie= %s' % cookie)
-                        logging.debug ('cookie.name= %s' % cookie.name)
-                        logging.debug ('cookie.value= %s' % cookie.value)
-                        logging.debug ('cookie.domain= %s' % cookie.domain)
+                        logging.debug('cookie= %s' % cookie)
+                        logging.debug('cookie.name= %s' % cookie.name)
+                        logging.debug('cookie.value= %s' % cookie.value)
+                        logging.debug('cookie.domain= %s' % cookie.domain)
+        # TODO: need to define a particular exception we are looking for blank except statements are not PEP8 compliant
             except:
                 pass
 
                 if self.debug:
-                    logging.debug (
-                        'prvSearch: loadCookie exception')
+                    logging.debug('prvSearch: loadCookie exception')
  
         return 
 
-
-    def by_dates (self, dates):
+    def by_dates(self, dates):
         """
         Constructs and submits a URL to the server for processing
 
@@ -123,47 +113,41 @@ class Archive:
 
         Example:
             >>> import hiresprv.archive
-            >>> srch = hiresprv.archive.Search(cookiepath)
+            >>> srch = hiresprv.archive.Archive(cookiepath)
             >>> multi_date_string = "2013-09-23,2013-09-25,2013-10-01"
             >>> srch.by_dates(multi_date_string)
         """
-        
-        self.dates = dates
 
         if self.debug:
-            logging.debug ('')
-            logging.debug ('Enter by_dates: dates= %s' % dates)
+            logging.debug('')
+            logging.debug('Enter by_dates: dates= %s' % dates)
 
- 
         self.param['project'] = self.project
         self.param['instrument'] = self.instrument
-        self.param['time'] = self.dates 
+        self.param['time'] = dates
 
         if self.debug:
-            logging.debug ('')
+            logging.debug('')
 
-            for k,v in self.param.items():
-                logging.debug ('k= %s v= %s ' % (k, v))
-        
-                
-        self.__send_post () 
+            for k, v in self.param.items():
+                logging.debug('k= %s v= %s ' % (k, v))
+
+        self.__send_post()
 
         if self.debug:
-            logging.debug ('')
-            logging.debug ('returned send_post')
-            logging.debug ('status= %s' % self.status)
-            logging.debug ('msg= %s' % self.msg)
-  
+            logging.debug('')
+            logging.debug('returned send_post')
+            logging.debug('status= %s' % self.status)
+            logging.debug('msg= %s' % self.msg)
 
-        retval = {}
+        retval = dict()
 
         retval['status'] = self.status
         retval['msg'] = self.msg
 
         return retval
 
-
-    def by_datefile (self, datefile):
+    def by_datefile(self, datefile):
         """
         This method operates the same as by_dates method except it reads
         the dates string from a file containing a list of dates.
@@ -178,91 +162,83 @@ class Archive:
         
         self.debug = 1
         
-        print ('Enter by_datefile: datefile= %s' % datefile)
-        print ('self.debug= %d' % self.debug)
-
-        self.datefile = datefile
+        print('Enter by_datefile: datefile= %s' % datefile)
+        print('self.debug= %d' % self.debug)
 
         if self.debug:
-            logging.debug ('')
-            logging.debug ('Enter by_dates: datefile= %s' % datefile)
+            logging.debug('')
+            logging.debug('Enter by_dates: datefile= %s' % datefile)
 
-        with open (datefile, 'r') as fp:
+        with open(datefile, 'r') as fp:
            
             if self.debug:
-                logging.debug ('')
+                logging.debug('')
             
-            dates = fp.read();
+            dates = fp.read()
 
         if self.debug:
-             logging.debug ('datefile= %s' % datefile)
-             logging.debug ('dates= [%s]' % dates)
+            logging.debug('datefile= %s' % datefile)
+            logging.debug('dates= [%s]' % dates)
 
         len_date = len(dates)
 
-        self.dates = dates[:(len_date-1)]  
+        dates = dates[:(len_date-1)]
 
         if self.debug:
-             logging.debug ('2: self.dates= [%s]' % self.dates)
+            logging.debug('2: self.dates= [%s]' % dates)
 
         self.param['project'] = self.project
         self.param['instrument'] = self.instrument
-        self.param['time'] = self.dates 
+        self.param['time'] = dates
 
         if self.debug:
-            logging.debug ('')
+            logging.debug('')
 
-            for k,v in self.param.items():
-                logging.debug ('k= %s v= %s ' % (k, v))
-        
-                
-        self.__send_post () 
+            for k, v in self.param.items():
+                logging.debug('k= %s v= %s ' % (k, v))
+
+        self.__send_post()
 
         if self.debug:
-            logging.debug ('')
-            logging.debug ('returned send_post')
-            logging.debug ('status= %s' % self.status)
-            logging.debug ('msg= %s' % self.msg)
+            logging.debug('')
+            logging.debug('returned send_post')
+            logging.debug('status= %s' % self.status)
+            logging.debug('msg= %s' % self.msg)
   
-        retval = {}
+        retval = dict()
 
         retval['status'] = self.status
         retval['msg'] = self.msg
 
         return retval
 
-        return
-
-
-    def __send_post (self):
+    def __send_post(self):
 
         if self.debug:
-            logging.debug ('')
-            logging.debug ('Enter send_post:')
+            logging.debug('')
+            logging.debug('Enter send_post:')
    
         self.url = 'http://hiresprv.ipac.caltech.edu/cgi-bin/PrvPython/nph-prvSearch.py'
 
         if self.debug:
-            logging.debug ('url= %s' % self.url)
+            logging.debug('url= %s' % self.url)
 
         try:
 
-            self.response =  requests.post (self.url, data=self.param, \
-                cookies=self.cookiejar) 
+            self.response = requests.post(self.url, data=self.param, cookies=self.cookiejar)
 
             if self.debug:
-                logging.debug ('')
-                logging.debug ('request sent')
+                logging.debug('')
+                logging.debug('request sent')
 
-            print (self.response.text)
+            print(self.response.text)
         
         except Exception as e:
             
             if self.debug:
-                logging.debug ('')
-                logging.debug ('exception: e= %s' % e)
+                logging.debug('')
+                logging.debug('exception: e= %s' % e)
 
-            print ('post request exception: %s' % e)
+            print('post request exception: %s' % e)
         
         return
-

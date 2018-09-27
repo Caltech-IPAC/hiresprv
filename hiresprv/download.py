@@ -2,14 +2,10 @@
 Download data from the remote workspace
 """
 
-import os
-import sys
 import logging
 import json
-import ijson
 
 import requests
-import urllib
 import http.cookiejar
 
 
@@ -45,103 +41,101 @@ class Download:
     
     content_type = ''
 
-
     debug = 0
     debugfile = '' 
 
     status = ''
     msg = ''
     
-    def __init__ (self, cookiepath, **kwargs):
+    def __init__(self, cookiepath, **kwargs):
         self.cookiepath = cookiepath
 
-        if (len(self.cookiepath) == 0):
+        if len(self.cookiepath) == 0:
 
             self.status = 'error'
             self.msg = 'Failed to find required parameter: cookiepath'
             
-            retval = {}
+            retval = dict()
             retval['status'] = self.status
             retval['msg'] = self.msg
 
+            # TODO: return in ``__init__``
             return retval
 
-
-        if (len(kwargs) > 0):
+        if len(kwargs) > 0:
        
-            if ('debugfile' in kwargs.keys()):
+            if 'debugfile' in kwargs.keys():
                 self.debugfile = kwargs['debugfile']
          
-        if (len(self.debugfile) > 0):
+        if len(self.debugfile) > 0:
             
             self.debug = 1
-            logging.basicConfig (filename=self.debugfile, level=logging.DEBUG)
-            
-            with open (self.debugfile, 'w') as fdebug:
+            logging.basicConfig(filename=self.debugfile, level=logging.DEBUG)
+
+            # TODO: fdebug variable unused
+            with open(self.debugfile, 'w') as fdebug:
                 pass
          
         if self.debug:
-            print ('Enter database.init:')
-            print ('cookiepath= %s' % self.cookiepath)
+            print('Enter database.init:')
+            print('cookiepath= %s' % self.cookiepath)
 
-            logging.debug ('')
-            logging.debug ('Enter database.init:')
-            logging.debug ('cookiepath= %s' % self.cookiepath)
+            logging.debug('')
+            logging.debug('Enter database.init:')
+            logging.debug('cookiepath= %s' % self.cookiepath)
    
-        self.cookiejar = http.cookiejar.MozillaCookieJar (self.cookiepath)
+        self.cookiejar = http.cookiejar.MozillaCookieJar(self.cookiepath)
     
-        if (len(self.cookiepath) > 0):
+        if len(self.cookiepath) > 0:
    
             try: 
-                self.cookiejar.load (ignore_discard=True, ignore_expires=True)
+                self.cookiejar.load(ignore_discard=True, ignore_expires=True)
     
                 if self.debug:
-                    logging.debug ('cookie loaded from %s' 
-                        % self.cookiepath)
+                    logging.debug('cookie loaded from %s' % self.cookiepath)
         
                 for cookie in self.cookiejar:
                     
                     if self.debug:
-                        logging.debug ('cookie= %s' % cookie)
-                        logging.debug ('cookie.name= %s' % cookie.name)
-                        logging.debug ('cookie.value= %s' % cookie.value)
-                        logging.debug ('cookie.domain= %s' % cookie.domain)
+                        logging.debug('cookie= %s' % cookie)
+                        logging.debug('cookie.name= %s' % cookie.name)
+                        logging.debug('cookie.value= %s' % cookie.value)
+                        logging.debug('cookie.domain= %s' % cookie.domain)
                     
-                    if (cookie.name == 'HIPRV'):
+                    if cookie.name == 'HIPRV':
                         self.cookiestr = cookie.value                
-                        
+
+            # TODO: bare except statement
             except:
                 pass
 
                 if self.debug:
-                    logging.debug ('loadCookie exception')
+                    logging.debug('loadCookie exception')
  
         if self.debug:
-            logging.debug ('cookiestr= %s' % self.cookiestr)
+            logging.debug('cookiestr= %s' % self.cookiestr)
        
-        if (len(self.cookiestr) > 0): 
-            arr = self.cookiestr.split ('|') 
+        if len(self.cookiestr) > 0:
+            arr = self.cookiestr.split('|')
             narr = len(arr)
         
         if self.debug:
-            logging.debug ('narr= [%d]' % narr)
-            for i in range (0, narr):
-                logging.debug ('arr[%d]= [%s]' % (i, arr[i]))
+            logging.debug('narr= [%d]' % narr)
+            for i in range(0, narr):
+                logging.debug('arr[%d]= [%s]' % (i, arr[i]))
         
-        if (narr == 3):    
+        if narr == 3:
             self.userid = arr[0]
             self.workspace = arr[2]
 
         if self.debug:
-            logging.debug ('userid= %s workspace= %s' 
-                % (self.userid, self.workspace))
+            logging.debug('userid= %s workspace= %s' % (self.userid, self.workspace))
        
         self.url = 'http://hiresprv.ipac.caltech.edu/cgi-bin/idlDriver/nph-prvDownload?workspace=' + self.workspace
 
         return
 
-
-    def rvcurve (self, objname):
+    def rvcurve(self, objname):
         """
         This method downloads a rvcurve csv file from the user's
         workspace.
@@ -154,15 +148,15 @@ class Download:
         """
         
         if self.debug:
-            logging.debug ('')
-            logging.debug ('Enter Download.rvcurve: objname = %s' % objname)
+            logging.debug('')
+            logging.debug('Enter Download.rvcurve: objname = %s' % objname)
        
-        if (len (objname) == 0):
+        if len(objname) == 0:
             
             self.status = 'error'
             self.msg = 'Input argument objname is required.'
             
-            retval = {}
+            retval = dict()
             retval['status'] = self.status
             retval['msg'] = self.msg
 
@@ -173,39 +167,36 @@ class Download:
         url = self.url + '&cmd=rvcurve&objname=' + objname + '&debug=1'
 
         if self.debug:
-            logging.debug ('')
-            logging.debug ('url= [%s]' % url)
+            logging.debug('')
+            logging.debug('url= [%s]' % url)
 
         self.__submit_request(url)
         
         if self.debug:
-            logging.debug ('')
-            logging.debug ('returned submit_request:')
-            logging.debug ('self.status= [%s]' % self.status)
-            logging.debug ('self.msg= [%s]' % self.msg)
-       
+            logging.debug('')
+            logging.debug('returned submit_request:')
+            logging.debug('self.status= [%s]' % self.status)
+            logging.debug('self.msg= [%s]' % self.msg)
 
-        if (self.status == 'ok'):
+        if self.status == 'ok':
 
             if self.debug:
-                logging.debug ('')
+                logging.debug('')
             
-            self.__save_to_file (self.filepath) 
+            self.__save_to_file(self.filepath)
         
             if self.debug:
-                logging.debug ('')
-                logging.debug ('returned save_to_file:')
-                logging.debug ('self.status= [%s]' % self.status)
-                logging.debug ('self.msg= [%s]' % self.msg)
-       
+                logging.debug('')
+                logging.debug('returned save_to_file:')
+                logging.debug('self.status= [%s]' % self.status)
+                logging.debug('self.msg= [%s]' % self.msg)
 
-        retval = {}
+        retval = dict()
         retval['status'] = self.status
         retval['msg'] = self.msg
 
         return retval
 
-    
     def spectrum(self, fileid):
         """
         This method downloads one or more extracted spectrum FITS files
@@ -222,15 +213,15 @@ class Download:
         """
         
         if self.debug:
-            logging.debug ('')
-            logging.debug ('Enter Download.spectrum: fileid = %s' % fileid)
+            logging.debug('')
+            logging.debug('Enter Download.spectrum: fileid = %s' % fileid)
        
-        if (len (fileid) == 0):
+        if len(fileid) == 0:
 
             self.status = 'error'
             self.msg = 'Input argument fileid is required.'
             
-            retval = {}
+            retval = dict()
             retval['status'] = self.status
             retval['msg'] = self.msg
 
@@ -323,72 +314,66 @@ class Download:
         url = self.url + '&cmd=spectrum&fileid=' + fileid + '&debug=1' 
 
         if self.debug:
-            logging.debug ('')
-            logging.debug ('url= [%s]' % url)
+            logging.debug('')
+            logging.debug('url= [%s]' % url)
 
         self.__submit_request(url)
         
         if self.debug:
-            logging.debug ('')
-            logging.debug ('returned submit_request:')
-            logging.debug ('self.status= [%s]' % self.status)
-            logging.debug ('self.msg= [%s]' % self.msg)
-       
+            logging.debug('')
+            logging.debug('returned submit_request:')
+            logging.debug('self.status= [%s]' % self.status)
+            logging.debug('self.msg= [%s]' % self.msg)
 
-        if (self.status == 'ok'):
+        if self.status == 'ok':
 
             if self.debug:
-                logging.debug ('')
+                logging.debug('')
             
-            self.__save_to_file (self.filepath) 
+            self.__save_to_file(self.filepath)
         
             if self.debug:
-                logging.debug ('')
-                logging.debug ('returned save_to_file:')
-                logging.debug ('self.status= [%s]' % self.status)
-                logging.debug ('self.msg= [%s]' % self.msg)
+                logging.debug('')
+                logging.debug('returned save_to_file:')
+                logging.debug('self.status= [%s]' % self.status)
+                logging.debug('self.msg= [%s]' % self.msg)
         
-        retval = {}
+        retval = dict()
         retval['status'] = self.status
         retval['msg'] = self.msg
 
         return retval
 
-
-
     def __submit_request(self, url):
 
         if self.debug:
-            logging.debug ('')
-            logging.debug ('Enter database.__submit_request:')
-            logging.debug ('url= [%s]' % url)
+            logging.debug('')
+            logging.debug('Enter database.__submit_request:')
+            logging.debug('url= [%s]' % url)
 
-        
         try:
-            self.response =  requests.get (url, stream=True)
+            self.response = requests.get(url, stream=True)
 
             if self.debug:
-                logging.debug ('')
-                logging.debug ('request sent')
+                logging.debug('')
+                logging.debug('request sent')
         
         except Exception as e:
             
             if self.debug:
-                logging.debug ('')
-                logging.debug ('exception: e= %s' % str(e))
+                logging.debug('')
+                logging.debug('exception: e= %s' % str(e))
 
             self.status = 'error'
             self.msg = 'Failed to submit the request: ' + str(e)
             return
-                       
         
         if self.debug:
-            logging.debug ('')
-            logging.debug ('status_code:')
-            logging.debug (self.response.status_code)
+            logging.debug('')
+            logging.debug('status_code:')
+            logging.debug(self.response.status_code)
       
-      
-        if (self.response.status_code == 200):
+        if self.response.status_code == 200:
             self.status = 'ok'
             self.msg = ''
         else:
@@ -396,45 +381,43 @@ class Download:
             self.msg = 'Failed to submit the request'
             
         if self.debug:
-            logging.debug ('')
-            logging.debug ('headers: ')
-            logging.debug (self.response.headers)
-      
+            logging.debug('')
+            logging.debug('headers: ')
+            logging.debug(self.response.headers)
       
         self.content_type = self.response.headers['Content-type']
        
-        if (self.content_type == 'json'):
+        if self.content_type == 'json':
             
             if self.debug:
-                logging.debug ('')
-                logging.debug ('return is a json structure: error message')
+                logging.debug('')
+                logging.debug('return is a json structure: error message')
             
-            jsondata = json.loads (self.response.text)
+            jsondata = json.loads(self.response.text)
             
             self.status = jsondata['status']
             self.msg = jsondata['msg']
 
         return
 
-
-    def __save_to_file (self, filepath):
+    def __save_to_file(self, filepath):
 
         if self.debug:
-            logging.debug ('')
-            logging.debug ('Enter database.__save_to_file:')
-            logging.debug ('filepath= %s' % filepath)
+            logging.debug('')
+            logging.debug('Enter database.__save_to_file:')
+            logging.debug('filepath= %s' % filepath)
        
         try:
-            with open (filepath, 'wb') as fd:
+            with open(filepath, 'wb') as fd:
 
-                for chunk in self.response.iter_content (chunk_size=512):
-                    fd.write (chunk)
+                for chunk in self.response.iter_content(chunk_size=512):
+                    fd.write(chunk)
             
         except Exception as e:
 
             if self.debug:
-                logging.debug ('')
-                logging.debug ('exception: e= %s' % e)
+                logging.debug('')
+                logging.debug('exception: e= %s' % e)
 
             self.status = 'error'
             self.msg = 'Failed to save returned data to file: %s' % filepath
@@ -444,4 +427,3 @@ class Download:
         self.status = 'ok'
         self.msg = ''
         return
-                       

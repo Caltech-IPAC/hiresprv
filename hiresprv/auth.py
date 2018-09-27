@@ -136,8 +136,9 @@ def login(cookiepath):
         if debug:
             logging.debug('HTTPError: msg= %s' % msg)
 
-    # TODO: Is there a more specific exception we should catch here? I see that this is the last
-    # of several possible exceptions so probaby OK to let slide here.
+    # TODO: Is there a more specific exception we should catch here?
+    # I see that this is the last of several possible exceptions so
+    # probaby OK to let slide here.
     except Exception:
            
         status = 'error'

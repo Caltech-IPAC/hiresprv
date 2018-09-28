@@ -1,0 +1,232 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Documentation for the HIRES Radial Velocity Processing Environment &#8212; HIRES PRV  documentation</title>
+    <link rel="stylesheet" href="_static/graphite.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Observing Instructions" href="setup.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="setup.html" title="Observing Instructions"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">HIRES PRV  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="documentation-for-the-hires-radial-velocity-processing-environment">
+<h1>Documentation for the HIRES Radial Velocity Processing Environment<a class="headerlink" href="#documentation-for-the-hires-radial-velocity-processing-environment" title="Permalink to this headline">¶</a></h1>
+<p>This is a radial velocity processing environment that can be used to transform raw <a class="reference external" href="https://www2.keck.hawaii.edu/inst/hires/">Keck/HIRES</a> spectra into
+publication-ready precision radial velocities (PRVs).
+.. Data collected in the prescribed <a class="reference internal" href="setup.html#setup"><span class="std std-ref">HIRES-PRV configuration</span></a> will be compatible with this PRV
+processing environment.</p>
+<p>A Python API provides a convenient way to interact with the service running on <a class="reference external" href="http://nexsci.caltech.edu">NExScI</a> servers. The
+source code for the Python package is on <a class="reference external" href="https://github.com/Caltech-IPAC/hiresprv">GitHub</a>.</p>
+<p>Please post any questions regarding the HIRES-PRV configuration or the NExScI PRV
+processing environment to the <a class="reference external" href="https://github.com/Caltech-IPAC/hiresprv/issues">GitHub issue tracker</a>.</p>
+<div class="section" id="installation-instructions">
+<h2>Installation Instructions<a class="headerlink" href="#installation-instructions" title="Permalink to this headline">¶</a></h2>
+<p>We recommend that users first install <a class="reference external" href="https://www.anaconda.com/download/">Anaconda Python</a> or a similar scientific computing environment for Python.</p>
+<p>Python 3.6 or greater is required.</p>
+<p>The HIRES-PRV Python package can be installed from PyPI:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install hiresprv
+</pre></div>
+</div>
+</div>
+<div class="section" id="planning-and-conducting-observations">
+<h2>Planning and Conducting Observations<a class="headerlink" href="#planning-and-conducting-observations" title="Permalink to this headline">¶</a></h2>
+<p>There are several important considerations for observers wishing to utilize the HIRES PRV configuration.
+Only data collected in the specified HIRES-PRV configuration and according to the recommendations
+summarized below can be processed properly within the NExScI HIRES-PRV environment.</p>
+<ul class="simple">
+<li>Observers new to the HIRES-PRV configuration should treat this configuration as a “new” instrument.</li>
+<li>The echelle and cross disperser angles must be set at specific angles as part of the <a class="reference internal" href="setup.html#alignment"><span class="std std-ref">afternoon setup</span></a> and must not be changed during the night.</li>
+<li>A minimum of three PRV observations with the iodine cell inserted on a given target are required before any PRVs will be produced.</li>
+<li>The minimum signal-to-noise ratio per pixel for each iodine-in RV observation must be at least 70 with the optimal SNR being 200.</li>
+<li>One high SNR (at least 100 per pixel) <a class="reference internal" href="setup.html#template"><span class="std std-ref">template observation</span></a> of the target without the iodine cell must be collected before any PRVs can be measured.</li>
+<li>The optimal SNR for the iodine-out template is 2x the typical iodine-in observation.</li>
+<li>Each iodine-out template observation must be bracketed by 2-5 exposures of <a class="reference internal" href="setup.html#bstars"><span class="std std-ref">bright, rapidly-rotating stars</span></a> with the iodine cell in for calibration.</li>
+<li>Individual exposure times should be no longer than 1 hour.</li>
+</ul>
+<dl class="docutils">
+<dt>See link below for detailed instrument configuration and observing instructions.</dt>
+<dd><ul class="first last simple">
+<li><a class="reference internal" href="setup.html#setup"><span class="std std-ref">Observing Instructions</span></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="data-reduction-tutorial">
+<h2>Data Reduction Tutorial<a class="headerlink" href="#data-reduction-tutorial" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>The reduction of HIRES PRV data consists of four basic steps.</dt>
+<dd><ol class="first last arabic simple">
+<li>Transfer files from the <a class="reference external" href="https://www2.keck.hawaii.edu/koa/public/koa.php">Keck Observatory Archive (KOA)</a> and extract into 1D spectra.</li>
+<li>Construct a template from an iodine-free observation of your target star.</li>
+<li>Analyze each PRV observation collected with the iodine cell in the light path</li>
+<li>Concatenate into an PRV timeseries.</li>
+</ol>
+</dd>
+</dl>
+<p>We have provided a sample tutorial to guide you through the reduction. The tutorial is a Jupyter notebook.
+Please note have not tested the notebook itself and do not guarantee its performance.</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="data_reduction_overview.html#data-reduction-overview"><span class="std std-ref">Data Reduction Tutorial</span></a></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="understanding-the-outputs">
+<h2>Understanding the Outputs<a class="headerlink" href="#understanding-the-outputs" title="Permalink to this headline">¶</a></h2>
+<p>Calibrated and extracted 1D spectra, PRV timeseries for any stars with sufficient data, and the database of your observations
+can be downloaded to your local machine from your workspace on the server.</p>
+<dl class="docutils">
+<dt>The contents of those files are documented here:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference internal" href="outputs.html#outputs"><span class="std std-ref">Output Data Products</span></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="velocity-precision">
+<h2>Velocity Precision<a class="headerlink" href="#velocity-precision" title="Permalink to this headline">¶</a></h2>
+<p>We have performed a comparison of the velocities produced by this service to archival velocities derived from
+those same observations. We find consistent results and comparable precision.
+The detailed results of that comparison can be found at the link below.</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="performance.html#performance"><span class="std std-ref">Velocity Precision</span></a></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound" id="mastertoc">
+<p class="caption"><span class="caption-text">Contents:</span><a class="headerlink" href="#mastertoc" title="Permalink to this toctree">¶</a></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Observing Instructions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#afternoon-setup">Afternoon Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#spectrograph-alignment-and-focus">Spectrograph Alignment and Focus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#required-calibrations">Required Calibrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#observations-of-stars">Observations of Stars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#template-observations">Template Observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#target-lists">Target Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#partial-nights">Partial Nights</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#end-of-night">End of Night</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#tips-tricks-troubleshooting">Tips, Tricks, &amp; Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data_reduction_overview.html">Data Reduction Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="outputs.html">Output Data Products</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="outputs.html#radial-velocity-timeseries">Radial Velocity Timeseries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="outputs.html#wavelength-solution">Wavelength Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="outputs.html#extracted-spectra">Extracted Spectra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="outputs.html#example-reading-spectrum">Example Reading Spectrum</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Velocity Precision</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="performance.html#precision-vs-signal-to-noise">Precision vs. Signal to Noise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance.html#rv-standard-stars">RV Standard Stars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance.html#known-planet-recovery">Known Planet Recovery</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hiresprv.html">Python API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hiresprv.html#module-hiresprv.auth">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiresprv.html#module-hiresprv.archive">Data Transfer and Reduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiresprv.html#module-hiresprv.status">Progress Monitor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiresprv.html#module-hiresprv.database">Observation Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiresprv.html#module-hiresprv.idldriver">IDL Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiresprv.html#module-hiresprv.download">Retrieve Results</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="#">
+              <img class="logo" src="_static/hiresprv_logo.png" alt="Logo"/>
+            </a></p>
+<h3><a href="#">HIRES PRV</a></h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Observing Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_reduction_overview.html">Data Reduction Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="outputs.html">Output Data Products</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Velocity Precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hiresprv.html">Python API</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="setup.html" title="Observing Instructions"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">HIRES PRV  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, CALTECH.
+      Last updated on Sep 27, 2018.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
+    </div>
+  </body>
+</html>

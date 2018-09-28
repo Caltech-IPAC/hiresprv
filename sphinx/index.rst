@@ -71,7 +71,8 @@ Velocity Precision
 ==================
 We have performed a comparison of the velocities produced by this service to archival velocities derived from
 those same observations. We find consistent results and comparable precision.
-The detailed results of that comparison can be found at the link below.
+
+See link below for a prediction of RV precision as a function of signal to noise ratio.
     * :ref:`performance`
 
 

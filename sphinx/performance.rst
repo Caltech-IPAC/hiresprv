@@ -30,7 +30,7 @@ RV Standard Stars
 =================
 
 .. figure:: _static/one_to_one.png
-    :width: 40%
+    :width: 50%
     :align: center
     :alt: velocity comparison plot
 

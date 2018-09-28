@@ -4,19 +4,28 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Python API &#8212; HIRES PRV  documentation</title>
     <link rel="stylesheet" href="_static/graphite.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Velocity Precision" href="performance.html" /> 
-  </head><body>
+  </head>
+  <body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -56,7 +65,7 @@ provides the information needed to construct reduction scripts.</p>
 monitoring the state of the processing.</p>
 <div class="section" id="module-hiresprv.auth">
 <span id="authentication"></span><h2>Authentication<a class="headerlink" href="#module-hiresprv.auth" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">hiresprv.login</span></code> module initializes an account on the PRV pipeline
+<p>The <code class="docutils literal"><span class="pre">hiresprv.login</span></code> module initializes an account on the PRV pipeline
 server for reduction of radial velocity data.</p>
 <dl class="function">
 <dt id="hiresprv.auth.login">
@@ -75,7 +84,7 @@ subsequent PRV operations.</td>
 </tbody>
 </table>
 <p class="rubric">Example</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hiresprv.auth</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hiresprv.auth</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hiresprv</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">cookiepath</span><span class="p">)</span>
 <span class="go"># program will prompt for userid and password</span>
 </pre></div>
@@ -85,7 +94,7 @@ subsequent PRV operations.</td>
 </div>
 <div class="section" id="module-hiresprv.archive">
 <span id="data-transfer-and-reduction"></span><h2>Data Transfer and Reduction<a class="headerlink" href="#module-hiresprv.archive" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">hiresprv.archive</span></code> module handles data transfers from the Keck Observatory Archive (KOA) archive into the
+<p>The <code class="docutils literal"><span class="pre">hiresprv.archive</span></code> module handles data transfers from the Keck Observatory Archive (KOA) archive into the
 user workspace on the server and the reduction from 2D CCD images to 1D spectra.</p>
 <dl class="class">
 <dt id="hiresprv.archive.Archive">
@@ -104,7 +113,7 @@ night at a time.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cookiepath</strong> – full path to a cookie file saved by <a class="reference internal" href="#hiresprv.auth.login" title="hiresprv.auth.login"><code class="xref py py-func docutils literal notranslate"><span class="pre">hiresprv.auth.login()</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cookiepath</strong> – full path to a cookie file saved by <a class="reference internal" href="#hiresprv.auth.login" title="hiresprv.auth.login"><code class="xref py py-func docutils literal"><span class="pre">hiresprv.auth.login()</span></code></a></td>
 </tr>
 </tbody>
 </table>
@@ -131,7 +140,7 @@ Each date should be in to ‘yyyy-mm-dd’ format.</td>
 </tbody>
 </table>
 <p class="rubric">Example</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hiresprv.archive</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hiresprv.archive</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">srch</span> <span class="o">=</span> <span class="n">hiresprv</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">Archive</span><span class="p">(</span><span class="n">cookiepath</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">multi_date_string</span> <span class="o">=</span> <span class="s2">&quot;2013-09-23,2013-09-25,2013-10-01&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">srch</span><span class="o">.</span><span class="n">by_dates</span><span class="p">(</span><span class="n">multi_date_string</span><span class="p">)</span>
@@ -151,7 +160,7 @@ the dates string from a file containing a list of dates.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>datefile</strong> (<em>string</em>) – Path to a file containing more than one date. Each date
 sould be in the ‘yyyy-mm-dd’ format and separated by new line.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Same status and msg as <a class="reference internal" href="#hiresprv.archive.Archive.by_dates" title="hiresprv.archive.Archive.by_dates"><code class="xref py py-meth docutils literal notranslate"><span class="pre">hiresprv.archive.Archive.by_dates()</span></code></a> method</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Same status and msg as <a class="reference internal" href="#hiresprv.archive.Archive.by_dates" title="hiresprv.archive.Archive.by_dates"><code class="xref py py-meth docutils literal"><span class="pre">hiresprv.archive.Archive.by_dates()</span></code></a> method</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">JSON structure</td>
 </tr>
@@ -171,7 +180,7 @@ sould be in the ‘yyyy-mm-dd’ format and separated by new line.</td>
 <dd><p>The HIRES PRV processing involves transferring and reducing a large amount of
 data and can be quite lengthy.  Therefore, most of this processing is
 done in background.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">hiresprv.status.Status</span></code> class is used to check the state of the processing,
+<p>The <code class="docutils literal"><span class="pre">hiresprv.status.Status</span></code> class is used to check the state of the processing,
 to watch progress, or simply to check whether the
 workspace is busy.  New processing will be rejected until the
 workspace is ready.</p>
@@ -182,7 +191,7 @@ Methods of this class return information on the current state.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cookiepath</strong> (<em>string</em>) – full path to cookie file saved from <a class="reference internal" href="#hiresprv.auth.login" title="hiresprv.auth.login"><code class="xref py py-func docutils literal notranslate"><span class="pre">hiresprv.auth.login()</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cookiepath</strong> (<em>string</em>) – full path to cookie file saved from <a class="reference internal" href="#hiresprv.auth.login" title="hiresprv.auth.login"><code class="xref py py-func docutils literal"><span class="pre">hiresprv.auth.login()</span></code></a></td>
 </tr>
 </tbody>
 </table>
@@ -247,7 +256,7 @@ seconds to a minute but a few operations will run longer.</p>
 <em class="property">class </em><code class="descclassname">hiresprv.database.</code><code class="descname">Database</code><span class="sig-paren">(</span><em>cookiepath</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/database.html#Database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.database.Database" title="Permalink to this definition">¶</a></dt>
 <dd><p>Each workspace in HIRES PRV pipeline server contains a database
 listing all the data retrieved from KOA for the user.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">hiresprv.status.Database</span></code> class provides methods for querying that
+<p>The <code class="docutils literal"><span class="pre">hiresprv.status.Database</span></code> class provides methods for querying that
 database.  This information is primarily used to plan reduction
 and analysis processing.</p>
 <p>The initialization of database class loads the cookie file saved
@@ -257,7 +266,7 @@ users workspace.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cookiepath</strong> (<em>string</em>) – full path to a cookie file saved by <a class="reference internal" href="#hiresprv.auth.login" title="hiresprv.auth.login"><code class="xref py py-func docutils literal notranslate"><span class="pre">hiresprv.auth.login()</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cookiepath</strong> (<em>string</em>) – full path to a cookie file saved by <a class="reference internal" href="#hiresprv.auth.login" title="hiresprv.auth.login"><code class="xref py py-func docutils literal"><span class="pre">hiresprv.auth.login()</span></code></a></td>
 </tr>
 </tbody>
 </table>
@@ -380,18 +389,18 @@ on the disk.</td>
 set of IDL scripts developed over several decades.  This processing
 is quite intensive, takes a long time, and is run in the
 background.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">hiresprv.idldriver.Idldriver</span></code> class provides functionality that allows
+<p>The <code class="docutils literal"><span class="pre">hiresprv.idldriver.Idldriver</span></code> class provides functionality that allows
 the user to submit reduction scripts that
 are parsed and sent to the appropriate IDL functions on the server.</p>
 <p>The idldriver class intialization checks for cookie indicating
 a previous login that connects to the user to a PRV pipeline
 workspace.  This workspace is populated with data from the KOA
-Archive using the <a class="reference internal" href="#hiresprv.archive.Archive" title="hiresprv.archive.Archive"><code class="xref py py-class docutils literal notranslate"><span class="pre">hiresprv.archive.Archive</span></code></a> class methods.</p>
+Archive using the <a class="reference internal" href="#hiresprv.archive.Archive" title="hiresprv.archive.Archive"><code class="xref py py-class docutils literal"><span class="pre">hiresprv.archive.Archive</span></code></a> class methods.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cookiepath</strong> – a full path to cookie file saved from <a class="reference internal" href="#hiresprv.auth.login" title="hiresprv.auth.login"><code class="xref py py-func docutils literal notranslate"><span class="pre">hiresprv.auth.login()</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cookiepath</strong> – a full path to cookie file saved from <a class="reference internal" href="#hiresprv.auth.login" title="hiresprv.auth.login"><code class="xref py py-func docutils literal"><span class="pre">hiresprv.auth.login()</span></code></a></td>
 </tr>
 </tbody>
 </table>
@@ -412,7 +421,7 @@ from a set of reduced RV measurements.</p>
 </tbody>
 </table>
 <p class="rubric">Example</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hiresprv.idldriver</span> <span class="k">import</span> <span class="n">Idldriver</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hiresprv.idldriver</span> <span class="k">import</span> <span class="n">Idldriver</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">idl</span> <span class="o">=</span> <span class="n">Idldriver</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">rtn</span> <span class="o">=</span> <span class="n">idl</span><span class="o">.</span><span class="n">run_script</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="go">template 185144 20091231</span>
@@ -430,14 +439,14 @@ from a set of reduced RV measurements.</p>
 <dl class="method">
 <dt id="hiresprv.idldriver.Idldriver.run_scriptfile">
 <code class="descname">run_scriptfile</code><span class="sig-paren">(</span><em>scriptfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/idldriver.html#Idldriver.run_scriptfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.idldriver.Idldriver.run_scriptfile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Same as <a class="reference internal" href="#hiresprv.idldriver.Idldriver.run_script" title="hiresprv.idldriver.Idldriver.run_script"><code class="xref py py-meth docutils literal notranslate"><span class="pre">hiresprv.idldriver.Idldriver.run_script()</span></code></a> except takes a path to a file
+<dd><p>Same as <a class="reference internal" href="#hiresprv.idldriver.Idldriver.run_script" title="hiresprv.idldriver.Idldriver.run_script"><code class="xref py py-meth docutils literal"><span class="pre">hiresprv.idldriver.Idldriver.run_script()</span></code></a> except takes a path to a file
 containing the script lines.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scriptfile</strong> (<em>string</em>) – path to plain text file that will be read as a continuous string
-and used as input to the <a class="reference internal" href="#hiresprv.idldriver.Idldriver.run_script" title="hiresprv.idldriver.Idldriver.run_script"><code class="xref py py-meth docutils literal notranslate"><span class="pre">hiresprv.idldriver.Idldriver.run_script()</span></code></a> method.</td>
+and used as input to the <a class="reference internal" href="#hiresprv.idldriver.Idldriver.run_script" title="hiresprv.idldriver.Idldriver.run_script"><code class="xref py py-meth docutils literal"><span class="pre">hiresprv.idldriver.Idldriver.run_script()</span></code></a> method.</td>
 </tr>
 </tbody>
 </table>
@@ -491,7 +500,7 @@ workspace.</p>
 <code class="descname">spectrum</code><span class="sig-paren">(</span><em>fileid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/download.html#Download.spectrum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.download.Download.spectrum" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method downloads one or more extracted spectrum FITS files
 from the user’s workspace. The downloaded file will be a single FITS file
-if <code class="docutils literal notranslate"><span class="pre">fileids</span></code> is a single file name or a GZIP file if multiple
+if <code class="docutils literal"><span class="pre">fileids</span></code> is a single file name or a GZIP file if multiple
 files are requested.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -543,14 +552,12 @@ comma or new line; must match entries in the ‘FILENAME’ column in the worksp
 
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -574,8 +581,8 @@ comma or new line; must match entries in the ‘FILENAME’ column in the worksp
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
-      Last updated on Sep 27, 2018.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
+      Last updated on Sep 28, 2018.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
     </div>
   </body>
 </html>

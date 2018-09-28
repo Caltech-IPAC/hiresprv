@@ -4,27 +4,18 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>hiresprv.download &#8212; HIRES PRV  documentation</title>
     <link rel="stylesheet" href="../../_static/graphite.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
-        VERSION:     '',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
-  </head>
-  <body>
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -45,32 +36,25 @@
           <div class="body" role="main">
             
   <h1>Source code for hiresprv.download</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Download data from the remote workspace</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">ijson</span>
 
 <span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">urllib</span>
 <span class="kn">import</span> <span class="nn">http.cookiejar</span>
 
 
 <div class="viewcode-block" id="Download"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.download.Download">[docs]</a><span class="k">class</span> <span class="nc">Download</span><span class="p">:</span>
+
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The Download class provides methods for users to download</span>
-<span class="sd">    individual files from their workspace in HIRES PRV pipeline server.</span>
+<span class="sd">    The Download class provides methods for users to download the </span>
+<span class="sd">    individual file from their workspace in HIRES PRV pipeline server.</span>
 
 <span class="sd">    It validates user information (via cookie file), then contacts PRV </span>
-<span class="sd">    Server to retrieve the requested file.</span>
-
-<span class="sd">    The initialization of database class loads the cookie file saved</span>
-<span class="sd">    from HIRES PRV pipelone login, parse the cookie to look up the</span>
-<span class="sd">    users workspace.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        cookiepath (string): a full cookie file path saved from auth.Login.</span>
-
+<span class="sd">    Server to get the requested file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>    
 
     <span class="n">cookiepath</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
@@ -88,122 +72,134 @@
     
     <span class="n">content_type</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 
+
     <span class="n">debug</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">debugfile</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> 
 
     <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cookiepath</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cookiepath</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The initialization of database class loads the cookie file saved</span>
+<span class="sd">        from HIRES PRV pipelone login, parse the cookie to look up the </span>
+<span class="sd">        users workspace. </span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">        ----------------</span>
+<span class="sd">        cookiepath (string): a full cookie file path saved from auth.Login.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span> <span class="o">=</span> <span class="n">cookiepath</span>
 
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;error&#39;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Failed to find required parameter: cookiepath&#39;</span>
             
-            <span class="n">retval</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span>
             <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span>
 
-            <span class="c1"># TODO: return in ``__init__``</span>
             <span class="k">return</span> <span class="n">retval</span>
 
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
        
-            <span class="k">if</span> <span class="s1">&#39;debugfile&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;debugfile&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">debugfile</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;debugfile&#39;</span><span class="p">]</span>
          
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">debugfile</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">debugfile</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
             
             <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">debugfile</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-
-            <span class="c1"># TODO: fdebug variable unused</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">debugfile</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fdebug</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span> <span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">debugfile</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+            
+            <span class="k">with</span> <span class="nb">open</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">debugfile</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fdebug</span><span class="p">:</span>
                 <span class="k">pass</span>
          
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Enter database.init:&#39;</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;cookiepath= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span><span class="p">)</span>
+            <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Enter database.init:&#39;</span><span class="p">)</span>
+            <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;cookiepath= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span><span class="p">)</span>
 
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Enter database.init:&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;cookiepath= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;Enter database.init:&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;cookiepath= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span><span class="p">)</span>
    
-        <span class="bp">self</span><span class="o">.</span><span class="n">cookiejar</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">cookiejar</span><span class="o">.</span><span class="n">MozillaCookieJar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cookiejar</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">cookiejar</span><span class="o">.</span><span class="n">MozillaCookieJar</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span><span class="p">)</span>
     
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
    
             <span class="k">try</span><span class="p">:</span> 
-                <span class="bp">self</span><span class="o">.</span><span class="n">cookiejar</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">ignore_discard</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ignore_expires</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cookiejar</span><span class="o">.</span><span class="n">load</span> <span class="p">(</span><span class="n">ignore_discard</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ignore_expires</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;cookie loaded from </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;cookie loaded from </span><span class="si">%s</span><span class="s1">&#39;</span> 
+                        <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span><span class="p">)</span>
         
                 <span class="k">for</span> <span class="n">cookie</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookiejar</span><span class="p">:</span>
                     
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-                        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;cookie= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">cookie</span><span class="p">)</span>
-                        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;cookie.name= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">cookie</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-                        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;cookie.value= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">cookie</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-                        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;cookie.domain= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">cookie</span><span class="o">.</span><span class="n">domain</span><span class="p">)</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;cookie= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">cookie</span><span class="p">)</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;cookie.name= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">cookie</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;cookie.value= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">cookie</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;cookie.domain= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">cookie</span><span class="o">.</span><span class="n">domain</span><span class="p">)</span>
                     
-                    <span class="k">if</span> <span class="n">cookie</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;HIPRV&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">cookie</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;HIPRV&#39;</span><span class="p">):</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">cookiestr</span> <span class="o">=</span> <span class="n">cookie</span><span class="o">.</span><span class="n">value</span>                
-
-            <span class="c1"># TODO: bare except statement</span>
+                        
             <span class="k">except</span><span class="p">:</span>
                 <span class="k">pass</span>
 
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;loadCookie exception&#39;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;loadCookie exception&#39;</span><span class="p">)</span>
  
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;cookiestr= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookiestr</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;cookiestr= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookiestr</span><span class="p">)</span>
        
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cookiestr</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">arr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookiestr</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cookiestr</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span> 
+            <span class="n">arr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookiestr</span><span class="o">.</span><span class="n">split</span> <span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span> 
             <span class="n">narr</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;narr= [</span><span class="si">%d</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="n">narr</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">narr</span><span class="p">):</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;arr[</span><span class="si">%d</span><span class="s1">]= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;narr= [</span><span class="si">%d</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="n">narr</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">narr</span><span class="p">):</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;arr[</span><span class="si">%d</span><span class="s1">]= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
         
-        <span class="k">if</span> <span class="n">narr</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">narr</span> <span class="o">==</span> <span class="mi">3</span><span class="p">):</span>    
             <span class="bp">self</span><span class="o">.</span><span class="n">userid</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">workspace</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;userid= </span><span class="si">%s</span><span class="s1"> workspace= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">userid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">workspace</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;userid= </span><span class="si">%s</span><span class="s1"> workspace= </span><span class="si">%s</span><span class="s1">&#39;</span> 
+                <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">userid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">workspace</span><span class="p">))</span>
        
         <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://hiresprv.ipac.caltech.edu/cgi-bin/idlDriver/nph-prvDownload?workspace=&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">workspace</span>
 
         <span class="k">return</span>
 
-<div class="viewcode-block" id="Download.rvcurve"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.download.Download.rvcurve">[docs]</a>    <span class="k">def</span> <span class="nf">rvcurve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objname</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method downloads a rvcurve csv file from the user&#39;s</span>
-<span class="sd">        workspace.</span>
-<span class="sd">        </span>
-<span class="sd">        Args:</span>
-<span class="sd">            objname (string): object name; must match an entry in the &#39;TARGET&#39; column of the workspace database</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            JSON structure: structure indicating the status of the submission</span>
+<div class="viewcode-block" id="Download.rvcurve"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.download.Download.rvcurve">[docs]</a>    <span class="k">def</span> <span class="nf">rvcurve</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objname</span><span class="p">):</span>
+    
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The rvcurve method downloads a rvcurve csv file from the user&#39;s </span>
+<span class="sd">        workspace. </span>
+<span class="sd">        </span>
+<span class="sd">        Args: </span>
+<span class="sd">        ---- </span>
+<span class="sd">        objname (string): the object name of the rvcurve.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Enter Download.rvcurve: objname = </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">objname</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;Enter Download.rvcurve: objname = </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">objname</span><span class="p">)</span>
        
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">objname</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span> <span class="p">(</span><span class="n">objname</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
             
             <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;error&#39;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Input argument objname is required.&#39;</span>
             
-            <span class="n">retval</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span>
             <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span>
 
@@ -214,61 +210,63 @@
         <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">+</span> <span class="s1">&#39;&amp;cmd=rvcurve&amp;objname=&#39;</span> <span class="o">+</span> <span class="n">objname</span> <span class="o">+</span> <span class="s1">&#39;&amp;debug=1&#39;</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;url= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="n">url</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;url= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="n">url</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">__submit_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;returned submit_request:&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;self.status= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;self.msg= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;returned submit_request:&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;self.status= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;self.msg= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
+       
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;ok&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;ok&#39;</span><span class="p">):</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
             
-            <span class="bp">self</span><span class="o">.</span><span class="n">__save_to_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__save_to_file</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">)</span> 
         
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;returned save_to_file:&#39;</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;self.status= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;self.msg= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;returned save_to_file:&#39;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;self.status= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;self.msg= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
+       
 
-        <span class="n">retval</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">retval</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span>
         <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span>
 
         <span class="k">return</span> <span class="n">retval</span></div>
 
+    
 <div class="viewcode-block" id="Download.spectrum"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.download.Download.spectrum">[docs]</a>    <span class="k">def</span> <span class="nf">spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fileid</span><span class="p">):</span>
+    
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method downloads one or more extracted spectrum FITS files</span>
-<span class="sd">        from the user&#39;s workspace. The downloaded file will be a single FITS file</span>
-<span class="sd">        if ``fileids`` is a single file name or a GZIP file if multiple</span>
+<span class="sd">        The spectrum method downloads one or more spectrum FITS files </span>
+<span class="sd">        from the user&#39;s workspace. The downloaded file will be a FITS file </span>
+<span class="sd">        if &#39;fileids&#39; is a single file name and a GZIP file if multiple </span>
 <span class="sd">        files are requested.</span>
 <span class="sd">        </span>
-<span class="sd">        Args:</span>
-<span class="sd">            fileid (string): one or more spectrum file names separated by</span>
-<span class="sd">                             comma or new line; must match entries in the &#39;FILENAME&#39; column in the workspace database</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            JSON structure: structure indicating the status of the submission</span>
+<span class="sd">        Args: </span>
+<span class="sd">        ---- </span>
+<span class="sd">        spec_fileid (string): one or more spectrum file names separated by</span>
+<span class="sd">        comma or new line.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Enter Download.spectrum: fileid = </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">fileid</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;Enter Download.spectrum: fileid = </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">fileid</span><span class="p">)</span>
        
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fileid</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span> <span class="p">(</span><span class="n">fileid</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;error&#39;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Input argument fileid is required.&#39;</span>
             
-            <span class="n">retval</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span>
             <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span>
 
@@ -361,66 +359,72 @@
         <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">+</span> <span class="s1">&#39;&amp;cmd=spectrum&amp;fileid=&#39;</span> <span class="o">+</span> <span class="n">fileid</span> <span class="o">+</span> <span class="s1">&#39;&amp;debug=1&#39;</span> 
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;url= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="n">url</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;url= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="n">url</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">__submit_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;returned submit_request:&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;self.status= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;self.msg= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;returned submit_request:&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;self.status= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;self.msg= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
+       
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;ok&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;ok&#39;</span><span class="p">):</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
             
-            <span class="bp">self</span><span class="o">.</span><span class="n">__save_to_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__save_to_file</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">)</span> 
         
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;returned save_to_file:&#39;</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;self.status= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;self.msg= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;returned save_to_file:&#39;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;self.status= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;self.msg= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
         
-        <span class="n">retval</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">retval</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span>
         <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span>
 
         <span class="k">return</span> <span class="n">retval</span></div>
 
+
+
     <span class="k">def</span> <span class="nf">__submit_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Enter database.__submit_request:&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;url= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="n">url</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;Enter database.__submit_request:&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;url= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="n">url</span><span class="p">)</span>
 
+        
         <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">response</span> <span class="o">=</span>  <span class="n">requests</span><span class="o">.</span><span class="n">get</span> <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;request sent&#39;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;request sent&#39;</span><span class="p">)</span>
         
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;exception: e= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;exception: e= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;error&#39;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Failed to submit the request: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
             <span class="k">return</span>
+                       
         
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;status_code:&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;status_code:&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
       
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+      
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;ok&#39;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="k">else</span><span class="p">:</span>
@@ -428,43 +432,45 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Failed to submit the request&#39;</span>
             
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;headers: &#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;headers: &#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
+      
       
         <span class="bp">self</span><span class="o">.</span><span class="n">content_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Content-type&#39;</span><span class="p">]</span>
        
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">content_type</span> <span class="o">==</span> <span class="s1">&#39;json&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">content_type</span> <span class="o">==</span> <span class="s1">&#39;json&#39;</span><span class="p">):</span>
             
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;return is a json structure: error message&#39;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;return is a json structure: error message&#39;</span><span class="p">)</span>
             
-            <span class="n">jsondata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">jsondata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
             
             <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">jsondata</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">jsondata</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span>
 
         <span class="k">return</span>
 
-    <span class="k">def</span> <span class="nf">__save_to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__save_to_file</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Enter database.__save_to_file:&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;filepath= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">filepath</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;Enter database.__save_to_file:&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;filepath= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">filepath</span><span class="p">)</span>
        
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span> <span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
 
-                <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">512</span><span class="p">):</span>
-                    <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">iter_content</span> <span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">512</span><span class="p">):</span>
+                    <span class="n">fd</span><span class="o">.</span><span class="n">write</span> <span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
             
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;exception: e= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;exception: e= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;error&#39;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Failed to save returned data to file: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">filepath</span>
@@ -474,6 +480,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;ok&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="k">return</span></div>
+                       
 </pre></div>
 
           </div>
@@ -496,12 +503,14 @@
 
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -524,7 +533,7 @@
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
       Last updated on Sep 28, 2018.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.
     </div>
   </body>
 </html>

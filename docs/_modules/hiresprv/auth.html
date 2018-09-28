@@ -4,27 +4,18 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>hiresprv.auth &#8212; HIRES PRV  documentation</title>
     <link rel="stylesheet" href="../../_static/graphite.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
-        VERSION:     '',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
-  </head>
-  <body>
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -45,12 +36,9 @@
           <div class="body" role="main">
             
   <h1>Source code for hiresprv.auth</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">The ``hiresprv.login`` module initializes an account on the PRV pipeline</span>
-<span class="sd">server for reduction of radial velocity data.</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
-<span class="kn">import</span> <span class="nn">getpass</span>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span> 
+<span class="kn">import</span> <span class="nn">getpass</span> 
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">json</span>
 
@@ -58,26 +46,39 @@
 <span class="kn">import</span> <span class="nn">http.cookiejar</span>
 
 
-<div class="viewcode-block" id="login"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.auth.login">[docs]</a><span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="n">cookiepath</span><span class="p">):</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The HIRES PRV login module initializes an account on the PRV pipeline</span>
+<span class="sd">server for reduction of radial velocity data.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="login"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.auth.login">[docs]</a><span class="k">def</span> <span class="nf">login</span> <span class="p">(</span><span class="n">cookie_path</span><span class="p">):</span>
+
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The login function prompts for an authorized KOA user ID and password, </span>
 <span class="sd">    then sets up a workspace (or connects to an existing workspace) on </span>
 <span class="sd">    the PRV pipeline server for that user.  </span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        cookiepath (string): a file path provided by the user to save</span>
+
+<span class="sd">        userid     (string): a valid user id exists in the KOA&#39;s user table.</span>
+<span class="sd">        </span>
+<span class="sd">        password   (string): a valid password in the KOA&#39;s user table. </span>
+
+<span class="sd">        cookiepath (string): a file path provided by the user to save </span>
 <span class="sd">                             returned cookie which is needed for the </span>
 <span class="sd">                             subsequent PRV operations.</span>
 
-<span class="sd">    Example:</span>
-<span class="sd">        &gt;&gt;&gt; import hiresprv.auth</span>
-<span class="sd">        &gt;&gt;&gt; hiresprv.auth.login(cookiepath)</span>
-<span class="sd">        # program will prompt for userid and password</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># TODO: Many of these variables are not used</span>
-    <span class="n">userid</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    <span class="n">password</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="sd">    Calling synopsis: </span>
+<span class="sd">    </span>
+<span class="sd">        import hiresprv.auth</span>
 
+<span class="sd">        login (cookiepath): program will prompt for userid and password </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">cookiepath</span> <span class="o">=</span> <span class="n">cookie_path</span> 
+    <span class="n">userid</span><span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+   
     <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="n">response</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="n">jsondata</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
@@ -87,40 +88,40 @@
 
     <span class="n">debug</span> <span class="o">=</span> <span class="mi">0</span> 
     <span class="n">debugfile</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="c1">#    debugfile = &#39;./login.debug&#39;</span>
 
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">debugfile</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">debugfile</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
             
         <span class="n">debug</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">debugfile</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-
-        <span class="c1"># TODO: Do we need this?</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">debugfile</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fdebug</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span> <span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">debugfile</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+            
+        <span class="k">with</span> <span class="nb">open</span> <span class="p">(</span><span class="n">debugfile</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fdebug</span><span class="p">:</span>
             <span class="k">pass</span>
 
     <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Enter Login.init:&#39;</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;cookiepath= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">cookiepath</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;Enter Login.init:&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;cookiepath= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">cookiepath</span><span class="p">)</span>
    
 <span class="c1">#</span>
 <span class="c1">#    get userid and password via keyboard input</span>
 <span class="c1">#</span>
-    <span class="n">userid</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;KOA userid: &quot;</span><span class="p">)</span>
+    <span class="n">userid</span> <span class="o">=</span> <span class="nb">input</span> <span class="p">(</span><span class="s2">&quot;KOA userid: &quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>    
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;userid= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">userid</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span> 
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;userid= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">userid</span><span class="p">)</span>
 
-    <span class="n">password</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="s2">&quot;KOA Password: &quot;</span><span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span> <span class="p">(</span><span class="s2">&quot;KOA Password: &quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>    
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;password= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">password</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span> 
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;password= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">password</span><span class="p">)</span>
 
-    <span class="n">password</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">quote</span> <span class="p">(</span><span class="n">password</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>    
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;after urlencode: password= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">password</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span> 
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;after urlencode: password= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">password</span><span class="p">)</span>
 
-    <span class="n">cookiejar</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">cookiejar</span><span class="o">.</span><span class="n">MozillaCookieJar</span><span class="p">(</span><span class="n">cookiepath</span><span class="p">)</span>
+    <span class="n">cookiejar</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">cookiejar</span><span class="o">.</span><span class="n">MozillaCookieJar</span> <span class="p">(</span><span class="n">cookiepath</span><span class="p">)</span>
         
 <span class="c1">#</span>
 <span class="c1">#  url for login</span>
@@ -130,41 +131,41 @@
     <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s1">&#39;password=&#39;</span> <span class="o">+</span> <span class="n">password</span> 
 
     <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>    
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;url= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">url</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span> 
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;url= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">url</span><span class="p">)</span>
 
 <span class="c1">#</span>
 <span class="c1">#    build url_opener</span>
 <span class="c1">#</span>
-    <span class="c1"># TODO: unused variable</span>
     <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">opener</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">build_opener</span><span class="p">(</span><span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">HTTPCookieProcessor</span><span class="p">(</span><span class="n">cookiejar</span><span class="p">))</span>
+        <span class="n">opener</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">build_opener</span> <span class="p">(</span>
+            <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">HTTPCookieProcessor</span> <span class="p">(</span><span class="n">cookiejar</span><span class="p">))</span>
             
         <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;here1&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;here1&#39;</span><span class="p">)</span>
 
-        <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">install_opener</span><span class="p">(</span><span class="n">opener</span><span class="p">)</span>
+        <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">install_opener</span> <span class="p">(</span><span class="n">opener</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;opener installed&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;opener installed&#39;</span><span class="p">)</span>
 
-        <span class="n">request</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">Request</span> <span class="p">(</span><span class="n">url</span><span class="p">)</span>
             
         <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;here2&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;here2&#39;</span><span class="p">)</span>
 
-        <span class="n">cookiejar</span><span class="o">.</span><span class="n">add_cookie_header</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="n">cookiejar</span><span class="o">.</span><span class="n">add_cookie_header</span> <span class="p">(</span><span class="n">request</span><span class="p">)</span>
             
         <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;cookie added&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;cookie added&#39;</span><span class="p">)</span>
 
-        <span class="n">response</span> <span class="o">=</span> <span class="n">opener</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">opener</span><span class="o">.</span><span class="n">open</span> <span class="p">(</span><span class="n">request</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;response= &#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;response= &#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="n">response</span><span class="p">)</span>
 
     <span class="k">except</span> <span class="n">urllib</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">URLError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         
@@ -172,85 +173,84 @@
         <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;URLError= &#39;</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="n">reason</span>    
 
         <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;e.code= &#39;</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="n">code</span> <span class="o">+</span> <span class="s1">&#39; e.reason= &#39;</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="n">reason</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;URLError: msg= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">msg</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span> <span class="s1">&#39;e.code= &#39;</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="n">code</span> <span class="o">+</span> <span class="s1">&#39; e.reason= &#39;</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="n">reason</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;URLError: msg= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">msg</span><span class="p">)</span>
         
     <span class="k">except</span> <span class="n">urllib</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             
         <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;error&#39;</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;HTTPError= &#39;</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="n">reason</span>
+        <span class="n">msg</span> <span class="o">=</span>  <span class="s1">&#39;HTTPError= &#39;</span> <span class="o">+</span>  <span class="n">e</span><span class="o">.</span><span class="n">reason</span> 
             
         <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;HTTPError: msg= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">msg</span><span class="p">)</span>
-
-    <span class="c1"># TODO: Is there a more specific exception we should catch here?</span>
-    <span class="c1"># I see that this is the last of several possible exceptions so</span>
-    <span class="c1"># probaby OK to let slide here.</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;HTTPError: msg= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">msg</span><span class="p">)</span>
+        
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
            
         <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;error&#39;</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;URL exception&#39;</span>
 
         <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;other exceptions&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;other exceptions&#39;</span><span class="p">)</span> 
              
-    <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;error&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;error&#39;</span><span class="p">):</span>       
         <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Failed to login: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">msg</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
 
     <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;got here: response= &#39;</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;got here: response= &#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="n">response</span><span class="p">)</span>
 
 <span class="c1">#</span>
 <span class="c1">#    check content-type in response header: </span>
 <span class="c1">#    if it is &#39;application/json&#39;, then it is an error message</span>
 <span class="c1">#</span>
     <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;response.info=&#39;</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;response.info=&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
+
 
     <span class="n">infostr</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
 
     <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;infostr= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">infostr</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;infostr= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">infostr</span><span class="p">)</span>
       
     <span class="n">contenttype</span> <span class="o">=</span> <span class="n">infostr</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-type&#39;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;contenttype= </span><span class="si">%s</span><span class="s1"> &#39;</span> <span class="o">%</span> <span class="n">contenttype</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;contenttype= </span><span class="si">%s</span><span class="s1"> &#39;</span> <span class="o">%</span> <span class="n">contenttype</span><span class="p">)</span>
        
     <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-    <span class="n">sdata</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="n">sdata</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">decode</span> <span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">);</span>
    
-    <span class="n">jsondata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">sdata</span><span class="p">)</span>
+    <span class="n">jsondata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span> <span class="p">(</span><span class="n">sdata</span><span class="p">);</span>
    
     <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;here2: data= &#39;</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;sdata= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">sdata</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;jsondata= &#39;</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">jsondata</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;here2: data= &#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;sdata= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">sdata</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;jsondata= &#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="n">jsondata</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">jsondata</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">val</span> <span class="ow">in</span> <span class="n">jsondata</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 
         <span class="k">if</span> <span class="n">debug</span><span class="p">:</span> 
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;key= </span><span class="si">%s</span><span class="s1"> val= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;key= </span><span class="si">%s</span><span class="s1"> val= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">))</span>
         
-        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;status&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;status&#39;</span><span class="p">):</span>
             <span class="n">status</span> <span class="o">=</span> <span class="n">val</span>
                 
-        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;msg&#39;</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="n">val</span>
-
+        <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;msg&#39;</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span>  <span class="n">val</span>
+		
     <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;status= </span><span class="si">%s</span><span class="s1"> msg= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">msg</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;status= </span><span class="si">%s</span><span class="s1"> msg= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">msg</span><span class="p">))</span>
+        
 
-    <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;ok&#39;</span><span class="p">:</span>
-        <span class="n">cookiejar</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">cookiepath</span><span class="p">,</span> <span class="n">ignore_discard</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;ok&#39;</span><span class="p">):</span>
+        <span class="n">cookiejar</span><span class="o">.</span><span class="n">save</span> <span class="p">(</span><span class="n">cookiepath</span><span class="p">,</span> <span class="n">ignore_discard</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>
         <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;cookiejar saved to hirescookietxt&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;cookiejar saved to hirescookietxt&#39;</span><span class="p">)</span>
         
         <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Successful login as </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">userid</span>
     
@@ -258,13 +258,14 @@
         <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Failed to login: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">msg</span>
 
     <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;status= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">status</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;msg= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">msg</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;status= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">status</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;msg= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">msg</span><span class="p">)</span>
  
-    <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">;</span></div>
 
-    <span class="k">return</span></div>
+
 </pre></div>
 
           </div>
@@ -287,12 +288,14 @@
 
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -315,7 +318,7 @@
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
       Last updated on Sep 28, 2018.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.
     </div>
   </body>
 </html>

@@ -39,7 +39,7 @@ summarized below can be processed properly within the NExScI HIRES-PRV environme
 * One high SNR (at least 100 per pixel) :ref:`template observation <template>` of the target without the iodine cell must be collected before any PRVs can be measured.
 * The optimal SNR for the iodine-out template is 2x the typical iodine-in observation.
 * Each iodine-out template observation must be bracketed by 2-5 exposures of :ref:`bright, rapidly-rotating stars <bstars>` with the iodine cell in for calibration.
-* Individual exposure times should be no longer than 1 hour and iodine-out template observations should span no more than 1.5 hours.
+* Individual exposure times should be no longer than 1 hour.
 
 See link below for detailed instrument configuration and observing instructions.
    * :ref:`Observing Instructions <setup>`
@@ -53,10 +53,9 @@ The reduction of HIRES PRV data consists of four basic steps.
    3) Analyze each PRV observation collected with the iodine cell in the light path
    4) Concatenate into an PRV timeseries.
 
-We've provided a beta-release tutorial to walk you through the reduction process for a typical data set spanning several observing nights.
-    * :ref:`data_reduction_overview`
-.. *WARNING: This tutorial is not part of the official v1.0 release. The code snippets presented within have not been tested. The project makes no guarantees the code within the tutorial will function exactly as presented. Use at your own risk.*
-
+We have provided a sample tutorial to guide you through the reduction. The tutorial is a Jupyter notebook.
+Please note have not tested the notebook itself and do not guarantee its performance.
+   * :ref:`data_reduction_overview`
 
 
 Understanding the Outputs
@@ -66,6 +65,15 @@ can be downloaded to your local machine from your workspace on the server.
 
 The contents of those files are documented here:
    * :ref:`outputs`
+
+
+Velocity Precision
+==================
+We have performed a comparison of the velocities produced by this service to archival velocities derived from
+those same observations. We find consistent results and comparable precision.
+The detailed results of that comparison can be found at the link below.
+    * :ref:`performance`
+
 
 Table of Contents
 =================

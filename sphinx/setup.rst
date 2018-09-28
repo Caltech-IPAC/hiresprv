@@ -19,8 +19,9 @@ Afternoon Setup
     * Respond to the prompts:
         * "Do you want to continue running the setup script?" type y and return
         * Enter observer names
-        * Confirm data directory (e.g. /s/sdata125/hires1/20??monDD/)
+        * Confirm data directory (e.g. /s/sdata125/hires?/20??monDD/)
             * Use the current UT date. (typically one day later than local calendar date), hit enter.
+            * The 'hires?' part of the path corresponds to your HIRES user account given by the SA
         * Set starting observation number at 1
 * Now appearing on the 3 screens:
     1) HIRES dashboard, exposure meter dashboard, terminal
@@ -55,8 +56,8 @@ Afternoon Setup
     * Filter1 = clear (``m fil1name = clear``; using gui okay)
     * Filter2 = clear (``m fil2name = clear``; using gui okay)
     * Collimator = red (This should always be set by SA)
-    * Set collimator focus: ``m cofraw = +70000``; Use ``s cofraw`` to show value
-    * Set camera focus: ``m cafraw = 0``; Use ``s cafraw`` to show value
+    * Set collimator focus: ``m cofraw = +70000``; Use ``s cofraw`` to show value (±2000 units is insignificant)
+    * Set camera focus: ``m cafraw = 0``; Use ``s cafraw`` to show value (±2000 units is insignificant)
     * Move echelle and cross disperser angles with "A" button to positions from last HIRES-PRV night (get these values from your SA)
 * Guide camera configuration:
     * Filters: BG38 + ND0.01 (BG38 is important, ND up to OA)
@@ -78,13 +79,16 @@ as well-focused as possible.
 * Texp: 10 sec (in brown "CCD" window, enter exposure time. Click "UpdateCCD")
 * Set x-disperser and echelle to values from previous HIRES-PRV night.
 * Click "EXPOSE"
-* Run focus and alignment analysis in IDL:  ``IDL> foc,inpfile='20180201_0001.fits'``
+* Run focus and alignment analysis in IDL:
+    * Have your SA direct you to the location of the IDL alignment code
+    * From within that directory launch IDL and run ``foc`` on the just-collected ThAr spectrum (e.g. ``IDL> foc,inpfile='20180201_0001.fits'``)
     * Check instructions from focus program and move echelle and cross disperser as needed.
     * If focus program crashes, you may need to move echelle or cross disperser manually.
     * If note regarding 'Counts in lines too low' appears re-position lines manually.
     * Check fwhm focus value returned by the focus program. It should be in the range 2.28-2.40.
     * If the fwhm is greater than 2.40, try changing the cafraw (add 10,000 to the current value). Use the terminal command: ``m cafraw = 10000``. Keep changing the cafraw value in steps of 10,000 until you observe a minimum in the fwhm values. (this should need to be done only rarely)
 * If manual grating moves are needed:
+    * First double check that you are at the same echelle and cross disperser positions from the last HIRES-PRV run
     * Run ``foc.pro`` with the ``/mark`` flag: ``IDL> foc,inpfile='20180201_0001.fits', /mark``
     * Note positions of bright lines relative to boxes drawn on echelle format
     * Estimate the appropriate moves to center the lines in the boxes. This may require some trial and error.
@@ -179,6 +183,8 @@ Instrumental configuration, considerations, and best practices for observing sta
     * Filter #2 is "clear"
     * TV filters are "bg38" and "nd_0.01"
     * Iodine IN/OUT as appropriate
+    * Periodically check seeing by using the projection cut tool in DS9. The pixel scale in the spatial dimension is ~0.3"
+    * Ask the SA to run a telescope focus every ~3 hours or if you notice significant, unexplained degradation in your seeing estimates
 * Start observing bright stars up to 20 min before 12 degree twilight:
     * ``m deckname = C2`` (0.85 x 14.0 arcsec)
     * If seeing is > 2.0", then begin observing only 10 minutes before 12 deg twilight and use B5.
@@ -206,7 +212,7 @@ Template Observations
     * We recommend selecting B stars from `Clubb et al. (2018) <http://adsabs.harvard.edu/abs/2018RNAAS...2a..44C>`_
     * B stars should be near in the sky as possible to the target
     * Three consecutive exposures of two different B stars on either side of the target exposure(s) are recommended
-    * The B star observations should be collected using the same decker as the template observation
+    * The B star observations should be collected using the same decker as the template observation and exposed to 250k on the exposure meter
 
 * Always ask the OA to focus the telescope before a template sequence
 * Use the B3 decker for stars fainter than V=10, B1 for brighter stars, or E2 for very bright and very RV stable stars
@@ -217,6 +223,8 @@ Target Lists
 ============
 Create your target list during the day and upload to the Keck computers. Your SA can help you upload.
 
+* Make a "script" for the full night of observations following the `Keck guidelines <https://www2.keck.hawaii.edu/observing/starlist.html>`_
+* Consult the plot on the :ref:`RV performance page <performance>` when considering exposure times and signal to noise ratios
 * Inform the operator of the path to your script you will use and ask them to load it into MAGIQ.
 * Once the OA has loaded the list, click on 'Map OA starlist' from dropdown on MAGIQ (Useful for planning observations.)
 * Use the middle mouse button to highlight the next target to observe.
@@ -252,6 +260,7 @@ Tips, Tricks, & Troubleshooting
 * Cross-disperser oscillations:
     * If cross-disperser values are oscillating, reset by right-clicking blue background and selecting "HIRES Control Menu" > "Stop Cross-disperser Oscillation"
     * Avoid moving cross-disperser by increments >0.5 to help prevent oscillations. Move in multiple steps if needed.
+* General tips about Keck observing: `<http://keckobservatory.org/about/observing/>`_
 * Useful link with extra HIRES info: `<http://www2.keck.hawaii.edu/inst/hires/startup.html>`_
 * In ds9, if the mouse, clicking and dragging is zooming, instead of drawing a cross section, choose Edit→Pointer
 * When using the C2 decker, always be careful to center the star on the slit.

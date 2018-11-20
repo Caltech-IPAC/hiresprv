@@ -134,7 +134,7 @@ The pipeline requires a very specific set of calibration data.
     * Turn OFF Exposure meter.
     * Lamp: Quartz2
     * Lamp Filter: ng3
-    * Decker: B1 ``m deckname=B1`` (0.57 x 3.5 arcsec, ==> 3.0 pixel projected slit)
+    * Decker: B5 ``m deckname=B5`` (0.57 x 3.5 arcsec, ==> 3.0 pixel projected slit)
     * Iodine: In
     * Exposure: 2 secs
     * check saturation: < 20,000 counts on middle chip?

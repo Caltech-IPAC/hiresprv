@@ -40,6 +40,7 @@ summarized below can be processed properly within the NExScI HIRES-PRV environme
 * The optimal SNR for the iodine-out template is 2x the typical iodine-in observation.
 * Each iodine-out template observation must be bracketed by 2-5 exposures of :ref:`bright, rapidly-rotating stars <bstars>` with the iodine cell in for calibration.
 * Individual exposure times should be no longer than 1 hour.
+* Target names must be resolvable by Simbad to obtain accurate coordinates and proper motions
 
 See link below for detailed instrument configuration and observing instructions.
    * :ref:`Observing Instructions <setup>`

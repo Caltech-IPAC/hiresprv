@@ -134,7 +134,7 @@ The pipeline requires a very specific set of calibration data.
     * Turn OFF Exposure meter.
     * Lamp: Quartz2
     * Lamp Filter: ng3
-    * Decker: B1 ``m deckname=B1`` (0.57 x 3.5 arcsec, ==> 3.0 pixel projected slit)
+    * Decker: B5 ``m deckname=B5`` (0.57 x 3.5 arcsec, ==> 3.0 pixel projected slit)
     * Iodine: In
     * Exposure: 2 secs
     * check saturation: < 20,000 counts on middle chip?
@@ -224,6 +224,7 @@ Target Lists
 Create your target list during the day and upload to the Keck computers. Your SA can help you upload.
 
 * Make a "script" for the full night of observations following the `Keck guidelines <https://www2.keck.hawaii.edu/observing/starlist.html>`_
+* Target names must be resolvable by Simbad to obtain accurate coordinates and proper motions
 * Consult the plot on the :ref:`RV performance page <performance>` when considering exposure times and signal to noise ratios
 * Inform the operator of the path to your script you will use and ask them to load it into MAGIQ.
 * Once the OA has loaded the list, click on 'Map OA starlist' from dropdown on MAGIQ (Useful for planning observations.)

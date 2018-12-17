@@ -48,7 +48,7 @@ See link below for detailed instrument configuration and observing instructions.
 Data Reduction Tutorial
 =======================
 The reduction of HIRES PRV data consists of four basic steps.
-   1) Transfer files from the `Keck Observatory Archive (KOA) <https://www2.keck.hawaii.edu/koa/public/koa.php>`_ and extract into 1D spectra.
+   1) Transfer files from the `Keck Observatory Archive (KOA) <https://koa.ipac.caltech.edu>`_ and extract into 1D spectra.
    2) Construct a template from an iodine-free observation of your target star.
    3) Analyze each PRV observation collected with the iodine cell in the light path
    4) Concatenate into an PRV timeseries.

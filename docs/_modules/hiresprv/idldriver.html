@@ -36,27 +36,36 @@
           <div class="body" role="main">
             
   <h1>Source code for hiresprv.idldriver</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Drive the underlying IDL code</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">json</span>
 
 <span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">import</span> <span class="nn">urllib</span> 
 <span class="kn">import</span> <span class="nn">http.cookiejar</span>
 
 
 <div class="viewcode-block" id="Idldriver"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.idldriver.Idldriver">[docs]</a><span class="k">class</span> <span class="nc">Idldriver</span><span class="p">:</span>
-
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The principle processing of the HIRES PRV pipeline is done by a</span>
 <span class="sd">    set of IDL scripts developed over several decades.  This processing</span>
-<span class="sd">    is quite intensive and takes a long time and so is run in the </span>
+<span class="sd">    is quite intensive, takes a long time, and is run in the</span>
 <span class="sd">    background.</span>
 
-<span class="sd">    The HIRES PRV idldriver class provides functionality that allows</span>
-<span class="sd">    the user to submit radial velocity data reduction scripts that </span>
-<span class="sd">    get sent to a sequence of these IDL scripts.</span>
+<span class="sd">    The ``hiresprv.idldriver.Idldriver`` class provides functionality that allows</span>
+<span class="sd">    the user to submit reduction scripts that</span>
+<span class="sd">    are parsed and sent to the appropriate IDL functions on the server.</span>
+
+<span class="sd">    The idldriver class intialization checks for cookie indicating</span>
+<span class="sd">    a previous login that connects to the user to a PRV pipeline</span>
+<span class="sd">    workspace.  This workspace is populated with data from the KOA</span>
+<span class="sd">    Archive using the :class:`hiresprv.archive.Archive` class methods.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        cookiepath: a full path to cookie file saved from :func:`hiresprv.auth.login()`</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">cookiepath</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
@@ -71,158 +80,164 @@
     <span class="n">debug</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">debugfname</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> 
 
-    <span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cookiepath</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The idldriver class intialization checks for cookie indicating </span>
-<span class="sd">        a previous login that connects to the user to a PRV pipeline </span>
-<span class="sd">        workspace.  This workspace is populated with data from the KOA </span>
-<span class="sd">        Archive using Archive class methods.</span>
-<span class="sd">        </span>
-<span class="sd">        Args:</span>
-
-<span class="sd">            cookiepath: a full cookie file path saved from auth.Login.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cookiepath</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span> <span class="o">=</span> <span class="n">cookiepath</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;debugfile&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">):</span> 
+        <span class="k">if</span> <span class="s1">&#39;debugfile&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">debugfname</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;debugfile&#39;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">debugfname</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">debugfname</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
     
-            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span> <span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">debugfname</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-         
-            <span class="k">with</span> <span class="nb">open</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">debugfname</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fdebug</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">debugfname</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+            <span class="c1"># TODO: fdebug unused</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">debugfname</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fdebug</span><span class="p">:</span>
                 <span class="k">pass</span>
     
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;DEBUG&gt; Enter idldriver.init:&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;cookiepath= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="n">cookiepath</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;debug= [</span><span class="si">%d</span><span class="s1">] debugfname= [</span><span class="si">%s</span><span class="s1">]&#39;</span> 
-                <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">debugfname</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;DEBUG&gt; Enter idldriver.init:&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;cookiepath= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="n">cookiepath</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;debug= [</span><span class="si">%d</span><span class="s1">] debugfname= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">debugfname</span><span class="p">))</span>
       
-        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cookiepath</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Required input cookie not found.&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cookiepath</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Required input cookie not found.&#39;</span><span class="p">)</span>
             <span class="k">return</span>
         
 <span class="c1">#</span>
 <span class="c1">#  load cookie</span>
 <span class="c1">#</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cookiejar</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">cookiejar</span><span class="o">.</span><span class="n">MozillaCookieJar</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cookiejar</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">cookiejar</span><span class="o">.</span><span class="n">MozillaCookieJar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span><span class="p">)</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">cookie</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> 
         <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">cookiejar</span><span class="o">.</span><span class="n">load</span> <span class="p">(</span><span class="n">ignore_discard</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ignore_expires</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cookiejar</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">ignore_discard</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ignore_expires</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
             <span class="k">for</span> <span class="n">cookie</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookiejar</span><span class="p">:</span>
 
-                <span class="k">if</span> <span class="p">(</span><span class="n">cookie</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;HIPRV&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">cookie</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;HIPRV&#39;</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">cookie</span> <span class="o">=</span> <span class="n">cookie</span>
+        <span class="c1"># TODO: bare except clause</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="k">pass</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;load cookie exception&#39;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;load cookie exception&#39;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cookie</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookie</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;cookie= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookie</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;cookiename= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookie</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;cookievalue= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookie</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;cookiedomain= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookie</span><span class="o">.</span><span class="n">domain</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;cookie= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookie</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;cookiename= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookie</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;cookievalue= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookie</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;cookiedomain= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookie</span><span class="o">.</span><span class="n">domain</span><span class="p">)</span>
 
         <span class="k">return</span>
 
-
-<div class="viewcode-block" id="Idldriver.run_script"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.idldriver.Idldriver.run_script">[docs]</a>    <span class="k">def</span> <span class="nf">run_script</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">script</span><span class="p">):</span>   
-
+<div class="viewcode-block" id="Idldriver.run_script"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.idldriver.Idldriver.run_script">[docs]</a>    <span class="k">def</span> <span class="nf">run_script</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">script</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The HIRES PRV idldriver class run method is given a script of steps to</span>
+<span class="sd">        This method is given a script of steps to</span>
 <span class="sd">        run on the data in the user&#39;s workspace.  These steps include creating </span>
-<span class="sd">        a template spectrum for a sky target, reducing a specific radial </span>
-<span class="sd">        velocity measurement using such a template, and creating an RV curve </span>
+<span class="sd">        a template spectrum for a sky target, reducing specific radial</span>
+<span class="sd">        velocity measurement(s) using such a template, and creating an RV curve</span>
 <span class="sd">        from a set of reduced RV measurements.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            script (string): script containing processing steps separated by newlines</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; from hiresprv.idldriver import Idldriver</span>
+<span class="sd">            &gt;&gt;&gt; idl = Idldriver(&#39;prv.cookies&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; rtn = idl.run_script(\&quot;\&quot;\&quot;</span>
+<span class="sd">            template 185144 20091231</span>
+<span class="sd">            rv 185144 r20091231.72</span>
+<span class="sd">            rv 185144 r20091231.73</span>
+<span class="sd">            rv 185144 r20091231.74</span>
+<span class="sd">            rv 185144 r20150606.145</span>
+<span class="sd">            rv 185144 r20150606.146</span>
+<span class="sd">            rv 185144 r20150606.147</span>
+<span class="sd">            rvcurve 185144\&quot;\&quot;\&quot;)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">script</span> <span class="o">=</span> <span class="n">script</span> 
         
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;Enter idldriver.run_script:&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;script= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Enter idldriver.run_script:&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;script= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span><span class="p">)</span>
     
         <span class="bp">self</span><span class="o">.</span><span class="n">__submitScript</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;returned submitScript: status= [</span><span class="si">%s</span><span class="s1">]&#39;</span> 
-                <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;returned submitScript: msg= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;returned submitScript: status= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;returned submitScript: msg= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
        
-        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;status= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
-        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;msg= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;status= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;msg= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
 
         <span class="k">return</span></div>
 
+<div class="viewcode-block" id="Idldriver.run_scriptfile"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.idldriver.Idldriver.run_scriptfile">[docs]</a>    <span class="k">def</span> <span class="nf">run_scriptfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scriptfile</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Same as :meth:`hiresprv.idldriver.Idldriver.run_script()` except takes a path to a file</span>
+<span class="sd">        containing the script lines.</span>
 
-    <span class="k">def</span> <span class="nf">run_scriptfile</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scriptfile</span><span class="p">):</span>   
+<span class="sd">        Args:</span>
+<span class="sd">            scriptfile (string): path to plain text file that will be read as a continuous string</span>
+<span class="sd">                                 and used as input to the :meth:`hiresprv.idldriver.Idldriver.run_script()` method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">scriptfile</span> <span class="o">=</span> <span class="n">scriptfile</span> 
     
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;Enter idldriver.run_scriptfile:&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;scriptfile= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">scriptfile</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Enter idldriver.run_scriptfile:&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;scriptfile= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">scriptfile</span><span class="p">)</span>
     
 <span class="c1">#</span>
 <span class="c1">#  read file into a script</span>
 <span class="c1">#</span>
-        <span class="k">with</span> <span class="nb">open</span> <span class="p">(</span><span class="n">scriptfile</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">scriptfile</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
             
             <span class="bp">self</span><span class="o">.</span><span class="n">script</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
     
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;script read from file&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;script= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;script read from file&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;script= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span><span class="p">)</span>
     
         <span class="bp">self</span><span class="o">.</span><span class="n">__submitScript</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;returned submitScript: status= [</span><span class="si">%s</span><span class="s1">]&#39;</span> 
-                <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;returned submitScript: msg= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;returned submitScript: status= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;returned submitScript: msg= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
        
-        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;status= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
-        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;msg= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;status= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;msg= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
 
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    
-    <span class="k">def</span> <span class="nf">__submitScript</span> <span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># TODO: Technically shouldn&#39;t use camel case in a function or method name</span>
+    <span class="k">def</span> <span class="nf">__submitScript</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
    
         <span class="n">debug</span> <span class="o">=</span> <span class="mi">0</span> 
 
         <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;Enter idldriver.__submitScript&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;script= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span><span class="p">)</span>
-    
-        
-        <span class="n">scriptdict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;script&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">script</span><span class="p">}</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Enter idldriver.__submitScript&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;script= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span><span class="p">)</span>
+
+        <span class="n">scriptdict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;script&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span><span class="p">}</span>
     
         <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;format script to dictionary, scriptdict=&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="n">scriptdict</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;format script to dictionary, scriptdict=&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">scriptdict</span><span class="p">)</span>
 
 <span class="c1">#</span>
 <span class="c1">#   construct URL </span>
@@ -230,31 +245,30 @@
         <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://hiresprv.ipac.caltech.edu/cgi-bin/idlDriver/nph-idlDriver&quot;</span>
 
         <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;url= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">url</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;url= </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">url</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">response</span> <span class="o">=</span>  <span class="n">requests</span><span class="o">.</span><span class="n">post</span> <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">scriptdict</span><span class="p">,</span> \
-            <span class="n">cookies</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cookiejar</span><span class="p">)</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">scriptdict</span><span class="p">,</span> <span class="n">cookies</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cookiejar</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;response: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;response: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
         
-        <span class="n">jsonstr</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="n">jsonstr</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;jsonstr: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">jsonstr</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;jsonstr: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">jsonstr</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">jsonstr</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">jsonstr</span><span class="p">[</span><span class="s2">&quot;msg&quot;</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;status: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span> <span class="p">(</span><span class="s1">&#39;msg: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;status: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;msg: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
 
-        <span class="n">retval</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">retval</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 
         <span class="n">retval</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span>
         <span class="n">retval</span><span class="p">[</span><span class="s2">&quot;msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span>
@@ -312,7 +326,7 @@
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
       Last updated on Dec 17, 2018.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
   </body>
 </html>

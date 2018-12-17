@@ -18,7 +18,7 @@ class Download:
     Server to retrieve the requested file.
 
     The initialization of database class loads the cookie file saved
-    from HIRES PRV pipelone login, parse the cookie to look up the
+    from HIRES PRV pipeline login, parse the cookie to look up the
     users workspace.
 
     Args:
@@ -250,7 +250,6 @@ class Download:
 
         return retval
 
-       
     def rvcurve(self, objname):
         """
         This method downloads a rvcurve csv file from the user's

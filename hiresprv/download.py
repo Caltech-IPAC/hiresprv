@@ -37,6 +37,7 @@ class Download:
     sql = ''
     format = 'html'
     filepath = ''
+    localfile = ''
     disp = 1 
     
     content_type = ''
@@ -135,6 +136,121 @@ class Download:
 
         return
 
+    def directory_listing(self):
+        """
+        This method returns a listing of all the downloadable files in the
+        workspace.
+        
+        Returns:
+            JSON structure: Dictionary with one entry for each workspace data
+            directory.  The value of the item is an array of file references.
+        """
+        
+        if self.debug:
+            logging.debug('')
+            logging.debug('Enter Download.directory_listing')
+
+        url = self.url + '&cmd=listing'
+
+        if self.debug:
+            logging.debug('')
+            logging.debug('url= [%s]' % url)
+
+        self.__submit_request(url)
+        
+        if self.debug:
+            logging.debug('')
+            logging.debug('returned submit_request:')
+            logging.debug('self.status= [%s]' % self.status)
+            logging.debug('self.msg= [%s]' % self.msg)
+
+        if self.status == 'ok':
+
+            retval = json.loads(self.response.text)
+
+        else:
+            retval = dict()
+            retval['status'] = self.status
+            retval['msg'] = self.msg
+
+        return retval
+
+       
+    def download(self, filename, localfile):
+        """
+        This method downloads any file from the user's workspace.
+        
+        Args:
+            filename (string): workspace file name 
+            savefile (string): local output file
+
+        Returns:
+            JSON structure: structure indicating the status of the submission
+        """
+        
+        if self.debug:
+            logging.debug('')
+            logging.debug('Enter Download.download: filename = %s, localfile = %s' % objname, localfile)
+       
+        if len(filename) == 0:
+            
+            self.status = 'error'
+            self.msg = 'Input argument filename is required.'
+            
+            retval = dict()
+            retval['status'] = self.status
+            retval['msg'] = self.msg
+
+            return retval
+
+        if len(localfile) == 0:
+            
+            self.status = 'error'
+            self.msg = 'Input argument localfile is required.'
+            
+            retval = dict()
+            retval['status'] = self.status
+            retval['msg'] = self.msg
+
+            return retval
+
+        self.filepath = filename
+        self.localfile = localfile
+
+        url = self.url + '&cmd=download&fileid=' + filename + '&debug=1'
+
+        if self.debug:
+            logging.debug('')
+            logging.debug('url= [%s]' % url)
+
+        self.__submit_request(url)
+        
+        if self.debug:
+            logging.debug('')
+            logging.debug('returned submit_request:')
+            logging.debug('self.status= [%s]' % self.status)
+            logging.debug('self.msg= [%s]' % self.msg)
+
+        if self.status == 'ok':
+
+            if self.debug:
+                logging.debug('')
+            
+            self.__save_to_file(self.localfile)
+        
+            if self.debug:
+                logging.debug('')
+                logging.debug('returned save_to_file:')
+                logging.debug('self.status= [%s]' % self.status)
+                logging.debug('self.msg= [%s]' % self.msg)
+
+        retval = dict()
+        retval['status'] = self.status
+        retval['msg'] = self.msg
+
+        return retval
+
+       
     def rvcurve(self, objname):
         """
         This method downloads a rvcurve csv file from the user's

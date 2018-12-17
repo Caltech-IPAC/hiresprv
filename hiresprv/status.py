@@ -123,6 +123,23 @@ class Status:
 
         return
     
+    def generate_link(self):
+        """
+        This method returns an HTML string that contains a link to start 
+        the real-time monitor in a separate window/tab.  It is generally
+        used in applications like Jupyter notebook where you don't want
+        the monitor embedded in the page.
+
+        Returns:
+            string: HTML fragment to be embedding in page to provide access
+            to real-time monitor page.
+        """
+        
+        linkStr = 'Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor.html?workspace=' + self.workspace + '" target="_blank">real-time monitor</a>.'
+
+        return linkStr
+
+
     def processing_status(self):
         """
         This method returns a URL to a page displaying the progress of

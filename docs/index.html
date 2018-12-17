@@ -41,8 +41,7 @@
   <div class="section" id="documentation-for-the-hires-radial-velocity-processing-environment">
 <h1>Documentation for the HIRES Radial Velocity Processing Environment<a class="headerlink" href="#documentation-for-the-hires-radial-velocity-processing-environment" title="Permalink to this headline">¶</a></h1>
 <p>This is a radial velocity processing environment that can be used to transform raw <a class="reference external" href="https://www2.keck.hawaii.edu/inst/hires/">Keck/HIRES</a> spectra into
-publication-ready precision radial velocities (PRVs).
-.. Data collected in the prescribed <a class="reference internal" href="setup.html#setup"><span class="std std-ref">HIRES-PRV configuration</span></a> will be compatible with this PRV
+publication-ready precision radial velocities (PRVs). Data collected only in the prescribed <a class="reference internal" href="setup.html#setup"><span class="std std-ref">HIRES-PRV configuration</span></a> will be compatible with this PRV
 processing environment.</p>
 <p>A Python API provides a convenient way to interact with the service running on <a class="reference external" href="http://nexsci.caltech.edu">NExScI</a> servers. The
 source code for the Python package is on <a class="reference external" href="https://github.com/Caltech-IPAC/hiresprv">GitHub</a>.</p>
@@ -63,7 +62,7 @@ processing environment to the <a class="reference external" href="https://github
 Only data collected in the specified HIRES-PRV configuration and according to the recommendations
 summarized below can be processed properly within the NExScI HIRES-PRV environment.</p>
 <ul class="simple">
-<li>Observers new to the HIRES-PRV configuration should treat this configuration as a “new” instrument.</li>
+<li>Observers new to the HIRES-PRV configuration should treat this configuration as a “new” instrument, which comes with requirements from Keck observatory. If you have not previously observed in the HIRES-PRV mode then you must be trained in person at Keck Headquarters in Waimea.</li>
 <li>The echelle and cross disperser angles must be set at specific angles as part of the <a class="reference internal" href="setup.html#alignment"><span class="std std-ref">afternoon setup</span></a> and must not be changed during the night.</li>
 <li>A minimum of three PRV observations with the iodine cell inserted on a given target are required before any PRVs will be produced.</li>
 <li>The minimum signal-to-noise ratio per pixel for each iodine-in RV observation must be at least 70 with the optimal SNR being 200.</li>
@@ -225,7 +224,7 @@ those same observations. We find consistent results and comparable precision.</p
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
-      Last updated on Nov 20, 2018.
+      Last updated on Dec 17, 2018.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.
     </div>
   </body>

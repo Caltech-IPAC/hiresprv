@@ -253,9 +253,9 @@ whatever directory management and navigation you like.</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-KOA userid: prvtest_jcgtest7
+KOA userid: koaadmin
 KOA Password: ········
-Successful login as prvtest_jcgtest7
+Successful login as koaadmin
 </pre></div></div>
 </div>
 </div>
@@ -271,7 +271,7 @@ give here are actually shifted a few hours to catch any calibration data
 collected in the afternoon of the same (Hawaii-local) day.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [42]:
+<span></span>In [2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -313,15 +313,42 @@ initiated.</p>
 </div>
 <div class="section" id="PRV-Processing-Monitor">
 <h2>PRV Processing Monitor<a class="headerlink" href="#PRV-Processing-Monitor" title="Permalink to this headline">¶</a></h2>
-<p>The PRV monitor makes use of IFrames. An IFrame is a region in the
-Jupyter page which can display another full browser document, in this
-case a real-time web service watching the workspace status file. Unlike
-the rest of the Jupyter page, where we have very little control over
-layout and event management, the IFrame contents can be treated much
-more like a traditional HTML/Javascript GUI.</p>
+<p>Some steps in the PRV processing can take quite a long time (hours) and
+we do not want to tie up this notebook page waiting for it to finish.
+Below we show how to retrieve a snapshot of the status (and you would
+have to poll manually to track the progress of the job) but the
+preferred approach is to start a real-time monitor in a custom page/tab
+which uses Javascript and an HTTP Event stream. Run the next cell to
+generate a link to this monitor:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [43]:
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">hiresprv.status</span> <span class="k">import</span> <span class="n">Status</span>
+<span class="kn">from</span> <span class="nn">IPython.core.display</span> <span class="k">import</span> <span class="n">HTML</span>
+
+<span class="n">monitor</span> <span class="o">=</span> <span class="n">Status</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
+
+<span class="n">link</span> <span class="o">=</span> <span class="n">monitor</span><span class="o">.</span><span class="n">generate_link</span><span class="p">()</span>
+
+<span class="n">HTML</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor.html?workspace=prv_20180827_151259_7663" target="_blank">real-time monitor</a>.</div>
+</div>
+<p>But if you still want a static status snapshoot, run the following:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -337,14 +364,14 @@ more like a traditional HTML/Javascript GUI.</p>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[43]:
+<span></span>Out[6]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <iframe
     width="950"
     height="500"
-    src="http://hiresprv.ipac.caltech.edu/cgi-bin/prvMonitor/nph-prvStatus?workspace=prv_20180924_084557_7258&format=html"
+    src="http://hiresprv.ipac.caltech.edu/cgi-bin/prvMonitor/nph-prvStatus?workspace=prv_20180827_151259_7663&format=html"
     frameborder="0"
     allowfullscreen
 ></iframe></div>
@@ -352,8 +379,8 @@ more like a traditional HTML/Javascript GUI.</p>
 </div>
 <div class="section" id="Metadata">
 <h2>Metadata<a class="headerlink" href="#Metadata" title="Permalink to this headline">¶</a></h2>
-<p>Once data has been retrieve and the “nightly” raw reduction performed, a
-set of records is added to a persistent metadata table, one per
+<p>Once data have been retrieve and the “nightly” raw reduction performed,
+a set of records is added to a persistent metadata table, one per
 observation. These observations are all taken through the HIRES PRV
 instrument (2D CCD) and will have been reduced to 1D spectra by the raw
 reduction. They fall into five classes:</p>
@@ -367,9 +394,9 @@ the template observation and used to reduce it.</p>
 <p/></li><li><p>Iodine – Reference observation of iodine for nightly calibration.</p>
 <p/></li><li><p>Miscellaneous other calibration observations (labelled as “Unknown”).</p>
 <p/></li></ul><p>By inspecting this table, the user can determine what objects were
-observed, whether there are template observation for which of them (and
-adequate B star data to reduce a template), and whether there are enough
-RV measurements to generate a final RV curve.</p>
+observed, whether there are template observations for them (and adequate
+B star data to reduce a template), and whether there are enough RV
+measurements to generate a final RV curve.</p>
 <p>With a small metadata table, this is simple enough to do by inspection
 but a typical workspace can easily have thousands of files covering tens
 or hundreds of objects. Furthermore, since observations for a single
@@ -390,7 +417,7 @@ data download or processing requests are submitted. It is up to the user
 to re-request the new metadata.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [24]:
+<span></span>In [4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -406,14 +433,14 @@ to re-request the new metadata.</p>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[24]:
+<span></span>Out[4]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <iframe
     width="950"
     height="500"
-    src="http://hiresprv.ipac.caltech.edu/cgi-bin/idlDriver/nph-prvState?workspace=prv_20180924_084557_7258&format=html"
+    src="http://prvdev.ipac.caltech.edu:9020/cgi-bin/idlDriver/nph-prvState?workspace=prv_20181214_142727_25689&format=html"
     frameborder="0"
     allowfullscreen
 ></iframe></div>
@@ -429,10 +456,10 @@ ways to do this; in our case we we used the remote SQLite query
 capability and filtered it with</p>
 <p/><p>select DATE, OBTYPE, FILENAME, TARGET, BJD, BCVEL from FILES where
 TARGET like ‘HD185144’;</p>
-<p>The resulting data is shown below.</p>
+<p>The resulting records are shown below.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [45]:
+<span></span>In [5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -444,14 +471,14 @@ TARGET like ‘HD185144’;</p>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[45]:
+<span></span>Out[5]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <iframe
     width="700"
     height="325"
-    src="http://hiresprv.ipac.caltech.edu/cgi-bin/idlDriver/nph-prvState?workspace=prv_20180924_084557_7258&format=html&sql=select DATE, OBTYPE, FILENAME, TARGET, BJD, BCVEL from FILES where TARGET like 'HD185144';"
+    src="http://prvdev.ipac.caltech.edu:9020/cgi-bin/idlDriver/nph-prvState?workspace=prv_20181214_142727_25689&format=html&sql=select DATE, OBTYPE, FILENAME, TARGET, BJD, BCVEL from FILES where TARGET like 'HD185144';"
     frameborder="0"
     allowfullscreen
 ></iframe></div>
@@ -483,7 +510,7 @@ whatever order we wish (e.g. all the templates first).</p>
 <p>All of this is submitted to the pipeline as a text script:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [44]:
+<span></span>In [2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -511,9 +538,50 @@ whatever order we wish (e.g. all the templates first).</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-status= ok
-msg= Script running in background. Consult monitor for status.
-None
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">JSONDecodeError</span>                           Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-2-ec26b6b6dcdd&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-intense-fg ansi-bold">     12</span> rv <span class="ansi-cyan-fg">185144</span> r20150606<span class="ansi-cyan-fg">.147</span>
+<span class="ansi-green-intense-fg ansi-bold">     13</span> rvcurve <span class="ansi-cyan-fg">185144</span>
+<span class="ansi-green-fg">---&gt; 14</span><span class="ansi-red-fg"> &#34;&#34;&#34;)
+</span><span class="ansi-green-intense-fg ansi-bold">     15</span>
+<span class="ansi-green-intense-fg ansi-bold">     16</span> print<span class="ansi-blue-fg">(</span>rtn<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/anaconda3/lib/python3.6/site-packages/hiresprv/idldriver.py</span> in <span class="ansi-cyan-fg">run_script</span><span class="ansi-blue-fg">(self, script)</span>
+<span class="ansi-green-intense-fg ansi-bold">    132</span>             logging<span class="ansi-blue-fg">.</span>debug<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;script= %s&#39;</span> <span class="ansi-blue-fg">%</span> self<span class="ansi-blue-fg">.</span>script<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    133</span>
+<span class="ansi-green-fg">--&gt; 134</span><span class="ansi-red-fg">         </span>self<span class="ansi-blue-fg">.</span>__submitScript<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    135</span>
+<span class="ansi-green-intense-fg ansi-bold">    136</span>         <span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>debug<span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/anaconda3/lib/python3.6/site-packages/hiresprv/idldriver.py</span> in <span class="ansi-cyan-fg">__submitScript</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-intense-fg ansi-bold">    217</span>             logging<span class="ansi-blue-fg">.</span>debug<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;response: %s&#39;</span> <span class="ansi-blue-fg">%</span> self<span class="ansi-blue-fg">.</span>response<span class="ansi-blue-fg">.</span>text<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    218</span>
+<span class="ansi-green-fg">--&gt; 219</span><span class="ansi-red-fg">         </span>jsonstr <span class="ansi-blue-fg">=</span> json<span class="ansi-blue-fg">.</span>loads<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>response<span class="ansi-blue-fg">.</span>text<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    220</span>
+<span class="ansi-green-intense-fg ansi-bold">    221</span>         <span class="ansi-green-fg">if</span> debug<span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/anaconda3/lib/python3.6/json/__init__.py</span> in <span class="ansi-cyan-fg">loads</span><span class="ansi-blue-fg">(s, encoding, cls, object_hook, parse_float, parse_int, parse_constant, object_pairs_hook, **kw)</span>
+<span class="ansi-green-intense-fg ansi-bold">    352</span>             parse_int <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span> <span class="ansi-green-fg">and</span> parse_float <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span> <span class="ansi-green-fg">and</span>
+<span class="ansi-green-intense-fg ansi-bold">    353</span>             parse_constant is None and object_pairs_hook is None and not kw):
+<span class="ansi-green-fg">--&gt; 354</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> _default_decoder<span class="ansi-blue-fg">.</span>decode<span class="ansi-blue-fg">(</span>s<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    355</span>     <span class="ansi-green-fg">if</span> cls <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    356</span>         cls <span class="ansi-blue-fg">=</span> JSONDecoder
+
+<span class="ansi-green-fg">~/anaconda3/lib/python3.6/json/decoder.py</span> in <span class="ansi-cyan-fg">decode</span><span class="ansi-blue-fg">(self, s, _w)</span>
+<span class="ansi-green-intense-fg ansi-bold">    337</span>
+<span class="ansi-green-intense-fg ansi-bold">    338</span>         &#34;&#34;&#34;
+<span class="ansi-green-fg">--&gt; 339</span><span class="ansi-red-fg">         </span>obj<span class="ansi-blue-fg">,</span> end <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>raw_decode<span class="ansi-blue-fg">(</span>s<span class="ansi-blue-fg">,</span> idx<span class="ansi-blue-fg">=</span>_w<span class="ansi-blue-fg">(</span>s<span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>end<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    340</span>         end <span class="ansi-blue-fg">=</span> _w<span class="ansi-blue-fg">(</span>s<span class="ansi-blue-fg">,</span> end<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>end<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    341</span>         <span class="ansi-green-fg">if</span> end <span class="ansi-blue-fg">!=</span> len<span class="ansi-blue-fg">(</span>s<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/anaconda3/lib/python3.6/json/decoder.py</span> in <span class="ansi-cyan-fg">raw_decode</span><span class="ansi-blue-fg">(self, s, idx)</span>
+<span class="ansi-green-intense-fg ansi-bold">    355</span>             obj<span class="ansi-blue-fg">,</span> end <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>scan_once<span class="ansi-blue-fg">(</span>s<span class="ansi-blue-fg">,</span> idx<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    356</span>         <span class="ansi-green-fg">except</span> StopIteration <span class="ansi-green-fg">as</span> err<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 357</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">raise</span> JSONDecodeError<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;Expecting value&#34;</span><span class="ansi-blue-fg">,</span> s<span class="ansi-blue-fg">,</span> err<span class="ansi-blue-fg">.</span>value<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">from</span> <span class="ansi-green-fg">None</span>
+<span class="ansi-green-intense-fg ansi-bold">    358</span>         <span class="ansi-green-fg">return</span> obj<span class="ansi-blue-fg">,</span> end
+
+<span class="ansi-red-fg">JSONDecodeError</span>: Expecting value: line 1 column 1 (char 0)
 </pre></div></div>
 </div>
 </div>
@@ -523,13 +591,74 @@ None
 another cell the runs the PRV Processing Monitor here or just go back to
 the previous cell and monitor from there.</p>
 </div>
-<div class="section" id="Data-Retrieval">
-<h3>Data Retrieval<a class="headerlink" href="#Data-Retrieval" title="Permalink to this headline">¶</a></h3>
-<p>The principal retrievable items are the RV curves (CSV files) for each
-target</p>
+<div class="section" id="Workspace-Directory-Listing">
+<h3>Workspace Directory Listing<a class="headerlink" href="#Workspace-Directory-Listing" title="Permalink to this headline">¶</a></h3>
+<p>We can get a list of all the downloadable files in the workspace. There
+are utility functions (below) for quickly downloading the final products
+but we often want to see the intermediate products to evaluate/diagnose
+the processing.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [46]:
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">hiresprv.download</span> <span class="k">import</span> <span class="n">Download</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">Download</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
+
+<span class="n">listing</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">directory_listing</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">listing</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;dnloadlod&#39;: [&#39;dnloadlog/20130629.json&#39;, &#39;dnloadlog/20130912.json&#39;, &#39;dnloadlog/20150606.json&#39;, &#39;dnloadlog/20091231.json&#39;], &#39;logsheets&#39;: [&#39;logsheets/20130629.logsheet1&#39;, &#39;logsheets/20091231.logsheet1&#39;, &#39;logsheets/20130912.logsheet1&#39;, &#39;logsheets/20150606.logsheet1&#39;], &#39;statuslog&#39;: [&#39;statuslog/status.2018-12-14T14:50:45.txt&#39;, &#39;statuslog/status.2018-12-14T17:13:49.txt&#39;, &#39;statuslog/status.2018-12-14T14:27:49.txt&#39;, &#39;statuslog/status.2018-12-14T14:58:53.txt&#39;, &#39;statuslog/status.2018-12-14T15:12:48.txt&#39;], &#39;idllog&#39;: [&#39;idllog/idlDebug.2018-12-14T14:50:45.txt&#39;, &#39;idllog/idlDebug.2018-12-14T17:13:49.txt&#39;, &#39;idllog/idlDebug.2018-12-14T14:58:53.txt&#39;, &#39;idllog/idlDebug.2018-12-14T14:27:49.txt&#39;, &#39;idllog/idlDebug.2018-12-14T15:12:48.txt&#39;], &#39;fits&#39;: [&#39;fits/r20150606.4.fits&#39;, &#39;fits/r20130629.99.fits&#39;, &#39;fits/r20091231.154.fits&#39;, &#39;fits/r20150606.75.fits&#39;, &#39;fits/r20091231.85.fits&#39;, &#39;fits/r20091231.211.fits&#39;, &#39;fits/r20130912.157.fits&#39;, &#39;fits/r20130629.70.fits&#39;, &#39;fits/r20150606.128.fits&#39;, &#39;fits/r20150606.119.fits&#39;, &#39;fits/r20130912.166.fits&#39;, &#39;fits/r20091231.220.fits&#39;, &#39;fits/r20150606.152.fits&#39;, &#39;fits/r20130912.78.fits&#39;, &#39;fits/r20130629.8.fits&#39;, &#39;fits/r20130912.91.fits&#39;, &#39;fits/r20091231.165.fits&#39;, &#39;fits/r20130629.115.fits&#39;, &#39;fits/r20091231.8.fits&#39;, &#39;fits/r20091231.209.fits&#39;, &#39;fits/r20130912.104.fits&#39;, &#39;fits/r20150606.130.fits&#39;, &#39;fits/r20091231.242.fits&#39;, &#39;fits/r20091231.74.fits&#39;, &#39;fits/r20150606.84.fits&#39;, &#39;fits/r20091231.107.fits&#39;, &#39;fits/r20130629.81.fits&#39;, &#39;fits/r20130912.89.fits&#39;, &#39;fits/r20091231.136.fits&#39;, &#39;fits/r20091231.273.fits&#39;, &#39;fits/r20150606.101.fits&#39;, &#39;fits/r20130629.12.fits&#39;, &#39;fits/r20130912.135.fits&#39;, &#39;fits/r20091231.238.fits&#39;, &#39;fits/r20091231.194.fits&#39;, &#39;fits/r20091231.188.fits&#39;, &#39;fits/r20130912.162.fits&#39;, &#39;fits/r20150606.156.fits&#39;, &#39;fits/r20091231.224.fits&#39;, &#39;fits/r20130912.129.fits&#39;, &#39;fits/r20091231.286.fits&#39;, &#39;fits/r20130629.111.fits&#39;, &#39;fits/r20091231.161.fits&#39;, &#39;fits/r20130912.95.fits&#39;, &#39;fits/r20091231.150.fits&#39;, &#39;fits/r20130629.120.fits&#39;, &#39;fits/r20150606.98.fits&#39;, &#39;fits/r20091231.68.fits&#39;, &#39;fits/r20091231.81.fits&#39;, &#39;fits/r20150606.71.fits&#39;, &#39;fits/r20130912.118.fits&#39;, &#39;fits/r20091231.215.fits&#39;, &#39;fits/r20130629.74.fits&#39;, &#39;fits/r20130912.153.fits&#39;, &#39;fits/r20091231.132.fits&#39;, &#39;fits/r20130629.109.fits&#39;, &#39;fits/r20091231.179.fits&#39;, &#39;fits/r20091231.190.fits&#39;, &#39;fits/r20150606.105.fits&#39;, &#39;fits/r20091231.277.fits&#39;, &#39;fits/r20130912.131.fits&#39;, &#39;fits/r20130629.16.fits&#39;, &#39;fits/r20130912.100.fits&#39;, &#39;fits/r20091231.246.fits&#39;, &#39;fits/r20150606.134.fits&#39;, &#39;fits/r20091231.99.fits&#39;, &#39;fits/r20150606.69.fits&#39;, &#39;fits/r20150606.80.fits&#39;, &#39;fits/r20091231.70.fits&#39;, &#39;fits/r20091231.148.fits&#39;, &#39;fits/r20130629.85.fits&#39;, &#39;fits/r20091231.103.fits&#39;, &#39;fits/r20091231.95.fits&#39;, &#39;fits/r20150606.65.fits&#39;, &#39;fits/r20150606.138.fits&#39;, &#39;fits/r20091231.201.fits&#39;, &#39;fits/r20130912.147.fits&#39;, &#39;fits/r20091231.144.fits&#39;, &#39;fits/r20130629.89.fits&#39;, &#39;fits/r20130912.2.fits&#39;, &#39;fits/r20130629.105.fits&#39;, &#39;fits/r20091231.175.fits&#39;, &#39;fits/r20130912.81.fits&#39;, &#39;fits/r20130912.68.fits&#39;, &#39;fits/r20130912.176.fits&#39;, &#39;fits/r20091231.230.fits&#39;, &#39;fits/r20150606.142.fits&#39;, &#39;fits/r20150606.109.fits&#39;, &#39;fits/r20150606.94.fits&#39;, &#39;fits/r20130629.91.fits&#39;, &#39;fits/r20091231.117.fits&#39;, &#39;fits/r20130912.114.fits&#39;, &#39;fits/r20150606.120.fits&#39;, &#39;fits/r20091231.252.fits&#39;, &#39;fits/r20130629.78.fits&#39;, &#39;fits/r20091231.219.fits&#39;, &#39;fits/r20091231.184.fits&#39;, &#39;fits/r20091231.228.fits&#39;, &#39;fits/r20130912.70.fits&#39;, &#39;fits/r20091231.263.fits&#39;, &#39;fits/r20150606.111.fits&#39;, &#39;fits/r20130912.125.fits&#39;, &#39;fits/r20091231.126.fits&#39;, &#39;fits/r20130912.99.fits&#39;, &#39;fits/r20130912.85.fits&#39;, &#39;fits/r20091231.171.fits&#39;, &#39;fits/r20130629.101.fits&#39;, &#39;fits/r20130912.139.fits&#39;, &#39;fits/r20130912.172.fits&#39;, &#39;fits/r20150606.146.fits&#39;, &#39;fits/r20091231.234.fits&#39;, &#39;fits/r20091231.198.fits&#39;, &#39;fits/r20150606.61.fits&#39;, &#39;fits/r20091231.91.fits&#39;, &#39;fits/r20091231.205.fits&#39;, &#39;fits/r20130912.143.fits&#39;, &#39;fits/r20130912.108.fits&#39;, &#39;fits/r20130912.6.fits&#39;, &#39;fits/r20091231.140.fits&#39;, &#39;fits/r20091231.78.fits&#39;, &#39;fits/r20150606.88.fits&#39;, &#39;fits/r20150606.115.fits&#39;, &#39;fits/r20091231.267.fits&#39;, &#39;fits/r20130912.121.fits&#39;, &#39;fits/r20130912.74.fits&#39;, &#39;fits/r20091231.180.fits&#39;, &#39;fits/r20091231.4.fits&#39;, &#39;fits/r20091231.169.fits&#39;, &#39;fits/r20130629.4.fits&#39;, &#39;fits/r20130629.119.fits&#39;, &#39;fits/r20091231.122.fits&#39;, &#39;fits/r20150606.90.fits&#39;, &#39;fits/r20091231.113.fits&#39;, &#39;fits/r20130629.95.fits&#39;, &#39;fits/r20091231.158.fits&#39;, &#39;fits/r20150606.8.fits&#39;, &#39;fits/r20130912.110.fits&#39;, &#39;fits/r20091231.256.fits&#39;, &#39;fits/r20150606.124.fits&#39;, &#39;fits/r20150606.79.fits&#39;, &#39;fits/r20091231.89.fits&#39;, &#39;fits/r20091231.200.fits&#39;, &#39;fits/r20130912.146.fits&#39;, &#39;fits/r20150606.139.fits&#39;, &#39;fits/r20150606.64.fits&#39;, &#39;fits/r20091231.94.fits&#39;, &#39;fits/r20130912.3.fits&#39;, &#39;fits/r20091231.145.fits&#39;, &#39;fits/r20130629.88.fits&#39;, &#39;fits/r20091231.174.fits&#39;, &#39;fits/r20130912.80.fits&#39;, &#39;fits/r20130629.104.fits&#39;, &#39;fits/r20150606.108.fits&#39;, &#39;fits/r20130912.69.fits&#39;, &#39;fits/r20150606.143.fits&#39;, &#39;fits/r20091231.231.fits&#39;, &#39;fits/r20091231.116.fits&#39;, &#39;fits/r20130629.90.fits&#39;, &#39;fits/r20150606.95.fits&#39;, &#39;fits/r20130629.79.fits&#39;, &#39;fits/r20091231.218.fits&#39;, &#39;fits/r20130912.115.fits&#39;, &#39;fits/r20091231.253.fits&#39;, &#39;fits/r20150606.121.fits&#39;, &#39;fits/r20150606.110.fits&#39;, &#39;fits/r20091231.262.fits&#39;, &#39;fits/r20130912.124.fits&#39;, &#39;fits/r20091231.185.fits&#39;, &#39;fits/r20091231.229.fits&#39;, &#39;fits/r20130912.71.fits&#39;, &#39;fits/r20130912.98.fits&#39;, &#39;fits/r20130629.1.fits&#39;, &#39;fits/r20091231.127.fits&#39;, &#39;fits/r20091231.1.fits&#39;, &#39;fits/r20130629.100.fits&#39;, &#39;fits/r20130912.84.fits&#39;, &#39;fits/r20091231.170.fits&#39;, &#39;fits/r20130912.173.fits&#39;, &#39;fits/r20091231.235.fits&#39;, &#39;fits/r20150606.147.fits&#39;, &#39;fits/r20091231.199.fits&#39;, &#39;fits/r20130912.138.fits&#39;, &#39;fits/r20130912.109.fits&#39;, &#39;fits/r20091231.204.fits&#39;, &#39;fits/r20130912.142.fits&#39;, &#39;fits/r20091231.90.fits&#39;, &#39;fits/r20150606.89.fits&#39;, &#39;fits/r20091231.79.fits&#39;, &#39;fits/r20091231.141.fits&#39;, &#39;fits/r20130912.7.fits&#39;, &#39;fits/r20130912.75.fits&#39;, &#39;fits/r20091231.181.fits&#39;, &#39;fits/r20091231.266.fits&#39;, &#39;fits/r20150606.114.fits&#39;, &#39;fits/r20130912.120.fits&#39;, &#39;fits/r20130629.118.fits&#39;, &#39;fits/r20091231.123.fits&#39;, &#39;fits/r20091231.168.fits&#39;, &#39;fits/r20130629.5.fits&#39;, &#39;fits/r20091231.5.fits&#39;, &#39;fits/r20130629.94.fits&#39;, &#39;fits/r20091231.159.fits&#39;, &#39;fits/r20150606.9.fits&#39;, &#39;fits/r20091231.112.fits&#39;, &#39;fits/r20150606.91.fits&#39;, &#39;fits/r20091231.88.fits&#39;, &#39;fits/r20150606.78.fits&#39;, &#39;fits/r20130912.111.fits&#39;, &#39;fits/r20150606.125.fits&#39;, &#39;fits/r20091231.257.fits&#39;, &#39;fits/r20150606.5.fits&#39;, &#39;fits/r20130629.98.fits&#39;, &#39;fits/r20091231.155.fits&#39;, &#39;fits/r20150606.129.fits&#39;, &#39;fits/r20091231.210.fits&#39;, &#39;fits/r20150606.162.fits&#39;, &#39;fits/r20130912.156.fits&#39;, &#39;fits/r20130629.71.fits&#39;, &#39;fits/r20091231.84.fits&#39;, &#39;fits/r20150606.74.fits&#39;, &#39;fits/r20130912.167.fits&#39;, &#39;fits/r20150606.153.fits&#39;, &#39;fits/r20091231.221.fits&#39;, &#39;fits/r20130912.79.fits&#39;, &#39;fits/r20150606.118.fits&#39;, &#39;fits/r20091231.9.fits&#39;, &#39;fits/r20091231.283.fits&#39;, &#39;fits/r20130629.114.fits&#39;, &#39;fits/r20130629.9.fits&#39;, &#39;fits/r20130912.90.fits&#39;, &#39;fits/r20091231.164.fits&#39;, &#39;fits/r20130912.105.fits&#39;, &#39;fits/r20091231.243.fits&#39;, &#39;fits/r20150606.131.fits&#39;, &#39;fits/r20091231.208.fits&#39;, &#39;fits/r20130629.80.fits&#39;, &#39;fits/r20091231.106.fits&#39;, &#39;fits/r20150606.85.fits&#39;, &#39;fits/r20091231.75.fits&#39;, &#39;fits/r20091231.137.fits&#39;, &#39;fits/r20130912.88.fits&#39;, &#39;fits/r20091231.239.fits&#39;, &#39;fits/r20091231.195.fits&#39;, &#39;fits/r20150606.100.fits&#39;, &#39;fits/r20091231.272.fits&#39;, &#39;fits/r20130629.13.fits&#39;, &#39;fits/r20130912.134.fits&#39;, &#39;fits/r20130912.128.fits&#39;, &#39;fits/r20091231.189.fits&#39;, &#39;fits/r20130912.163.fits&#39;, &#39;fits/r20091231.225.fits&#39;, &#39;fits/r20150606.157.fits&#39;, &#39;fits/r20091231.160.fits&#39;, &#39;fits/r20130912.94.fits&#39;, &#39;fits/r20091231.287.fits&#39;, &#39;fits/r20130629.110.fits&#39;, &#39;fits/r20091231.69.fits&#39;, &#39;fits/r20150606.99.fits&#39;, &#39;fits/r20091231.151.fits&#39;, &#39;fits/r20150606.1.fits&#39;, &#39;fits/r20150606.166.fits&#39;, &#39;fits/r20091231.214.fits&#39;, &#39;fits/r20130629.75.fits&#39;, &#39;fits/r20130912.152.fits&#39;, &#39;fits/r20130912.119.fits&#39;, &#39;fits/r20150606.70.fits&#39;, &#39;fits/r20091231.80.fits&#39;, &#39;fits/r20091231.178.fits&#39;, &#39;fits/r20091231.133.fits&#39;, &#39;fits/r20130629.108.fits&#39;, &#39;fits/r20091231.276.fits&#39;, &#39;fits/r20150606.104.fits&#39;, &#39;fits/r20130912.130.fits&#39;, &#39;fits/r20130629.17.fits&#39;, &#39;fits/r20091231.191.fits&#39;, &#39;fits/r20150606.68.fits&#39;, &#39;fits/r20091231.98.fits&#39;, &#39;fits/r20130912.101.fits&#39;, &#39;fits/r20150606.135.fits&#39;, &#39;fits/r20091231.247.fits&#39;, &#39;fits/r20091231.102.fits&#39;, &#39;fits/r20091231.149.fits&#39;, &#39;fits/r20130629.84.fits&#39;, &#39;fits/r20091231.71.fits&#39;, &#39;fits/r20150606.81.fits&#39;, &#39;fits/r20130912.1.fits&#39;, &#39;fits/r20091231.147.fits&#39;, &#39;fits/r20150606.66.fits&#39;, &#39;fits/r20091231.96.fits&#39;, &#39;fits/r20091231.202.fits&#39;, &#39;fits/r20130912.144.fits&#39;, &#39;fits/r20130912.11.fits&#39;, &#39;fits/r20091231.249.fits&#39;, &#39;fits/r20130629.19.fits&#39;, &#39;fits/r20091231.278.fits&#39;, &#39;fits/r20091231.233.fits&#39;, &#39;fits/r20150606.141.fits&#39;, &#39;fits/r20091231.176.fits&#39;, &#39;fits/r20130912.82.fits&#39;, &#39;fits/r20130629.106.fits&#39;, &#39;fits/r20130912.117.fits&#39;, &#39;fits/r20150606.123.fits&#39;, &#39;fits/r20091231.251.fits&#39;, &#39;fits/r20091231.67.fits&#39;, &#39;fits/r20150606.97.fits&#39;, &#39;fits/r20091231.114.fits&#39;, &#39;fits/r20130629.92.fits&#39;, &#39;fits/r20091231.3.fits&#39;, &#39;fits/r20130629.3.fits&#39;, &#39;fits/r20091231.125.fits&#39;, &#39;fits/r20091231.260.fits&#39;, &#39;fits/r20150606.112.fits&#39;, &#39;fits/r20130912.126.fits&#39;, &#39;fits/r20091231.187.fits&#39;, &#39;fits/r20150606.159.fits&#39;, &#39;fits/r20130912.73.fits&#39;, &#39;fits/r20130912.171.fits&#39;, &#39;fits/r20150606.145.fits&#39;, &#39;fits/r20091231.237.fits&#39;, &#39;fits/r20130629.102.fits&#39;, &#39;fits/r20091231.139.fits&#39;, &#39;fits/r20130912.86.fits&#39;, &#39;fits/r20091231.172.fits&#39;, &#39;fits/r20091231.143.fits&#39;, &#39;fits/r20130912.5.fits&#39;, &#39;fits/r20091231.108.fits&#39;, &#39;fits/r20091231.92.fits&#39;, &#39;fits/r20150606.62.fits&#39;, &#39;fits/r20130912.15.fits&#39;, &#39;fits/r20091231.206.fits&#39;, &#39;fits/r20130912.140.fits&#39;, &#39;fits/r20091231.7.fits&#39;, &#39;fits/r20091231.121.fits&#39;, &#39;fits/r20130629.7.fits&#39;, &#39;fits/r20130912.77.fits&#39;, &#39;fits/r20091231.183.fits&#39;, &#39;fits/r20130912.169.fits&#39;, &#39;fits/r20150606.116.fits&#39;, &#39;fits/r20091231.264.fits&#39;, &#39;fits/r20130912.122.fits&#39;, &#39;fits/r20130912.113.fits&#39;, &#39;fits/r20091231.255.fits&#39;, &#39;fits/r20150606.127.fits&#39;, &#39;fits/r20130912.158.fits&#39;, &#39;fits/r20150606.93.fits&#39;, &#39;fits/r20130629.96.fits&#39;, &#39;fits/r20091231.110.fits&#39;, &#39;fits/r20091231.86.fits&#39;, &#39;fits/r20150606.76.fits&#39;, &#39;fits/r20091231.259.fits&#39;, &#39;fits/r20150606.160.fits&#39;, &#39;fits/r20091231.212.fits&#39;, &#39;fits/r20130629.73.fits&#39;, &#39;fits/r20130912.154.fits&#39;, &#39;fits/r20150606.7.fits&#39;, &#39;fits/r20091231.157.fits&#39;, &#39;fits/r20130629.116.fits&#39;, &#39;fits/r20130912.92.fits&#39;, &#39;fits/r20091231.166.fits&#39;, &#39;fits/r20130912.165.fits&#39;, &#39;fits/r20091231.223.fits&#39;, &#39;fits/r20150606.151.fits&#39;, &#39;fits/r20091231.268.fits&#39;, &#39;fits/r20150606.87.fits&#39;, &#39;fits/r20091231.77.fits&#39;, &#39;fits/r20130629.82.fits&#39;, &#39;fits/r20130912.9.fits&#39;, &#39;fits/r20091231.104.fits&#39;, &#39;fits/r20130912.107.fits&#39;, &#39;fits/r20150606.133.fits&#39;, &#39;fits/r20091231.241.fits&#39;, &#39;fits/r20150606.149.fits&#39;, &#39;fits/r20091231.197.fits&#39;, &#39;fits/r20091231.270.fits&#39;, &#39;fits/r20150606.102.fits&#39;, &#39;fits/r20130912.136.fits&#39;, &#39;fits/r20130629.11.fits&#39;, &#39;fits/r20091231.135.fits&#39;, &#39;fits/r20091231.162.fits&#39;, &#39;fits/r20130912.96.fits&#39;, &#39;fits/r20091231.285.fits&#39;, &#39;fits/r20091231.129.fits&#39;, &#39;fits/r20130629.112.fits&#39;, &#39;fits/r20091231.11.fits&#39;, &#39;fits/r20130912.161.fits&#39;, &#39;fits/r20150606.155.fits&#39;, &#39;fits/r20091231.227.fits&#39;, &#39;fits/r20150606.72.fits&#39;, &#39;fits/r20091231.82.fits&#39;, &#39;fits/r20091231.216.fits&#39;, &#39;fits/r20150606.164.fits&#39;, &#39;fits/r20130912.150.fits&#39;, &#39;fits/r20130629.77.fits&#39;, &#39;fits/r20091231.118.fits&#39;, &#39;fits/r20091231.153.fits&#39;, &#39;fits/r20150606.3.fits&#39;, &#39;fits/r20150606.106.fits&#39;, &#39;fits/r20091231.274.fits&#39;, &#39;fits/r20130629.15.fits&#39;, &#39;fits/r20130912.132.fits&#39;, &#39;fits/r20091231.193.fits&#39;, &#39;fits/r20130912.67.fits&#39;, &#39;fits/r20150606.10.fits&#39;, &#39;fits/r20091231.131.fits&#39;, &#39;fits/r20091231.73.fits&#39;, &#39;fits/r20150606.83.fits&#39;, &#39;fits/r20091231.100.fits&#39;, &#39;fits/r20130629.86.fits&#39;, &#39;fits/r20130912.148.fits&#39;, &#39;fits/r20130912.103.fits&#39;, &#39;fits/r20091231.245.fits&#39;, &#39;fits/r20150606.137.fits&#39;, &#39;fits/r20091231.213.fits&#39;, &#39;fits/r20150606.161.fits&#39;, &#39;fits/r20130629.72.fits&#39;, &#39;fits/r20130912.155.fits&#39;, &#39;fits/r20091231.258.fits&#39;, &#39;fits/r20150606.77.fits&#39;, &#39;fits/r20091231.87.fits&#39;, &#39;fits/r20150606.6.fits&#39;, &#39;fits/r20091231.156.fits&#39;, &#39;fits/r20130912.93.fits&#39;, &#39;fits/r20091231.167.fits&#39;, &#39;fits/r20130629.117.fits&#39;, &#39;fits/r20091231.269.fits&#39;, &#39;fits/r20130912.164.fits&#39;, &#39;fits/r20150606.150.fits&#39;, &#39;fits/r20091231.222.fits&#39;, &#39;fits/r20130912.8.fits&#39;, &#39;fits/r20091231.105.fits&#39;, &#39;fits/r20130629.83.fits&#39;, &#39;fits/r20091231.76.fits&#39;, &#39;fits/r20150606.86.fits&#39;, &#39;fits/r20130912.106.fits&#39;, &#39;fits/r20091231.240.fits&#39;, &#39;fits/r20150606.132.fits&#39;, &#39;fits/r20150606.103.fits&#39;, &#39;fits/r20091231.271.fits&#39;, &#39;fits/r20130912.137.fits&#39;, &#39;fits/r20130629.10.fits&#39;, &#39;fits/r20150606.148.fits&#39;, &#39;fits/r20091231.196.fits&#39;, &#39;fits/r20091231.134.fits&#39;, &#39;fits/r20091231.10.fits&#39;, &#39;fits/r20091231.284.fits&#39;, &#39;fits/r20091231.128.fits&#39;, &#39;fits/r20130629.113.fits&#39;, &#39;fits/r20091231.163.fits&#39;, &#39;fits/r20130912.97.fits&#39;, &#39;fits/r20130912.160.fits&#39;, &#39;fits/r20091231.226.fits&#39;, &#39;fits/r20150606.154.fits&#39;, &#39;fits/r20150606.165.fits&#39;, &#39;fits/r20091231.217.fits&#39;, &#39;fits/r20130912.151.fits&#39;, &#39;fits/r20130629.76.fits&#39;, &#39;fits/r20091231.83.fits&#39;, &#39;fits/r20150606.73.fits&#39;, &#39;fits/r20091231.152.fits&#39;, &#39;fits/r20150606.2.fits&#39;, &#39;fits/r20091231.119.fits&#39;, &#39;fits/r20091231.192.fits&#39;, &#39;fits/r20130912.66.fits&#39;, &#39;fits/r20091231.275.fits&#39;, &#39;fits/r20150606.107.fits&#39;, &#39;fits/r20130629.14.fits&#39;, &#39;fits/r20130912.133.fits&#39;, &#39;fits/r20091231.130.fits&#39;, &#39;fits/r20130629.87.fits&#39;, &#39;fits/r20091231.101.fits&#39;, &#39;fits/r20150606.82.fits&#39;, &#39;fits/r20091231.72.fits&#39;, &#39;fits/r20130912.102.fits&#39;, &#39;fits/r20150606.136.fits&#39;, &#39;fits/r20091231.244.fits&#39;, &#39;fits/r20130912.149.fits&#39;, &#39;fits/r20091231.146.fits&#39;, &#39;fits/r20130912.10.fits&#39;, &#39;fits/r20091231.248.fits&#39;, &#39;fits/r20091231.203.fits&#39;, &#39;fits/r20130912.145.fits&#39;, &#39;fits/r20091231.97.fits&#39;, &#39;fits/r20150606.67.fits&#39;, &#39;fits/r20130912.174.fits&#39;, &#39;fits/r20150606.140.fits&#39;, &#39;fits/r20091231.232.fits&#39;, &#39;fits/r20130629.18.fits&#39;, &#39;fits/r20130629.107.fits&#39;, &#39;fits/r20091231.177.fits&#39;, &#39;fits/r20130912.83.fits&#39;, &#39;fits/r20130912.116.fits&#39;, &#39;fits/r20091231.250.fits&#39;, &#39;fits/r20150606.122.fits&#39;, &#39;fits/r20130629.93.fits&#39;, &#39;fits/r20091231.115.fits&#39;, &#39;fits/r20150606.96.fits&#39;, &#39;fits/r20091231.66.fits&#39;, &#39;fits/r20091231.288.fits&#39;, &#39;fits/r20091231.124.fits&#39;, &#39;fits/r20130629.2.fits&#39;, &#39;fits/r20091231.2.fits&#39;, &#39;fits/r20091231.186.fits&#39;, &#39;fits/r20150606.158.fits&#39;, &#39;fits/r20130912.72.fits&#39;, &#39;fits/r20150606.113.fits&#39;, &#39;fits/r20091231.261.fits&#39;, &#39;fits/r20130912.127.fits&#39;, &#39;fits/r20130912.170.fits&#39;, &#39;fits/r20091231.236.fits&#39;, &#39;fits/r20150606.144.fits&#39;, &#39;fits/r20130912.87.fits&#39;, &#39;fits/r20091231.173.fits&#39;, &#39;fits/r20130629.103.fits&#39;, &#39;fits/r20091231.138.fits&#39;, &#39;fits/r20130912.4.fits&#39;, &#39;fits/r20091231.109.fits&#39;, &#39;fits/r20091231.142.fits&#39;, &#39;fits/r20091231.207.fits&#39;, &#39;fits/r20130912.141.fits&#39;, &#39;fits/r20130912.14.fits&#39;, &#39;fits/r20150606.63.fits&#39;, &#39;fits/r20091231.93.fits&#39;, &#39;fits/r20130629.6.fits&#39;, &#39;fits/r20091231.120.fits&#39;, &#39;fits/r20091231.6.fits&#39;, &#39;fits/r20091231.265.fits&#39;, &#39;fits/r20150606.117.fits&#39;, &#39;fits/r20130912.123.fits&#39;, &#39;fits/r20130912.76.fits&#39;, &#39;fits/r20091231.182.fits&#39;, &#39;fits/r20130912.168.fits&#39;, &#39;fits/r20130912.159.fits&#39;, &#39;fits/r20130912.112.fits&#39;, &#39;fits/r20150606.126.fits&#39;, &#39;fits/r20091231.254.fits&#39;, &#39;fits/r20091231.111.fits&#39;, &#39;fits/r20130629.97.fits&#39;, &#39;fits/r20150606.92.fits&#39;], &#39;deblazed&#39;: [&#39;deblazed/r20130629.76.fits&#39;, &#39;deblazed/r20091231.138.fits&#39;, &#39;deblazed/r20130629.103.fits&#39;, &#39;deblazed/r20091231.173.fits&#39;, &#39;deblazed/r20150606.73.fits&#39;, &#39;deblazed/r20091231.83.fits&#39;, &#39;deblazed/r20130912.170.fits&#39;, &#39;deblazed/r20091231.236.fits&#39;, &#39;deblazed/r20150606.144.fits&#39;, &#39;deblazed/r20091231.10.fits&#39;, &#39;deblazed/r20130912.97.fits&#39;, &#39;deblazed/r20091231.207.fits&#39;, &#39;deblazed/r20130912.141.fits&#39;, &#39;deblazed/r20091231.142.fits&#39;, &#39;deblazed/r20091231.109.fits&#39;, &#39;deblazed/r20091231.182.fits&#39;, &#39;deblazed/r20130912.168.fits&#39;, &#39;deblazed/r20091231.265.fits&#39;, &#39;deblazed/r20150606.117.fits&#39;, &#39;deblazed/r20130912.123.fits&#39;, &#39;deblazed/r20130629.87.fits&#39;, &#39;deblazed/r20130912.2.fits&#39;, &#39;deblazed/r20091231.72.fits&#39;, &#39;deblazed/r20150606.82.fits&#39;, &#39;deblazed/r20091231.120.fits&#39;, &#39;deblazed/r20130629.14.fits&#39;, &#39;deblazed/r20091231.111.fits&#39;, &#39;deblazed/r20130912.66.fits&#39;, &#39;deblazed/r20130912.112.fits&#39;, &#39;deblazed/r20150606.126.fits&#39;, &#39;deblazed/r20091231.254.fits&#39;, &#39;deblazed/r20130912.159.fits&#39;, &#39;deblazed/r20130629.4.fits&#39;, &#39;deblazed/r20091231.203.fits&#39;, &#39;deblazed/r20130912.145.fits&#39;, &#39;deblazed/r20130912.93.fits&#39;, &#39;deblazed/r20091231.248.fits&#39;, &#39;deblazed/r20091231.4.fits&#39;, &#39;deblazed/r20091231.146.fits&#39;, &#39;deblazed/r20091231.177.fits&#39;, &#39;deblazed/r20130629.72.fits&#39;, &#39;deblazed/r20130629.107.fits&#39;, &#39;deblazed/r20091231.87.fits&#39;, &#39;deblazed/r20150606.77.fits&#39;, &#39;deblazed/r20150606.8.fits&#39;, &#39;deblazed/r20130912.174.fits&#39;, &#39;deblazed/r20150606.140.fits&#39;, &#39;deblazed/r20091231.232.fits&#39;, &#39;deblazed/r20091231.115.fits&#39;, &#39;deblazed/r20130629.10.fits&#39;, &#39;deblazed/r20130912.116.fits&#39;, &#39;deblazed/r20091231.250.fits&#39;, &#39;deblazed/r20150606.122.fits&#39;, &#39;deblazed/r20150606.113.fits&#39;, &#39;deblazed/r20091231.261.fits&#39;, &#39;deblazed/r20130912.127.fits&#39;, &#39;deblazed/r20130629.83.fits&#39;, &#39;deblazed/r20091231.186.fits&#39;, &#39;deblazed/r20150606.158.fits&#39;, &#39;deblazed/r20150606.86.fits&#39;, &#39;deblazed/r20091231.76.fits&#39;, &#39;deblazed/r20130912.6.fits&#39;, &#39;deblazed/r20091231.288.fits&#39;, &#39;deblazed/r20091231.124.fits&#39;, &#39;deblazed/r20130912.160.fits&#39;, &#39;deblazed/r20091231.226.fits&#39;, &#39;deblazed/r20150606.154.fits&#39;, &#39;deblazed/r20091231.163.fits&#39;, &#39;deblazed/r20130912.14.fits&#39;, &#39;deblazed/r20091231.284.fits&#39;, &#39;deblazed/r20130629.113.fits&#39;, &#39;deblazed/r20091231.128.fits&#39;, &#39;deblazed/r20091231.93.fits&#39;, &#39;deblazed/r20150606.63.fits&#39;, &#39;deblazed/r20091231.119.fits&#39;, &#39;deblazed/r20091231.152.fits&#39;, &#39;deblazed/r20150606.165.fits&#39;, &#39;deblazed/r20091231.217.fits&#39;, &#39;deblazed/r20130912.151.fits&#39;, &#39;deblazed/r20130912.87.fits&#39;, &#39;deblazed/r20091231.130.fits&#39;, &#39;deblazed/r20130629.97.fits&#39;, &#39;deblazed/r20091231.275.fits&#39;, &#39;deblazed/r20150606.107.fits&#39;, &#39;deblazed/r20130912.133.fits&#39;, &#39;deblazed/r20091231.192.fits&#39;, &#39;deblazed/r20150606.92.fits&#39;, &#39;deblazed/r20150606.4.fits&#39;, &#39;deblazed/r20130912.149.fits&#39;, &#39;deblazed/r20130912.102.fits&#39;, &#39;deblazed/r20091231.8.fits&#39;, &#39;deblazed/r20150606.136.fits&#39;, &#39;deblazed/r20091231.244.fits&#39;, &#39;deblazed/r20130629.8.fits&#39;, &#39;deblazed/r20130912.76.fits&#39;, &#39;deblazed/r20091231.101.fits&#39;, &#39;deblazed/r20091231.156.fits&#39;, &#39;deblazed/r20130629.18.fits&#39;, &#39;deblazed/r20091231.258.fits&#39;, &#39;deblazed/r20130912.83.fits&#39;, &#39;deblazed/r20091231.213.fits&#39;, &#39;deblazed/r20150606.161.fits&#39;, &#39;deblazed/r20130912.155.fits&#39;, &#39;deblazed/r20130912.164.fits&#39;, &#39;deblazed/r20150606.150.fits&#39;, &#39;deblazed/r20091231.222.fits&#39;, &#39;deblazed/r20091231.269.fits&#39;, &#39;deblazed/r20130629.117.fits&#39;, &#39;deblazed/r20130912.10.fits&#39;, &#39;deblazed/r20091231.167.fits&#39;, &#39;deblazed/r20150606.67.fits&#39;, &#39;deblazed/r20091231.97.fits&#39;, &#39;deblazed/r20130912.106.fits&#39;, &#39;deblazed/r20091231.240.fits&#39;, &#39;deblazed/r20150606.132.fits&#39;, &#39;deblazed/r20091231.105.fits&#39;, &#39;deblazed/r20130912.72.fits&#39;, &#39;deblazed/r20091231.134.fits&#39;, &#39;deblazed/r20150606.148.fits&#39;, &#39;deblazed/r20091231.196.fits&#39;, &#39;deblazed/r20130629.93.fits&#39;, &#39;deblazed/r20150606.103.fits&#39;, &#39;deblazed/r20091231.271.fits&#39;, &#39;deblazed/r20130912.137.fits&#39;, &#39;deblazed/r20091231.66.fits&#39;, &#39;deblazed/r20150606.96.fits&#39;, &#39;deblazed/r20130912.161.fits&#39;, &#39;deblazed/r20150606.155.fits&#39;, &#39;deblazed/r20091231.227.fits&#39;, &#39;deblazed/r20150606.62.fits&#39;, &#39;deblazed/r20091231.92.fits&#39;, &#39;deblazed/r20091231.285.fits&#39;, &#39;deblazed/r20130629.112.fits&#39;, &#39;deblazed/r20091231.129.fits&#39;, &#39;deblazed/r20091231.162.fits&#39;, &#39;deblazed/r20130912.15.fits&#39;, &#39;deblazed/r20091231.153.fits&#39;, &#39;deblazed/r20091231.118.fits&#39;, &#39;deblazed/r20130912.86.fits&#39;, &#39;deblazed/r20091231.216.fits&#39;, &#39;deblazed/r20150606.164.fits&#39;, &#39;deblazed/r20130912.150.fits&#39;, &#39;deblazed/r20091231.131.fits&#39;, &#39;deblazed/r20150606.93.fits&#39;, &#39;deblazed/r20150606.5.fits&#39;, &#39;deblazed/r20091231.193.fits&#39;, &#39;deblazed/r20130629.96.fits&#39;, &#39;deblazed/r20150606.106.fits&#39;, &#39;deblazed/r20091231.274.fits&#39;, &#39;deblazed/r20130912.132.fits&#39;, &#39;deblazed/r20130629.9.fits&#39;, &#39;deblazed/r20130912.103.fits&#39;, &#39;deblazed/r20091231.9.fits&#39;, &#39;deblazed/r20091231.245.fits&#39;, &#39;deblazed/r20150606.137.fits&#39;, &#39;deblazed/r20130912.148.fits&#39;, &#39;deblazed/r20130912.77.fits&#39;, &#39;deblazed/r20091231.100.fits&#39;, &#39;deblazed/r20091231.157.fits&#39;, &#39;deblazed/r20130629.19.fits&#39;, &#39;deblazed/r20150606.160.fits&#39;, &#39;deblazed/r20091231.212.fits&#39;, &#39;deblazed/r20130912.154.fits&#39;, &#39;deblazed/r20091231.259.fits&#39;, &#39;deblazed/r20130912.82.fits&#39;, &#39;deblazed/r20091231.268.fits&#39;, &#39;deblazed/r20130912.165.fits&#39;, &#39;deblazed/r20091231.223.fits&#39;, &#39;deblazed/r20150606.151.fits&#39;, &#39;deblazed/r20091231.96.fits&#39;, &#39;deblazed/r20150606.66.fits&#39;, &#39;deblazed/r20130912.11.fits&#39;, &#39;deblazed/r20091231.166.fits&#39;, &#39;deblazed/r20130629.116.fits&#39;, &#39;deblazed/r20130912.107.fits&#39;, &#39;deblazed/r20150606.133.fits&#39;, &#39;deblazed/r20091231.241.fits&#39;, &#39;deblazed/r20091231.104.fits&#39;, &#39;deblazed/r20130912.73.fits&#39;, &#39;deblazed/r20091231.135.fits&#39;, &#39;deblazed/r20150606.97.fits&#39;, &#39;deblazed/r20150606.1.fits&#39;, &#39;deblazed/r20091231.67.fits&#39;, &#39;deblazed/r20130629.92.fits&#39;, &#39;deblazed/r20091231.270.fits&#39;, &#39;deblazed/r20150606.102.fits&#39;, &#39;deblazed/r20130912.136.fits&#39;, &#39;deblazed/r20150606.149.fits&#39;, &#39;deblazed/r20091231.197.fits&#39;, &#39;deblazed/r20091231.82.fits&#39;, &#39;deblazed/r20150606.72.fits&#39;, &#39;deblazed/r20091231.172.fits&#39;, &#39;deblazed/r20130629.77.fits&#39;, &#39;deblazed/r20091231.139.fits&#39;, &#39;deblazed/r20130629.102.fits&#39;, &#39;deblazed/r20130912.171.fits&#39;, &#39;deblazed/r20150606.145.fits&#39;, &#39;deblazed/r20091231.237.fits&#39;, &#39;deblazed/r20091231.206.fits&#39;, &#39;deblazed/r20130912.140.fits&#39;, &#39;deblazed/r20091231.1.fits&#39;, &#39;deblazed/r20130912.96.fits&#39;, &#39;deblazed/r20130629.1.fits&#39;, &#39;deblazed/r20091231.11.fits&#39;, &#39;deblazed/r20091231.108.fits&#39;, &#39;deblazed/r20091231.143.fits&#39;, &#39;deblazed/r20150606.83.fits&#39;, &#39;deblazed/r20130912.3.fits&#39;, &#39;deblazed/r20091231.73.fits&#39;, &#39;deblazed/r20150606.116.fits&#39;, &#39;deblazed/r20091231.264.fits&#39;, &#39;deblazed/r20130912.122.fits&#39;, &#39;deblazed/r20130629.86.fits&#39;, &#39;deblazed/r20091231.183.fits&#39;, &#39;deblazed/r20130912.169.fits&#39;, &#39;deblazed/r20091231.121.fits&#39;, &#39;deblazed/r20091231.110.fits&#39;, &#39;deblazed/r20130912.67.fits&#39;, &#39;deblazed/r20130629.15.fits&#39;, &#39;deblazed/r20150606.10.fits&#39;, &#39;deblazed/r20130912.158.fits&#39;, &#39;deblazed/r20130912.113.fits&#39;, &#39;deblazed/r20091231.255.fits&#39;, &#39;deblazed/r20150606.127.fits&#39;, &#39;deblazed/r20130912.92.fits&#39;, &#39;deblazed/r20091231.249.fits&#39;, &#39;deblazed/r20091231.5.fits&#39;, &#39;deblazed/r20091231.202.fits&#39;, &#39;deblazed/r20130912.144.fits&#39;, &#39;deblazed/r20130629.5.fits&#39;, &#39;deblazed/r20091231.147.fits&#39;, &#39;deblazed/r20150606.76.fits&#39;, &#39;deblazed/r20091231.86.fits&#39;, &#39;deblazed/r20130629.73.fits&#39;, &#39;deblazed/r20130629.106.fits&#39;, &#39;deblazed/r20091231.176.fits&#39;, &#39;deblazed/r20091231.233.fits&#39;, &#39;deblazed/r20150606.141.fits&#39;, &#39;deblazed/r20091231.278.fits&#39;, &#39;deblazed/r20150606.9.fits&#39;, &#39;deblazed/r20130629.11.fits&#39;, &#39;deblazed/r20091231.114.fits&#39;, &#39;deblazed/r20130912.117.fits&#39;, &#39;deblazed/r20150606.123.fits&#39;, &#39;deblazed/r20091231.251.fits&#39;, &#39;deblazed/r20091231.77.fits&#39;, &#39;deblazed/r20130912.7.fits&#39;, &#39;deblazed/r20150606.87.fits&#39;, &#39;deblazed/r20091231.187.fits&#39;, &#39;deblazed/r20150606.159.fits&#39;, &#39;deblazed/r20091231.260.fits&#39;, &#39;deblazed/r20150606.112.fits&#39;, &#39;deblazed/r20130912.126.fits&#39;, &#39;deblazed/r20130629.82.fits&#39;, &#39;deblazed/r20091231.125.fits&#39;, &#39;deblazed/r20091231.287.fits&#39;, &#39;deblazed/r20130629.110.fits&#39;, &#39;deblazed/r20091231.160.fits&#39;, &#39;deblazed/r20091231.90.fits&#39;, &#39;deblazed/r20130912.9.fits&#39;, &#39;deblazed/r20091231.79.fits&#39;, &#39;deblazed/r20150606.89.fits&#39;, &#39;deblazed/r20091231.189.fits&#39;, &#39;deblazed/r20130912.163.fits&#39;, &#39;deblazed/r20091231.225.fits&#39;, &#39;deblazed/r20150606.157.fits&#39;, &#39;deblazed/r20130912.128.fits&#39;, &#39;deblazed/r20130912.84.fits&#39;, &#39;deblazed/r20130912.119.fits&#39;, &#39;deblazed/r20150606.166.fits&#39;, &#39;deblazed/r20091231.214.fits&#39;, &#39;deblazed/r20130912.152.fits&#39;, &#39;deblazed/r20091231.151.fits&#39;, &#39;deblazed/r20091231.191.fits&#39;, &#39;deblazed/r20130629.94.fits&#39;, &#39;deblazed/r20091231.276.fits&#39;, &#39;deblazed/r20150606.104.fits&#39;, &#39;deblazed/r20130912.130.fits&#39;, &#39;deblazed/r20150606.91.fits&#39;, &#39;deblazed/r20150606.7.fits&#39;, &#39;deblazed/r20150606.78.fits&#39;, &#39;deblazed/r20091231.88.fits&#39;, &#39;deblazed/r20130629.108.fits&#39;, &#39;deblazed/r20091231.133.fits&#39;, &#39;deblazed/r20091231.178.fits&#39;, &#39;deblazed/r20091231.149.fits&#39;, &#39;deblazed/r20130912.75.fits&#39;, &#39;deblazed/r20091231.102.fits&#39;, &#39;deblazed/r20130912.101.fits&#39;, &#39;deblazed/r20150606.135.fits&#39;, &#39;deblazed/r20091231.247.fits&#39;, &#39;deblazed/r20091231.210.fits&#39;, &#39;deblazed/r20150606.162.fits&#39;, &#39;deblazed/r20130912.156.fits&#39;, &#39;deblazed/r20150606.129.fits&#39;, &#39;deblazed/r20130912.80.fits&#39;, &#39;deblazed/r20130912.69.fits&#39;, &#39;deblazed/r20091231.155.fits&#39;, &#39;deblazed/r20091231.164.fits&#39;, &#39;deblazed/r20091231.283.fits&#39;, &#39;deblazed/r20130629.114.fits&#39;, &#39;deblazed/r20091231.94.fits&#39;, &#39;deblazed/r20150606.64.fits&#39;, &#39;deblazed/r20150606.118.fits&#39;, &#39;deblazed/r20130629.88.fits&#39;, &#39;deblazed/r20130912.167.fits&#39;, &#39;deblazed/r20150606.153.fits&#39;, &#39;deblazed/r20091231.221.fits&#39;, &#39;deblazed/r20091231.106.fits&#39;, &#39;deblazed/r20130912.71.fits&#39;, &#39;deblazed/r20091231.208.fits&#39;, &#39;deblazed/r20130912.98.fits&#39;, &#39;deblazed/r20130912.105.fits&#39;, &#39;deblazed/r20091231.243.fits&#39;, &#39;deblazed/r20150606.131.fits&#39;, &#39;deblazed/r20130629.90.fits&#39;, &#39;deblazed/r20150606.100.fits&#39;, &#39;deblazed/r20091231.272.fits&#39;, &#39;deblazed/r20130912.134.fits&#39;, &#39;deblazed/r20091231.239.fits&#39;, &#39;deblazed/r20091231.195.fits&#39;, &#39;deblazed/r20150606.95.fits&#39;, &#39;deblazed/r20150606.3.fits&#39;, &#39;deblazed/r20091231.137.fits&#39;, &#39;deblazed/r20130629.79.fits&#39;, &#39;deblazed/r20150606.99.fits&#39;, &#39;deblazed/r20091231.69.fits&#39;, &#39;deblazed/r20130912.138.fits&#39;, &#39;deblazed/r20130912.173.fits&#39;, &#39;deblazed/r20091231.235.fits&#39;, &#39;deblazed/r20150606.147.fits&#39;, &#39;deblazed/r20091231.199.fits&#39;, &#39;deblazed/r20091231.170.fits&#39;, &#39;deblazed/r20130629.75.fits&#39;, &#39;deblazed/r20130629.100.fits&#39;, &#39;deblazed/r20091231.80.fits&#39;, &#39;deblazed/r20150606.70.fits&#39;, &#39;deblazed/r20091231.141.fits&#39;, &#39;deblazed/r20130629.3.fits&#39;, &#39;deblazed/r20091231.204.fits&#39;, &#39;deblazed/r20130912.142.fits&#39;, &#39;deblazed/r20091231.3.fits&#39;, &#39;deblazed/r20130912.109.fits&#39;, &#39;deblazed/r20130912.94.fits&#39;, &#39;deblazed/r20091231.98.fits&#39;, &#39;deblazed/r20150606.68.fits&#39;, &#39;deblazed/r20091231.168.fits&#39;, &#39;deblazed/r20091231.123.fits&#39;, &#39;deblazed/r20130629.118.fits&#39;, &#39;deblazed/r20091231.266.fits&#39;, &#39;deblazed/r20150606.114.fits&#39;, &#39;deblazed/r20130912.120.fits&#39;, &#39;deblazed/r20130629.84.fits&#39;, &#39;deblazed/r20091231.181.fits&#39;, &#39;deblazed/r20150606.81.fits&#39;, &#39;deblazed/r20130912.1.fits&#39;, &#39;deblazed/r20091231.71.fits&#39;, &#39;deblazed/r20130912.111.fits&#39;, &#39;deblazed/r20150606.125.fits&#39;, &#39;deblazed/r20091231.257.fits&#39;, &#39;deblazed/r20091231.112.fits&#39;, &#39;deblazed/r20130629.17.fits&#39;, &#39;deblazed/r20091231.159.fits&#39;, &#39;deblazed/r20091231.145.fits&#39;, &#39;deblazed/r20130912.79.fits&#39;, &#39;deblazed/r20130629.7.fits&#39;, &#39;deblazed/r20130912.90.fits&#39;, &#39;deblazed/r20150606.139.fits&#39;, &#39;deblazed/r20091231.7.fits&#39;, &#39;deblazed/r20091231.200.fits&#39;, &#39;deblazed/r20130912.146.fits&#39;, &#39;deblazed/r20150606.143.fits&#39;, &#39;deblazed/r20091231.231.fits&#39;, &#39;deblazed/r20130629.98.fits&#39;, &#39;deblazed/r20150606.108.fits&#39;, &#39;deblazed/r20130629.71.fits&#39;, &#39;deblazed/r20130629.104.fits&#39;, &#39;deblazed/r20091231.174.fits&#39;, &#39;deblazed/r20150606.74.fits&#39;, &#39;deblazed/r20091231.84.fits&#39;, &#39;deblazed/r20130912.115.fits&#39;, &#39;deblazed/r20091231.253.fits&#39;, &#39;deblazed/r20150606.121.fits&#39;, &#39;deblazed/r20130912.88.fits&#39;, &#39;deblazed/r20091231.218.fits&#39;, &#39;deblazed/r20130629.13.fits&#39;, &#39;deblazed/r20091231.116.fits&#39;, &#39;deblazed/r20091231.127.fits&#39;, &#39;deblazed/r20091231.185.fits&#39;, &#39;deblazed/r20091231.229.fits&#39;, &#39;deblazed/r20150606.110.fits&#39;, &#39;deblazed/r20091231.262.fits&#39;, &#39;deblazed/r20130912.124.fits&#39;, &#39;deblazed/r20130629.80.fits&#39;, &#39;deblazed/r20091231.75.fits&#39;, &#39;deblazed/r20130912.5.fits&#39;, &#39;deblazed/r20150606.85.fits&#39;, &#39;deblazed/r20130912.172.fits&#39;, &#39;deblazed/r20150606.146.fits&#39;, &#39;deblazed/r20091231.234.fits&#39;, &#39;deblazed/r20091231.198.fits&#39;, &#39;deblazed/r20130912.139.fits&#39;, &#39;deblazed/r20091231.68.fits&#39;, &#39;deblazed/r20150606.98.fits&#39;, &#39;deblazed/r20150606.71.fits&#39;, &#39;deblazed/r20091231.81.fits&#39;, &#39;deblazed/r20130629.74.fits&#39;, &#39;deblazed/r20130629.101.fits&#39;, &#39;deblazed/r20091231.171.fits&#39;, &#39;deblazed/r20091231.140.fits&#39;, &#39;deblazed/r20091231.2.fits&#39;, &#39;deblazed/r20130912.108.fits&#39;, &#39;deblazed/r20130912.95.fits&#39;, &#39;deblazed/r20091231.205.fits&#39;, &#39;deblazed/r20130912.143.fits&#39;, &#39;deblazed/r20130629.2.fits&#39;, &#39;deblazed/r20091231.122.fits&#39;, &#39;deblazed/r20130629.119.fits&#39;, &#39;deblazed/r20091231.169.fits&#39;, &#39;deblazed/r20150606.69.fits&#39;, &#39;deblazed/r20091231.99.fits&#39;, &#39;deblazed/r20091231.70.fits&#39;, &#39;deblazed/r20150606.80.fits&#39;, &#39;deblazed/r20091231.180.fits&#39;, &#39;deblazed/r20150606.115.fits&#39;, &#39;deblazed/r20091231.267.fits&#39;, &#39;deblazed/r20130912.121.fits&#39;, &#39;deblazed/r20130629.85.fits&#39;, &#39;deblazed/r20130912.110.fits&#39;, &#39;deblazed/r20091231.256.fits&#39;, &#39;deblazed/r20150606.124.fits&#39;, &#39;deblazed/r20130629.16.fits&#39;, &#39;deblazed/r20091231.158.fits&#39;, &#39;deblazed/r20091231.113.fits&#39;, &#39;deblazed/r20130912.78.fits&#39;, &#39;deblazed/r20091231.144.fits&#39;, &#39;deblazed/r20091231.201.fits&#39;, &#39;deblazed/r20130912.147.fits&#39;, &#39;deblazed/r20130912.91.fits&#39;, &#39;deblazed/r20150606.138.fits&#39;, &#39;deblazed/r20091231.6.fits&#39;, &#39;deblazed/r20130629.6.fits&#39;, &#39;deblazed/r20130629.99.fits&#39;, &#39;deblazed/r20150606.109.fits&#39;, &#39;deblazed/r20130912.176.fits&#39;, &#39;deblazed/r20091231.230.fits&#39;, &#39;deblazed/r20150606.142.fits&#39;, &#39;deblazed/r20091231.85.fits&#39;, &#39;deblazed/r20150606.75.fits&#39;, &#39;deblazed/r20091231.175.fits&#39;, &#39;deblazed/r20130629.70.fits&#39;, &#39;deblazed/r20130629.105.fits&#39;, &#39;deblazed/r20091231.219.fits&#39;, &#39;deblazed/r20130912.114.fits&#39;, &#39;deblazed/r20150606.120.fits&#39;, &#39;deblazed/r20091231.252.fits&#39;, &#39;deblazed/r20130912.89.fits&#39;, &#39;deblazed/r20091231.117.fits&#39;, &#39;deblazed/r20130629.12.fits&#39;, &#39;deblazed/r20091231.126.fits&#39;, &#39;deblazed/r20150606.84.fits&#39;, &#39;deblazed/r20091231.74.fits&#39;, &#39;deblazed/r20130912.4.fits&#39;, &#39;deblazed/r20091231.263.fits&#39;, &#39;deblazed/r20150606.111.fits&#39;, &#39;deblazed/r20130912.125.fits&#39;, &#39;deblazed/r20130629.81.fits&#39;, &#39;deblazed/r20091231.184.fits&#39;, &#39;deblazed/r20091231.228.fits&#39;, &#39;deblazed/r20091231.91.fits&#39;, &#39;deblazed/r20150606.61.fits&#39;, &#39;deblazed/r20091231.161.fits&#39;, &#39;deblazed/r20091231.286.fits&#39;, &#39;deblazed/r20130629.111.fits&#39;, &#39;deblazed/r20130912.129.fits&#39;, &#39;deblazed/r20091231.188.fits&#39;, &#39;deblazed/r20130912.162.fits&#39;, &#39;deblazed/r20150606.156.fits&#39;, &#39;deblazed/r20091231.224.fits&#39;, &#39;deblazed/r20150606.88.fits&#39;, &#39;deblazed/r20130912.8.fits&#39;, &#39;deblazed/r20091231.78.fits&#39;, &#39;deblazed/r20091231.215.fits&#39;, &#39;deblazed/r20130912.153.fits&#39;, &#39;deblazed/r20130912.85.fits&#39;, &#39;deblazed/r20130912.118.fits&#39;, &#39;deblazed/r20130629.120.fits&#39;, &#39;deblazed/r20091231.150.fits&#39;, &#39;deblazed/r20150606.90.fits&#39;, &#39;deblazed/r20150606.6.fits&#39;, &#39;deblazed/r20130629.95.fits&#39;, &#39;deblazed/r20150606.105.fits&#39;, &#39;deblazed/r20091231.277.fits&#39;, &#39;deblazed/r20130912.131.fits&#39;, &#39;deblazed/r20091231.190.fits&#39;, &#39;deblazed/r20091231.179.fits&#39;, &#39;deblazed/r20130629.109.fits&#39;, &#39;deblazed/r20091231.132.fits&#39;, &#39;deblazed/r20091231.89.fits&#39;, &#39;deblazed/r20150606.79.fits&#39;, &#39;deblazed/r20130912.74.fits&#39;, &#39;deblazed/r20091231.103.fits&#39;, &#39;deblazed/r20091231.148.fits&#39;, &#39;deblazed/r20130912.100.fits&#39;, &#39;deblazed/r20091231.246.fits&#39;, &#39;deblazed/r20150606.134.fits&#39;, &#39;deblazed/r20150606.128.fits&#39;, &#39;deblazed/r20130912.81.fits&#39;, &#39;deblazed/r20091231.211.fits&#39;, &#39;deblazed/r20130912.157.fits&#39;, &#39;deblazed/r20091231.154.fits&#39;, &#39;deblazed/r20130912.68.fits&#39;, &#39;deblazed/r20150606.65.fits&#39;, &#39;deblazed/r20091231.95.fits&#39;, &#39;deblazed/r20130629.115.fits&#39;, &#39;deblazed/r20091231.165.fits&#39;, &#39;deblazed/r20130912.166.fits&#39;, &#39;deblazed/r20091231.220.fits&#39;, &#39;deblazed/r20150606.152.fits&#39;, &#39;deblazed/r20150606.119.fits&#39;, &#39;deblazed/r20130629.89.fits&#39;, &#39;deblazed/r20091231.107.fits&#39;, &#39;deblazed/r20130912.70.fits&#39;, &#39;deblazed/r20130912.99.fits&#39;, &#39;deblazed/r20130912.104.fits&#39;, &#39;deblazed/r20150606.130.fits&#39;, &#39;deblazed/r20091231.242.fits&#39;, &#39;deblazed/r20091231.209.fits&#39;, &#39;deblazed/r20150606.94.fits&#39;, &#39;deblazed/r20150606.2.fits&#39;, &#39;deblazed/r20091231.238.fits&#39;, &#39;deblazed/r20091231.194.fits&#39;, &#39;deblazed/r20130629.91.fits&#39;, &#39;deblazed/r20091231.273.fits&#39;, &#39;deblazed/r20150606.101.fits&#39;, &#39;deblazed/r20130912.135.fits&#39;, &#39;deblazed/r20091231.136.fits&#39;, &#39;deblazed/r20130629.78.fits&#39;], &#39;rv&#39;: [], &#39;files&#39;: [&#39;files/vst185144.csv&#39;], &#39;database&#39;: &#39;prvState.db&#39;}
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="File-Download">
+<h3>File Download<a class="headerlink" href="#File-Download" title="Permalink to this headline">¶</a></h3>
+<p>Any of the files in the listing can be retrieve by name.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">hiresprv.download</span> <span class="k">import</span> <span class="n">Download</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">Download</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
+
+<span class="n">rtn</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;deblazed/r20091231.238.fits&#39;</span><span class="p">,</span> <span class="s1">&#39;deblazed_example.fits&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">rtn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;status&#39;: &#39;ok&#39;, &#39;msg&#39;: &#39;&#39;}
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Product-Retrieval">
+<h3>Product Retrieval<a class="headerlink" href="#Product-Retrieval" title="Permalink to this headline">¶</a></h3>
+<p>There is a utility function for retrieving the RV curves (CSV files) for
+each target (similarly, there is a function – data.spectrum – for
+retrieving the 1D FITS spectrum files).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -623,7 +752,7 @@ BJD_TDB,RV,RV_ERR,BC,ADU,CHI2
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
-      Last updated on Sep 28, 2018.
+      Last updated on Dec 17, 2018.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.
     </div>
   </body>

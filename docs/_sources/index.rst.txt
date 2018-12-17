@@ -2,8 +2,7 @@ Documentation for the HIRES Radial Velocity Processing Environment
 ******************************************************************
 
 This is a radial velocity processing environment that can be used to transform raw `Keck/HIRES <https://www2.keck.hawaii.edu/inst/hires/>`_ spectra into
-publication-ready precision radial velocities (PRVs).
-.. Data collected in the prescribed :ref:`HIRES-PRV configuration <setup>` will be compatible with this PRV
+publication-ready precision radial velocities (PRVs). Data collected only in the prescribed :ref:`HIRES-PRV configuration <setup>` will be compatible with this PRV
 processing environment.
 
 A Python API provides a convenient way to interact with the service running on `NExScI <http://nexsci.caltech.edu>`_ servers. The
@@ -32,7 +31,7 @@ There are several important considerations for observers wishing to utilize the 
 Only data collected in the specified HIRES-PRV configuration and according to the recommendations
 summarized below can be processed properly within the NExScI HIRES-PRV environment.
 
-* Observers new to the HIRES-PRV configuration should treat this configuration as a "new" instrument.
+* Observers new to the HIRES-PRV configuration should treat this configuration as a "new" instrument, which comes with requirements from Keck observatory. If you have not previously observed in the HIRES-PRV mode then you must be trained in person at Keck Headquarters in Waimea.
 * The echelle and cross disperser angles must be set at specific angles as part of the :ref:`afternoon setup <alignment>` and must not be changed during the night.
 * A minimum of three PRV observations with the iodine cell inserted on a given target are required before any PRVs will be produced.
 * The minimum signal-to-noise ratio per pixel for each iodine-in RV observation must be at least 70 with the optimal SNR being 200.

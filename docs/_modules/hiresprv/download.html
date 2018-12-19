@@ -56,7 +56,7 @@
 <span class="sd">    Server to retrieve the requested file.</span>
 
 <span class="sd">    The initialization of database class loads the cookie file saved</span>
-<span class="sd">    from HIRES PRV pipeline login, parse the cookie to look up the</span>
+<span class="sd">    from HIRES PRV pipelone login, parse the cookie to look up the</span>
 <span class="sd">    users workspace.</span>
 
 <span class="sd">    Args:</span>
@@ -75,7 +75,6 @@
     <span class="n">sql</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="nb">format</span> <span class="o">=</span> <span class="s1">&#39;html&#39;</span>
     <span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    <span class="n">localfile</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="n">disp</span> <span class="o">=</span> <span class="mi">1</span> 
     
     <span class="n">content_type</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
@@ -173,120 +172,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://hiresprv.ipac.caltech.edu/cgi-bin/idlDriver/nph-prvDownload?workspace=&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">workspace</span>
 
         <span class="k">return</span>
-
-<div class="viewcode-block" id="Download.directory_listing"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.download.Download.directory_listing">[docs]</a>    <span class="k">def</span> <span class="nf">directory_listing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method returns a listing of all the downloadable files in the</span>
-<span class="sd">        workspace.</span>
-<span class="sd">        </span>
-<span class="sd">        Returns:</span>
-<span class="sd">            JSON structure: Dictionary with one entry for each workspace data</span>
-<span class="sd">            directory.  The value of the item is an array of file references.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Enter Download.directory_listing&#39;</span><span class="p">)</span>
-
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">+</span> <span class="s1">&#39;&amp;cmd=listing&#39;</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;url= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="n">url</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">__submit_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-        
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;returned submit_request:&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;self.status= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;self.msg= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;ok&#39;</span><span class="p">:</span>
-
-            <span class="n">retval</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">retval</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-            <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span>
-            <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span>
-
-        <span class="k">return</span> <span class="n">retval</span></div>
-
-       
-<div class="viewcode-block" id="Download.download"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.download.Download.download">[docs]</a>    <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">localfile</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method downloads any file from the user&#39;s workspace.</span>
-<span class="sd">        </span>
-<span class="sd">        Args:</span>
-<span class="sd">            filename (string): workspace file name </span>
-<span class="sd">            savefile (string): local output file</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            JSON structure: structure indicating the status of the submission</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Enter Download.download: filename = </span><span class="si">%s</span><span class="s1">, localfile = </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">objname</span><span class="p">,</span> <span class="n">localfile</span><span class="p">)</span>
-       
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            
-            <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;error&#39;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Input argument filename is required.&#39;</span>
-            
-            <span class="n">retval</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-            <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span>
-            <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span>
-
-            <span class="k">return</span> <span class="n">retval</span>
-
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">localfile</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            
-            <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;error&#39;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Input argument localfile is required.&#39;</span>
-            
-            <span class="n">retval</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-            <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span>
-            <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span>
-
-            <span class="k">return</span> <span class="n">retval</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">filename</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">localfile</span> <span class="o">=</span> <span class="n">localfile</span>
-
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">+</span> <span class="s1">&#39;&amp;cmd=download&amp;fileid=&#39;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;&amp;debug=1&#39;</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;url= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="n">url</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">__submit_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-        
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;returned submit_request:&#39;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;self.status= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;self.msg= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;ok&#39;</span><span class="p">:</span>
-
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-            
-            <span class="bp">self</span><span class="o">.</span><span class="n">__save_to_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">localfile</span><span class="p">)</span>
-        
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;returned save_to_file:&#39;</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;self.status= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;self.msg= [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
-
-        <span class="n">retval</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-        <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span>
-        <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span>
-
-        <span class="k">return</span> <span class="n">retval</span></div>
 
 <div class="viewcode-block" id="Download.rvcurve"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.download.Download.rvcurve">[docs]</a>    <span class="k">def</span> <span class="nf">rvcurve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objname</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -631,7 +516,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
-      Last updated on Dec 18, 2018.
+      Last updated on Dec 19, 2018.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
   </body>

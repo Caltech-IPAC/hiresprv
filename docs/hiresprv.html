@@ -187,26 +187,6 @@ Methods of this class return information on the current state.</p>
 </tbody>
 </table>
 <dl class="method">
-<dt id="hiresprv.status.Status.generate_link">
-<code class="descname">generate_link</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/status.html#Status.generate_link"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.status.Status.generate_link" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method returns an HTML string that contains a link to start
-the real-time monitor in a separate window/tab.  It is generally
-used in applications like Jupyter notebook where you don’t want
-the monitor embedded in the page.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">HTML fragment to be embedding in page to provide access
-to real-time monitor page.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
 <dt id="hiresprv.status.Status.processing_status">
 <code class="descname">processing_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/status.html#Status.processing_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.status.Status.processing_status" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a URL to a page displaying the progress of
@@ -477,7 +457,7 @@ individual files from their workspace in HIRES PRV pipeline server.</p>
 <p>It validates user information (via cookie file), then contacts PRV
 Server to retrieve the requested file.</p>
 <p>The initialization of database class loads the cookie file saved
-from HIRES PRV pipeline login, parse the cookie to look up the
+from HIRES PRV pipelone login, parse the cookie to look up the
 users workspace.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -487,48 +467,6 @@ users workspace.</p>
 </tr>
 </tbody>
 </table>
-<dl class="method">
-<dt id="hiresprv.download.Download.directory_listing">
-<code class="descname">directory_listing</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/download.html#Download.directory_listing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.download.Download.directory_listing" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method returns a listing of all the downloadable files in the
-workspace.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Dictionary with one entry for each workspace data
-directory.  The value of the item is an array of file references.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">JSON structure</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hiresprv.download.Download.download">
-<code class="descname">download</code><span class="sig-paren">(</span><em>filename</em>, <em>localfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/download.html#Download.download"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.download.Download.download" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method downloads any file from the user’s workspace.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>filename</strong> (<em>string</em>) – workspace file name</li>
-<li><strong>savefile</strong> (<em>string</em>) – local output file</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">structure indicating the status of the submission</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">JSON structure</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 <dl class="method">
 <dt id="hiresprv.download.Download.rvcurve">
 <code class="descname">rvcurve</code><span class="sig-paren">(</span><em>objname</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/download.html#Download.rvcurve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.download.Download.rvcurve" title="Permalink to this definition">¶</a></dt>
@@ -636,7 +574,7 @@ comma or new line; must match entries in the ‘FILENAME’ column in the worksp
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
-      Last updated on Dec 18, 2018.
+      Last updated on Dec 19, 2018.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
   </body>

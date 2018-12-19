@@ -19,7 +19,7 @@ factor in any additional sources of instrumental and/or astrophysical noise.
 RV Standard Stars
 =================
 
-Arguably the most important metric for assessing the performance of any PRV pipeline/instrument
+One of the best metrics for assessing the performance of any PRV pipeline/instrument
 is the RMS of the velocities of standard stars collected over several months or longer. The three stars
 chosen for the plot below are known to show little to no radial velocity variation on these timescales.
 The observed scatter in the velocities encompasses most sources of pipeline, instrumental,

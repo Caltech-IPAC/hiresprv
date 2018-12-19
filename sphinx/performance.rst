@@ -35,6 +35,22 @@ scatter of less than 2.0 m/s for the most well-behaved targets.
     in the figure. The plotted uncertainties do not include instrumental or astrophysical jitter.
 
 
+Comparison with California Planet Search Pipeline
+=================
+
+The PRV processing environment at NExScI is closely related to the `California Planet Search (CPS) <https://exoplanets.caltech.edu>`_
+pipeline so it is useful to compare the RVs produced by both pipelines. The mean difference between the RVs for
+tau Ceti is -0.04 m/s and the scatter is 0.8 m/s. This scatter is significantly smaller than the typical single
+measurement uncertainties (1.2 m/s).
+
+.. figure:: _static/one_to_one.png
+    :width: 40%
+    :align: center
+    :alt: CPS
+
+    Comparison of the velocities produced by the NExScI PRV processing environment to the RVs produced by the
+    California Planet Search version of the pipeline.
+
 
 Known Planet Recovery
 =====================

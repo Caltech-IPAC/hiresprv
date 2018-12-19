@@ -16,6 +16,25 @@ factor in any additional sources of instrumental and/or astrophysical noise.
     below 70 (indicated with grey shading) are not officially supported by the pipeline and may produce erratic results.
 
 
+RV Standard Stars
+=================
+
+Arguably, the most important metric for assessing the performance of any PRV pipeline/instrument
+is the RMS of the velocities of standard stars collected over several months or longer. The three stars
+chosen for the plot below are known to show little to no radial velocity variation on these timescales.
+The observed scatter in the velocities encompasses most sources of pipeline, instrument,
+and astrophysical noise. The NExScI pipeline shows scatter of less than 2.0 m/s for the most well-behaved targets.
+
+.. figure:: _static/rv_standards.png
+    :width: 40%
+    :align: center
+    :alt: radial velocity standard stars
+
+    Radial velocity timeseries of several RV standard stars. The names of the stars and the RMS of the velocities are annotated
+    in the figure. The plotted uncertainties do not include instrumental or astrophysical jitter.
+
+
+
 Known Planet Recovery
 =====================
 

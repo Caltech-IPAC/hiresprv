@@ -52,6 +52,19 @@ factor in any additional sources of instrumental and/or astrophysical noise.</p>
 The red line traces the lower 30th percentile of the individual measurements shown in grey. Signal to noise ratios
 below 70 (indicated with grey shading) are not officially supported by the pipeline and may produce erratic results.</span></p>
 </div>
+<div class="section" id="rv-standard-stars">
+<h2>RV Standard Stars<a class="headerlink" href="#rv-standard-stars" title="Permalink to this headline">¶</a></h2>
+<p>Arguably, the most important metric for assessing the performance of any PRV pipeline/instrument
+is the RMS of the velocities of standard stars collected over several months or longer. The three stars
+chosen for the plot below are known to show little to no radial velocity variation on these timescales.
+The observed scatter in the velocities encompasses most sources of pipeline, instrument,
+and astrophysical noise. The NExScI pipeline shows scatter of less than 2.0 m/s for the most well-behaved targets.</p>
+<div class="figure align-center" id="id3">
+<a class="reference internal image-reference" href="_images/rv_standards.png"><img alt="radial velocity standard stars" src="_images/rv_standards.png" style="width: 40%;" /></a>
+<p class="caption"><span class="caption-text">Radial velocity timeseries of several RV standard stars. The names of the stars and the RMS of the velocities are annotated
+in the figure. The plotted uncertainties do not include instrumental or astrophysical jitter.</span></p>
+</div>
+</div>
 <div class="section" id="known-planet-recovery">
 <h2>Known Planet Recovery<a class="headerlink" href="#known-planet-recovery" title="Permalink to this headline">¶</a></h2>
 <p>We demonstrated the ability to detect the PRV signatures of small planets by analyzing one year of archival data collected
@@ -59,7 +72,7 @@ on the star HD 7924 in addition to the sample nights referenced in the <a class=
 <a class="reference external" href="http://adsabs.harvard.edu/cgi-bin/bib_query?arXiv:1504.06629">Fulton et al. 2015</a>). We use <a class="reference external" href="http://radvel.readthedocs.io">RadVel</a> to fit the data, seeding the fit
 with the known orbital periods. We can successfully recover the correct velocity semi-amplitude (K) and mass for planet b with only ~75% of the data presented
 in <a class="reference external" href="http://adsabs.harvard.edu/cgi-bin/nph-data_query?bibcode=2009ApJ...696...75H&amp;db_key=AST&amp;link_type=ABSTRACT">Howard et al. (2009)</a>.</p>
-<div class="figure align-center" id="id3">
+<div class="figure align-center" id="id4">
 <a class="reference internal image-reference" href="_images/HD7924_rv_multipanel.png"><img alt="radial velocity fit" src="_images/HD7924_rv_multipanel.png" style="width: 50%;" /></a>
 <p class="caption"><span class="caption-text">Fit results for HD 7924.</span></p>
 </div>
@@ -82,6 +95,7 @@ in <a class="reference external" href="http://adsabs.harvard.edu/cgi-bin/nph-dat
 <li class="toctree-l1"><a class="reference internal" href="data_reduction_overview.html">Data Reduction Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="outputs.html">Output Data Products</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Velocity Precision</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#rv-standard-stars">RV Standard Stars</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#known-planet-recovery">Known Planet Recovery</a></li>
 </ul>
 </li>
@@ -124,7 +138,7 @@ in <a class="reference external" href="http://adsabs.harvard.edu/cgi-bin/nph-dat
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
-      Last updated on Dec 17, 2018.
+      Last updated on Dec 18, 2018.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
   </body>

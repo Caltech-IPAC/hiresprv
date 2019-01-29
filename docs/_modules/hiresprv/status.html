@@ -161,6 +161,23 @@
 
         <span class="k">return</span>
     
+<div class="viewcode-block" id="Status.generate_link"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.status.Status.generate_link">[docs]</a>    <span class="k">def</span> <span class="nf">generate_link</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns an HTML string that contains a link to start </span>
+<span class="sd">        the real-time monitor in a separate window/tab.  It is generally</span>
+<span class="sd">        used in applications like Jupyter notebook where you don&#39;t want</span>
+<span class="sd">        the monitor embedded in the page.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            string: HTML fragment to be embedding in page to provide access</span>
+<span class="sd">            to real-time monitor page.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">linkStr</span> <span class="o">=</span> <span class="s1">&#39;Launch &lt;a href=&quot;http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor.html?workspace=&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">workspace</span> <span class="o">+</span> <span class="s1">&#39;&quot; target=&quot;_blank&quot;&gt;real-time monitor&lt;/a&gt;.&#39;</span>
+
+        <span class="k">return</span> <span class="n">linkStr</span></div>
+
+
 <div class="viewcode-block" id="Status.processing_status"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.status.Status.processing_status">[docs]</a>    <span class="k">def</span> <span class="nf">processing_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method returns a URL to a page displaying the progress of</span>
@@ -309,6 +326,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../data_reduction_overview.html">Data Reduction Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../outputs.html">Output Data Products</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../performance.html">Velocity Precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../performance.html#rv-standard-stars">RV Standard Stars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../performance.html#comparison-with-california-planet-search-pipeline">Comparison with California Planet Search Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../performance.html#known-planet-recovery">Known Planet Recovery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../hiresprv.html">Python API</a></li>
 </ul>
 
@@ -343,7 +363,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
-      Last updated on Dec 19, 2018.
+      Last updated on Jan 28, 2019.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
   </body>

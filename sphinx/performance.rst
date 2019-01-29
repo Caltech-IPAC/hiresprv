@@ -52,6 +52,8 @@ measurement uncertainty (1.2 m/s).
     California Planet Search version of the pipeline.
 
 
+A more detailed comparison with the CPS data products is available `here <_static/dopcode-diff.pdf>`_.
+
 Known Planet Recovery
 =====================
 

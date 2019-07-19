@@ -6,7 +6,7 @@ reqs = ['ijson', 'requests']
 
 setup(
     name="hiresprv",
-    version="1.1.0",
+    version="1.1.1",
     author="Mihseh Kong, John Good, BJ Fulton",
     classifiers=[
         'Intended Audience :: Science/Research',

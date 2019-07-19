@@ -6,5 +6,6 @@ sed -i .bak -e 's/prvdev.ipac.caltech.edu:9020/hiresprv.ipac.caltech.edu/' hires
 sed -i .bak -e 's/prvdev.ipac.caltech.edu:9020/hiresprv.ipac.caltech.edu/' hiresprv/download.py
 sed -i .bak -e 's/prvdev.ipac.caltech.edu:9020/hiresprv.ipac.caltech.edu/' hiresprv/idldriver.py
 sed -i .bak -e 's/prvdev.ipac.caltech.edu:9020/hiresprv.ipac.caltech.edu/' hiresprv/status.py
+sed -i .bak -e 's/prvdev.ipac.caltech.edu:9020/hiresprv.ipac.caltech.edu/' Jupyter/HIRES_PRV_Service.ipynb
 
 rm -f hiresprv/*.bak

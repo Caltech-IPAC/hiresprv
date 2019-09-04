@@ -31,7 +31,6 @@ fi
 log=$1
 run=${log:0:8}
 export IDL_PATH_IN=$IDL_PATH
-# export IDL_PATH_IN='<IDL_DEFAULT>'
 
 ### Middle chip
 echo $'\n CPS-PIPELINE-RREDUCE Running Middle Chip Raw reduction for ' $1 $'\n'

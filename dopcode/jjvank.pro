@@ -264,20 +264,8 @@ endif
 csvfile = repstr(vstnm, '.dat', '.csv')
 write_csv, csvfile, cfj.jd, cfj.mnvel, cfj.errvel, cfj.bc, cfj.cts, cfj.mdchi, $
     header=['BJD_TDB', 'RV', 'RV_ERR', 'BC', 'ADU', 'CHI2']
+
 print, "Wrote CSV to: ", csvfile
-
-;velplot,cf3,1./12,d1,v1,e1,tit=catalog+strupcase(strtrim(strnm,2)),$ 
-;	errcut=errcut,/yrs,noplot=noplot
-
-;postscript to laser printer?
-if keyword_set(ps) then begin
-    if 1-keyword_set(outfile) then outfile = 'jjvank.ps'
-    psopen,outfile,xs=8,ys=6,/inch
-    if 1-keyword_set(title) then title = catalog+strupcase(strtrim(strnm,2))
-    velplot,cf3, title,0.6,/yrs,/nocolor,errcut=errcut  
-    psclose
-endif
-
 print, "JJVANK completed successfully"
 
 return

@@ -76,7 +76,7 @@ See below for an example of reading and interpreting this file.
 
 Extracted Spectra
 =================
-Use the :mod:`hiresprv.download` module to access and download the 1D extracted spectra onto your local disk.
+Use the :mod:`hiresprv.download.spectrum` module to access and download the 1D extracted spectra onto your local disk.
 
 The extracted spectra are available as single-extension FITS files. One file is produced for each observation.
 The FITS file contains an array with dimensions 16 x 4021.
@@ -118,3 +118,4 @@ Example python code to plot the order containing the Mg B triplet:
     :width: 50%
     :align: center
     :alt: plot of spectrum
+

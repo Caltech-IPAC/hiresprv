@@ -4,12 +4,13 @@ Download data from the remote workspace
 
 import logging
 import json
+import os
 
 import requests
 import http.cookiejar
 
 
-class Download:
+class Download(object):
     """
     The Download class provides methods for users to download
     individual files from their workspace in HIRES PRV pipeline server.
@@ -23,6 +24,7 @@ class Download:
 
     Args:
         cookiepath (string): a full cookie file path saved from auth.Login.
+        localdir (string): local output directory
 
     """    
 
@@ -48,8 +50,9 @@ class Download:
     status = ''
     msg = ''
     
-    def __init__(self, cookiepath, **kwargs):
+    def __init__(self, cookiepath, localdir, **kwargs):
         self.cookiepath = cookiepath
+        self.localdir = localdir
 
         if len(self.cookiepath) == 0:
 
@@ -61,6 +64,15 @@ class Download:
             retval['msg'] = self.msg
 
             # TODO: return in ``__init__``
+            return retval
+
+        if not os.path.exists(self.localdir):
+            self.status = 'error'
+            self.msg = "Could not find local directory: {}".format(localdir)
+            retval = dict()
+            retval['status'] = self.status
+            retval['msg'] = self.msg
+
             return retval
 
         if len(kwargs) > 0:
@@ -173,16 +185,16 @@ class Download:
             retval['status'] = self.status
             retval['msg'] = self.msg
 
-        return retval
+        
 
+        return retval
        
-    def download(self, filename, localfile):
+    def download(self, filename):
         """
         This method downloads any file from the user's workspace.
         
         Args:
             filename (string): workspace file name 
-            savefile (string): local output file
 
         Returns:
             JSON structure: structure indicating the status of the submission
@@ -203,19 +215,7 @@ class Download:
 
             return retval
 
-        if len(localfile) == 0:
-            
-            self.status = 'error'
-            self.msg = 'Input argument localfile is required.'
-            
-            retval = dict()
-            retval['status'] = self.status
-            retval['msg'] = self.msg
-
-            return retval
-
         self.filepath = filename
-        self.localfile = localfile
 
         url = self.url + '&cmd=download&fileid=' + filename + '&debug=1'
 
@@ -236,7 +236,7 @@ class Download:
             if self.debug:
                 logging.debug('')
             
-            self.__save_to_file(self.localfile)
+            self.__save_to_file(os.path.join(self.localdir, self.filepath))
         
             if self.debug:
                 logging.debug('')
@@ -261,7 +261,7 @@ class Download:
         Returns:
             JSON structure: structure indicating the status of the submission
         """
-        
+
         if self.debug:
             logging.debug('')
             logging.debug('Enter Download.rvcurve: objname = %s' % objname)
@@ -298,7 +298,7 @@ class Download:
             if self.debug:
                 logging.debug('')
             
-            self.__save_to_file(self.filepath)
+            self.__save_to_file(os.path.join(self.localdir, self.filepath))
         
             if self.debug:
                 logging.debug('')
@@ -316,8 +316,7 @@ class Download:
         """
         This method downloads one or more extracted spectrum FITS files
         from the user's workspace. The downloaded file will be a single FITS file
-        if ``fileids`` is a single file name or a GZIP file if multiple
-        files are requested.
+        if ``fileids`` is a single observation code.
         
         Args:
             fileid (string): one or more spectrum file names separated by
@@ -326,7 +325,7 @@ class Download:
         Returns:
             JSON structure: structure indicating the status of the submission
         """
-        
+
         if self.debug:
             logging.debug('')
             logging.debug('Enter Download.spectrum: fileid = %s' % fileid)
@@ -341,88 +340,6 @@ class Download:
             retval['msg'] = self.msg
 
             return retval
-
-        """
-        fileidstr = fileid
-        filelist = None
-        
-        delimiter = ''
-        ind = -1
-        ind = fileidstr.find (',')
-        if self.debug:
-            logging.debug ('comma: ind= %d' % ind)
-
-        if (ind != -1):
-            delimiter = ','
-        else:
-            ind = fileidstr.find ('\r')
-                  
-            if debug:
-                logging.debug ('carriage return: ind= %d' % ind)
-                
-            if (ind != -1):
-                delimiter = '\r'
-            else:
-                ind = fileidstr.find ('\n')
-
-            if (ind != -1):
-                delimiter = '\n'
-                    
-            if debug:
-                logging.debug ('')
-                logging.debug ('delimiter= [%s]' % delimiter)
-       
-            mylist = None
-            if (len(delimiter) > 0): 
-                mylist = fileidstr.split(delimiter)
-            else:
-                list = [fileidstr]
-                
-            ncnt = len(mylist)  
-             
-            if debug:
-                logging.debug ('')
-                logging.debug ('ncnt= %d' % ncnt)
-           
-
-            nfileid = 0
-            for i in range (0, len(mylist)):
-                    
-                if debug:
-                    logging.debug ('mylist[%d]= %s' % (i,mylist[i]))
-
-                if (len(mylist[i]) > 0):
-                    nfileid = nfileid + 1
-
-            fileidlist = ['']*n
-
-            nfileid = 0
-            for i in range (0, len(mylist)):
-                    
-                if (len(mylist[i]) > 0):
-                    filelist[nfileid] = mylist[i]
-                    nfileid = nfileid + 1
-
-        if debug:
-            logging.debug ('')
-            logging.debug ('End of parsing fileid: nfileid= %d' % nfileid)
-            for i in range (0, len(fileidlist)):
-                logging.debug ('fileidlist[%d]= %s' % (i,fileidlist[i]))
-
-
-        if (nfileid == 0): 
-            return
-
-        if (nfileid == 1): 
-            self.filepath = './' + fileidlist[0] + '.fits'
-        else:
-            ind = fileidlist[0].find('.')
-            substr = fileidlist[0][0:ind]
-            self.filepath = './' + substr + '.gz'
-
-        if self.debug:
-            logging.debug ('filepath= %s' % self.filepath)
-        """
 
         self.filepath = './r' + fileid + '.fits'
         
@@ -445,7 +362,7 @@ class Download:
             if self.debug:
                 logging.debug('')
             
-            self.__save_to_file(self.filepath)
+            self.__save_to_file(os.path.join(self.localdir, self.filepath))
         
             if self.debug:
                 logging.debug('')

@@ -122,6 +122,14 @@ class Idldriver:
             rv 185144 r20150606.146
             rv 185144 r20150606.147
             rvcurve 185144\"\"\")
+
+        Note:
+            List of available commands for `run_script`: \n
+            'template <object> <date>' (create template) \n
+            'rv <obsid> (calculate RV for single observation)'  \n
+            'rvcurve <object> (construct RV timeseries for an object)'  \n
+            'activate <filename> (activate or include file in analysis)'  \n
+            'deactivate <filename> (deactivate or exclude file from analysis)' \n
         """
 
         self.script = script 

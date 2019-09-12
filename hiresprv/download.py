@@ -155,7 +155,7 @@ class Download(object):
         
         Returns:
             JSON structure: Dictionary with one entry for each workspace data
-            directory.  The value of the item is an array of file references.
+            directory.  The value of each item is an array of full file paths within each directory.
         """
         
         if self.debug:
@@ -180,12 +180,14 @@ class Download(object):
 
             retval = json.loads(self.response.text)
 
+            # hide undocumented files directory containing IDL save files
+            del retval['files']
+
         else:
             retval = dict()
             retval['status'] = self.status
             retval['msg'] = self.msg
 
-        
 
         return retval
        

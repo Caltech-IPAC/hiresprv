@@ -36,6 +36,7 @@ summarized below can be processed properly within the NExScI HIRES-PRV environme
 * A minimum of three PRV observations with the iodine cell inserted on a given target are required before any PRVs will be produced.
 * The minimum signal-to-noise ratio per pixel for each iodine-in RV observation must be at least 70 with the optimal SNR being 200.
 * One high SNR (at least 100 per pixel) :ref:`template observation <template>` of the target without the iodine cell must be collected before any PRVs can be measured.
+* High SNR observations of B stars should be the first and last observations of the night
 * The optimal SNR for the iodine-out template is 2x the typical iodine-in observation.
 * Each iodine-out template observation must be bracketed by 2-5 exposures of :ref:`bright, rapidly-rotating stars <bstars>` with the iodine cell in for calibration.
 * Individual exposure times should be no longer than 1 hour.

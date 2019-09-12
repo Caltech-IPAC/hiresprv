@@ -9,7 +9,7 @@ import requests
 import http.cookiejar
 
 
-class Database:
+class Database(object):
     """
     Each workspace in HIRES PRV pipeline server contains a database
     listing all the data retrieved from KOA for the user.

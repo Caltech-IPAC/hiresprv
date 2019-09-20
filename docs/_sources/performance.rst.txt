@@ -1,7 +1,7 @@
 .. _performance:
 
 Velocity Precision
-=================
+==================
 
 Consult the plot below when considering exposure times needed to achieve a desired RV precision. This does not
 factor in any additional sources of instrumental and/or astrophysical noise.
@@ -36,7 +36,7 @@ scatter of less than 2.0 m/s for the most well-behaved targets.
 
 
 Comparison with California Planet Search Pipeline
-=================
+=================================================
 
 The PRV processing environment at NExScI is closely related to the `California Planet Search (CPS) <https://exoplanets.caltech.edu>`_
 pipeline so it is useful to compare the RVs produced by both pipelines. The mean difference between the RVs for

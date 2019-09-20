@@ -87,6 +87,7 @@ Table of Contents
 
    setup
    data_reduction_overview
+   advanced_usage
    outputs
    performance
    hiresprv

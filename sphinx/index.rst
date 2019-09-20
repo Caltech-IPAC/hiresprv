@@ -87,7 +87,7 @@ Table of Contents
 
    setup
    data_reduction_overview
-   advanced_usage
+   tutorials/Advanced_Usage.ipynb
    outputs
    performance
    hiresprv

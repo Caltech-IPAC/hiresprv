@@ -13089,7 +13089,7 @@ div#notebook {
 
 <!-- Loading mathjax macro -->
 <!-- Load mathjax -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML"></script>
     <!-- MathJax configuration -->
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -13144,7 +13144,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="k">import</span> <span class="n">IFrame</span>
@@ -13241,14 +13241,14 @@ Successful login as koaadmin
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="PRV-Processing-Monitor">PRV Processing Monitor<a class="anchor-link" href="#PRV-Processing-Monitor">&#182;</a></h2><p>Some steps in the PRV processing can take quite a long time (hours) and we do not want to tie up this notebook page waiting for it to finish.  Below we show how to retrieve a snapshot of the status (and you would have to poll manually to track the progress of the job) but the preferred approach is to start a real-time monitor in a custom page/tab which uses Javascript and an HTTP Event stream.  Run the next cell to generate a link to this monitor:</p>
+<h3 id="PRV-Processing-Monitor">PRV Processing Monitor<a class="anchor-link" href="#PRV-Processing-Monitor">&#182;</a></h3><p>Some steps in the PRV processing can take quite a long time (hours) and we do not want to tie up this notebook page waiting for it to finish.  Below we show how to retrieve a snapshot of the status (and you would have to poll manually to track the progress of the job) but the preferred approach is to start a real-time monitor in a custom page/tab which uses Javascript and an HTTP Event stream.  Run the next cell to generate a link to this monitor:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">hiresprv.status</span> <span class="k">import</span> <span class="n">Status</span>
@@ -13271,12 +13271,12 @@ Successful login as koaadmin
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[3]:</div>
+    <div class="prompt output_prompt">Out[5]:</div>
 
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
-Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor.html?workspace=prv_20180827_151259_7663" target="_blank">real-time monitor</a>.
+Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor.html?workspace=prv_20181217_090643_16445" target="_blank">real-time monitor</a>.
 </div>
 
 </div>
@@ -13295,7 +13295,7 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">hiresprv.status</span> <span class="k">import</span> <span class="n">Status</span>
@@ -13317,7 +13317,7 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[6]:</div>
+    <div class="prompt output_prompt">Out[10]:</div>
 
 
 
@@ -13326,7 +13326,7 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
         <iframe
             width="950"
             height="500"
-            src="prvStatus.html"
+            src="http://hiresprv.ipac.caltech.edu/cgi-bin/prvMonitor/nph-prvMonitor?workspace=prv_20181217_090643_16445&format=html"
             frameborder="0"
             allowfullscreen
         ></iframe>
@@ -13342,7 +13342,7 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Metadata">Metadata<a class="anchor-link" href="#Metadata">&#182;</a></h2><p>Once data have been retrieved and the "nightly" raw reduction performed, a set of records is added to a persistent metadata table, one row is added per observation.  These observations are all taken through the HIRES PRV instrument (2D CCD) and will have been reduced to 1D spectra by the raw reduction.  They fall into five classes:</p>
+<h3 id="Metadata">Metadata<a class="anchor-link" href="#Metadata">&#182;</a></h3><p>Once data have been retrieved and the "nightly" raw reduction performed, a set of records is added to a persistent metadata table, one row is added per observation.  These observations are all taken through the HIRES PRV instrument (2D CCD) and will have been reduced to 1D spectra by the raw reduction.  They fall into five classes:</p>
 <ul>
 <li><b>RV observations</b> -- Multiple observations of a star with the iodine cell in the light path.  Precision, relative radial velocities are calculated for this type of observation. <p/></li>
 
@@ -13364,7 +13364,7 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">hiresprv.database</span> <span class="k">import</span> <span class="n">Database</span>
@@ -13386,7 +13386,7 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[4]:</div>
+    <div class="prompt output_prompt">Out[11]:</div>
 
 
 
@@ -13395,7 +13395,7 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
         <iframe
             width="950"
             height="500"
-            src="prvState_all.html"
+            src="http://hiresprv.ipac.caltech.edu/cgi-bin/idlDriver/nph-prvState?workspace=prv_20181217_090643_16445&format=html"
             frameborder="0"
             allowfullscreen
         ></iframe>
@@ -13411,7 +13411,7 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Subsetting-the-Metadata:-Single-Target">Subsetting the Metadata: Single Target<a class="anchor-link" href="#Subsetting-the-Metadata:-Single-Target">&#182;</a></h2><p>Ultimately, to make an RV curve for one star we need to reduce its observations into RV measurements.  Assuming there are adequate B star observations to reduce the template, we can isolate appropriate records in the metadata above by simply filtering on TARGET name.  There are many ways to do this; in our case we we used the remote SQLite query capability and filtered it with <p/></p>
+<h2 id="Reducing-RV-Measurements-for-a-Star">Reducing RV Measurements for a Star<a class="anchor-link" href="#Reducing-RV-Measurements-for-a-Star">&#182;</a></h2><h3 id="Subsetting-the-Metadata:-Single-Target">Subsetting the Metadata: Single Target<a class="anchor-link" href="#Subsetting-the-Metadata:-Single-Target">&#182;</a></h3><p>Ultimately, to make an RV curve for one star we need to reduce its observations into RV measurements.  Assuming there are adequate B star observations to reduce the template, we can isolate appropriate records in the metadata above by simply filtering on TARGET name.  There are many ways to do this; in our case we we used the remote SQLite query capability and filtered it with <p/></p>
 <tt>select DATE, OBTYPE, FILENAME, TARGET, BJD, BCVEL from FILES where TARGET like 'HD185144';</tt><p>The resulting records are shown below.</p>
 
 </div>
@@ -13419,7 +13419,7 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">sql</span><span class="o">=</span><span class="s2">&quot;select DATE, OBTYPE, FILENAME, TARGET, BJD, BCVEL from FILES where TARGET like &#39;HD185144&#39;;&quot;</span><span class="p">)</span>
@@ -13437,7 +13437,7 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[5]:</div>
+    <div class="prompt output_prompt">Out[12]:</div>
 
 
 
@@ -13446,7 +13446,59 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
         <iframe
             width="700"
             height="325"
-            src="prvState_HD185144.html"
+            src="http://hiresprv.ipac.caltech.edu/cgi-bin/idlDriver/nph-prvState?workspace=prv_20181217_090643_16445&format=html&sql=select DATE, OBTYPE, FILENAME, TARGET, BJD, BCVEL from FILES where TARGET like 'HD185144';"
+            frameborder="0"
+            allowfullscreen
+        ></iframe>
+        
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Templates-and-B-stars">Templates and B-stars<a class="anchor-link" href="#Templates-and-B-stars">&#182;</a></h3><p>Another subset that comes up is matching B-Star observations with the template observations they will be used with.  This can be many to many so the easiest quick look is just to list out all B-star and Template observations in time order and then match visually:<p/></p>
+<tt>select DATE, OBTYPE, FILENAME, TARGET, BJD from FILES 
+    where OBTYPE like 'TEMPLATE' or OBTYPE like 'B Star';</tt><p>The resulting records are shown below.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">sql</span><span class="o">=</span><span class="s2">&quot;select DATE, OBTYPE, FILENAME, TARGET, BJD from FILES where OBTYPE like &#39;TEMPLATE&#39; or OBTYPE like &#39;B Star&#39;;&quot;</span><span class="p">)</span>
+
+<span class="n">IFrame</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="mi">700</span><span class="p">,</span>  <span class="mi">325</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[13]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+        <iframe
+            width="700"
+            height="325"
+            src="http://hiresprv.ipac.caltech.edu/cgi-bin/idlDriver/nph-prvState?workspace=prv_20181217_090643_16445&format=html&sql=select DATE, OBTYPE, FILENAME, TARGET, BJD from FILES where OBTYPE like 'TEMPLATE' or OBTYPE like 'B Star';"
             frameborder="0"
             allowfullscreen
         ></iframe>
@@ -13465,9 +13517,9 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 <h3 id="RV-Pipeline-Processing">RV Pipeline Processing<a class="anchor-link" href="#RV-Pipeline-Processing">&#182;</a></h3><p>This shows that on 12/31/2009 three separate RV observations were made of HD185144 followed by five template observations (which the pipeline will combine into a single template).  Five years later, another three RV observations were made.</p>
 <p>As with the data download, the further reduction steps in the pipeline can be quite lengthy (minutes to hours each), so rather than have the user monitor each one, we provide a scripting mechanism so complex reduction jobs can be submitted in on shot.</p>
 <p>In order to turn any of the RV observations into an RV value, we need the template.  So we will generate that first.  Since it is possible to repeat the template observations on more than one day, we need to explicitly state which object and which day.  The script command for this is:</p>
-<pre>template HD185144 20091231</pre><p>To reduce an RV measurement, we have to refer to this template (the target name is enough) and specify which file to reduce.  For example:</p>
-<pre>rv HD185144 r20091231.7</pre><p>Finally, once we have a set of RV measurements for an object, we a generate an RV curve (the pipeline finds all the appropriate RV measurements):</p>
-<pre>rvcurve HD185144</pre><p>As long as we follow the general rules that we need a template before we can reduce an RV measurement and we need at least three RV measurements before we can generate an RV curve, we can otherwise scripte things in whatever order we wish (<i>e.g.</i> all the templates first).</p>
+<pre>template 185144 20091231</pre><p>To reduce an RV measurement, we have to refer to this template (the target name is enough) and specify which file to reduce.  For example:</p>
+<pre>rv 185144 r20091231.7</pre><p>Finally, once we have a set of RV measurements for an object, we a generate an RV curve (the pipeline finds all the appropriate RV measurements):</p>
+<pre>rvcurve 185144</pre><p>As long as we follow the general rules that we need a template before we can reduce an RV measurement and we need at least three RV measurements before we can generate an RV curve, we can otherwise scripte things in whatever order we wish (<i>e.g.</i> all the templates first).</p>
 <p>All of this is submitted to the pipeline as a text script:</p>
 
 </div>
@@ -13475,7 +13527,7 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">hiresprv.idldriver</span> <span class="k">import</span> <span class="n">Idldriver</span>
@@ -13500,11 +13552,31 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>status= ok
+msg= Script running in background. Consult monitor for status.
+None
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Monitoring-(again)">Monitoring (again)<a class="anchor-link" href="#Monitoring-(again)">&#182;</a></h3><p>To monitor the pipeline processing request, you can either insert another cell the runs the PRV Processing Monitor here or just go back to the previous cell and monitor from there.</p>
+<h3 id="Monitoring-(again)">Monitoring (again)<a class="anchor-link" href="#Monitoring-(again)">&#182;</a></h3><p>To monitor the pipeline processing request, the best idea is to use the same monitor page from above.  It stops whenever a given script is finished but you can restart it any time to see the currently-running job.  You can also insert a monitor start-up or status polling call here as well.</p>
 
 </div>
 </div>
@@ -13512,24 +13584,26 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Workspace-Directory-Listing">Workspace Directory Listing<a class="anchor-link" href="#Workspace-Directory-Listing">&#182;</a></h3><p>We can get a list of all the downloadable files in the workspace.  There are utility functions (below) for quickly downloading the final products but we often want to see the intermediate products to evaluate/diagnose the processing.</p>
+<h3 id="Product-Retrieval">Product Retrieval<a class="anchor-link" href="#Product-Retrieval">&#182;</a></h3><p>There is a utility function for retrieving the RV curves (CSV files) for each target
+(similarly, there is a function -- data.spectrum -- for retrieving the 1D FITS spectrum files).</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">hiresprv.download</span> <span class="k">import</span> <span class="n">Download</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">hiresprv.download</span> <span class="k">import</span> <span class="n">Download</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">Download</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
 
-<span class="n">listing</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">directory_listing</span><span class="p">()</span>
+<span class="n">rtn</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">rvcurve</span><span class="p">(</span><span class="s1">&#39;185144&#39;</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">listing</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;vst185144.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13545,8 +13619,801 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
     <div class="prompt"></div>
 
 
-<div class="output_subarea output_stream output_stdout output_text" style="height: 400px;">
-<pre>{&#39;dnloadlog&#39;: [&#39;dnloadlog/20091231.json&#39;], &#39;logsheets&#39;: [&#39;logsheets/20091231.logsheet1&#39;], &#39;statuslog&#39;: [&#39;statuslog/status.2018-12-17T09:07:02.txt&#39;], &#39;idllog&#39;: [&#39;idllog/idlDebug.2018-12-17T09:07:02.txt&#39;], &#39;fits&#39;: [&#39;fits/r20091231.166.fits&#39;, &#39;fits/r20091231.157.fits&#39;, &#39;fits/r20091231.75.fits&#39;, &#39;fits/r20091231.197.fits&#39;, &#39;fits/r20091231.135.fits&#39;, &#39;fits/r20091231.104.fits&#39;, &#39;fits/r20091231.84.fits&#39;, &#39;fits/r20091231.98.fits&#39;, &#39;fits/r20091231.71.fits&#39;, &#39;fits/r20091231.153.fits&#39;, &#39;fits/r20091231.118.fits&#39;, &#39;fits/r20091231.129.fits&#39;, &#39;fits/r20091231.162.fits&#39;, &#39;fits/r20091231.69.fits&#39;, &#39;fits/r20091231.100.fits&#39;, &#39;fits/r20091231.80.fits&#39;, &#39;fits/r20091231.193.fits&#39;, &#39;fits/r20091231.131.fits&#39;, &#39;fits/r20091231.176.fits&#39;, &#39;fits/r20091231.147.fits&#39;, &#39;fits/r20091231.202.fits&#39;, &#39;fits/r20091231.125.fits&#39;, &#39;fits/r20091231.187.fits&#39;, &#39;fits/r20091231.94.fits&#39;, &#39;fits/r20091231.114.fits&#39;, &#39;fits/r20091231.108.fits&#39;, &#39;fits/r20091231.143.fits&#39;, &#39;fits/r20091231.88.fits&#39;, &#39;fits/r20091231.206.fits&#39;, &#39;fits/r20091231.172.fits&#39;, &#39;fits/r20091231.139.fits&#39;, &#39;fits/r20091231.90.fits&#39;, &#39;fits/r20091231.110.fits&#39;, &#39;fits/r20091231.79.fits&#39;, &#39;fits/r20091231.121.fits&#39;, &#39;fits/r20091231.183.fits&#39;, &#39;fits/r20091231.177.fits&#39;, &#39;fits/r20091231.146.fits&#39;, &#39;fits/r20091231.203.fits&#39;, &#39;fits/r20091231.124.fits&#39;, &#39;fits/r20091231.186.fits&#39;, &#39;fits/r20091231.95.fits&#39;, &#39;fits/r20091231.115.fits&#39;, &#39;fits/r20091231.142.fits&#39;, &#39;fits/r20091231.109.fits&#39;, &#39;fits/r20091231.89.fits&#39;, &#39;fits/r20091231.207.fits&#39;, &#39;fits/r20091231.138.fits&#39;, &#39;fits/r20091231.173.fits&#39;, &#39;fits/r20091231.91.fits&#39;, &#39;fits/r20091231.78.fits&#39;, &#39;fits/r20091231.111.fits&#39;, &#39;fits/r20091231.120.fits&#39;, &#39;fits/r20091231.182.fits&#39;, &#39;fits/r20091231.167.fits&#39;, &#39;fits/r20091231.156.fits&#39;, &#39;fits/r20091231.74.fits&#39;, &#39;fits/r20091231.196.fits&#39;, &#39;fits/r20091231.134.fits&#39;, &#39;fits/r20091231.105.fits&#39;, &#39;fits/r20091231.85.fits&#39;, &#39;fits/r20091231.99.fits&#39;, &#39;fits/r20091231.119.fits&#39;, &#39;fits/r20091231.70.fits&#39;, &#39;fits/r20091231.152.fits&#39;, &#39;fits/r20091231.163.fits&#39;, &#39;fits/r20091231.128.fits&#39;, &#39;fits/r20091231.101.fits&#39;, &#39;fits/r20091231.68.fits&#39;, &#39;fits/r20091231.81.fits&#39;, &#39;fits/r20091231.192.fits&#39;, &#39;fits/r20091231.130.fits&#39;, &#39;fits/r20091231.175.fits&#39;, &#39;fits/r20091231.201.fits&#39;, &#39;fits/r20091231.66.fits&#39;, &#39;fits/r20091231.144.fits&#39;, &#39;fits/r20091231.184.fits&#39;, &#39;fits/r20091231.126.fits&#39;, &#39;fits/r20091231.117.fits&#39;, &#39;fits/r20091231.97.fits&#39;, &#39;fits/r20091231.205.fits&#39;, &#39;fits/r20091231.140.fits&#39;, &#39;fits/r20091231.171.fits&#39;, &#39;fits/r20091231.198.fits&#39;, &#39;fits/r20091231.158.fits&#39;, &#39;fits/r20091231.113.fits&#39;, &#39;fits/r20091231.93.fits&#39;, &#39;fits/r20091231.180.fits&#39;, &#39;fits/r20091231.122.fits&#39;, &#39;fits/r20091231.169.fits&#39;, &#39;fits/r20091231.165.fits&#39;, &#39;fits/r20091231.154.fits&#39;, &#39;fits/r20091231.76.fits&#39;, &#39;fits/r20091231.136.fits&#39;, &#39;fits/r20091231.194.fits&#39;, &#39;fits/r20091231.209.fits&#39;, &#39;fits/r20091231.87.fits&#39;, &#39;fits/r20091231.107.fits&#39;, &#39;fits/r20091231.72.fits&#39;, &#39;fits/r20091231.150.fits&#39;, &#39;fits/r20091231.188.fits&#39;, &#39;fits/r20091231.161.fits&#39;, &#39;fits/r20091231.83.fits&#39;, &#39;fits/r20091231.103.fits&#39;, &#39;fits/r20091231.148.fits&#39;, &#39;fits/r20091231.179.fits&#39;, &#39;fits/r20091231.132.fits&#39;, &#39;fits/r20091231.190.fits&#39;, &#39;fits/r20091231.164.fits&#39;, &#39;fits/r20091231.155.fits&#39;, &#39;fits/r20091231.77.fits&#39;, &#39;fits/r20091231.137.fits&#39;, &#39;fits/r20091231.195.fits&#39;, &#39;fits/r20091231.208.fits&#39;, &#39;fits/r20091231.86.fits&#39;, &#39;fits/r20091231.106.fits&#39;, &#39;fits/r20091231.73.fits&#39;, &#39;fits/r20091231.151.fits&#39;, &#39;fits/r20091231.189.fits&#39;, &#39;fits/r20091231.160.fits&#39;, &#39;fits/r20091231.82.fits&#39;, &#39;fits/r20091231.149.fits&#39;, &#39;fits/r20091231.102.fits&#39;, &#39;fits/r20091231.133.fits&#39;, &#39;fits/r20091231.178.fits&#39;, &#39;fits/r20091231.191.fits&#39;, &#39;fits/r20091231.174.fits&#39;, &#39;fits/r20091231.200.fits&#39;, &#39;fits/r20091231.67.fits&#39;, &#39;fits/r20091231.145.fits&#39;, &#39;fits/r20091231.185.fits&#39;, &#39;fits/r20091231.127.fits&#39;, &#39;fits/r20091231.116.fits&#39;, &#39;fits/r20091231.96.fits&#39;, &#39;fits/r20091231.204.fits&#39;, &#39;fits/r20091231.141.fits&#39;, &#39;fits/r20091231.170.fits&#39;, &#39;fits/r20091231.199.fits&#39;, &#39;fits/r20091231.112.fits&#39;, &#39;fits/r20091231.159.fits&#39;, &#39;fits/r20091231.92.fits&#39;, &#39;fits/r20091231.181.fits&#39;, &#39;fits/r20091231.168.fits&#39;, &#39;fits/r20091231.123.fits&#39;], &#39;deblazed&#39;: [&#39;deblazed/r20091231.166.fits&#39;, &#39;deblazed/r20091231.157.fits&#39;, &#39;deblazed/r20091231.197.fits&#39;, &#39;deblazed/r20091231.135.fits&#39;, &#39;deblazed/r20091231.104.fits&#39;, &#39;deblazed/r20091231.92.fits&#39;, &#39;deblazed/r20091231.67.fits&#39;, &#39;deblazed/r20091231.118.fits&#39;, &#39;deblazed/r20091231.153.fits&#39;, &#39;deblazed/r20091231.162.fits&#39;, &#39;deblazed/r20091231.129.fits&#39;, &#39;deblazed/r20091231.100.fits&#39;, &#39;deblazed/r20091231.96.fits&#39;, &#39;deblazed/r20091231.193.fits&#39;, &#39;deblazed/r20091231.131.fits&#39;, &#39;deblazed/r20091231.176.fits&#39;, &#39;deblazed/r20091231.73.fits&#39;, &#39;deblazed/r20091231.147.fits&#39;, &#39;deblazed/r20091231.202.fits&#39;, &#39;deblazed/r20091231.125.fits&#39;, &#39;deblazed/r20091231.187.fits&#39;, &#39;deblazed/r20091231.82.fits&#39;, &#39;deblazed/r20091231.114.fits&#39;, &#39;deblazed/r20091231.77.fits&#39;, &#39;deblazed/r20091231.143.fits&#39;, &#39;deblazed/r20091231.108.fits&#39;, &#39;deblazed/r20091231.206.fits&#39;, &#39;deblazed/r20091231.139.fits&#39;, &#39;deblazed/r20091231.172.fits&#39;, &#39;deblazed/r20091231.86.fits&#39;, &#39;deblazed/r20091231.110.fits&#39;, &#39;deblazed/r20091231.121.fits&#39;, &#39;deblazed/r20091231.183.fits&#39;, &#39;deblazed/r20091231.177.fits&#39;, &#39;deblazed/r20091231.146.fits&#39;, &#39;deblazed/r20091231.72.fits&#39;, &#39;deblazed/r20091231.203.fits&#39;, &#39;deblazed/r20091231.124.fits&#39;, &#39;deblazed/r20091231.186.fits&#39;, &#39;deblazed/r20091231.83.fits&#39;, &#39;deblazed/r20091231.115.fits&#39;, &#39;deblazed/r20091231.109.fits&#39;, &#39;deblazed/r20091231.142.fits&#39;, &#39;deblazed/r20091231.76.fits&#39;, &#39;deblazed/r20091231.207.fits&#39;, &#39;deblazed/r20091231.173.fits&#39;, &#39;deblazed/r20091231.138.fits&#39;, &#39;deblazed/r20091231.87.fits&#39;, &#39;deblazed/r20091231.111.fits&#39;, &#39;deblazed/r20091231.120.fits&#39;, &#39;deblazed/r20091231.182.fits&#39;, &#39;deblazed/r20091231.167.fits&#39;, &#39;deblazed/r20091231.156.fits&#39;, &#39;deblazed/r20091231.196.fits&#39;, &#39;deblazed/r20091231.134.fits&#39;, &#39;deblazed/r20091231.105.fits&#39;, &#39;deblazed/r20091231.93.fits&#39;, &#39;deblazed/r20091231.152.fits&#39;, &#39;deblazed/r20091231.119.fits&#39;, &#39;deblazed/r20091231.66.fits&#39;, &#39;deblazed/r20091231.128.fits&#39;, &#39;deblazed/r20091231.163.fits&#39;, &#39;deblazed/r20091231.101.fits&#39;, &#39;deblazed/r20091231.97.fits&#39;, &#39;deblazed/r20091231.192.fits&#39;, &#39;deblazed/r20091231.130.fits&#39;, &#39;deblazed/r20091231.175.fits&#39;, &#39;deblazed/r20091231.201.fits&#39;, &#39;deblazed/r20091231.99.fits&#39;, &#39;deblazed/r20091231.70.fits&#39;, &#39;deblazed/r20091231.144.fits&#39;, &#39;deblazed/r20091231.184.fits&#39;, &#39;deblazed/r20091231.126.fits&#39;, &#39;deblazed/r20091231.117.fits&#39;, &#39;deblazed/r20091231.68.fits&#39;, &#39;deblazed/r20091231.81.fits&#39;, &#39;deblazed/r20091231.205.fits&#39;, &#39;deblazed/r20091231.74.fits&#39;, &#39;deblazed/r20091231.140.fits&#39;, &#39;deblazed/r20091231.171.fits&#39;, &#39;deblazed/r20091231.198.fits&#39;, &#39;deblazed/r20091231.113.fits&#39;, &#39;deblazed/r20091231.158.fits&#39;, &#39;deblazed/r20091231.85.fits&#39;, &#39;deblazed/r20091231.180.fits&#39;, &#39;deblazed/r20091231.169.fits&#39;, &#39;deblazed/r20091231.122.fits&#39;, &#39;deblazed/r20091231.165.fits&#39;, &#39;deblazed/r20091231.154.fits&#39;, &#39;deblazed/r20091231.89.fits&#39;, &#39;deblazed/r20091231.136.fits&#39;, &#39;deblazed/r20091231.194.fits&#39;, &#39;deblazed/r20091231.91.fits&#39;, &#39;deblazed/r20091231.209.fits&#39;, &#39;deblazed/r20091231.107.fits&#39;, &#39;deblazed/r20091231.78.fits&#39;, &#39;deblazed/r20091231.150.fits&#39;, &#39;deblazed/r20091231.188.fits&#39;, &#39;deblazed/r20091231.161.fits&#39;, &#39;deblazed/r20091231.95.fits&#39;, &#39;deblazed/r20091231.148.fits&#39;, &#39;deblazed/r20091231.103.fits&#39;, &#39;deblazed/r20091231.132.fits&#39;, &#39;deblazed/r20091231.179.fits&#39;, &#39;deblazed/r20091231.190.fits&#39;, &#39;deblazed/r20091231.164.fits&#39;, &#39;deblazed/r20091231.155.fits&#39;, &#39;deblazed/r20091231.88.fits&#39;, &#39;deblazed/r20091231.137.fits&#39;, &#39;deblazed/r20091231.195.fits&#39;, &#39;deblazed/r20091231.208.fits&#39;, &#39;deblazed/r20091231.90.fits&#39;, &#39;deblazed/r20091231.79.fits&#39;, &#39;deblazed/r20091231.106.fits&#39;, &#39;deblazed/r20091231.151.fits&#39;, &#39;deblazed/r20091231.189.fits&#39;, &#39;deblazed/r20091231.160.fits&#39;, &#39;deblazed/r20091231.94.fits&#39;, &#39;deblazed/r20091231.102.fits&#39;, &#39;deblazed/r20091231.149.fits&#39;, &#39;deblazed/r20091231.178.fits&#39;, &#39;deblazed/r20091231.133.fits&#39;, &#39;deblazed/r20091231.191.fits&#39;, &#39;deblazed/r20091231.174.fits&#39;, &#39;deblazed/r20091231.98.fits&#39;, &#39;deblazed/r20091231.200.fits&#39;, &#39;deblazed/r20091231.145.fits&#39;, &#39;deblazed/r20091231.71.fits&#39;, &#39;deblazed/r20091231.185.fits&#39;, &#39;deblazed/r20091231.127.fits&#39;, &#39;deblazed/r20091231.69.fits&#39;, &#39;deblazed/r20091231.116.fits&#39;, &#39;deblazed/r20091231.80.fits&#39;, &#39;deblazed/r20091231.204.fits&#39;, &#39;deblazed/r20091231.141.fits&#39;, &#39;deblazed/r20091231.75.fits&#39;, &#39;deblazed/r20091231.170.fits&#39;, &#39;deblazed/r20091231.199.fits&#39;, &#39;deblazed/r20091231.159.fits&#39;, &#39;deblazed/r20091231.112.fits&#39;, &#39;deblazed/r20091231.84.fits&#39;, &#39;deblazed/r20091231.181.fits&#39;, &#39;deblazed/r20091231.123.fits&#39;, &#39;deblazed/r20091231.168.fits&#39;], &#39;rv&#39;: [], &#39;files&#39;: [], &#39;database&#39;: &#39;prvState.db&#39;}
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>BJD_TDB,RV,RV_ERR,BC,ADU,CHI2
+15196.69208800001,-2.860674413602231,0.789710,-4620.095214843750,52362,1.05080
+15196.69270200003,1.730315543645411,0.812607,-4620.210937500000,51591,1.04891
+15196.69329199987,1.431450932849171,0.803164,-4620.320800781250,48950,1.05804
+17180.10972899990,-2.845576383390323,0.890091,3189.794921875000,55029,1.10542
+17180.11030799989,1.235438116773508,0.825978,3189.327880859375,55717,1.10771
+17180.11088699987,1.047083913731319,0.828699,3188.863037109375,48769,1.10120
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Ancillary-Tools">Ancillary Tools<a class="anchor-link" href="#Ancillary-Tools">&#182;</a></h2><h3 id="Workspace-Directory-Listing">Workspace Directory Listing<a class="anchor-link" href="#Workspace-Directory-Listing">&#182;</a></h3><p>We can get a list of all the downloadable files in the workspace.  There are utility functions (below) for quickly downloading the final products but we often want to see the intermediate products to evaluate/diagnose the processing.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">hiresprv.download</span> <span class="k">import</span> <span class="n">Download</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">Download</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
+
+<span class="n">listing</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">directory_listing</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">listing</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{
+    &#34;database&#34;: &#34;prvState.db&#34;,
+    &#34;deblazed&#34;: [
+        &#34;deblazed/r20091231.232.fits&#34;,
+        &#34;deblazed/r20150606.140.fits&#34;,
+        &#34;deblazed/r20091231.8.fits&#34;,
+        &#34;deblazed/r20091231.177.fits&#34;,
+        &#34;deblazed/r20150606.79.fits&#34;,
+        &#34;deblazed/r20091231.146.fits&#34;,
+        &#34;deblazed/r20091231.89.fits&#34;,
+        &#34;deblazed/r20091231.248.fits&#34;,
+        &#34;deblazed/r20091231.203.fits&#34;,
+        &#34;deblazed/r20150606.90.fits&#34;,
+        &#34;deblazed/r20150606.4.fits&#34;,
+        &#34;deblazed/r20091231.124.fits&#34;,
+        &#34;deblazed/r20091231.288.fits&#34;,
+        &#34;deblazed/r20150606.158.fits&#34;,
+        &#34;deblazed/r20091231.186.fits&#34;,
+        &#34;deblazed/r20091231.261.fits&#34;,
+        &#34;deblazed/r20150606.113.fits&#34;,
+        &#34;deblazed/r20150606.122.fits&#34;,
+        &#34;deblazed/r20091231.250.fits&#34;,
+        &#34;deblazed/r20091231.78.fits&#34;,
+        &#34;deblazed/r20150606.88.fits&#34;,
+        &#34;deblazed/r20150606.61.fits&#34;,
+        &#34;deblazed/r20091231.115.fits&#34;,
+        &#34;deblazed/r20091231.91.fits&#34;,
+        &#34;deblazed/r20091231.109.fits&#34;,
+        &#34;deblazed/r20091231.142.fits&#34;,
+        &#34;deblazed/r20091231.207.fits&#34;,
+        &#34;deblazed/r20150606.94.fits&#34;,
+        &#34;deblazed/r20150606.144.fits&#34;,
+        &#34;deblazed/r20091231.236.fits&#34;,
+        &#34;deblazed/r20091231.173.fits&#34;,
+        &#34;deblazed/r20091231.138.fits&#34;,
+        &#34;deblazed/r20091231.254.fits&#34;,
+        &#34;deblazed/r20150606.126.fits&#34;,
+        &#34;deblazed/r20091231.95.fits&#34;,
+        &#34;deblazed/r20091231.111.fits&#34;,
+        &#34;deblazed/r20150606.65.fits&#34;,
+        &#34;deblazed/r20091231.120.fits&#34;,
+        &#34;deblazed/r20150606.117.fits&#34;,
+        &#34;deblazed/r20091231.265.fits&#34;,
+        &#34;deblazed/r20091231.182.fits&#34;,
+        &#34;deblazed/r20091231.167.fits&#34;,
+        &#34;deblazed/r20091231.269.fits&#34;,
+        &#34;deblazed/r20091231.222.fits&#34;,
+        &#34;deblazed/r20150606.150.fits&#34;,
+        &#34;deblazed/r20150606.80.fits&#34;,
+        &#34;deblazed/r20150606.161.fits&#34;,
+        &#34;deblazed/r20091231.213.fits&#34;,
+        &#34;deblazed/r20091231.258.fits&#34;,
+        &#34;deblazed/r20091231.70.fits&#34;,
+        &#34;deblazed/r20091231.99.fits&#34;,
+        &#34;deblazed/r20091231.156.fits&#34;,
+        &#34;deblazed/r20150606.69.fits&#34;,
+        &#34;deblazed/r20091231.271.fits&#34;,
+        &#34;deblazed/r20150606.103.fits&#34;,
+        &#34;deblazed/r20091231.12.fits&#34;,
+        &#34;deblazed/r20091231.196.fits&#34;,
+        &#34;deblazed/r20150606.148.fits&#34;,
+        &#34;deblazed/r20091231.134.fits&#34;,
+        &#34;deblazed/r20091231.81.fits&#34;,
+        &#34;deblazed/r20091231.105.fits&#34;,
+        &#34;deblazed/r20150606.71.fits&#34;,
+        &#34;deblazed/r20150606.98.fits&#34;,
+        &#34;deblazed/r20091231.68.fits&#34;,
+        &#34;deblazed/r20150606.132.fits&#34;,
+        &#34;deblazed/r20091231.240.fits&#34;,
+        &#34;deblazed/r20091231.74.fits&#34;,
+        &#34;deblazed/r20150606.84.fits&#34;,
+        &#34;deblazed/r20091231.217.fits&#34;,
+        &#34;deblazed/r20150606.165.fits&#34;,
+        &#34;deblazed/r20091231.152.fits&#34;,
+        &#34;deblazed/r20091231.119.fits&#34;,
+        &#34;deblazed/r20091231.128.fits&#34;,
+        &#34;deblazed/r20091231.284.fits&#34;,
+        &#34;deblazed/r20091231.163.fits&#34;,
+        &#34;deblazed/r20150606.154.fits&#34;,
+        &#34;deblazed/r20091231.226.fits&#34;,
+        &#34;deblazed/r20150606.75.fits&#34;,
+        &#34;deblazed/r20091231.101.fits&#34;,
+        &#34;deblazed/r20091231.85.fits&#34;,
+        &#34;deblazed/r20150606.8.fits&#34;,
+        &#34;deblazed/r20091231.244.fits&#34;,
+        &#34;deblazed/r20150606.136.fits&#34;,
+        &#34;deblazed/r20091231.4.fits&#34;,
+        &#34;deblazed/r20091231.192.fits&#34;,
+        &#34;deblazed/r20091231.16.fits&#34;,
+        &#34;deblazed/r20150606.107.fits&#34;,
+        &#34;deblazed/r20091231.275.fits&#34;,
+        &#34;deblazed/r20091231.130.fits&#34;,
+        &#34;deblazed/r20091231.166.fits&#34;,
+        &#34;deblazed/r20150606.151.fits&#34;,
+        &#34;deblazed/r20091231.223.fits&#34;,
+        &#34;deblazed/r20091231.268.fits&#34;,
+        &#34;deblazed/r20091231.259.fits&#34;,
+        &#34;deblazed/r20091231.71.fits&#34;,
+        &#34;deblazed/r20150606.81.fits&#34;,
+        &#34;deblazed/r20091231.212.fits&#34;,
+        &#34;deblazed/r20150606.160.fits&#34;,
+        &#34;deblazed/r20091231.157.fits&#34;,
+        &#34;deblazed/r20150606.68.fits&#34;,
+        &#34;deblazed/r20091231.98.fits&#34;,
+        &#34;deblazed/r20091231.13.fits&#34;,
+        &#34;deblazed/r20091231.197.fits&#34;,
+        &#34;deblazed/r20150606.149.fits&#34;,
+        &#34;deblazed/r20091231.1.fits&#34;,
+        &#34;deblazed/r20150606.102.fits&#34;,
+        &#34;deblazed/r20091231.270.fits&#34;,
+        &#34;deblazed/r20091231.135.fits&#34;,
+        &#34;deblazed/r20150606.70.fits&#34;,
+        &#34;deblazed/r20091231.80.fits&#34;,
+        &#34;deblazed/r20091231.104.fits&#34;,
+        &#34;deblazed/r20091231.69.fits&#34;,
+        &#34;deblazed/r20091231.241.fits&#34;,
+        &#34;deblazed/r20150606.133.fits&#34;,
+        &#34;deblazed/r20150606.99.fits&#34;,
+        &#34;deblazed/r20150606.85.fits&#34;,
+        &#34;deblazed/r20150606.164.fits&#34;,
+        &#34;deblazed/r20091231.216.fits&#34;,
+        &#34;deblazed/r20091231.75.fits&#34;,
+        &#34;deblazed/r20091231.118.fits&#34;,
+        &#34;deblazed/r20091231.153.fits&#34;,
+        &#34;deblazed/r20091231.162.fits&#34;,
+        &#34;deblazed/r20091231.129.fits&#34;,
+        &#34;deblazed/r20091231.285.fits&#34;,
+        &#34;deblazed/r20091231.227.fits&#34;,
+        &#34;deblazed/r20150606.155.fits&#34;,
+        &#34;deblazed/r20091231.100.fits&#34;,
+        &#34;deblazed/r20091231.84.fits&#34;,
+        &#34;deblazed/r20150606.74.fits&#34;,
+        &#34;deblazed/r20150606.137.fits&#34;,
+        &#34;deblazed/r20091231.245.fits&#34;,
+        &#34;deblazed/r20150606.9.fits&#34;,
+        &#34;deblazed/r20091231.274.fits&#34;,
+        &#34;deblazed/r20150606.106.fits&#34;,
+        &#34;deblazed/r20091231.5.fits&#34;,
+        &#34;deblazed/r20091231.193.fits&#34;,
+        &#34;deblazed/r20091231.17.fits&#34;,
+        &#34;deblazed/r20091231.131.fits&#34;,
+        &#34;deblazed/r20091231.278.fits&#34;,
+        &#34;deblazed/r20150606.141.fits&#34;,
+        &#34;deblazed/r20091231.233.fits&#34;,
+        &#34;deblazed/r20091231.9.fits&#34;,
+        &#34;deblazed/r20091231.176.fits&#34;,
+        &#34;deblazed/r20091231.88.fits&#34;,
+        &#34;deblazed/r20150606.78.fits&#34;,
+        &#34;deblazed/r20091231.147.fits&#34;,
+        &#34;deblazed/r20150606.5.fits&#34;,
+        &#34;deblazed/r20091231.202.fits&#34;,
+        &#34;deblazed/r20150606.91.fits&#34;,
+        &#34;deblazed/r20091231.249.fits&#34;,
+        &#34;deblazed/r20091231.125.fits&#34;,
+        &#34;deblazed/r20150606.112.fits&#34;,
+        &#34;deblazed/r20091231.260.fits&#34;,
+        &#34;deblazed/r20150606.159.fits&#34;,
+        &#34;deblazed/r20091231.187.fits&#34;,
+        &#34;deblazed/r20150606.89.fits&#34;,
+        &#34;deblazed/r20091231.251.fits&#34;,
+        &#34;deblazed/r20150606.123.fits&#34;,
+        &#34;deblazed/r20091231.79.fits&#34;,
+        &#34;deblazed/r20091231.114.fits&#34;,
+        &#34;deblazed/r20091231.90.fits&#34;,
+        &#34;deblazed/r20091231.143.fits&#34;,
+        &#34;deblazed/r20091231.108.fits&#34;,
+        &#34;deblazed/r20150606.1.fits&#34;,
+        &#34;deblazed/r20091231.206.fits&#34;,
+        &#34;deblazed/r20150606.95.fits&#34;,
+        &#34;deblazed/r20091231.237.fits&#34;,
+        &#34;deblazed/r20150606.145.fits&#34;,
+        &#34;deblazed/r20091231.139.fits&#34;,
+        &#34;deblazed/r20091231.172.fits&#34;,
+        &#34;deblazed/r20150606.127.fits&#34;,
+        &#34;deblazed/r20091231.255.fits&#34;,
+        &#34;deblazed/r20150606.64.fits&#34;,
+        &#34;deblazed/r20091231.94.fits&#34;,
+        &#34;deblazed/r20091231.110.fits&#34;,
+        &#34;deblazed/r20091231.121.fits&#34;,
+        &#34;deblazed/r20091231.183.fits&#34;,
+        &#34;deblazed/r20091231.264.fits&#34;,
+        &#34;deblazed/r20150606.116.fits&#34;,
+        &#34;deblazed/r20091231.221.fits&#34;,
+        &#34;deblazed/r20150606.153.fits&#34;,
+        &#34;deblazed/r20150606.118.fits&#34;,
+        &#34;deblazed/r20150606.10.fits&#34;,
+        &#34;deblazed/r20091231.283.fits&#34;,
+        &#34;deblazed/r20091231.164.fits&#34;,
+        &#34;deblazed/r20091231.155.fits&#34;,
+        &#34;deblazed/r20150606.129.fits&#34;,
+        &#34;deblazed/r20091231.73.fits&#34;,
+        &#34;deblazed/r20150606.83.fits&#34;,
+        &#34;deblazed/r20150606.162.fits&#34;,
+        &#34;deblazed/r20091231.210.fits&#34;,
+        &#34;deblazed/r20091231.137.fits&#34;,
+        &#34;deblazed/r20091231.195.fits&#34;,
+        &#34;deblazed/r20091231.11.fits&#34;,
+        &#34;deblazed/r20091231.239.fits&#34;,
+        &#34;deblazed/r20091231.3.fits&#34;,
+        &#34;deblazed/r20091231.272.fits&#34;,
+        &#34;deblazed/r20150606.100.fits&#34;,
+        &#34;deblazed/r20150606.131.fits&#34;,
+        &#34;deblazed/r20091231.243.fits&#34;,
+        &#34;deblazed/r20091231.208.fits&#34;,
+        &#34;deblazed/r20150606.72.fits&#34;,
+        &#34;deblazed/r20091231.106.fits&#34;,
+        &#34;deblazed/r20091231.82.fits&#34;,
+        &#34;deblazed/r20091231.151.fits&#34;,
+        &#34;deblazed/r20150606.87.fits&#34;,
+        &#34;deblazed/r20091231.214.fits&#34;,
+        &#34;deblazed/r20150606.166.fits&#34;,
+        &#34;deblazed/r20091231.77.fits&#34;,
+        &#34;deblazed/r20150606.157.fits&#34;,
+        &#34;deblazed/r20091231.225.fits&#34;,
+        &#34;deblazed/r20091231.189.fits&#34;,
+        &#34;deblazed/r20091231.160.fits&#34;,
+        &#34;deblazed/r20091231.287.fits&#34;,
+        &#34;deblazed/r20091231.247.fits&#34;,
+        &#34;deblazed/r20150606.135.fits&#34;,
+        &#34;deblazed/r20091231.86.fits&#34;,
+        &#34;deblazed/r20091231.102.fits&#34;,
+        &#34;deblazed/r20150606.76.fits&#34;,
+        &#34;deblazed/r20091231.149.fits&#34;,
+        &#34;deblazed/r20091231.178.fits&#34;,
+        &#34;deblazed/r20091231.133.fits&#34;,
+        &#34;deblazed/r20150606.104.fits&#34;,
+        &#34;deblazed/r20091231.276.fits&#34;,
+        &#34;deblazed/r20091231.7.fits&#34;,
+        &#34;deblazed/r20091231.15.fits&#34;,
+        &#34;deblazed/r20091231.191.fits&#34;,
+        &#34;deblazed/r20091231.174.fits&#34;,
+        &#34;deblazed/r20150606.108.fits&#34;,
+        &#34;deblazed/r20091231.19.fits&#34;,
+        &#34;deblazed/r20091231.231.fits&#34;,
+        &#34;deblazed/r20150606.143.fits&#34;,
+        &#34;deblazed/r20091231.200.fits&#34;,
+        &#34;deblazed/r20150606.93.fits&#34;,
+        &#34;deblazed/r20150606.139.fits&#34;,
+        &#34;deblazed/r20150606.7.fits&#34;,
+        &#34;deblazed/r20091231.145.fits&#34;,
+        &#34;deblazed/r20091231.262.fits&#34;,
+        &#34;deblazed/r20150606.110.fits&#34;,
+        &#34;deblazed/r20091231.229.fits&#34;,
+        &#34;deblazed/r20091231.185.fits&#34;,
+        &#34;deblazed/r20091231.127.fits&#34;,
+        &#34;deblazed/r20091231.92.fits&#34;,
+        &#34;deblazed/r20091231.116.fits&#34;,
+        &#34;deblazed/r20150606.62.fits&#34;,
+        &#34;deblazed/r20091231.218.fits&#34;,
+        &#34;deblazed/r20150606.121.fits&#34;,
+        &#34;deblazed/r20091231.253.fits&#34;,
+        &#34;deblazed/r20091231.67.fits&#34;,
+        &#34;deblazed/r20091231.204.fits&#34;,
+        &#34;deblazed/r20150606.97.fits&#34;,
+        &#34;deblazed/r20150606.3.fits&#34;,
+        &#34;deblazed/r20091231.141.fits&#34;,
+        &#34;deblazed/r20091231.170.fits&#34;,
+        &#34;deblazed/r20091231.199.fits&#34;,
+        &#34;deblazed/r20150606.147.fits&#34;,
+        &#34;deblazed/r20091231.235.fits&#34;,
+        &#34;deblazed/r20091231.159.fits&#34;,
+        &#34;deblazed/r20150606.66.fits&#34;,
+        &#34;deblazed/r20091231.112.fits&#34;,
+        &#34;deblazed/r20091231.96.fits&#34;,
+        &#34;deblazed/r20091231.257.fits&#34;,
+        &#34;deblazed/r20150606.125.fits&#34;,
+        &#34;deblazed/r20091231.181.fits&#34;,
+        &#34;deblazed/r20150606.114.fits&#34;,
+        &#34;deblazed/r20091231.266.fits&#34;,
+        &#34;deblazed/r20091231.123.fits&#34;,
+        &#34;deblazed/r20091231.168.fits&#34;,
+        &#34;deblazed/r20091231.175.fits&#34;,
+        &#34;deblazed/r20091231.18.fits&#34;,
+        &#34;deblazed/r20150606.142.fits&#34;,
+        &#34;deblazed/r20091231.230.fits&#34;,
+        &#34;deblazed/r20150606.109.fits&#34;,
+        &#34;deblazed/r20150606.6.fits&#34;,
+        &#34;deblazed/r20150606.138.fits&#34;,
+        &#34;deblazed/r20091231.201.fits&#34;,
+        &#34;deblazed/r20150606.92.fits&#34;,
+        &#34;deblazed/r20091231.144.fits&#34;,
+        &#34;deblazed/r20091231.228.fits&#34;,
+        &#34;deblazed/r20091231.184.fits&#34;,
+        &#34;deblazed/r20150606.111.fits&#34;,
+        &#34;deblazed/r20091231.263.fits&#34;,
+        &#34;deblazed/r20091231.126.fits&#34;,
+        &#34;deblazed/r20150606.63.fits&#34;,
+        &#34;deblazed/r20091231.93.fits&#34;,
+        &#34;deblazed/r20091231.117.fits&#34;,
+        &#34;deblazed/r20091231.252.fits&#34;,
+        &#34;deblazed/r20150606.120.fits&#34;,
+        &#34;deblazed/r20091231.219.fits&#34;,
+        &#34;deblazed/r20150606.2.fits&#34;,
+        &#34;deblazed/r20091231.205.fits&#34;,
+        &#34;deblazed/r20150606.96.fits&#34;,
+        &#34;deblazed/r20091231.66.fits&#34;,
+        &#34;deblazed/r20091231.140.fits&#34;,
+        &#34;deblazed/r20091231.171.fits&#34;,
+        &#34;deblazed/r20091231.198.fits&#34;,
+        &#34;deblazed/r20091231.234.fits&#34;,
+        &#34;deblazed/r20150606.146.fits&#34;,
+        &#34;deblazed/r20091231.113.fits&#34;,
+        &#34;deblazed/r20091231.97.fits&#34;,
+        &#34;deblazed/r20091231.158.fits&#34;,
+        &#34;deblazed/r20150606.67.fits&#34;,
+        &#34;deblazed/r20150606.124.fits&#34;,
+        &#34;deblazed/r20091231.256.fits&#34;,
+        &#34;deblazed/r20091231.267.fits&#34;,
+        &#34;deblazed/r20150606.115.fits&#34;,
+        &#34;deblazed/r20091231.180.fits&#34;,
+        &#34;deblazed/r20091231.169.fits&#34;,
+        &#34;deblazed/r20091231.122.fits&#34;,
+        &#34;deblazed/r20150606.119.fits&#34;,
+        &#34;deblazed/r20150606.152.fits&#34;,
+        &#34;deblazed/r20091231.220.fits&#34;,
+        &#34;deblazed/r20091231.165.fits&#34;,
+        &#34;deblazed/r20091231.154.fits&#34;,
+        &#34;deblazed/r20150606.82.fits&#34;,
+        &#34;deblazed/r20091231.211.fits&#34;,
+        &#34;deblazed/r20150606.128.fits&#34;,
+        &#34;deblazed/r20091231.72.fits&#34;,
+        &#34;deblazed/r20091231.136.fits&#34;,
+        &#34;deblazed/r20150606.101.fits&#34;,
+        &#34;deblazed/r20091231.273.fits&#34;,
+        &#34;deblazed/r20091231.194.fits&#34;,
+        &#34;deblazed/r20091231.10.fits&#34;,
+        &#34;deblazed/r20091231.238.fits&#34;,
+        &#34;deblazed/r20091231.2.fits&#34;,
+        &#34;deblazed/r20091231.209.fits&#34;,
+        &#34;deblazed/r20091231.242.fits&#34;,
+        &#34;deblazed/r20150606.130.fits&#34;,
+        &#34;deblazed/r20091231.107.fits&#34;,
+        &#34;deblazed/r20091231.83.fits&#34;,
+        &#34;deblazed/r20150606.73.fits&#34;,
+        &#34;deblazed/r20091231.150.fits&#34;,
+        &#34;deblazed/r20091231.76.fits&#34;,
+        &#34;deblazed/r20150606.86.fits&#34;,
+        &#34;deblazed/r20091231.215.fits&#34;,
+        &#34;deblazed/r20091231.224.fits&#34;,
+        &#34;deblazed/r20150606.156.fits&#34;,
+        &#34;deblazed/r20091231.188.fits&#34;,
+        &#34;deblazed/r20091231.286.fits&#34;,
+        &#34;deblazed/r20091231.161.fits&#34;,
+        &#34;deblazed/r20150606.134.fits&#34;,
+        &#34;deblazed/r20091231.246.fits&#34;,
+        &#34;deblazed/r20150606.77.fits&#34;,
+        &#34;deblazed/r20091231.148.fits&#34;,
+        &#34;deblazed/r20091231.87.fits&#34;,
+        &#34;deblazed/r20091231.103.fits&#34;,
+        &#34;deblazed/r20091231.132.fits&#34;,
+        &#34;deblazed/r20091231.179.fits&#34;,
+        &#34;deblazed/r20091231.6.fits&#34;,
+        &#34;deblazed/r20091231.14.fits&#34;,
+        &#34;deblazed/r20091231.190.fits&#34;,
+        &#34;deblazed/r20091231.277.fits&#34;,
+        &#34;deblazed/r20150606.105.fits&#34;
+    ],
+    &#34;dnloadlog&#34;: [
+        &#34;dnloadlog/20130912.json&#34;,
+        &#34;dnloadlog/20091231.json&#34;,
+        &#34;dnloadlog/20150606.json&#34;,
+        &#34;dnloadlog/20130629.json&#34;
+    ],
+    &#34;files&#34;: [
+        &#34;files/vst185144.csv&#34;
+    ],
+    &#34;fits&#34;: [
+        &#34;fits/r20091231.19.fits&#34;,
+        &#34;fits/r20091231.278.fits&#34;,
+        &#34;fits/r20150606.141.fits&#34;,
+        &#34;fits/r20091231.233.fits&#34;,
+        &#34;fits/r20091231.3.fits&#34;,
+        &#34;fits/r20091231.176.fits&#34;,
+        &#34;fits/r20091231.147.fits&#34;,
+        &#34;fits/r20091231.202.fits&#34;,
+        &#34;fits/r20091231.249.fits&#34;,
+        &#34;fits/r20150606.93.fits&#34;,
+        &#34;fits/r20091231.125.fits&#34;,
+        &#34;fits/r20150606.112.fits&#34;,
+        &#34;fits/r20091231.260.fits&#34;,
+        &#34;fits/r20091231.187.fits&#34;,
+        &#34;fits/r20150606.159.fits&#34;,
+        &#34;fits/r20091231.251.fits&#34;,
+        &#34;fits/r20150606.123.fits&#34;,
+        &#34;fits/r20091231.114.fits&#34;,
+        &#34;fits/r20150606.62.fits&#34;,
+        &#34;fits/r20091231.92.fits&#34;,
+        &#34;fits/r20091231.143.fits&#34;,
+        &#34;fits/r20091231.108.fits&#34;,
+        &#34;fits/r20150606.97.fits&#34;,
+        &#34;fits/r20091231.67.fits&#34;,
+        &#34;fits/r20091231.206.fits&#34;,
+        &#34;fits/r20091231.237.fits&#34;,
+        &#34;fits/r20150606.145.fits&#34;,
+        &#34;fits/r20091231.7.fits&#34;,
+        &#34;fits/r20091231.139.fits&#34;,
+        &#34;fits/r20091231.172.fits&#34;,
+        &#34;fits/r20150606.127.fits&#34;,
+        &#34;fits/r20091231.255.fits&#34;,
+        &#34;fits/r20091231.96.fits&#34;,
+        &#34;fits/r20091231.110.fits&#34;,
+        &#34;fits/r20150606.66.fits&#34;,
+        &#34;fits/r20091231.121.fits&#34;,
+        &#34;fits/r20091231.183.fits&#34;,
+        &#34;fits/r20091231.264.fits&#34;,
+        &#34;fits/r20150606.116.fits&#34;,
+        &#34;fits/r20091231.166.fits&#34;,
+        &#34;fits/r20150606.10.fits&#34;,
+        &#34;fits/r20150606.151.fits&#34;,
+        &#34;fits/r20091231.223.fits&#34;,
+        &#34;fits/r20091231.268.fits&#34;,
+        &#34;fits/r20150606.83.fits&#34;,
+        &#34;fits/r20091231.259.fits&#34;,
+        &#34;fits/r20091231.212.fits&#34;,
+        &#34;fits/r20150606.160.fits&#34;,
+        &#34;fits/r20091231.73.fits&#34;,
+        &#34;fits/r20091231.157.fits&#34;,
+        &#34;fits/r20150606.149.fits&#34;,
+        &#34;fits/r20091231.197.fits&#34;,
+        &#34;fits/r20150606.102.fits&#34;,
+        &#34;fits/r20091231.270.fits&#34;,
+        &#34;fits/r20091231.11.fits&#34;,
+        &#34;fits/r20091231.135.fits&#34;,
+        &#34;fits/r20091231.82.fits&#34;,
+        &#34;fits/r20150606.7.fits&#34;,
+        &#34;fits/r20150606.72.fits&#34;,
+        &#34;fits/r20091231.104.fits&#34;,
+        &#34;fits/r20091231.241.fits&#34;,
+        &#34;fits/r20150606.133.fits&#34;,
+        &#34;fits/r20150606.164.fits&#34;,
+        &#34;fits/r20091231.216.fits&#34;,
+        &#34;fits/r20091231.77.fits&#34;,
+        &#34;fits/r20150606.87.fits&#34;,
+        &#34;fits/r20091231.118.fits&#34;,
+        &#34;fits/r20091231.153.fits&#34;,
+        &#34;fits/r20091231.162.fits&#34;,
+        &#34;fits/r20091231.285.fits&#34;,
+        &#34;fits/r20091231.129.fits&#34;,
+        &#34;fits/r20091231.227.fits&#34;,
+        &#34;fits/r20150606.155.fits&#34;,
+        &#34;fits/r20150606.76.fits&#34;,
+        &#34;fits/r20091231.100.fits&#34;,
+        &#34;fits/r20150606.3.fits&#34;,
+        &#34;fits/r20091231.86.fits&#34;,
+        &#34;fits/r20150606.137.fits&#34;,
+        &#34;fits/r20091231.245.fits&#34;,
+        &#34;fits/r20091231.274.fits&#34;,
+        &#34;fits/r20150606.106.fits&#34;,
+        &#34;fits/r20091231.15.fits&#34;,
+        &#34;fits/r20091231.193.fits&#34;,
+        &#34;fits/r20091231.131.fits&#34;,
+        &#34;fits/r20091231.167.fits&#34;,
+        &#34;fits/r20091231.269.fits&#34;,
+        &#34;fits/r20091231.222.fits&#34;,
+        &#34;fits/r20150606.150.fits&#34;,
+        &#34;fits/r20091231.72.fits&#34;,
+        &#34;fits/r20150606.161.fits&#34;,
+        &#34;fits/r20091231.213.fits&#34;,
+        &#34;fits/r20091231.258.fits&#34;,
+        &#34;fits/r20150606.82.fits&#34;,
+        &#34;fits/r20091231.156.fits&#34;,
+        &#34;fits/r20091231.10.fits&#34;,
+        &#34;fits/r20091231.271.fits&#34;,
+        &#34;fits/r20150606.103.fits&#34;,
+        &#34;fits/r20150606.148.fits&#34;,
+        &#34;fits/r20091231.196.fits&#34;,
+        &#34;fits/r20091231.134.fits&#34;,
+        &#34;fits/r20150606.73.fits&#34;,
+        &#34;fits/r20091231.105.fits&#34;,
+        &#34;fits/r20091231.83.fits&#34;,
+        &#34;fits/r20150606.6.fits&#34;,
+        &#34;fits/r20150606.132.fits&#34;,
+        &#34;fits/r20091231.240.fits&#34;,
+        &#34;fits/r20150606.86.fits&#34;,
+        &#34;fits/r20091231.76.fits&#34;,
+        &#34;fits/r20091231.217.fits&#34;,
+        &#34;fits/r20150606.165.fits&#34;,
+        &#34;fits/r20091231.152.fits&#34;,
+        &#34;fits/r20091231.119.fits&#34;,
+        &#34;fits/r20091231.284.fits&#34;,
+        &#34;fits/r20091231.128.fits&#34;,
+        &#34;fits/r20091231.163.fits&#34;,
+        &#34;fits/r20150606.154.fits&#34;,
+        &#34;fits/r20091231.226.fits&#34;,
+        &#34;fits/r20150606.2.fits&#34;,
+        &#34;fits/r20091231.87.fits&#34;,
+        &#34;fits/r20150606.77.fits&#34;,
+        &#34;fits/r20091231.101.fits&#34;,
+        &#34;fits/r20091231.244.fits&#34;,
+        &#34;fits/r20150606.136.fits&#34;,
+        &#34;fits/r20091231.192.fits&#34;,
+        &#34;fits/r20091231.14.fits&#34;,
+        &#34;fits/r20150606.107.fits&#34;,
+        &#34;fits/r20091231.275.fits&#34;,
+        &#34;fits/r20091231.130.fits&#34;,
+        &#34;fits/r20091231.232.fits&#34;,
+        &#34;fits/r20150606.140.fits&#34;,
+        &#34;fits/r20091231.18.fits&#34;,
+        &#34;fits/r20091231.177.fits&#34;,
+        &#34;fits/r20091231.2.fits&#34;,
+        &#34;fits/r20091231.146.fits&#34;,
+        &#34;fits/r20150606.92.fits&#34;,
+        &#34;fits/r20091231.248.fits&#34;,
+        &#34;fits/r20091231.203.fits&#34;,
+        &#34;fits/r20091231.288.fits&#34;,
+        &#34;fits/r20091231.124.fits&#34;,
+        &#34;fits/r20091231.186.fits&#34;,
+        &#34;fits/r20150606.158.fits&#34;,
+        &#34;fits/r20091231.261.fits&#34;,
+        &#34;fits/r20150606.113.fits&#34;,
+        &#34;fits/r20150606.122.fits&#34;,
+        &#34;fits/r20091231.250.fits&#34;,
+        &#34;fits/r20091231.93.fits&#34;,
+        &#34;fits/r20091231.115.fits&#34;,
+        &#34;fits/r20150606.63.fits&#34;,
+        &#34;fits/r20091231.109.fits&#34;,
+        &#34;fits/r20091231.142.fits&#34;,
+        &#34;fits/r20091231.207.fits&#34;,
+        &#34;fits/r20091231.66.fits&#34;,
+        &#34;fits/r20150606.96.fits&#34;,
+        &#34;fits/r20150606.144.fits&#34;,
+        &#34;fits/r20091231.236.fits&#34;,
+        &#34;fits/r20091231.173.fits&#34;,
+        &#34;fits/r20091231.138.fits&#34;,
+        &#34;fits/r20091231.6.fits&#34;,
+        &#34;fits/r20091231.254.fits&#34;,
+        &#34;fits/r20150606.126.fits&#34;,
+        &#34;fits/r20091231.111.fits&#34;,
+        &#34;fits/r20150606.67.fits&#34;,
+        &#34;fits/r20091231.97.fits&#34;,
+        &#34;fits/r20091231.120.fits&#34;,
+        &#34;fits/r20150606.117.fits&#34;,
+        &#34;fits/r20091231.265.fits&#34;,
+        &#34;fits/r20091231.182.fits&#34;,
+        &#34;fits/r20150606.119.fits&#34;,
+        &#34;fits/r20150606.152.fits&#34;,
+        &#34;fits/r20091231.220.fits&#34;,
+        &#34;fits/r20091231.165.fits&#34;,
+        &#34;fits/r20150606.69.fits&#34;,
+        &#34;fits/r20091231.99.fits&#34;,
+        &#34;fits/r20091231.154.fits&#34;,
+        &#34;fits/r20091231.70.fits&#34;,
+        &#34;fits/r20091231.211.fits&#34;,
+        &#34;fits/r20150606.128.fits&#34;,
+        &#34;fits/r20150606.80.fits&#34;,
+        &#34;fits/r20091231.136.fits&#34;,
+        &#34;fits/r20091231.8.fits&#34;,
+        &#34;fits/r20091231.12.fits&#34;,
+        &#34;fits/r20150606.101.fits&#34;,
+        &#34;fits/r20091231.273.fits&#34;,
+        &#34;fits/r20091231.238.fits&#34;,
+        &#34;fits/r20091231.194.fits&#34;,
+        &#34;fits/r20091231.68.fits&#34;,
+        &#34;fits/r20091231.209.fits&#34;,
+        &#34;fits/r20091231.242.fits&#34;,
+        &#34;fits/r20150606.130.fits&#34;,
+        &#34;fits/r20150606.98.fits&#34;,
+        &#34;fits/r20150606.71.fits&#34;,
+        &#34;fits/r20091231.107.fits&#34;,
+        &#34;fits/r20091231.81.fits&#34;,
+        &#34;fits/r20150606.4.fits&#34;,
+        &#34;fits/r20091231.150.fits&#34;,
+        &#34;fits/r20150606.84.fits&#34;,
+        &#34;fits/r20091231.74.fits&#34;,
+        &#34;fits/r20091231.215.fits&#34;,
+        &#34;fits/r20091231.188.fits&#34;,
+        &#34;fits/r20091231.224.fits&#34;,
+        &#34;fits/r20150606.156.fits&#34;,
+        &#34;fits/r20091231.286.fits&#34;,
+        &#34;fits/r20091231.161.fits&#34;,
+        &#34;fits/r20150606.134.fits&#34;,
+        &#34;fits/r20091231.246.fits&#34;,
+        &#34;fits/r20091231.148.fits&#34;,
+        &#34;fits/r20091231.85.fits&#34;,
+        &#34;fits/r20150606.75.fits&#34;,
+        &#34;fits/r20091231.103.fits&#34;,
+        &#34;fits/r20091231.132.fits&#34;,
+        &#34;fits/r20091231.179.fits&#34;,
+        &#34;fits/r20091231.190.fits&#34;,
+        &#34;fits/r20091231.16.fits&#34;,
+        &#34;fits/r20091231.277.fits&#34;,
+        &#34;fits/r20150606.105.fits&#34;,
+        &#34;fits/r20091231.175.fits&#34;,
+        &#34;fits/r20150606.142.fits&#34;,
+        &#34;fits/r20091231.230.fits&#34;,
+        &#34;fits/r20150606.109.fits&#34;,
+        &#34;fits/r20150606.90.fits&#34;,
+        &#34;fits/r20150606.138.fits&#34;,
+        &#34;fits/r20091231.201.fits&#34;,
+        &#34;fits/r20091231.144.fits&#34;,
+        &#34;fits/r20091231.89.fits&#34;,
+        &#34;fits/r20150606.79.fits&#34;,
+        &#34;fits/r20091231.184.fits&#34;,
+        &#34;fits/r20091231.228.fits&#34;,
+        &#34;fits/r20150606.111.fits&#34;,
+        &#34;fits/r20091231.263.fits&#34;,
+        &#34;fits/r20091231.126.fits&#34;,
+        &#34;fits/r20091231.91.fits&#34;,
+        &#34;fits/r20091231.117.fits&#34;,
+        &#34;fits/r20150606.61.fits&#34;,
+        &#34;fits/r20150606.88.fits&#34;,
+        &#34;fits/r20091231.252.fits&#34;,
+        &#34;fits/r20150606.120.fits&#34;,
+        &#34;fits/r20091231.219.fits&#34;,
+        &#34;fits/r20091231.78.fits&#34;,
+        &#34;fits/r20091231.205.fits&#34;,
+        &#34;fits/r20150606.94.fits&#34;,
+        &#34;fits/r20150606.8.fits&#34;,
+        &#34;fits/r20091231.140.fits&#34;,
+        &#34;fits/r20091231.4.fits&#34;,
+        &#34;fits/r20091231.171.fits&#34;,
+        &#34;fits/r20091231.234.fits&#34;,
+        &#34;fits/r20150606.146.fits&#34;,
+        &#34;fits/r20091231.198.fits&#34;,
+        &#34;fits/r20091231.113.fits&#34;,
+        &#34;fits/r20150606.65.fits&#34;,
+        &#34;fits/r20091231.95.fits&#34;,
+        &#34;fits/r20091231.158.fits&#34;,
+        &#34;fits/r20150606.124.fits&#34;,
+        &#34;fits/r20091231.256.fits&#34;,
+        &#34;fits/r20091231.267.fits&#34;,
+        &#34;fits/r20150606.115.fits&#34;,
+        &#34;fits/r20091231.180.fits&#34;,
+        &#34;fits/r20091231.169.fits&#34;,
+        &#34;fits/r20091231.122.fits&#34;,
+        &#34;fits/r20091231.174.fits&#34;,
+        &#34;fits/r20091231.1.fits&#34;,
+        &#34;fits/r20150606.108.fits&#34;,
+        &#34;fits/r20091231.231.fits&#34;,
+        &#34;fits/r20150606.143.fits&#34;,
+        &#34;fits/r20091231.200.fits&#34;,
+        &#34;fits/r20150606.139.fits&#34;,
+        &#34;fits/r20150606.91.fits&#34;,
+        &#34;fits/r20150606.78.fits&#34;,
+        &#34;fits/r20091231.145.fits&#34;,
+        &#34;fits/r20091231.88.fits&#34;,
+        &#34;fits/r20091231.262.fits&#34;,
+        &#34;fits/r20150606.110.fits&#34;,
+        &#34;fits/r20091231.185.fits&#34;,
+        &#34;fits/r20091231.229.fits&#34;,
+        &#34;fits/r20091231.127.fits&#34;,
+        &#34;fits/r20091231.116.fits&#34;,
+        &#34;fits/r20091231.90.fits&#34;,
+        &#34;fits/r20091231.79.fits&#34;,
+        &#34;fits/r20091231.218.fits&#34;,
+        &#34;fits/r20150606.121.fits&#34;,
+        &#34;fits/r20091231.253.fits&#34;,
+        &#34;fits/r20150606.89.fits&#34;,
+        &#34;fits/r20150606.95.fits&#34;,
+        &#34;fits/r20091231.204.fits&#34;,
+        &#34;fits/r20150606.9.fits&#34;,
+        &#34;fits/r20091231.141.fits&#34;,
+        &#34;fits/r20091231.170.fits&#34;,
+        &#34;fits/r20091231.5.fits&#34;,
+        &#34;fits/r20150606.147.fits&#34;,
+        &#34;fits/r20091231.235.fits&#34;,
+        &#34;fits/r20091231.199.fits&#34;,
+        &#34;fits/r20091231.94.fits&#34;,
+        &#34;fits/r20091231.159.fits&#34;,
+        &#34;fits/r20091231.112.fits&#34;,
+        &#34;fits/r20150606.64.fits&#34;,
+        &#34;fits/r20091231.257.fits&#34;,
+        &#34;fits/r20150606.125.fits&#34;,
+        &#34;fits/r20091231.181.fits&#34;,
+        &#34;fits/r20150606.114.fits&#34;,
+        &#34;fits/r20091231.266.fits&#34;,
+        &#34;fits/r20091231.123.fits&#34;,
+        &#34;fits/r20091231.168.fits&#34;,
+        &#34;fits/r20091231.221.fits&#34;,
+        &#34;fits/r20150606.153.fits&#34;,
+        &#34;fits/r20150606.118.fits&#34;,
+        &#34;fits/r20091231.283.fits&#34;,
+        &#34;fits/r20091231.164.fits&#34;,
+        &#34;fits/r20091231.98.fits&#34;,
+        &#34;fits/r20091231.155.fits&#34;,
+        &#34;fits/r20150606.68.fits&#34;,
+        &#34;fits/r20150606.81.fits&#34;,
+        &#34;fits/r20150606.129.fits&#34;,
+        &#34;fits/r20150606.162.fits&#34;,
+        &#34;fits/r20091231.210.fits&#34;,
+        &#34;fits/r20091231.71.fits&#34;,
+        &#34;fits/r20091231.9.fits&#34;,
+        &#34;fits/r20091231.137.fits&#34;,
+        &#34;fits/r20091231.239.fits&#34;,
+        &#34;fits/r20091231.195.fits&#34;,
+        &#34;fits/r20091231.272.fits&#34;,
+        &#34;fits/r20150606.100.fits&#34;,
+        &#34;fits/r20091231.13.fits&#34;,
+        &#34;fits/r20150606.99.fits&#34;,
+        &#34;fits/r20150606.131.fits&#34;,
+        &#34;fits/r20091231.243.fits&#34;,
+        &#34;fits/r20091231.208.fits&#34;,
+        &#34;fits/r20091231.69.fits&#34;,
+        &#34;fits/r20091231.80.fits&#34;,
+        &#34;fits/r20150606.5.fits&#34;,
+        &#34;fits/r20150606.70.fits&#34;,
+        &#34;fits/r20091231.106.fits&#34;,
+        &#34;fits/r20091231.151.fits&#34;,
+        &#34;fits/r20091231.214.fits&#34;,
+        &#34;fits/r20150606.166.fits&#34;,
+        &#34;fits/r20091231.75.fits&#34;,
+        &#34;fits/r20150606.85.fits&#34;,
+        &#34;fits/r20091231.189.fits&#34;,
+        &#34;fits/r20150606.157.fits&#34;,
+        &#34;fits/r20091231.225.fits&#34;,
+        &#34;fits/r20091231.160.fits&#34;,
+        &#34;fits/r20091231.287.fits&#34;,
+        &#34;fits/r20091231.247.fits&#34;,
+        &#34;fits/r20150606.135.fits&#34;,
+        &#34;fits/r20150606.74.fits&#34;,
+        &#34;fits/r20091231.102.fits&#34;,
+        &#34;fits/r20150606.1.fits&#34;,
+        &#34;fits/r20091231.149.fits&#34;,
+        &#34;fits/r20091231.84.fits&#34;,
+        &#34;fits/r20091231.178.fits&#34;,
+        &#34;fits/r20091231.133.fits&#34;,
+        &#34;fits/r20150606.104.fits&#34;,
+        &#34;fits/r20091231.276.fits&#34;,
+        &#34;fits/r20091231.17.fits&#34;,
+        &#34;fits/r20091231.191.fits&#34;
+    ],
+    &#34;idllog&#34;: [
+        &#34;idllog/idlDebug.2019-05-15T14:55:03.txt&#34;,
+        &#34;idllog/idlDebug.2019-05-15T14:34:43.txt&#34;,
+        &#34;idllog/idlDebug.2019-05-15T16:30:20.txt&#34;,
+        &#34;idllog/idlDebug.2019-05-15T15:18:05.txt&#34;,
+        &#34;idllog/idlDebug.2019-05-15T14:57:24.txt&#34;
+    ],
+    &#34;logsheets&#34;: [
+        &#34;logsheets/20091231.logsheet1&#34;,
+        &#34;logsheets/20150606.logsheet1&#34;
+    ],
+    &#34;rv&#34;: [],
+    &#34;statuslog&#34;: [
+        &#34;statuslog/status.2019-05-15T14:34:43.txt&#34;,
+        &#34;statuslog/status.2019-05-15T14:55:03.txt&#34;,
+        &#34;statuslog/status.2019-05-15T16:30:20.txt&#34;,
+        &#34;statuslog/status.2019-05-15T15:18:05.txt&#34;,
+        &#34;statuslog/status.2019-05-16T07:34:14.txt&#34;,
+        &#34;statuslog/status.2019-05-15T14:57:24.txt&#34;
+    ]
+}
 </pre>
 </div>
 </div>
@@ -13603,15 +14470,221 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Product-Retrieval">Product Retrieval<a class="anchor-link" href="#Product-Retrieval">&#182;</a></h3><p>There is a utility function for retrieving the RV curves (CSV files) for each target
-(similarly, there is a function -- data.spectrum -- for retrieving the 1D FITS spectrum files).</p>
+<h2 id="Augmented-Processing">Augmented Processing<a class="anchor-link" href="#Augmented-Processing">&#182;</a></h2><p>There are no tunable parameters associated with the HIRES PRV pipeline.  However, you can affect the processing in a couple of places by "removing" files (usually because there is something suspect about them.  For instance, a bad B-star file can adversely affect the stellar template calculation so you man want to rerun the template building without it.  We don't actually delete the file; we deactivate it but leave it in place in case you change your mind.</p>
+<p>Similarly, in making the final RV curve you may decide to remove one or more of the reduced RV measurements.</p>
+<h3 id="Deactivating-Files">Deactivating Files<a class="anchor-link" href="#Deactivating-Files">&#182;</a></h3><p>Sometimes it turns out that a data file is suboptimal and should probably be removed from the processing.  It might be a B-star observation bracketing a template measurement or one of the RV observation that should be removed from an RV curve.</p>
+<p>The PRV service takes responsibility for remembering what files have been processed and for providing a mechanism (the "DEACTIVATED" column in the database) for "turning off" specific files.  It does not automatically redo all the affected downstream processing.  That is left up to the user so it is best to take care of all of that as soon as possible.</p>
+<p>In this example, we will turn off one of the B-star observations. This requires regenerating the template(s) it applies:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">hiresprv.idldriver</span> <span class="k">import</span> <span class="n">Idldriver</span>
+
+<span class="n">idl</span> <span class="o">=</span> <span class="n">Idldriver</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
+
+<span class="n">rtn</span> <span class="o">=</span> <span class="n">idl</span><span class="o">.</span><span class="n">run_script</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">deactivate r20091231.77</span>
+<span class="s2">template 185144 20091231</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">rtn</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>status= ok
+msg= Script running in background. Consult monitor for status.
+None
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Having regenerated the template, we must therefore regenerate the downstream data (RVs and RV curve).  The underlying processing code is smart enough to not regenerate the reduced RV data if that file already exists so we need to first remove the reduced RV files:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">hiresprv.idldriver</span> <span class="k">import</span> <span class="n">Idldriver</span>
+
+<span class="n">idl</span> <span class="o">=</span> <span class="n">Idldriver</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
+
+<span class="n">rtn</span> <span class="o">=</span> <span class="n">idl</span><span class="o">.</span><span class="n">run_script</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">deactivate vdaa185144_r20091231.72</span>
+<span class="s2">deactivate vdaa185144_r20091231.73</span>
+<span class="s2">deactivate vdaa185144_r20091231.74</span>
+<span class="s2">deactivate vdaa185144_r20150606.145</span>
+<span class="s2">deactivate vdaa185144_r20150606.146</span>
+<span class="s2">deactivate vdaa185144_r20150606.147</span>
+<span class="s2">rv 185144 r20091231.72</span>
+<span class="s2">rv 185144 r20091231.73</span>
+<span class="s2">rv 185144 r20091231.74</span>
+<span class="s2">rv 185144 r20150606.145</span>
+<span class="s2">rv 185144 r20150606.146</span>
+<span class="s2">rv 185144 r20150606.147</span>
+<span class="s2">rvcurve 185144</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">rtn</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>status= ok
+msg= Script running in background. Consult monitor for status.
+None
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>After further consideration, we decide that the second RV measurement was of inferior quality, so we deactivate it, too.  You can find the name of the reduced RV file by listing out the full database again or by doing a database search (if you look a the file name, it follows a simple pattern):</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">sql</span><span class="o">=</span><span class="s2">&quot;select DATE, OBTYPE, FILENAME, TARGET, BJD, BCVEL from FILES where TARGET like &#39;rv data&#39;;&quot;</span><span class="p">)</span>
+
+<span class="n">IFrame</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="mi">700</span><span class="p">,</span>  <span class="mi">325</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[14]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+        <iframe
+            width="700"
+            height="325"
+            src="http://hiresprv.ipac.caltech.edu/cgi-bin/idlDriver/nph-prvState?workspace=prv_20181217_090643_16445&format=html&sql=select DATE, OBTYPE, FILENAME, TARGET, BJD, BCVEL from FILES where TARGET like 'rv data';"
+            frameborder="0"
+            allowfullscreen
+        ></iframe>
+        
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">hiresprv.idldriver</span> <span class="k">import</span> <span class="n">Idldriver</span>
+
+<span class="n">idl</span> <span class="o">=</span> <span class="n">Idldriver</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
+
+<span class="n">rtn</span> <span class="o">=</span> <span class="n">idl</span><span class="o">.</span><span class="n">run_script</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">deactivate vdaa185144_r20091231.73</span>
+<span class="s2">rvcurve 185144</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">rtn</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>status= ok
+msg= Script running in background. Consult monitor for status.
+None
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So now we have only five reduced RV measurements and they were reduced with a slightly different template measurement.  This is reflected in the RV curve, which you can compare to the original:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">hiresprv.download</span> <span class="k">import</span> <span class="n">Download</span>
@@ -13640,12 +14713,11 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>BJD_TDB,RV,RV_ERR,BC,ADU,CHI2
-15196.69208800001,-1.943826130732300,0.790838,-4620.095214843750,52469,1.04605
-15196.69270200003,0.9499493348483788,0.766279,-4620.210937500000,51810,1.04807
-15196.69329199987,2.105588684332027,0.793553,-4620.320800781250,49018,1.05613
-17180.10972899990,-4.082477614453012,0.879030,3189.794921875000,55280,1.10551
-17180.11030799989,2.432186318703896,0.808950,3189.327880859375,55894,1.10709
-17180.11088699987,0.2617517122871171,0.854971,3188.863037109375,49070,1.10138
+15196.69208800001,-2.176984931266687,0.782362,-4620.095214843750,52362,1.04989
+15196.69329199987,2.082068283340939,0.778802,-4620.320800781250,48950,1.05804
+17180.10972899990,-2.351030457353758,0.769511,3189.794921875000,55029,1.10542
+17180.11030799989,1.241724284090688,0.678055,3189.327880859375,55593,1.10771
+17180.11088699987,0.9359797393606732,0.686433,3188.863037109375,48769,1.10120
 </pre>
 </div>
 </div>

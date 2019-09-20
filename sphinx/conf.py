@@ -129,3 +129,7 @@ html_sidebars = {
         'searchbox.html'
     ]
 }
+
+
+# nbsphinx setup
+nbsphinx_execute = 'never'

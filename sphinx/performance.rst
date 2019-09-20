@@ -58,7 +58,7 @@ Known Planet Recovery
 =====================
 
 We demonstrated the ability to detect the PRV signatures of small planets by analyzing one year of archival data collected
-on the star HD 7924 in addition to the sample nights referenced in the :ref:`tutorial <data_reduction_overview>`.
+on the star HD 7924 in addition to the sample nights referenced in the `tutorial <tutorials/HIRES_PRV_Service.html>`_.
 This star is known to host three small planets (`Howard et al. 2009 <http://adsabs.harvard.edu/cgi-bin/nph-data_query?bibcode=2009ApJ...696...75H&db_key=AST&link_type=ABSTRACT>`_;
 `Fulton et al. 2015 <http://adsabs.harvard.edu/cgi-bin/bib_query?arXiv:1504.06629>`_). We use `RadVel <http://radvel.readthedocs.io>`_
 to fit the data, seeding the fit with the known orbital periods. We can successfully recover the correct velocity

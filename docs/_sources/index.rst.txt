@@ -56,7 +56,7 @@ The reduction of HIRES PRV data consists of four basic steps.
 
 We have provided a sample tutorial to guide you through the reduction. The tutorial is a Jupyter notebook.
 Please note have not tested the notebook itself and do not guarantee its performance.
-   * :ref:`data_reduction_overview`
+   * `Data Reduction Tutorial <tutorials/HIRES_PRV_Service.html>`_
 
 
 Understanding the Outputs

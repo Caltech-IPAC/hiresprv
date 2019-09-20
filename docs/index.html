@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Documentation for the HIRES Radial Velocity Processing Environment &#8212; HIRES PRV  documentation</title>
     <link rel="stylesheet" href="_static/graphite.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -13,6 +11,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Observing Instructions" href="setup.html" /> 
@@ -62,33 +61,32 @@ processing environment to the <a class="reference external" href="https://github
 Only data collected in the specified HIRES-PRV configuration and according to the recommendations
 summarized below can be processed properly within the NExScI HIRES-PRV environment.</p>
 <ul class="simple">
-<li>Observers new to the HIRES-PRV configuration should treat this configuration as a “new” instrument, which comes with requirements from Keck observatory. If you have not previously observed in the HIRES-PRV mode then you must be trained in person at Keck Headquarters in Waimea.</li>
-<li>The echelle and cross disperser angles must be set at specific angles as part of the <a class="reference internal" href="setup.html#alignment"><span class="std std-ref">afternoon setup</span></a> and must not be changed during the night.</li>
-<li>A minimum of three PRV observations with the iodine cell inserted on a given target are required before any PRVs will be produced.</li>
-<li>The minimum signal-to-noise ratio per pixel for each iodine-in RV observation must be at least 70 with the optimal SNR being 200.</li>
-<li>One high SNR (at least 100 per pixel) <a class="reference internal" href="setup.html#template"><span class="std std-ref">template observation</span></a> of the target without the iodine cell must be collected before any PRVs can be measured.</li>
-<li>The optimal SNR for the iodine-out template is 2x the typical iodine-in observation.</li>
-<li>Each iodine-out template observation must be bracketed by 2-5 exposures of <a class="reference internal" href="setup.html#bstars"><span class="std std-ref">bright, rapidly-rotating stars</span></a> with the iodine cell in for calibration.</li>
-<li>Individual exposure times should be no longer than 1 hour.</li>
-<li>Target names must be resolvable by Simbad to obtain accurate coordinates and proper motions</li>
+<li><p>Observers new to the HIRES-PRV configuration should treat this configuration as a “new” instrument, which comes with requirements from Keck observatory. If you have not previously observed in the HIRES-PRV mode then you must be trained in person at Keck Headquarters in Waimea.</p></li>
+<li><p>The echelle and cross disperser angles must be set at specific angles as part of the <a class="reference internal" href="setup.html#alignment"><span class="std std-ref">afternoon setup</span></a> and must not be changed during the night.</p></li>
+<li><p>A minimum of three PRV observations with the iodine cell inserted on a given target are required before any PRVs will be produced.</p></li>
+<li><p>The minimum signal-to-noise ratio per pixel for each iodine-in RV observation must be at least 70 with the optimal SNR being 200.</p></li>
+<li><p>One high SNR (at least 100 per pixel) <a class="reference internal" href="setup.html#template"><span class="std std-ref">template observation</span></a> of the target without the iodine cell must be collected before any PRVs can be measured.</p></li>
+<li><p>High SNR observations of B stars should be the first and last observations of the night</p></li>
+<li><p>The optimal SNR for the iodine-out template is 2x the typical iodine-in observation.</p></li>
+<li><p>Each iodine-out template observation must be bracketed by 2-5 exposures of <a class="reference internal" href="setup.html#bstars"><span class="std std-ref">bright, rapidly-rotating stars</span></a> with the iodine cell in for calibration.</p></li>
+<li><p>Individual exposure times should be no longer than 1 hour.</p></li>
+<li><p>Target names must be resolvable by Simbad to obtain accurate coordinates and proper motions</p></li>
 </ul>
-<dl class="docutils">
-<dt>See link below for detailed instrument configuration and observing instructions.</dt>
-<dd><ul class="first last simple">
-<li><a class="reference internal" href="setup.html#setup"><span class="std std-ref">Observing Instructions</span></a></li>
+<dl class="simple">
+<dt>See link below for detailed instrument configuration and observing instructions.</dt><dd><ul class="simple">
+<li><p><a class="reference internal" href="setup.html#setup"><span class="std std-ref">Observing Instructions</span></a></p></li>
 </ul>
 </dd>
 </dl>
 </div>
 <div class="section" id="data-reduction-tutorial">
 <h2>Data Reduction Tutorial<a class="headerlink" href="#data-reduction-tutorial" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>The reduction of HIRES PRV data consists of four basic steps.</dt>
-<dd><ol class="first last arabic simple">
-<li>Transfer files from the <a class="reference external" href="https://koa.ipac.caltech.edu">Keck Observatory Archive (KOA)</a> and extract into 1D spectra.</li>
-<li>Construct a template from an iodine-free observation of your target star.</li>
-<li>Analyze each PRV observation collected with the iodine cell in the light path</li>
-<li>Concatenate into an PRV timeseries.</li>
+<dl class="simple">
+<dt>The reduction of HIRES PRV data consists of four basic steps.</dt><dd><ol class="arabic simple">
+<li><p>Transfer files from the <a class="reference external" href="https://koa.ipac.caltech.edu">Keck Observatory Archive (KOA)</a> and extract into 1D spectra.</p></li>
+<li><p>Construct a template from an iodine-free observation of your target star.</p></li>
+<li><p>Analyze each PRV observation collected with the iodine cell in the light path</p></li>
+<li><p>Concatenate into an PRV timeseries.</p></li>
 </ol>
 </dd>
 </dl>
@@ -96,7 +94,7 @@ summarized below can be processed properly within the NExScI HIRES-PRV environme
 Please note have not tested the notebook itself and do not guarantee its performance.</p>
 <blockquote>
 <div><ul class="simple">
-<li><a class="reference internal" href="data_reduction_overview.html#data-reduction-overview"><span class="std std-ref">Data Reduction Tutorial</span></a></li>
+<li><p><a class="reference internal" href="data_reduction_overview.html#data-reduction-overview"><span class="std std-ref">Data Reduction Tutorial</span></a></p></li>
 </ul>
 </div></blockquote>
 </div>
@@ -104,10 +102,9 @@ Please note have not tested the notebook itself and do not guarantee its perform
 <h2>Understanding the Outputs<a class="headerlink" href="#understanding-the-outputs" title="Permalink to this headline">¶</a></h2>
 <p>Calibrated and extracted 1D spectra, PRV timeseries for any stars with sufficient data, and the database of your observations
 can be downloaded to your local machine from your workspace on the server.</p>
-<dl class="docutils">
-<dt>The contents of those files are documented here:</dt>
-<dd><ul class="first last simple">
-<li><a class="reference internal" href="outputs.html#outputs"><span class="std std-ref">Output Data Products</span></a></li>
+<dl class="simple">
+<dt>The contents of those files are documented here:</dt><dd><ul class="simple">
+<li><p><a class="reference internal" href="outputs.html#outputs"><span class="std std-ref">Output Data Products</span></a></p></li>
 </ul>
 </dd>
 </dl>
@@ -116,10 +113,9 @@ can be downloaded to your local machine from your workspace on the server.</p>
 <h2>Velocity Precision<a class="headerlink" href="#velocity-precision" title="Permalink to this headline">¶</a></h2>
 <p>We have performed a comparison of the velocities produced by this service to archival velocities derived from
 those same observations. We find consistent results and comparable precision.</p>
-<dl class="docutils">
-<dt>See link below for a prediction of RV precision as a function of signal to noise ratio.</dt>
-<dd><ul class="first last simple">
-<li><a class="reference internal" href="performance.html#performance"><span class="std std-ref">Velocity Precision</span></a></li>
+<dl class="simple">
+<dt>See link below for a prediction of RV precision as a function of signal to noise ratio.</dt><dd><ul class="simple">
+<li><p><a class="reference internal" href="performance.html#performance"><span class="std std-ref">Velocity Precision</span></a></p></li>
 </ul>
 </dd>
 </dl>
@@ -141,12 +137,24 @@ those same observations. We find consistent results and comparable precision.</p
 <li class="toctree-l2"><a class="reference internal" href="setup.html#tips-tricks-troubleshooting">Tips, Tricks, &amp; Troubleshooting</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="data_reduction_overview.html">Data Reduction Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/HIRES_PRV_Service.html">Data Reduction Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/HIRES_PRV_Service.html#Login">Login</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/HIRES_PRV_Service.html#KOA-Data-Retrieval">KOA Data Retrieval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/HIRES_PRV_Service.html#Reducing-RV-Measurements-for-a-Star">Reducing RV Measurements for a Star</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/Advanced_Usage.html">Advanced usage tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/Advanced_Usage.html#Login">Login</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/Advanced_Usage.html#Ancillary-Tools">Ancillary Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/Advanced_Usage.html#Augmented-Processing">Augmented Processing</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="outputs.html">Output Data Products</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="outputs.html#radial-velocity-timeseries">Radial Velocity Timeseries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="outputs.html#wavelength-solution">Wavelength Solution</a></li>
 <li class="toctree-l2"><a class="reference internal" href="outputs.html#extracted-spectra">Extracted Spectra</a></li>
 <li class="toctree-l2"><a class="reference internal" href="outputs.html#example-reading-spectrum">Example Reading Spectrum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="outputs.html#workspace-directory-structure">Workspace Directory Structure</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="performance.html">Velocity Precision</a></li>
@@ -165,9 +173,9 @@ those same observations. We find consistent results and comparable precision.</p
 </ul>
 </div>
 <ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
-<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
 </div>
 </div>
@@ -185,7 +193,8 @@ those same observations. We find consistent results and comparable precision.</p
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="setup.html">Observing Instructions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_reduction_overview.html">Data Reduction Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/HIRES_PRV_Service.html">Data Reduction Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/Advanced_Usage.html">Advanced usage tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="outputs.html">Output Data Products</a></li>
 <li class="toctree-l1"><a class="reference internal" href="performance.html">Velocity Precision</a></li>
 <li class="toctree-l1"><a class="reference internal" href="performance.html#rv-standard-stars">RV Standard Stars</a></li>
@@ -195,13 +204,11 @@ those same observations. We find consistent results and comparable precision.</p
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -227,8 +234,8 @@ those same observations. We find consistent results and comparable precision.</p
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
-      Last updated on Jan 28, 2019.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+      Last updated on Sep 20, 2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
     </div>
   </body>
 </html>

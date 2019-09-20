@@ -86,7 +86,7 @@ Table of Contents
    :caption: Contents:
 
    setup
-   data_reduction_overview
+   tutorials/HIRES_PRV_Service.ipynb
    tutorials/Advanced_Usage.ipynb
    outputs
    performance

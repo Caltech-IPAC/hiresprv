@@ -9,7 +9,7 @@ import requests
 import http.cookiejar
 
 
-class Database:
+class Database(object):
     """
     Each workspace in HIRES PRV pipeline server contains a database
     listing all the data retrieved from KOA for the user.
@@ -174,7 +174,7 @@ class Database:
        
         self.sql = ''
         if (len(kwargs) > 0) and ('sql' in kwargs.keys()):
-            self.sql = kwargs['sql']
+            self.sql = kwargs['sql'].replace(' ', '%20')
 
         self.filepath = ''
         if (len(kwargs) > 0) and ('filepath' in kwargs.keys()):
@@ -533,7 +533,7 @@ class Database:
                 for chunk in self.response.iter_content(chunk_size=512):
                     fd.write(chunk)
             
-        except Exception as e:
+        except NameError as e:
 
             if self.debug:
                 logging.debug('')

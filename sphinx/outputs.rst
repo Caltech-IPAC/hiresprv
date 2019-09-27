@@ -76,7 +76,7 @@ See below for an example of reading and interpreting this file.
 
 Extracted Spectra
 =================
-Use the :mod:`hiresprv.download` module to access and download the 1D extracted spectra onto your local disk.
+Use the :mod:`hiresprv.download.spectrum` module to access and download the 1D extracted spectra onto your local disk.
 
 The extracted spectra are available as single-extension FITS files. One file is produced for each observation.
 The FITS file contains an array with dimensions 16 x 4021.
@@ -118,3 +118,61 @@ Example python code to plot the order containing the Mg B triplet:
     :width: 50%
     :align: center
     :alt: plot of spectrum
+
+
+Workspace Directory Structure
+=============================
+
+Below is a sample directory structure for a user workspace and a description of the various types of files contained
+in each directory. A listing of all files currently existing in a user's workspace can be
+accessed using the :mod:`hiresprv.download.directory_listing()` method. Any file visible can be downloaded to your local
+machine using the :mod:`hiresprv.download.download()` method specifying the full path to the file. The `prvState.db`
+file is the raw SQL database which can also be accessed with the :mod:`hiresprv.Database` methods.
+
+| user-workspace
+| ├── dnloadlog
+| │   └── 20091231.json
+| ├── logsheets
+| │   └── 20091231.logsheet1
+| ├── statuslog
+| │   └── status.2019-09-04T16:00:11.txt
+| ├── idllog
+| │   └── idlDebug.2019-09-04T16:00:11.txt
+| ├── fits
+| │   ├── r20091231.134.fits
+| │   ├── r20091231.75.fits
+| │   └── r20091231.271.fits
+| ├── deblazed
+| │   ├── r20091231.134.fits
+| │   ├── r20091231.75.fits
+| │   └── r20091231.271.fits
+| ├── rv
+| │   ├── vst185144.csv
+| │   └── vst10700.csv
+| └── prvState.db
+
+
+.. list-table:: Directory Descriptions
+    :widths: 25 150
+    :header-rows: 1
+
+    * - Directory
+      - Contents
+    * - dnloadlog
+      - log of actions related to the transfer of raw files into the user workspace
+    * - logsheets
+      - automatically-generated logsheets summarizing the observations collected on each night
+    * - statuslog
+      - log of processing status, same information as displayed in the real-time monitor
+    * - idllog
+      - log of the raw IDL output, useful for diagnosing failures in the IDL code
+    * - fits
+      - extracted 1D spectra, named by observation id (e.g. r20091231.134.fits)
+    * - deblazed
+      - extracted 1D spectra, named by observation id (e.g. r20091231.134.fits), blaze function removed
+    * - rv
+      - RV timeseries files, one file for each target
+
+
+
+

@@ -1,7 +1,7 @@
 .. _performance:
 
 Velocity Precision
-=================
+==================
 
 Consult the plot below when considering exposure times needed to achieve a desired RV precision. This does not
 factor in any additional sources of instrumental and/or astrophysical noise.
@@ -36,7 +36,7 @@ scatter of less than 2.0 m/s for the most well-behaved targets.
 
 
 Comparison with California Planet Search Pipeline
-=================
+=================================================
 
 The PRV processing environment at NExScI is closely related to the `California Planet Search (CPS) <https://exoplanets.caltech.edu>`_
 pipeline so it is useful to compare the RVs produced by both pipelines. The mean difference between the RVs for
@@ -58,7 +58,7 @@ Known Planet Recovery
 =====================
 
 We demonstrated the ability to detect the PRV signatures of small planets by analyzing one year of archival data collected
-on the star HD 7924 in addition to the sample nights referenced in the :ref:`tutorial <data_reduction_overview>`.
+on the star HD 7924 in addition to the sample nights referenced in the `tutorial <tutorials/HIRES_PRV_Service.html>`_.
 This star is known to host three small planets (`Howard et al. 2009 <http://adsabs.harvard.edu/cgi-bin/nph-data_query?bibcode=2009ApJ...696...75H&db_key=AST&link_type=ABSTRACT>`_;
 `Fulton et al. 2015 <http://adsabs.harvard.edu/cgi-bin/bib_query?arXiv:1504.06629>`_). We use `RadVel <http://radvel.readthedocs.io>`_
 to fit the data, seeding the fit with the known orbital periods. We can successfully recover the correct velocity

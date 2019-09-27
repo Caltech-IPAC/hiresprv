@@ -15,7 +15,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Velocity Precision" href="performance.html" />
-    <link rel="prev" title="Data Reduction Tutorial" href="data_reduction_overview.html" /> 
+    <link rel="prev" title="Advanced usage tutorial" href="tutorials/Advanced_Usage.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -30,7 +30,7 @@
           <a href="performance.html" title="Velocity Precision"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="data_reduction_overview.html" title="Data Reduction Tutorial"
+          <a href="tutorials/Advanced_Usage.html" title="Advanced usage tutorial"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">HIRES PRV  documentation</a> &#187;</li> 
       </ul>
@@ -128,7 +128,7 @@ static wavelength solution is good to ±1 pixel for any spectrum observed using 
 </div>
 <div class="section" id="extracted-spectra">
 <h2>Extracted Spectra<a class="headerlink" href="#extracted-spectra" title="Permalink to this headline">¶</a></h2>
-<p>Use the <a class="reference internal" href="hiresprv.html#module-hiresprv.download" title="hiresprv.download"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hiresprv.download</span></code></a> module to access and download the 1D extracted spectra onto your local disk.</p>
+<p>Use the <code class="xref py py-mod docutils literal notranslate"><span class="pre">hiresprv.download.spectrum</span></code> module to access and download the 1D extracted spectra onto your local disk.</p>
 <p>The extracted spectra are available as single-extension FITS files. One file is produced for each observation.
 The FITS file contains an array with dimensions 16 x 4021.
 Headers for these files are copied directly from the original echellegram images as downloaded from KOA.
@@ -166,6 +166,72 @@ with a rough wavelength calibration.</p>
 <a class="reference internal image-reference" href="_images/sample_spec.png"><img alt="plot of spectrum" src="_images/sample_spec.png" style="width: 50%;" /></a>
 </div>
 </div>
+<div class="section" id="workspace-directory-structure">
+<h2>Workspace Directory Structure<a class="headerlink" href="#workspace-directory-structure" title="Permalink to this headline">¶</a></h2>
+<p>Below is a sample directory structure for a user workspace and a description of the various types of files contained
+in each directory. A listing of all files currently existing in a user’s workspace can be
+accessed using the <code class="xref py py-mod docutils literal notranslate"><span class="pre">hiresprv.download.directory_listing()</span></code> method. Any file visible can be downloaded to your local
+machine using the <code class="xref py py-mod docutils literal notranslate"><span class="pre">hiresprv.download.download()</span></code> method specifying the full path to the file. The <cite>prvState.db</cite>
+file is the raw SQL database which can also be accessed with the <code class="xref py py-mod docutils literal notranslate"><span class="pre">hiresprv.Database</span></code> methods.</p>
+<div class="line-block">
+<div class="line">user-workspace</div>
+<div class="line">├── dnloadlog</div>
+<div class="line">│   └── 20091231.json</div>
+<div class="line">├── logsheets</div>
+<div class="line">│   └── 20091231.logsheet1</div>
+<div class="line">├── statuslog</div>
+<div class="line">│   └── status.2019-09-04T16:00:11.txt</div>
+<div class="line">├── idllog</div>
+<div class="line">│   └── idlDebug.2019-09-04T16:00:11.txt</div>
+<div class="line">├── fits</div>
+<div class="line">│   ├── r20091231.134.fits</div>
+<div class="line">│   ├── r20091231.75.fits</div>
+<div class="line">│   └── r20091231.271.fits</div>
+<div class="line">├── deblazed</div>
+<div class="line">│   ├── r20091231.134.fits</div>
+<div class="line">│   ├── r20091231.75.fits</div>
+<div class="line">│   └── r20091231.271.fits</div>
+<div class="line">├── rv</div>
+<div class="line">│   ├── vst185144.csv</div>
+<div class="line">│   └── vst10700.csv</div>
+<div class="line">└── prvState.db</div>
+</div>
+<table class="colwidths-given docutils align-default" id="id2">
+<caption><span class="caption-text">Directory Descriptions</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 86%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Directory</p></th>
+<th class="head"><p>Contents</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>dnloadlog</p></td>
+<td><p>log of actions related to the transfer of raw files into the user workspace</p></td>
+</tr>
+<tr class="row-odd"><td><p>logsheets</p></td>
+<td><p>automatically-generated logsheets summarizing the observations collected on each night</p></td>
+</tr>
+<tr class="row-even"><td><p>statuslog</p></td>
+<td><p>log of processing status, same information as displayed in the real-time monitor</p></td>
+</tr>
+<tr class="row-odd"><td><p>idllog</p></td>
+<td><p>log of the raw IDL output, useful for diagnosing failures in the IDL code</p></td>
+</tr>
+<tr class="row-even"><td><p>fits</p></td>
+<td><p>extracted 1D spectra, named by observation id (e.g. r20091231.134.fits)</p></td>
+</tr>
+<tr class="row-odd"><td><p>deblazed</p></td>
+<td><p>extracted 1D spectra, named by observation id (e.g. r20091231.134.fits), blaze function removed</p></td>
+</tr>
+<tr class="row-even"><td><p>rv</p></td>
+<td><p>RV timeseries files, one file for each target</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 
 
@@ -181,12 +247,14 @@ with a rough wavelength calibration.</p>
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="setup.html">Observing Instructions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_reduction_overview.html">Data Reduction Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/HIRES_PRV_Service.html">Data Reduction Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/Advanced_Usage.html">Advanced usage tutorial</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Output Data Products</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#radial-velocity-timeseries">Radial Velocity Timeseries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#wavelength-solution">Wavelength Solution</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#extracted-spectra">Extracted Spectra</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#example-reading-spectrum">Example Reading Spectrum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#workspace-directory-structure">Workspace Directory Structure</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="performance.html">Velocity Precision</a></li>
@@ -223,14 +291,14 @@ with a rough wavelength calibration.</p>
           <a href="performance.html" title="Velocity Precision"
              >next</a> |</li>
         <li class="right" >
-          <a href="data_reduction_overview.html" title="Data Reduction Tutorial"
+          <a href="tutorials/Advanced_Usage.html" title="Advanced usage tutorial"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">HIRES PRV  documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
-      Last updated on Aug 30, 2019.
+      Last updated on Sep 27, 2019.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
     </div>
   </body>

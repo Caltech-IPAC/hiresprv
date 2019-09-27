@@ -41,12 +41,13 @@
 
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">http.cookiejar</span>
 
 
-<div class="viewcode-block" id="Download"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.download.Download">[docs]</a><span class="k">class</span> <span class="nc">Download</span><span class="p">:</span>
+<div class="viewcode-block" id="Download"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.download.Download">[docs]</a><span class="k">class</span> <span class="nc">Download</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Download class provides methods for users to download</span>
 <span class="sd">    individual files from their workspace in HIRES PRV pipeline server.</span>
@@ -60,6 +61,7 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        cookiepath (string): a full cookie file path saved from auth.Login.</span>
+<span class="sd">        localdir (string): local output directory</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>    
 
@@ -85,8 +87,9 @@
     <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cookiepath</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cookiepath</span><span class="p">,</span> <span class="n">localdir</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span> <span class="o">=</span> <span class="n">cookiepath</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">localdir</span> <span class="o">=</span> <span class="n">localdir</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cookiepath</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 
@@ -98,6 +101,15 @@
             <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span>
 
             <span class="c1"># TODO: return in ``__init__``</span>
+            <span class="k">return</span> <span class="n">retval</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">localdir</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;error&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Could not find local directory: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">localdir</span><span class="p">)</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span>
+            <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span>
+
             <span class="k">return</span> <span class="n">retval</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -205,21 +217,23 @@
 
             <span class="n">retval</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
+            <span class="c1"># hide undocumented files directory containing IDL save files</span>
+            <span class="k">del</span> <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;files&#39;</span><span class="p">]</span>
+
         <span class="k">else</span><span class="p">:</span>
             <span class="n">retval</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
             <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span>
             <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span>
 
-        <span class="k">return</span> <span class="n">retval</span></div>
 
+        <span class="k">return</span> <span class="n">retval</span></div>
        
-<div class="viewcode-block" id="Download.download"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.download.Download.download">[docs]</a>    <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">localfile</span><span class="p">):</span>
+<div class="viewcode-block" id="Download.download"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.download.Download.download">[docs]</a>    <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method downloads any file from the user&#39;s workspace.</span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
 <span class="sd">            filename (string): workspace file name </span>
-<span class="sd">            savefile (string): local output file</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            JSON structure: structure indicating the status of the submission</span>
@@ -240,19 +254,7 @@
 
             <span class="k">return</span> <span class="n">retval</span>
 
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">localfile</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            
-            <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;error&#39;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Input argument localfile is required.&#39;</span>
-            
-            <span class="n">retval</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-            <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span>
-            <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span>
-
-            <span class="k">return</span> <span class="n">retval</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">filename</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">localfile</span> <span class="o">=</span> <span class="n">localfile</span>
 
         <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">+</span> <span class="s1">&#39;&amp;cmd=download&amp;fileid=&#39;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;&amp;debug=1&#39;</span>
 
@@ -273,7 +275,7 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
             
-            <span class="bp">self</span><span class="o">.</span><span class="n">__save_to_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">localfile</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__save_to_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">localdir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">))</span>
         
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
@@ -298,7 +300,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            JSON structure: structure indicating the status of the submission</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Enter Download.rvcurve: objname = </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">objname</span><span class="p">)</span>
@@ -335,7 +337,7 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
             
-            <span class="bp">self</span><span class="o">.</span><span class="n">__save_to_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__save_to_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">localdir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">))</span>
         
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
@@ -353,8 +355,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method downloads one or more extracted spectrum FITS files</span>
 <span class="sd">        from the user&#39;s workspace. The downloaded file will be a single FITS file</span>
-<span class="sd">        if ``fileids`` is a single file name or a GZIP file if multiple</span>
-<span class="sd">        files are requested.</span>
+<span class="sd">        if ``fileids`` is a single observation code.</span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
 <span class="sd">            fileid (string): one or more spectrum file names separated by</span>
@@ -363,7 +364,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            JSON structure: structure indicating the status of the submission</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Enter Download.spectrum: fileid = </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">fileid</span><span class="p">)</span>
@@ -378,88 +379,6 @@
             <span class="n">retval</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span>
 
             <span class="k">return</span> <span class="n">retval</span>
-
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        fileidstr = fileid</span>
-<span class="sd">        filelist = None</span>
-<span class="sd">        </span>
-<span class="sd">        delimiter = &#39;&#39;</span>
-<span class="sd">        ind = -1</span>
-<span class="sd">        ind = fileidstr.find (&#39;,&#39;)</span>
-<span class="sd">        if self.debug:</span>
-<span class="sd">            logging.debug (&#39;comma: ind= %d&#39; % ind)</span>
-
-<span class="sd">        if (ind != -1):</span>
-<span class="sd">            delimiter = &#39;,&#39;</span>
-<span class="sd">        else:</span>
-<span class="sd">            ind = fileidstr.find (&#39;\r&#39;)</span>
-<span class="sd">                  </span>
-<span class="sd">            if debug:</span>
-<span class="sd">                logging.debug (&#39;carriage return: ind= %d&#39; % ind)</span>
-<span class="sd">                </span>
-<span class="sd">            if (ind != -1):</span>
-<span class="sd">                delimiter = &#39;\r&#39;</span>
-<span class="sd">            else:</span>
-<span class="sd">                ind = fileidstr.find (&#39;\n&#39;)</span>
-
-<span class="sd">            if (ind != -1):</span>
-<span class="sd">                delimiter = &#39;\n&#39;</span>
-<span class="sd">                    </span>
-<span class="sd">            if debug:</span>
-<span class="sd">                logging.debug (&#39;&#39;)</span>
-<span class="sd">                logging.debug (&#39;delimiter= [%s]&#39; % delimiter)</span>
-<span class="sd">       </span>
-<span class="sd">            mylist = None</span>
-<span class="sd">            if (len(delimiter) &gt; 0): </span>
-<span class="sd">                mylist = fileidstr.split(delimiter)</span>
-<span class="sd">            else:</span>
-<span class="sd">                list = [fileidstr]</span>
-<span class="sd">                </span>
-<span class="sd">            ncnt = len(mylist)  </span>
-<span class="sd">             </span>
-<span class="sd">            if debug:</span>
-<span class="sd">                logging.debug (&#39;&#39;)</span>
-<span class="sd">                logging.debug (&#39;ncnt= %d&#39; % ncnt)</span>
-<span class="sd">           </span>
-
-<span class="sd">            nfileid = 0</span>
-<span class="sd">            for i in range (0, len(mylist)):</span>
-<span class="sd">                    </span>
-<span class="sd">                if debug:</span>
-<span class="sd">                    logging.debug (&#39;mylist[%d]= %s&#39; % (i,mylist[i]))</span>
-
-<span class="sd">                if (len(mylist[i]) &gt; 0):</span>
-<span class="sd">                    nfileid = nfileid + 1</span>
-
-<span class="sd">            fileidlist = [&#39;&#39;]*n</span>
-
-<span class="sd">            nfileid = 0</span>
-<span class="sd">            for i in range (0, len(mylist)):</span>
-<span class="sd">                    </span>
-<span class="sd">                if (len(mylist[i]) &gt; 0):</span>
-<span class="sd">                    filelist[nfileid] = mylist[i]</span>
-<span class="sd">                    nfileid = nfileid + 1</span>
-
-<span class="sd">        if debug:</span>
-<span class="sd">            logging.debug (&#39;&#39;)</span>
-<span class="sd">            logging.debug (&#39;End of parsing fileid: nfileid= %d&#39; % nfileid)</span>
-<span class="sd">            for i in range (0, len(fileidlist)):</span>
-<span class="sd">                logging.debug (&#39;fileidlist[%d]= %s&#39; % (i,fileidlist[i]))</span>
-
-
-<span class="sd">        if (nfileid == 0): </span>
-<span class="sd">            return</span>
-
-<span class="sd">        if (nfileid == 1): </span>
-<span class="sd">            self.filepath = &#39;./&#39; + fileidlist[0] + &#39;.fits&#39;</span>
-<span class="sd">        else:</span>
-<span class="sd">            ind = fileidlist[0].find(&#39;.&#39;)</span>
-<span class="sd">            substr = fileidlist[0][0:ind]</span>
-<span class="sd">            self.filepath = &#39;./&#39; + substr + &#39;.gz&#39;</span>
-
-<span class="sd">        if self.debug:</span>
-<span class="sd">            logging.debug (&#39;filepath= %s&#39; % self.filepath)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;./r&#39;</span> <span class="o">+</span> <span class="n">fileid</span> <span class="o">+</span> <span class="s1">&#39;.fits&#39;</span>
         
@@ -482,7 +401,7 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
             
-            <span class="bp">self</span><span class="o">.</span><span class="n">__save_to_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__save_to_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">localdir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">))</span>
         
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
@@ -593,7 +512,8 @@
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../setup.html">Observing Instructions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../data_reduction_overview.html">Data Reduction Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/HIRES_PRV_Service.html">Data Reduction Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/Advanced_Usage.html">Advanced usage tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../outputs.html">Output Data Products</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../performance.html">Velocity Precision</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../performance.html#rv-standard-stars">RV Standard Stars</a></li>
@@ -631,7 +551,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
-      Last updated on Sep 06, 2019.
+      Last updated on Sep 27, 2019.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
     </div>
   </body>

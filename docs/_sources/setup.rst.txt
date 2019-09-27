@@ -186,6 +186,7 @@ Instrumental configuration, considerations, and best practices for observing sta
     * Periodically check seeing by using the projection cut tool in DS9. The pixel scale in the spatial dimension is ~0.3"
     * Ask the SA to run a telescope focus every ~3 hours or if you notice significant, unexplained degradation in your seeing estimates
 * Start observing bright stars up to 20 min before 12 degree twilight:
+    * High SNR observations of B stars should be the first and last observations of the night (one shot at start and one at end). See `Clubb et al. (2018) <http://adsabs.harvard.edu/abs/2018RNAAS...2a..44C>`_ for a selection of suitable B stars.
     * ``m deckname = C2`` (0.85 x 14.0 arcsec)
     * If seeing is > 2.0", then begin observing only 10 minutes before 12 deg twilight and use B5.
     * Likewise if seeing > 2.0" at the end of the night, use B5 in twilight and end 10 minutes after 12deg

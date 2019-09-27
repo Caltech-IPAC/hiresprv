@@ -23,4 +23,3 @@ github:
 	@make html
 	@cp -v ../Jupyter/*.ipynb ./tutorials/
 	@cp -rv _build/html/* ../docs/
-	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)

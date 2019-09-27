@@ -66,6 +66,7 @@ summarized below can be processed properly within the NExScI HIRES-PRV environme
 <li><p>A minimum of three PRV observations with the iodine cell inserted on a given target are required before any PRVs will be produced.</p></li>
 <li><p>The minimum signal-to-noise ratio per pixel for each iodine-in RV observation must be at least 70 with the optimal SNR being 200.</p></li>
 <li><p>One high SNR (at least 100 per pixel) <a class="reference internal" href="setup.html#template"><span class="std std-ref">template observation</span></a> of the target without the iodine cell must be collected before any PRVs can be measured.</p></li>
+<li><p>High SNR observations of B stars should be the first and last observations of the night</p></li>
 <li><p>The optimal SNR for the iodine-out template is 2x the typical iodine-in observation.</p></li>
 <li><p>Each iodine-out template observation must be bracketed by 2-5 exposures of <a class="reference internal" href="setup.html#bstars"><span class="std std-ref">bright, rapidly-rotating stars</span></a> with the iodine cell in for calibration.</p></li>
 <li><p>Individual exposure times should be no longer than 1 hour.</p></li>
@@ -93,7 +94,7 @@ summarized below can be processed properly within the NExScI HIRES-PRV environme
 Please note have not tested the notebook itself and do not guarantee its performance.</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><a class="reference internal" href="data_reduction_overview.html#data-reduction-overview"><span class="std std-ref">Data Reduction Tutorial</span></a></p></li>
+<li><p><a class="reference external" href="tutorials/HIRES_PRV_Service.html">Data Reduction Tutorial</a></p></li>
 </ul>
 </div></blockquote>
 </div>
@@ -136,12 +137,24 @@ those same observations. We find consistent results and comparable precision.</p
 <li class="toctree-l2"><a class="reference internal" href="setup.html#tips-tricks-troubleshooting">Tips, Tricks, &amp; Troubleshooting</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="data_reduction_overview.html">Data Reduction Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/HIRES_PRV_Service.html">Data Reduction Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/HIRES_PRV_Service.html#Login">Login</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/HIRES_PRV_Service.html#KOA-Data-Retrieval">KOA Data Retrieval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/HIRES_PRV_Service.html#Reducing-RV-Measurements-for-a-Star">Reducing RV Measurements for a Star</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/Advanced_Usage.html">Advanced usage tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/Advanced_Usage.html#Login">Login</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/Advanced_Usage.html#Ancillary-Tools">Ancillary Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/Advanced_Usage.html#Augmented-Processing">Augmented Processing</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="outputs.html">Output Data Products</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="outputs.html#radial-velocity-timeseries">Radial Velocity Timeseries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="outputs.html#wavelength-solution">Wavelength Solution</a></li>
 <li class="toctree-l2"><a class="reference internal" href="outputs.html#extracted-spectra">Extracted Spectra</a></li>
 <li class="toctree-l2"><a class="reference internal" href="outputs.html#example-reading-spectrum">Example Reading Spectrum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="outputs.html#workspace-directory-structure">Workspace Directory Structure</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="performance.html">Velocity Precision</a></li>
@@ -180,7 +193,8 @@ those same observations. We find consistent results and comparable precision.</p
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="setup.html">Observing Instructions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_reduction_overview.html">Data Reduction Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/HIRES_PRV_Service.html">Data Reduction Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/Advanced_Usage.html">Advanced usage tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="outputs.html">Output Data Products</a></li>
 <li class="toctree-l1"><a class="reference internal" href="performance.html">Velocity Precision</a></li>
 <li class="toctree-l1"><a class="reference internal" href="performance.html#rv-standard-stars">RV Standard Stars</a></li>
@@ -220,7 +234,7 @@ those same observations. We find consistent results and comparable precision.</p
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
-      Last updated on Sep 06, 2019.
+      Last updated on Sep 27, 2019.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
     </div>
   </body>

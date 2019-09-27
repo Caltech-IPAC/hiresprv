@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Velocity Precision &#8212; HIRES PRV  documentation</title>
+    <link rel="stylesheet" href="_static/graphite.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Python API" href="hiresprv.html" />
+    <link rel="prev" title="Output Data Products" href="outputs.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="hiresprv.html" title="Python API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="outputs.html" title="Output Data Products"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">HIRES PRV  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="velocity-precision">
+<span id="performance"></span><h1>Velocity Precision<a class="headerlink" href="#velocity-precision" title="Permalink to this headline">¶</a></h1>
+<p>Consult the plot below when considering exposure times needed to achieve a desired RV precision. This does not
+factor in any additional sources of instrumental and/or astrophysical noise.</p>
+<div class="figure align-center" id="id2">
+<a class="reference internal image-reference" href="_images/snr_vs_err.png"><img alt="radial velocity fit" src="_images/snr_vs_err.png" style="width: 50%;" /></a>
+<p class="caption"><span class="caption-text">Photon-limited single measurement precision as a function of exposure meter setting and signal to noise ratio.
+The red line traces the lower 30th percentile of the individual measurements shown in grey. Signal to noise ratios
+below 70 (indicated with grey shading) are not officially supported by the pipeline and may produce erratic results.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="rv-standard-stars">
+<h1>RV Standard Stars<a class="headerlink" href="#rv-standard-stars" title="Permalink to this headline">¶</a></h1>
+<p>One of the best metrics for assessing the performance of any PRV pipeline/instrument
+is the RMS of the velocities of standard stars collected over several months or longer. The three stars
+chosen for the plot below are known to show little to no radial velocity variation on these timescales.
+The observed scatter in the velocities encompasses most sources of pipeline, instrumental,
+and astrophysical noise. Velocities produced by the NExScI PRV processing environment show
+scatter of less than 2.0 m/s for the most well-behaved targets.</p>
+<div class="figure align-center" id="id3">
+<a class="reference internal image-reference" href="_static/rv_standards.png"><img alt="radial velocity standard stars" src="_static/rv_standards.png" style="width: 40%;" /></a>
+<p class="caption"><span class="caption-text">Radial velocity timeseries of several RV standard stars. The names of the stars and the RMS of the velocities are annotated
+in the figure. The plotted uncertainties do not include instrumental or astrophysical jitter.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="comparison-with-california-planet-search-pipeline">
+<h1>Comparison with California Planet Search Pipeline<a class="headerlink" href="#comparison-with-california-planet-search-pipeline" title="Permalink to this headline">¶</a></h1>
+<p>The PRV processing environment at NExScI is closely related to the <a class="reference external" href="https://exoplanets.caltech.edu">California Planet Search (CPS)</a>
+pipeline so it is useful to compare the RVs produced by both pipelines. The mean difference between the RVs for
+tau Ceti is -0.04 m/s and the scatter is 0.8 m/s. This scatter is significantly smaller than the typical single
+measurement uncertainty (1.2 m/s).</p>
+<div class="figure align-center" id="id4">
+<a class="reference internal image-reference" href="_images/one_to_one.png"><img alt="CPS" src="_images/one_to_one.png" style="width: 40%;" /></a>
+<p class="caption"><span class="caption-text">Comparison of the velocities produced by the NExScI PRV processing environment to the RVs produced by the
+California Planet Search version of the pipeline.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+<p>A more detailed comparison with the CPS data products is available <a class="reference external" href="_static/dopcode-diff.pdf">here</a>.</p>
+</div>
+<div class="section" id="known-planet-recovery">
+<h1>Known Planet Recovery<a class="headerlink" href="#known-planet-recovery" title="Permalink to this headline">¶</a></h1>
+<p>We demonstrated the ability to detect the PRV signatures of small planets by analyzing one year of archival data collected
+on the star HD 7924 in addition to the sample nights referenced in the <a class="reference internal" href="data_reduction_overview.html#data-reduction-overview"><span class="std std-ref">tutorial</span></a>.
+This star is known to host three small planets (<a class="reference external" href="http://adsabs.harvard.edu/cgi-bin/nph-data_query?bibcode=2009ApJ...696...75H&amp;db_key=AST&amp;link_type=ABSTRACT">Howard et al. 2009</a>;
+<a class="reference external" href="http://adsabs.harvard.edu/cgi-bin/bib_query?arXiv:1504.06629">Fulton et al. 2015</a>). We use <a class="reference external" href="http://radvel.readthedocs.io">RadVel</a>
+to fit the data, seeding the fit with the known orbital periods. We can successfully recover the correct velocity
+semi-amplitude (K) and mass for planet b with only ~75% of the data presented in
+<a class="reference external" href="http://adsabs.harvard.edu/cgi-bin/nph-data_query?bibcode=2009ApJ...696...75H&amp;db_key=AST&amp;link_type=ABSTRACT">Howard et al. (2009)</a>.</p>
+<div class="figure align-center" id="id5">
+<a class="reference internal image-reference" href="_static/HD7924_rv_multipanel.png"><img alt="radial velocity fit" src="_static/HD7924_rv_multipanel.png" style="width: 50%;" /></a>
+<p class="caption"><span class="caption-text">Fit results for HD 7924.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/hiresprv_logo.png" alt="Logo"/>
+            </a></p>
+<h3><a href="index.html">HIRES PRV</a></h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Observing Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_reduction_overview.html">Data Reduction Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="outputs.html">Output Data Products</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Velocity Precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#rv-standard-stars">RV Standard Stars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#comparison-with-california-planet-search-pipeline">Comparison with California Planet Search Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#known-planet-recovery">Known Planet Recovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hiresprv.html">Python API</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="hiresprv.html" title="Python API"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="outputs.html" title="Output Data Products"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">HIRES PRV  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, CALTECH.
+      Last updated on Sep 06, 2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+    </div>
+  </body>
+</html>

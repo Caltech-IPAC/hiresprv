@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Output Data Products &#8212; HIRES PRV  documentation</title>
+    <link rel="stylesheet" href="_static/graphite.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Velocity Precision" href="performance.html" />
+    <link rel="prev" title="Data Reduction Tutorial" href="data_reduction_overview.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="performance.html" title="Velocity Precision"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="data_reduction_overview.html" title="Data Reduction Tutorial"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">HIRES PRV  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="output-data-products">
+<span id="outputs"></span><h1>Output Data Products<a class="headerlink" href="#output-data-products" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="radial-velocity-timeseries">
+<h2>Radial Velocity Timeseries<a class="headerlink" href="#radial-velocity-timeseries" title="Permalink to this headline">¶</a></h2>
+<p>Radial velocity timeseries data can be downloaded in CSV format using the <a class="reference internal" href="hiresprv.html#hiresprv.download.Download.rvcurve" title="hiresprv.download.Download.rvcurve"><code class="xref py py-meth docutils literal notranslate"><span class="pre">hiresprv.download.Download.rvcurve()</span></code></a> method.
+This table contains six columns:</p>
+<table class="colwidths-given docutils align-default" id="id1">
+<caption><span class="caption-text">RV Timeseries</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 38%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Column name</p></th>
+<th class="head"><p>Column description</p></th>
+<th class="head"><p>Units</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Valid range</p></th>
+<th class="head"><p>Null value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>NAME</p></td>
+<td><p>Target name</p></td>
+<td></td>
+<td><p>string</p></td>
+<td><p>14 characters</p></td>
+<td><p>UNKNOWN</p></td>
+</tr>
+<tr class="row-odd"><td><p>BJD_TDB</p></td>
+<td><p>Barycentric Julian Date in the dynamical time system</p></td>
+<td><p>JD</p></td>
+<td><p>float</p></td>
+<td><p>-inf to +inf</p></td>
+<td><p>NaN</p></td>
+</tr>
+<tr class="row-even"><td><p>RV</p></td>
+<td><p>Radial velocity</p></td>
+<td><p>m/s</p></td>
+<td><p>float</p></td>
+<td><p>-inf to +inf</p></td>
+<td><p>NaN</p></td>
+</tr>
+<tr class="row-odd"><td><p>RV_ERR</p></td>
+<td><p>Radial velocity uncertainty</p></td>
+<td><p>m/s</p></td>
+<td><p>float</p></td>
+<td><p>-inf to +inf</p></td>
+<td><p>NaN</p></td>
+</tr>
+<tr class="row-even"><td><p>BC</p></td>
+<td><p>Barycentric correction</p></td>
+<td><p>m/s</p></td>
+<td><p>float</p></td>
+<td><p>-inf to +inf</p></td>
+<td><p>NaN</p></td>
+</tr>
+<tr class="row-odd"><td><p>ADU</p></td>
+<td><p>Signal near 5500 Angstroms</p></td>
+<td><p>ADU</p></td>
+<td><p>float</p></td>
+<td><p>0 to +inf</p></td>
+<td><p>NaN</p></td>
+</tr>
+<tr class="row-even"><td><p>CHI</p></td>
+<td><p>Median chi-squared from the doppler fitting</p></td>
+<td></td>
+<td><p>float</p></td>
+<td><p>0 to +inf</p></td>
+<td><p>NaN</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="wavelength-solution">
+<h2>Wavelength Solution<a class="headerlink" href="#wavelength-solution" title="Permalink to this headline">¶</a></h2>
+<p>Here we provide a standard wavelength solution. Due to the strict requirements on the <a class="reference internal" href="setup.html#setup"><span class="std std-ref">instrument configuration</span></a>, this
+static wavelength solution is good to ±1 pixel for any spectrum observed using the HIRES-PRV configuration.</p>
+<p><a class="reference download internal" download="" href="_downloads/a8f343a3d32b80023af5bab3c14a7240/keck_rwav.fits"><code class="xref download docutils literal notranslate"><span class="pre">keck_rwav.fits</span></code></a></p>
+<p>See below for an example of reading and interpreting this file.</p>
+</div>
+<div class="section" id="extracted-spectra">
+<h2>Extracted Spectra<a class="headerlink" href="#extracted-spectra" title="Permalink to this headline">¶</a></h2>
+<p>Use the <a class="reference internal" href="hiresprv.html#module-hiresprv.download" title="hiresprv.download"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hiresprv.download</span></code></a> module to access and download the 1D extracted spectra onto your local disk.</p>
+<p>The extracted spectra are available as single-extension FITS files. One file is produced for each observation.
+The FITS file contains an array with dimensions 16 x 4021.
+Headers for these files are copied directly from the original echellegram images as downloaded from KOA.
+The value at each location in the array corresponds to the ADU counts summed over the spatial dimension of each
+spectral trace. These arrays can be loaded along with the wavelength solution files in order to associate them
+with a rough wavelength calibration.</p>
+</div>
+<div class="section" id="example-reading-spectrum">
+<h2>Example Reading Spectrum<a class="headerlink" href="#example-reading-spectrum" title="Permalink to this headline">¶</a></h2>
+<p>Example python code to plot the order containing the Mg B triplet:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">hiresprv.download</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">pl</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">dl</span> <span class="o">=</span> <span class="n">hiresprv</span><span class="o">.</span><span class="n">download</span><span class="o">.</span><span class="n">Download</span><span class="p">(</span><span class="s1">&#39;./prvcookie.txt&#39;</span><span class="p">)</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">5</span><span class="p">]:</span> <span class="n">dl</span><span class="o">.</span><span class="n">spectrum</span><span class="p">(</span><span class="s1">&#39;20091231.123&#39;</span><span class="p">)</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">6</span><span class="p">]:</span> <span class="n">spectrum</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">dl</span><span class="o">.</span><span class="n">filepath</span><span class="p">)</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">7</span><span class="p">]:</span> <span class="n">wavelength</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="s1">&#39;http://caltech-ipac.github.io/hiresprv/_static/keck_rwav.fits&#39;</span><span class="p">)</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">8</span><span class="p">]:</span> <span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wavelength</span><span class="p">[</span><span class="mi">2</span><span class="p">,:],</span> <span class="n">spectrum</span><span class="p">[</span><span class="mi">2</span><span class="p">,:],</span> <span class="s1">&#39;k-&#39;</span><span class="p">)</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">9</span><span class="p">]:</span> <span class="n">pl</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength [$\AA$]&#39;</span><span class="p">)</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">10</span><span class="p">]:</span> <span class="n">pl</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Counts [ADU]&#39;</span><span class="p">)</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">11</span><span class="p">]:</span> <span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/sample_spec.png"><img alt="plot of spectrum" src="_images/sample_spec.png" style="width: 50%;" /></a>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/hiresprv_logo.png" alt="Logo"/>
+            </a></p>
+<h3><a href="index.html">HIRES PRV</a></h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Observing Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_reduction_overview.html">Data Reduction Tutorial</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Output Data Products</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#radial-velocity-timeseries">Radial Velocity Timeseries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#wavelength-solution">Wavelength Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#extracted-spectra">Extracted Spectra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-reading-spectrum">Example Reading Spectrum</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Velocity Precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html#rv-standard-stars">RV Standard Stars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html#comparison-with-california-planet-search-pipeline">Comparison with California Planet Search Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html#known-planet-recovery">Known Planet Recovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hiresprv.html">Python API</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="performance.html" title="Velocity Precision"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="data_reduction_overview.html" title="Data Reduction Tutorial"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">HIRES PRV  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, CALTECH.
+      Last updated on Aug 30, 2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+    </div>
+  </body>
+</html>

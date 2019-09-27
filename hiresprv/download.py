@@ -238,7 +238,7 @@ class Download(object):
             if self.debug:
                 logging.debug('')
             
-            self.__save_to_file(os.path.join(self.localdir, self.filepath))
+            self.__save_to_file(os.path.join(self.localdir, os.path.basename(self.filepath)))
         
             if self.debug:
                 logging.debug('')

@@ -533,7 +533,7 @@ class Database(object):
                 for chunk in self.response.iter_content(chunk_size=512):
                     fd.write(chunk)
             
-        except Exception as e:
+        except NameError as e:
 
             if self.debug:
                 logging.debug('')

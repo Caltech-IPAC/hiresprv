@@ -324,3 +324,9 @@ body .highlight {
 .pinktext {
   color: #d481e6;
 }
+
+div.rendered_html table {
+    text-shadow: 0 0px 0px black;
+    background-color: #cccccc;
+}
+

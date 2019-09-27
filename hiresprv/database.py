@@ -174,7 +174,7 @@ class Database(object):
        
         self.sql = ''
         if (len(kwargs) > 0) and ('sql' in kwargs.keys()):
-            self.sql = kwargs['sql']
+            self.sql = kwargs['sql'].replace(' ', '%20')
 
         self.filepath = ''
         if (len(kwargs) > 0) and ('filepath' in kwargs.keys()):

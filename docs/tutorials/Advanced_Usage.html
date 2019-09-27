@@ -1,0 +1,701 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Advanced usage tutorial &#8212; HIRES PRV  documentation</title>
+    <link rel="stylesheet" href="../_static/graphite.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Output Data Products" href="../outputs.html" />
+    <link rel="prev" title="Data Reduction Tutorial" href="HIRES_PRV_Service.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../outputs.html" title="Output Data Products"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="HIRES_PRV_Service.html" title="Data Reduction Tutorial"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">HIRES PRV  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 7ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="Advanced-usage-tutorial">
+<h1>Advanced usage tutorial<a class="headerlink" href="#Advanced-usage-tutorial" title="Permalink to this headline">¶</a></h1>
+<p>This notebook assumes that you are already familiar with the hiresprv Python package and have run through the process described in the basic data reduction tutorial notebook.</p>
+<p>This notebook is meant to be a template to set up your own processing using the code snippets provided here. The notebook may not run exactly as presented if you attempt to run the full notebook directly. The code has not been rigorously tested from within a notebook environemnt.</p>
+<p>The notebook is kept with the HIRES PRV Python access toolkit in GitHub: <a class="reference external" href="https://github.com/Caltech-IPAC/hiresprv">https://github.com/Caltech-IPAC/hiresprv</a></p>
+<div class="section" id="Login">
+<h2>Login<a class="headerlink" href="#Login" title="Permalink to this headline">¶</a></h2>
+<p>As described in the basic data reduction tutorial we always need to login to our KOA account first.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="k">import</span> <span class="n">IFrame</span>
+<span class="kn">from</span> <span class="nn">hiresprv.auth</span> <span class="k">import</span> <span class="n">login</span>
+
+<span class="n">login</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+KOA userid: koaadmin
+KOA Password: ········
+Successful login as koaadmin
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Ancillary-Tools">
+<h2>Ancillary Tools<a class="headerlink" href="#Ancillary-Tools" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Workspace-Directory-Listing">
+<h3>Workspace Directory Listing<a class="headerlink" href="#Workspace-Directory-Listing" title="Permalink to this headline">¶</a></h3>
+<p>We can get a list of all the downloadable files in the workspace. There are utility functions (below) for quickly downloading the most-useful final products but we might want to see the intermediate products to evaluate/diagnose the processing. See <a class="reference external" href="http://caltech-ipac.github.io/hiresprv/outputs.html#workspace-directory-structure">http://caltech-ipac.github.io/hiresprv/outputs.html#workspace-directory-structure</a> for a description of the files availble in each directory.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">hiresprv.download</span> <span class="k">import</span> <span class="n">Download</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">Download</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">,</span> <span class="s1">&#39;./&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">listing</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">directory_listing</span><span class="p">()</span>
+<span class="n">prtstring</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">listing</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)[:</span><span class="mi">2000</span><span class="p">]</span>
+<span class="n">prtstring</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">... output truncated ...&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">prtstring</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{
+    &#34;database&#34;: &#34;prvState.db&#34;,
+    &#34;deblazed&#34;: [
+        &#34;deblazed/r20091231.160.fits&#34;,
+        &#34;deblazed/r20130629.110.fits&#34;,
+        &#34;deblazed/r20091231.287.fits&#34;,
+        &#34;deblazed/r20130912.73.fits&#34;,
+        &#34;deblazed/r20130912.1.fits&#34;,
+        &#34;deblazed/r20130912.128.fits&#34;,
+        &#34;deblazed/r20150606.157.fits&#34;,
+        &#34;deblazed/r20091231.225.fits&#34;,
+        &#34;deblazed/r20130912.163.fits&#34;,
+        &#34;deblazed/r20091231.189.fits&#34;,
+        &#34;deblazed/r20130629.92.fits&#34;,
+        &#34;deblazed/r20150606.97.fits&#34;,
+        &#34;deblazed/r20130912.152.fits&#34;,
+        &#34;deblazed/r20091231.214.fits&#34;,
+        &#34;deblazed/r20150606.166.fits&#34;,
+        &#34;deblazed/r20091231.67.fits&#34;,
+        &#34;deblazed/r20130912.119.fits&#34;,
+        &#34;deblazed/r20091231.151.fits&#34;,
+        &#34;deblazed/r20130912.130.fits&#34;,
+        &#34;deblazed/r20150606.104.fits&#34;,
+        &#34;deblazed/r20091231.276.fits&#34;,
+        &#34;deblazed/r20091231.191.fits&#34;,
+        &#34;deblazed/r20130912.82.fits&#34;,
+        &#34;deblazed/r20130629.19.fits&#34;,
+        &#34;deblazed/r20091231.178.fits&#34;,
+        &#34;deblazed/r20091231.133.fits&#34;,
+        &#34;deblazed/r20130629.108.fits&#34;,
+        &#34;deblazed/r20130912.11.fits&#34;,
+        &#34;deblazed/r20130629.3.fits&#34;,
+        &#34;deblazed/r20091231.96.fits&#34;,
+        &#34;deblazed/r20091231.102.fits&#34;,
+        &#34;deblazed/r20150606.66.fits&#34;,
+        &#34;deblazed/r20091231.3.fits&#34;,
+        &#34;deblazed/r20091231.149.fits&#34;,
+        &#34;deblazed/r20091231.247.fits&#34;,
+        &#34;deblazed/r20150606.135.fits&#34;,
+        &#34;deblazed/r20130912.101.fits&#34;,
+        &#34;deblazed/r20130629.96.fits&#34;,
+        &#34;deblazed/r20150606.129.fits&#34;,
+        &#34;deblazed/r20130912.156.fits&#34;,
+        &#34;deblazed/r20150606.162.fits&#34;,
+        &#34;deblazed/r20091231.210.fits&#34;,
+        &#34;deblazed/r20150606.93.fits&#34;,
+        &#34;deblazed/r20091231.155.fits&#34;,
+        &#34;deblazed/r20130629.114.fits&#34;,
+        &#34;deblazed/r20091231.283.fits&#34;,
+        &#34;deblazed/r20091231.164.fits&#34;,
+        &#34;deblazed/r20130912.5.fits&#34;,
+        &#34;deblazed/r20130912.77.fits&#34;,
+        &#34;deblazed/r20091231.221.fits&#34;,
+        &#34;deblazed/r
+... output truncated ...
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="File-Download">
+<h3>File Download<a class="headerlink" href="#File-Download" title="Permalink to this headline">¶</a></h3>
+<p>Any of the files in the listing can be retrieved by name. We specify the output directory when initializing the Download object.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">rtn</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;deblazed/r20091231.247.fits&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">rtn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;status&#39;: &#39;ok&#39;, &#39;msg&#39;: &#39;&#39;}
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Augmented-Processing">
+<h2>Augmented Processing<a class="headerlink" href="#Augmented-Processing" title="Permalink to this headline">¶</a></h2>
+<p>There are no tunable parameters associated with the HIRES PRV pipeline. However, you can affect the processing in a couple of places by “removing” files (usually because there is something suspect about them). For instance, a bad B-star observation can adversely affect the stellar template calculation so you may want to rerun the template building without it. We don’t actually delete the file; we deactivate it but leave it in place in case you change your mind.</p>
+<p>Similarly, in making the final RV curve you may decide to remove one or more of the reduced RV measurements.</p>
+<div class="section" id="Deactivating-Files">
+<h3>Deactivating Files<a class="headerlink" href="#Deactivating-Files" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes it turns out that a data file is suboptimal and should probably be removed from the processing. It might be a B-star observation bracketing a template measurement or one of the RV observations that should be removed from an RV curve.</p>
+<p>The PRV service takes responsibility for remembering what files have been processed and for providing a mechanism (the “DEACTIVATED” column in the database) for “turning off” specific files. It does not automatically redo all the affected downstream processing. That is left up to the user so it is best to take care of all of that as soon as possible.</p>
+<p>In this example, we will turn off one of the B-star observations. This requires regenerating the template(s) associated with that observation:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">hiresprv.idldriver</span> <span class="k">import</span> <span class="n">Idldriver</span>
+
+<span class="n">idl</span> <span class="o">=</span> <span class="n">Idldriver</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
+
+<span class="n">rtn</span> <span class="o">=</span> <span class="n">idl</span><span class="o">.</span><span class="n">run_script</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">deactivate r20091231.77</span>
+<span class="s2">template 185144 20091231</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">rtn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+status= ok
+msg= Script running in background. Consult monitor for status.
+None
+</pre></div></div>
+</div>
+<p>Having regenerated the template, we must therefore regenerate the downstream data (RVs and RV curve). The underlying processing code will not regenerate the reduced RV data if that file already exists so we need to explicitly deactivate the reduced RV files if we intend to re-calculate them:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">hiresprv.idldriver</span> <span class="k">import</span> <span class="n">Idldriver</span>
+
+<span class="n">idl</span> <span class="o">=</span> <span class="n">Idldriver</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
+
+<span class="n">rtn</span> <span class="o">=</span> <span class="n">idl</span><span class="o">.</span><span class="n">run_script</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">deactivate vdaa185144_r20091231.72</span>
+<span class="s2">deactivate vdaa185144_r20091231.73</span>
+<span class="s2">deactivate vdaa185144_r20091231.74</span>
+<span class="s2">deactivate vdaa185144_r20150606.145</span>
+<span class="s2">deactivate vdaa185144_r20150606.146</span>
+<span class="s2">deactivate vdaa185144_r20150606.147</span>
+<span class="s2">rv 185144 r20091231.72</span>
+<span class="s2">rv 185144 r20091231.73</span>
+<span class="s2">rv 185144 r20091231.74</span>
+<span class="s2">rv 185144 r20150606.145</span>
+<span class="s2">rv 185144 r20150606.146</span>
+<span class="s2">rv 185144 r20150606.147</span>
+<span class="s2">rvcurve 185144</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">rtn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+status= ok
+msg= Script running in background. Consult monitor for status.
+None
+</pre></div></div>
+</div>
+<p>After further consideration, we decide that the second RV measurement was of inferior quality, so we deactivate it, too. You can find the name of the reduced RV file by listing out the full database again or by doing a database search (if you look a the file name, it follows a simple pattern):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">hiresprv.database</span> <span class="k">import</span> <span class="n">Database</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">state</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">sql</span><span class="o">=</span><span class="s2">&quot;select DATE, OBTYPE, FILENAME, TARGET, BJD, BCVEL from FILES where TARGET like &#39;rv data&#39;;&quot;</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_html</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>DATE</th>
+      <th>OBTYPE</th>
+      <th>FILENAME</th>
+      <th>TARGET</th>
+      <th>BJD</th>
+      <th>BCVEL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>Reduced RV</td>
+      <td>vdaa185144_r20091231.72</td>
+      <td>rv data</td>
+      <td>2440000.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>Reduced RV</td>
+      <td>vdaa185144_r20091231.73</td>
+      <td>rv data</td>
+      <td>2440000.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>Reduced RV</td>
+      <td>vdaa185144_r20091231.74</td>
+      <td>rv data</td>
+      <td>2440000.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>Reduced RV</td>
+      <td>vdaa185144_r20150606.145</td>
+      <td>rv data</td>
+      <td>2440000.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>Reduced RV</td>
+      <td>vdaa185144_r20150606.146</td>
+      <td>rv data</td>
+      <td>2440000.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>Reduced RV</td>
+      <td>vdaa185144_r20150606.147</td>
+      <td>rv data</td>
+      <td>2440000.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">hiresprv.idldriver</span> <span class="k">import</span> <span class="n">Idldriver</span>
+
+<span class="n">idl</span> <span class="o">=</span> <span class="n">Idldriver</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
+
+<span class="n">rtn</span> <span class="o">=</span> <span class="n">idl</span><span class="o">.</span><span class="n">run_script</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">deactivate vdaa185144_r20091231.73</span>
+<span class="s2">rvcurve 185144</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">rtn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+status= ok
+msg= Script running in background. Consult monitor for status.
+None
+</pre></div></div>
+</div>
+<p>So now we have only five reduced RV measurements and they were reduced with a slightly different template measurement. This is reflected in the RV curve, which you can compare to the original:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">hiresprv.download</span> <span class="k">import</span> <span class="n">Download</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">Download</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
+
+<span class="n">rtn</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">rvcurve</span><span class="p">(</span><span class="s1">&#39;185144&#39;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;vst185144.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+BJD_TDB,RV,RV_ERR,BC,ADU,CHI2
+15196.69208800001,-2.176984931266687,0.782362,-4620.095214843750,52362,1.04989
+15196.69329199987,2.082068283340939,0.778802,-4620.320800781250,48950,1.05804
+17180.10972899990,-2.351030457353758,0.769511,3189.794921875000,55029,1.10542
+17180.11030799989,1.241724284090688,0.678055,3189.327880859375,55593,1.10771
+17180.11088699987,0.9359797393606732,0.686433,3188.863037109375,48769,1.10120
+</pre></div></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/hiresprv_logo.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">HIRES PRV</a></h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Observing Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HIRES_PRV_Service.html">Data Reduction Tutorial</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Advanced usage tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Login">Login</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Ancillary-Tools">Ancillary Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Augmented-Processing">Augmented Processing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../outputs.html">Output Data Products</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance.html">Velocity Precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance.html#rv-standard-stars">RV Standard Stars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance.html#comparison-with-california-planet-search-pipeline">Comparison with California Planet Search Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance.html#known-planet-recovery">Known Planet Recovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hiresprv.html">Python API</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../outputs.html" title="Output Data Products"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="HIRES_PRV_Service.html" title="Data Reduction Tutorial"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">HIRES PRV  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, CALTECH.
+      Last updated on Sep 27, 2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+    </div>
+  </body>
+</html>

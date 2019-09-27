@@ -1,0 +1,1193 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Data Reduction Tutorial &#8212; HIRES PRV  documentation</title>
+    <link rel="stylesheet" href="../_static/graphite.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Advanced usage tutorial" href="Advanced_Usage.html" />
+    <link rel="prev" title="Observing Instructions" href="../setup.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Advanced_Usage.html" title="Advanced usage tutorial"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../setup.html" title="Observing Instructions"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">HIRES PRV  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 7ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="Data-Reduction-Tutorial">
+<h1>Data Reduction Tutorial<a class="headerlink" href="#Data-Reduction-Tutorial" title="Permalink to this headline">¶</a></h1>
+<p>This service enables reduction and analysis of precision radial velocity (PRV) data from the HIRES Keck instrument.</p>
+<p>This notebook is meant to be a template to set up your own processing using the code snippets provided here. The notebook may not run exactly as presented if you attempt to run the full notebook directly. The code has not been rigorously tested from within a notebook environemnt.</p>
+<p>This notebook introduces the Keck HIRES Precision Radial Velocity (PRV) pipeline service and works through one specific example. There are number of variations, mostly having to do with planning processing, which will be covered in more detail by other notebooks but here you will see all the basics.</p>
+<p>The notebook is kept with the HIRES PRV Python access toolkit in GitHub: <a class="reference external" href="https://github.com/Caltech-IPAC/hiresprv">https://github.com/Caltech-IPAC/hiresprv</a></p>
+<div class="section" id="Login">
+<h2>Login<a class="headerlink" href="#Login" title="Permalink to this headline">¶</a></h2>
+<p>Logging in the first time creates a workspace for the user and associates it with a KOA account.</p>
+<p>Users of this service must have Keck Observatory Archive (KOA) accounts and use that login here to gain access to their data. Even researchers planning to use only public data will need a KOA login as this service is maintaining persistent storage under that ID.</p>
+<p>The login is persisted through the use of HTTP cookies and logging in from multiple clients will connect the user to the same account, storage, and processing history. This environment (user workspace) is permanent as we expect some on-going research to span years. The login for a give client machine need only be done once, assuming the cookie file in the local storage is not deleted. If it is, logging in again will reconstruct it.</p>
+<p>The cookie file, processing state information, and downloaded results like 1D spectra and RV curve tables will be kept locally in the same space as this notebook. If you wish to change that, simply add in whatever directory management and navigation you like.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">hiresprv.auth</span> <span class="k">import</span> <span class="n">login</span>
+
+<span class="n">login</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+KOA userid: koaadmin
+KOA Password: ········
+Successful login as koaadmin
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="KOA-Data-Retrieval">
+<h2>KOA Data Retrieval<a class="headerlink" href="#KOA-Data-Retrieval" title="Permalink to this headline">¶</a></h2>
+<p>The PRV workspace first needs to be populated with data from KOA. This can be done all at once, if the data exists, or incrementally as the data are taken/identified.</p>
+<p>This step is more than a simple data transfer. “Raw reduction” of the data, which converts the 2D CCD echelle images to 1D spectra, is done up-front as the data are retrieved a night at a time. The UT dates you give here are actually shifted a few hours to catch any calibration data collected in the afternoon of the same (Hawaii-local) day.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">hiresprv.archive</span> <span class="k">import</span> <span class="n">Archive</span>
+
+<span class="n">koa</span> <span class="o">=</span> <span class="n">Archive</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
+
+<span class="n">rtn</span> <span class="o">=</span> <span class="n">koa</span><span class="o">.</span><span class="n">by_dates</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;2009-12-31</span>
+<span class="s2">2013-06-29</span>
+<span class="s2">2013-09-12</span>
+<span class="s2">2015-06-06&quot;&quot;&quot;</span><span class="p">)</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{
+    &#34;status&#34;: &#34;ok&#34;,
+    &#34;msg&#34;: &#34;Processing dates in background.&#34;
+}
+
+</pre></div></div>
+</div>
+<p>Note that since the data in the workspace are permanent, repeated request for the same data would not change anything and so those dates will be ignored. Therefore, you can add to the above list or replace it with new dates as you choose. Dates must be formatted as YYYY-MM-DD.</p>
+<p>The above service responds immediately with an acknowledgement of the request and starts the actual transfer and raw data reduction (which can take some time) as a background job. The job status can be checked by polling or can be monitored using the function below. While one retrieval job (or processing job below) is running, no others can be initiated.</p>
+<div class="section" id="PRV-Processing-Monitor">
+<h3>PRV Processing Monitor<a class="headerlink" href="#PRV-Processing-Monitor" title="Permalink to this headline">¶</a></h3>
+<p>Some steps in the PRV processing can take quite a long time (hours) and we do not want to tie up this notebook page waiting for it to finish. Below we show how to retrieve a snapshot of the status (and you would have to poll manually to track the progress of the job) but the preferred approach is to start a real-time monitor in a custom page/tab which uses Javascript and an HTTP Event stream. Run the next cell to generate a link to this monitor:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">hiresprv.status</span> <span class="k">import</span> <span class="n">Status</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="k">import</span> <span class="n">IFrame</span><span class="p">,</span> <span class="n">HTML</span><span class="p">,</span> <span class="n">display</span>
+
+<span class="n">monitor</span> <span class="o">=</span> <span class="n">Status</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
+
+<span class="n">link</span> <span class="o">=</span> <span class="n">monitor</span><span class="o">.</span><span class="n">generate_link</span><span class="p">()</span>
+
+<span class="n">HTML</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor.html?workspace=prv_20190926_061945_122750" target="_blank">real-time monitor</a>.</div>
+</div>
+</div>
+<div class="section" id="Metadata">
+<h3>Metadata<a class="headerlink" href="#Metadata" title="Permalink to this headline">¶</a></h3>
+<p>Once data have been retrieved and the “nightly” raw reduction performed, a set of records is added to a persistent metadata table, one row is added per observation. These observations are all taken through the HIRES PRV instrument (2D CCD) and will have been reduced to 1D spectra by the raw reduction. They fall into five classes:</p>
+<ul><li><p>RV observations – Multiple observations of a star with the iodine cell in the light path. Precision, relative radial velocities are calculated for this type of observation.</p>
+<p/></li><li><p>Templates – One long observation of the same star without iodine, for reference.</p>
+<p/></li><li><p>B stars – A set of observations of rapidly rotating B stars bracketing the template observation and used to reduce it.</p>
+<p/></li><li><p>Iodine – Reference observation of iodine for nightly calibration.</p>
+<p/></li><li><p>Miscellaneous other calibration observations (labelled as “Unknown”).</p>
+<p/></li></ul><p>By inspecting this table, the user can determine what objects were observed, whether there are template observations for them (and adequate B star data to reduce a template), and whether there are enough RV measurements to generate a final RV curve.</p>
+<p>With a small metadata table, this is simple enough to do by inspection but a typical workspace can easily have thousands of files covering tens or hundreds of objects. Furthermore, since observations for a single object are frequently spread out over years, the metadata table is often fairly thorougly mixed in time.</p>
+<p>Luckily, there are a number of tools available in client-side Python subset and organize the metadata, so we provide it for download as a CSV table or an SQLite binary file or even, as here, as a simple HTML table. The workspace copy of the data is maintained in an SQLite database so we also provide a basic filtering mechanism as an optional addition to the download. This filtering is often adequate for basic processing scenarios.</p>
+<p>Note that metadata retrieval can’t be done while the system is “busy” (downloading additional data or further reducing data in the workspace). Otherwise, metadata downloads can be done at any time.</p>
+<p>Also note that the client-side file will become out-of-date once new data download or processing requests are submitted. It is up to the user to re-request the new metadata.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">hiresprv.database</span> <span class="k">import</span> <span class="n">Database</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">state</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">search</span><span class="p">()</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_html</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>DATE</th>
+      <th>DEACTIVATED</th>
+      <th>OBTYPE</th>
+      <th>FILENAME</th>
+      <th>TARGET</th>
+      <th>MJD</th>
+      <th>BJD</th>
+      <th>BCVEL</th>
+      <th>RADVEL</th>
+      <th>RA</th>
+      <th>DEC</th>
+      <th>EPOCH</th>
+      <th>HRANG</th>
+      <th>RA_MOTION</th>
+      <th>DEC_MOTION</th>
+      <th>PARALLAX</th>
+      <th>ORIGFILENAME</th>
+      <th>KOAID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>20091231</td>
+      <td>0</td>
+      <td>Unknown</td>
+      <td>r20091231.1</td>
+      <td>th-ar</td>
+      <td>2.455197e+06</td>
+      <td>2.455197e+06</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>j820001.fits</td>
+      <td>HI.20091231.06409.fits</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>20091231</td>
+      <td>0</td>
+      <td>Unknown</td>
+      <td>r20091231.2</td>
+      <td>th-ar</td>
+      <td>2.455197e+06</td>
+      <td>2.455197e+06</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>j820002.fits</td>
+      <td>HI.20091231.06653.fits</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>20091231</td>
+      <td>0</td>
+      <td>Unknown</td>
+      <td>r20091231.3</td>
+      <td>th-ar</td>
+      <td>2.455197e+06</td>
+      <td>2.455197e+06</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>j820003.fits</td>
+      <td>HI.20091231.07296.fits</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>20091231</td>
+      <td>0</td>
+      <td>Unknown</td>
+      <td>r20091231.4</td>
+      <td>th-ar</td>
+      <td>2.455197e+06</td>
+      <td>2.455197e+06</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>j820004.fits</td>
+      <td>HI.20091231.07594.fits</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>20091231</td>
+      <td>0</td>
+      <td>Unknown</td>
+      <td>r20091231.5</td>
+      <td>th-ar</td>
+      <td>2.455197e+06</td>
+      <td>2.455197e+06</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>j820005.fits</td>
+      <td>HI.20091231.07645.fits</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>20091231</td>
+      <td>0</td>
+      <td>Unknown</td>
+      <td>r20091231.6</td>
+      <td>th-ar</td>
+      <td>2.455197e+06</td>
+      <td>2.455197e+06</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>j820006.fits</td>
+      <td>HI.20091231.07801.fits</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>20091231</td>
+      <td>0</td>
+      <td>Unknown</td>
+      <td>r20091231.7</td>
+      <td>th-ar</td>
+      <td>2.455197e+06</td>
+      <td>2.455197e+06</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>j820007.fits</td>
+      <td>HI.20091231.07848.fits</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>20091231</td>
+      <td>0</td>
+      <td>Unknown</td>
+      <td>r20091231.8</td>
+      <td>th-ar</td>
+      <td>2.455197e+06</td>
+      <td>2.455197e+06</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>j820008.fits</td>
+      <td>HI.20091231.07964.fits</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>20091231</td>
+      <td>0</td>
+      <td>Unknown</td>
+      <td>r20091231.9</td>
+      <td>th-ar</td>
+      <td>2.455197e+06</td>
+      <td>2.455197e+06</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>j820009.fits</td>
+      <td>HI.20091231.08011.fits</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>20091231</td>
+      <td>0</td>
+      <td>Iodine calibration</td>
+      <td>r20091231.10</td>
+      <td>iodine</td>
+      <td>2.455197e+06</td>
+      <td>2.455197e+06</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>j820010.fits</td>
+      <td>HI.20091231.08160.fits</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>20091231</td>
+      <td>0</td>
+      <td>Iodine calibration</td>
+      <td>r20091231.11</td>
+      <td>iodine</td>
+      <td>2.455197e+06</td>
+      <td>2.455197e+06</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>j820011.fits</td>
+      <td>HI.20091231.08233.fits</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>20091231</td>
+      <td>0</td>
+      <td>RV observation</td>
+      <td>r20091231.66</td>
+      <td>HD204277</td>
+      <td>2.455197e+06</td>
+      <td>2.455197e+06</td>
+      <td>-20657.870</td>
+      <td>9320.0</td>
+      <td>21 27 06.53</td>
+      <td>+16 07 25.00</td>
+      <td>2015.5</td>
+      <td>3.250</td>
+      <td>-0.0783</td>
+      <td>-0.0962</td>
+      <td>0.030195</td>
+      <td>j820066.fits</td>
+      <td>HI.20091231.15897.fits</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>20091231</td>
+      <td>0</td>
+      <td>RV observation</td>
+      <td>r20091231.67</td>
+      <td>HD210460</td>
+      <td>2.455197e+06</td>
+      <td>2.455197e+06</td>
+      <td>-23885.341</td>
+      <td>20630.0</td>
+      <td>22 10 19.12</td>
+      <td>+19 36 57.00</td>
+      <td>2015.5</td>
+      <td>2.557</td>
+      <td>0.0917</td>
+      <td>-0.0935</td>
+      <td>0.017691</td>
+      <td>j820067.fits</td>
+      <td>HI.20091231.15988.fits</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>20091231</td>
+      <td>0</td>
+      <td>RV observation</td>
+      <td>r20091231.68</td>
+      <td>HD201091</td>
+      <td>2.455197e+06</td>
+      <td>2.455197e+06</td>
+      <td>-16012.432</td>
+      <td>NaN</td>
+      <td>21 06 53.74</td>
+      <td>+38 44 29.00</td>
+      <td>2015.5</td>
+      <td>3.646</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>j820068.fits</td>
+      <td>HI.20091231.16113.fits</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>20091231</td>
+      <td>0</td>
+      <td>RV observation</td>
+      <td>r20091231.69</td>
+      <td>HD201092</td>
+      <td>2.455197e+06</td>
+      <td>2.455197e+06</td>
+      <td>-16013.712</td>
+      <td>NaN</td>
+      <td>21 06 53.74</td>
+      <td>+38 44 29.00</td>
+      <td>2015.5</td>
+      <td>3.675</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>j820069.fits</td>
+      <td>HI.20091231.16208.fits</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Reducing-RV-Measurements-for-a-Star">
+<h2>Reducing RV Measurements for a Star<a class="headerlink" href="#Reducing-RV-Measurements-for-a-Star" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Subsetting-the-Metadata:-Single-Target">
+<h3>Subsetting the Metadata: Single Target<a class="headerlink" href="#Subsetting-the-Metadata:-Single-Target" title="Permalink to this headline">¶</a></h3>
+<p>Ultimately, to make an RV curve for one star we need to reduce its observations into RV measurements. Assuming there are adequate B star observations to reduce the template, we can isolate appropriate records in the metadata above by simply filtering on TARGET name. There are many ways to do this; in our case we we used the remote SQLite query capability and filtered it with</p>
+<p/><p>select DATE, OBTYPE, FILENAME, TARGET, BJD, BCVEL from FILES where TARGET like ‘HD185144’;</p>
+<p>The resulting records are shown below.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+
+<span></span><span class="n">search_string</span> <span class="o">=</span> <span class="s2">&quot;select DATE,OBTYPE,FILENAME,TARGET,BJD,BCVEL from FILES where TARGET like &#39;HD185144&#39;;&quot;</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">sql</span><span class="o">=</span><span class="n">search_string</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_html</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>DATE</th>
+      <th>OBTYPE</th>
+      <th>FILENAME</th>
+      <th>TARGET</th>
+      <th>BJD</th>
+      <th>BCVEL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>20091231</td>
+      <td>RV observation</td>
+      <td>r20091231.72</td>
+      <td>HD185144</td>
+      <td>2.455197e+06</td>
+      <td>-4620.095</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>20091231</td>
+      <td>RV observation</td>
+      <td>r20091231.73</td>
+      <td>HD185144</td>
+      <td>2.455197e+06</td>
+      <td>-4620.211</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>20091231</td>
+      <td>RV observation</td>
+      <td>r20091231.74</td>
+      <td>HD185144</td>
+      <td>2.455197e+06</td>
+      <td>-4620.321</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>20091231</td>
+      <td>Template</td>
+      <td>r20091231.79</td>
+      <td>HD185144</td>
+      <td>2.455197e+06</td>
+      <td>-4621.229</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>20091231</td>
+      <td>Template</td>
+      <td>r20091231.80</td>
+      <td>HD185144</td>
+      <td>2.455197e+06</td>
+      <td>-4621.324</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>20091231</td>
+      <td>Template</td>
+      <td>r20091231.81</td>
+      <td>HD185144</td>
+      <td>2.455197e+06</td>
+      <td>-4621.420</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>20091231</td>
+      <td>Template</td>
+      <td>r20091231.82</td>
+      <td>HD185144</td>
+      <td>2.455197e+06</td>
+      <td>-4621.511</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>20091231</td>
+      <td>Template</td>
+      <td>r20091231.83</td>
+      <td>HD185144</td>
+      <td>2.455197e+06</td>
+      <td>-4621.597</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Templates-and-B-stars">
+<h3>Templates and B-stars<a class="headerlink" href="#Templates-and-B-stars" title="Permalink to this headline">¶</a></h3>
+<p>Another subset that comes up is matching B-Star observations with the template observations they will be used with. This can be many to many so the easiest quick look is just to list out all B-star and Template observations in time order and then match visually:</p>
+<p/><p>select DATE, OBTYPE, FILENAME, TARGET, BJD from FILES where OBTYPE like ‘TEMPLATE’ or OBTYPE like ‘B Star’;</p>
+<p>The resulting records are shown below.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">search_string</span> <span class="o">=</span> <span class="s2">&quot;select DATE, OBTYPE, FILENAME, TARGET, BJD from FILES where OBTYPE like &#39;TEMPLATE&#39; or OBTYPE like &#39;B Star&#39;;&quot;</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">sql</span><span class="o">=</span><span class="n">search_string</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_html</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>DATE</th>
+      <th>OBTYPE</th>
+      <th>FILENAME</th>
+      <th>TARGET</th>
+      <th>BJD</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>20091231</td>
+      <td>B star</td>
+      <td>r20091231.75</td>
+      <td>HR9071</td>
+      <td>2.455197e+06</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>20091231</td>
+      <td>B star</td>
+      <td>r20091231.76</td>
+      <td>HR9071</td>
+      <td>2.455197e+06</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>20091231</td>
+      <td>B star</td>
+      <td>r20091231.77</td>
+      <td>HR9071</td>
+      <td>2.455197e+06</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>20091231</td>
+      <td>B star</td>
+      <td>r20091231.78</td>
+      <td>HR9071</td>
+      <td>2.455197e+06</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>20091231</td>
+      <td>Template</td>
+      <td>r20091231.79</td>
+      <td>HD185144</td>
+      <td>2.455197e+06</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>20091231</td>
+      <td>Template</td>
+      <td>r20091231.80</td>
+      <td>HD185144</td>
+      <td>2.455197e+06</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>20091231</td>
+      <td>Template</td>
+      <td>r20091231.81</td>
+      <td>HD185144</td>
+      <td>2.455197e+06</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>20091231</td>
+      <td>Template</td>
+      <td>r20091231.82</td>
+      <td>HD185144</td>
+      <td>2.455197e+06</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>20091231</td>
+      <td>Template</td>
+      <td>r20091231.83</td>
+      <td>HD185144</td>
+      <td>2.455197e+06</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>20091231</td>
+      <td>B star</td>
+      <td>r20091231.84</td>
+      <td>HR8047</td>
+      <td>2.455197e+06</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>20091231</td>
+      <td>B star</td>
+      <td>r20091231.85</td>
+      <td>HR8047</td>
+      <td>2.455197e+06</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>20091231</td>
+      <td>B star</td>
+      <td>r20091231.86</td>
+      <td>HR8047</td>
+      <td>2.455197e+06</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>20091231</td>
+      <td>B star</td>
+      <td>r20091231.87</td>
+      <td>HR8047</td>
+      <td>2.455197e+06</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>20091231</td>
+      <td>Template</td>
+      <td>r20091231.88</td>
+      <td>HD216520</td>
+      <td>2.455197e+06</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>20091231</td>
+      <td>Template</td>
+      <td>r20091231.89</td>
+      <td>HD216520</td>
+      <td>2.455197e+06</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="RV-Pipeline-Processing">
+<h3>RV Pipeline Processing<a class="headerlink" href="#RV-Pipeline-Processing" title="Permalink to this headline">¶</a></h3>
+<p>This shows that on 12/31/2009 three separate RV observations were made of HD185144 followed by five template observations (which the pipeline will combine into a single template). Five years later, another three RV observations were made.</p>
+<p>As with the data download, the further reduction steps in the pipeline can be quite lengthy (minutes to hours each), so rather than have the user monitor each one, we provide a scripting mechanism so complex reduction jobs can be submitted in on shot.</p>
+<p>In order to turn any of the RV observations into an RV value, we need the template. So we will generate that first. Since it is possible to repeat the template observations on more than one day, we need to explicitly state which object and which day. The script command for this is:</p>
+<pre>template 185144 20091231</pre><p>To reduce an RV measurement, we have to refer to this template (the target name is enough) and specify which file to reduce. For example:</p>
+<pre>rv 185144 r20091231.7</pre><p>Finally, once we have a set of RV measurements for an object, we a generate an RV curve (the pipeline finds all the appropriate RV measurements):</p>
+<pre>rvcurve 185144</pre><p>As long as we follow the general rules that we need a template before we can reduce an RV measurement and we need at least three RV measurements before we can generate an RV curve, we can otherwise scripte things in whatever order we wish (e.g. all the templates first).</p>
+<p>All of this is submitted to the pipeline as a text script:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">hiresprv.idldriver</span> <span class="k">import</span> <span class="n">Idldriver</span>
+
+<span class="n">idl</span> <span class="o">=</span> <span class="n">Idldriver</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
+
+<span class="n">rtn</span> <span class="o">=</span> <span class="n">idl</span><span class="o">.</span><span class="n">run_script</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">template 185144 20091231</span>
+<span class="s2">rv 185144 r20091231.72</span>
+<span class="s2">rv 185144 r20091231.73</span>
+<span class="s2">rv 185144 r20091231.74</span>
+<span class="s2">rv 185144 r20150606.145</span>
+<span class="s2">rv 185144 r20150606.146</span>
+<span class="s2">rv 185144 r20150606.147</span>
+<span class="s2">rvcurve 185144</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">rtn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+status= ok
+msg= Script running in background. Consult monitor for status.
+None
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Monitoring-(again)">
+<h3>Monitoring (again)<a class="headerlink" href="#Monitoring-(again)" title="Permalink to this headline">¶</a></h3>
+<p>To monitor the pipeline processing request, the best idea is to use the same monitor page from above. It stops whenever a given script is finished but you can restart it any time to see the currently-running job. You can also insert a monitor start-up or status polling call here as well.</p>
+</div>
+<div class="section" id="Product-Retrieval">
+<h3>Product Retrieval<a class="headerlink" href="#Product-Retrieval" title="Permalink to this headline">¶</a></h3>
+<p>There is a utility function for retrieving the RV curves (CSV files) for each target (similarly, there is a function – data.spectrum – for retrieving the 1D FITS spectrum files).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">hiresprv.download</span> <span class="k">import</span> <span class="n">Download</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">Download</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
+
+<span class="n">rtn</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">rvcurve</span><span class="p">(</span><span class="s1">&#39;185144&#39;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;vst185144.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+  <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+BJD_TDB,RV,RV_ERR,BC,ADU,CHI2
+15196.69208800001,-2.860674413602231,0.789710,-4620.095214843750,52362,1.05080
+15196.69270200003,1.730315543645411,0.812607,-4620.210937500000,51591,1.04891
+15196.69329199987,1.431450932849171,0.803164,-4620.320800781250,48950,1.05804
+17180.10972899990,-2.845576383390323,0.890091,3189.794921875000,55029,1.10542
+17180.11030799989,1.235438116773508,0.825978,3189.327880859375,55717,1.10771
+17180.11088699987,1.047083913731319,0.828699,3188.863037109375,48769,1.10120
+</pre></div></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/hiresprv_logo.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">HIRES PRV</a></h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Observing Instructions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Data Reduction Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Login">Login</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#KOA-Data-Retrieval">KOA Data Retrieval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Reducing-RV-Measurements-for-a-Star">Reducing RV Measurements for a Star</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Advanced_Usage.html">Advanced usage tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../outputs.html">Output Data Products</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance.html">Velocity Precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance.html#rv-standard-stars">RV Standard Stars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance.html#comparison-with-california-planet-search-pipeline">Comparison with California Planet Search Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance.html#known-planet-recovery">Known Planet Recovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hiresprv.html">Python API</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Advanced_Usage.html" title="Advanced usage tutorial"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../setup.html" title="Observing Instructions"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">HIRES PRV  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, CALTECH.
+      Last updated on Sep 27, 2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+    </div>
+  </body>
+</html>

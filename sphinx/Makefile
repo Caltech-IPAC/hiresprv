@@ -22,3 +22,4 @@ help:
 github:
 	@make html
 	@cp -rv _build/html/* ../docs/
+	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)

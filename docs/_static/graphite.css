@@ -118,10 +118,15 @@ div.section blockquote {
 div.section pre {
   margin: 1em 2em 0.5em;
   padding: 0.5em;
-  background-color: #555555;
+  background-color: #e0e0e0;
   border: 1px solid #333333;
-  color: #cccccc;
+  color: #000000;
   white-space: pre-wrap;
+  text-shadow: none;
+}
+
+div pre {
+  background-color: #e0e0e0;
   text-shadow: none;
 }
 
@@ -283,6 +288,11 @@ big {
   vertical-align: text-top;
 }
 
+.viewcode-block {
+  background-color: #ffffff;
+  text-shadow: none;
+}
+
 .class dt {
   font-size: 18px;
 }
@@ -330,3 +340,10 @@ div.rendered_html table {
     background-color: #cccccc;
 }
 
+div.nbinput pre {
+    width: 80%;
+}
+
+div.nboutput pre{
+    color: #e0e0e0;
+}

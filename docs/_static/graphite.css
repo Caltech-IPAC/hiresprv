@@ -340,10 +340,6 @@ div.rendered_html table {
     background-color: #cccccc;
 }
 
-div.nbinput pre {
-    width: 80%;
-}
-
 div.nboutput pre{
     color: #e0e0e0;
 }

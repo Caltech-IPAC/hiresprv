@@ -46,7 +46,7 @@
 <span class="kn">import</span> <span class="nn">http.cookiejar</span>
 
 
-<div class="viewcode-block" id="Database"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.database.Database">[docs]</a><span class="k">class</span> <span class="nc">Database</span><span class="p">:</span>
+<div class="viewcode-block" id="Database"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.database.Database">[docs]</a><span class="k">class</span> <span class="nc">Database</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Each workspace in HIRES PRV pipeline server contains a database</span>
 <span class="sd">    listing all the data retrieved from KOA for the user.</span>
@@ -211,7 +211,7 @@
        
         <span class="bp">self</span><span class="o">.</span><span class="n">sql</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="s1">&#39;sql&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">sql</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;sql&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sql</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;sql&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;%20&#39;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="s1">&#39;filepath&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
@@ -570,7 +570,7 @@
                 <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">512</span><span class="p">):</span>
                     <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
             
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">NameError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
@@ -608,10 +608,10 @@
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
+  <h3>Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -636,8 +636,8 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
-      Last updated on Sep 27, 2019.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+      Last updated on Oct 01, 2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.0.
     </div>
   </body>
 </html>

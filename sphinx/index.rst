@@ -12,6 +12,18 @@ Please post any questions regarding the HIRES-PRV configuration or the NExScI PR
 processing environment to the `GitHub issue tracker <https://github.com/Caltech-IPAC/hiresprv/issues>`_.
 
 
+News
+====
+Version 2.0 released!
+---------------------
+v2.0 enables the following features:
+
+* processing archival HIRES data collected in the correct configuration
+* access to your workspace directory structure and the ability to download any file within it
+* activate/deactive specific files/observations
+
+See the `advanced usage <tutorials/Advanced_Usage.html>`_ tutorial to see how to use the new features.
+
 Installation Instructions
 =========================
 We recommend that users first install `Anaconda Python <https://www.anaconda.com/download/>`_ or a similar scientific computing environment for Python.
@@ -54,10 +66,8 @@ The reduction of HIRES PRV data consists of four basic steps.
    3) Analyze each PRV observation collected with the iodine cell in the light path
    4) Concatenate into an PRV timeseries.
 
-We have provided a sample tutorial to guide you through the reduction. The tutorial is a Jupyter notebook.
-Please note have not tested the notebook itself and do not guarantee its performance.
-   * `Data Reduction Tutorial <tutorials/HIRES_PRV_Service.html>`_
-
+We provide a `sample tutorial <tutorials/HIRES_PRV_Service.html>`_ to guide you through the reduction. The tutorial is a Jupyter notebook.
+Please note have not tested the notebook itself and do not guarantee its performance. Also see the `advanced usage tutorial <tutorials/Advanced_Usage.html>`_ for special use cases.
 
 Understanding the Outputs
 =========================

@@ -2,6 +2,8 @@
 
 [![PyPI version](https://badge.fury.io/py/hiresprv.svg)](https://badge.fury.io/py/hiresprv)
 
+##### [Documentation](https://caltech-ipac.github.io/hiresprv)
+
 #### Version 2.0 released!
 
 v2.0 enables the following features:
@@ -10,12 +12,12 @@ v2.0 enables the following features:
 * access to your workspace directory structure and the ability to download any file within it
 * activate/deactive specific files/observations
 
-See the <a href="https://caltech-ipac.github.io/hiresprv/Advanced_Usage.html">advanced usage tutorial</a> to see how to use the new features.
+See the <a href="https://caltech-ipac.github.io/hiresprv/tutorials/Advanced_Usage.html">advanced usage tutorial</a> to see how to use the new features.
 
 
 <b>Note:</b> If you just want to use the library, you can install it with "<i>pip install hiresprv</i>".
 The example Jupyter page can be downloaded from [this repo](docs/tutorials/HIRES_PRV_Service.ipynb)
-and viewed <a href="https://caltech-ipac.github.io/hiresprv/HIRES_PRV_Service.html">here</a>.
+and viewed <a href="https://caltech-ipac.github.io/hiresprv/tutorials/HIRES_PRV_Service.html">here</a>.
 
 This repository contains all the software necessary to run the HIRES PRV pipeline remotely from Python
 and reduce astronomical radial velocity measurements from that instrument.

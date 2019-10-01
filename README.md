@@ -1,5 +1,18 @@
 # Keck HIRES PRV Pipeline Service Access
 
+[![PyPI version](https://badge.fury.io/py/hiresprv.svg)](https://badge.fury.io/py/hiresprv)
+
+#### Version 2.0 released!
+
+v2.0 enables the following features:
+
+* processing archival HIRES data collected in the correct configuration
+* access to your workspace directory structure and the ability to download any file within it
+* activate/deactive specific files/observations
+
+See the <a href="https://caltech-ipac.github.io/hiresprv/Advanced_Usage.html">advanced usage tutorial</a> to see how to use the new features.
+
+
 <b>Note:</b> If you just want to use the library, you can install it with "<i>pip install hiresprv</i>".
 The example Jupyter page can be downloaded from [this repo](docs/tutorials/HIRES_PRV_Service.ipynb)
 and viewed <a href="https://caltech-ipac.github.io/hiresprv/HIRES_PRV_Service.html">here</a>.

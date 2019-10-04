@@ -175,7 +175,7 @@ class Database(object):
        
         self.sql = ''
         if (len(kwargs) > 0) and ('sql' in kwargs.keys()):
-            self.sql = urllib.parse.urlencode(kwargs['sql'])
+            self.sql = urllib.parse.quote(kwargs['sql'])
 
         self.filepath = ''
         if (len(kwargs) > 0) and ('filepath' in kwargs.keys()):

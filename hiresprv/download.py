@@ -267,7 +267,7 @@ class Download(object):
         if self.debug:
             logging.debug('')
             logging.debug('Enter Download.rvcurve: objname = %s' % objname)
-       
+
         if len(objname) == 0:
             
             self.status = 'error'

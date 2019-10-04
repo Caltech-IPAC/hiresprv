@@ -12,6 +12,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Velocity Precision" href="performance.html" />
@@ -47,7 +48,7 @@
 <h2>Radial Velocity Timeseries<a class="headerlink" href="#radial-velocity-timeseries" title="Permalink to this headline">¶</a></h2>
 <p>Radial velocity timeseries data can be downloaded in CSV format using the <a class="reference internal" href="hiresprv.html#hiresprv.download.Download.rvcurve" title="hiresprv.download.Download.rvcurve"><code class="xref py py-meth docutils literal notranslate"><span class="pre">hiresprv.download.Download.rvcurve()</span></code></a> method.
 This table contains six columns:</p>
-<table class="colwidths-given docutils align-center" id="id1">
+<table class="colwidths-given docutils align-default" id="id1">
 <caption><span class="caption-text">RV Timeseries</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 13%" />
@@ -123,7 +124,7 @@ This table contains six columns:</p>
 <h2>Wavelength Solution<a class="headerlink" href="#wavelength-solution" title="Permalink to this headline">¶</a></h2>
 <p>Here we provide a standard wavelength solution. Due to the strict requirements on the <a class="reference internal" href="setup.html#setup"><span class="std std-ref">instrument configuration</span></a>, this
 static wavelength solution is good to ±1 pixel for any spectrum observed using the HIRES-PRV configuration.</p>
-<p><a class="reference download internal" download="" href="_downloads/a239ee2592508c77508c68481b8177a9/keck_rwav.fits"><code class="xref download docutils literal notranslate"><span class="pre">keck_rwav.fits</span></code></a></p>
+<p><a class="reference download internal" download="" href="_downloads/a8f343a3d32b80023af5bab3c14a7240/keck_rwav.fits"><code class="xref download docutils literal notranslate"><span class="pre">keck_rwav.fits</span></code></a></p>
 <p>See below for an example of reading and interpreting this file.</p>
 </div>
 <div class="section" id="extracted-spectra">
@@ -196,7 +197,7 @@ file is the raw SQL database which can also be accessed with the <code class="xr
 <div class="line">│   └── vst10700.csv</div>
 <div class="line">└── prvState.db</div>
 </div>
-<table class="colwidths-given docutils align-center" id="id2">
+<table class="colwidths-given docutils align-default" id="id2">
 <caption><span class="caption-text">Directory Descriptions</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 14%" />
@@ -265,10 +266,10 @@ file is the raw SQL database which can also be accessed with the <code class="xr
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -298,8 +299,8 @@ file is the raw SQL database which can also be accessed with the <code class="xr
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
-      Last updated on Oct 01, 2019.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.0.
+      Last updated on Oct 04, 2019.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
     </div>
   </body>
 </html>

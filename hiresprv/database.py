@@ -4,6 +4,7 @@ Access and query a user's observation database.
 
 import logging
 import json
+import urllib.parse
 
 import requests
 import http.cookiejar
@@ -174,7 +175,7 @@ class Database(object):
        
         self.sql = ''
         if (len(kwargs) > 0) and ('sql' in kwargs.keys()):
-            self.sql = kwargs['sql'].replace(' ', '%20')
+            self.sql = urllib.parse.urlencode(kwargs['sql'])
 
         self.filepath = ''
         if (len(kwargs) > 0) and ('filepath' in kwargs.keys()):
@@ -252,10 +253,7 @@ class Database(object):
         the database.
         
         Args:
-            format (string): (optional) string specifying the output format ('html'|'csv'|'ipac'); the default is html
-            filepath (string): (optional) full path where the file will be saved; if not provided,
-                               a URL string to an HTML view of the table.
-
+            None
         Returns:
             string: URL to HTML table if filepath is not specified
         """
@@ -277,7 +275,7 @@ class Database(object):
         else:
             self.disp = 1
   
-        self.sql = 'select distinct target from FILES;'
+        self.sql = urllib.parse.quote('select distinct TARGET from FILES;'.replace(' ', '%20'))
 
         url = self.url + '&format=' + self.format + '&sql=' + self.sql
 
@@ -353,9 +351,7 @@ class Database(object):
         else:
             self.disp = 1
         
-        self.sql = "select * from FILES where target like '%" + target + "%';"
-
-#        self.sql = "select * from FILES where upper(target) = upper('" + target + "');"
+        self.sql = urllib.parse.quote("select * from FILES where target like '%" + target + "%';")
 
         url = self.url + '&format=' + self.format + '&sql=' + self.sql
 

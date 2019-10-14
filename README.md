@@ -16,7 +16,7 @@ See the <a href="https://caltech-ipac.github.io/hiresprv/tutorials/Advanced_Usag
 
 
 <b>Note:</b> If you just want to use the library, you can install it with "<i>pip install hiresprv</i>".
-The example Jupyter page can be downloaded from [this repo](docs/tutorials/HIRES_PRV_Service.ipynb)
+The example Jupyter page can be downloaded from [this repo](Jupyter/HIRES_PRV_Service.ipynb)
 and viewed <a href="https://caltech-ipac.github.io/hiresprv/tutorials/HIRES_PRV_Service.html">here</a>.
 
 This repository contains all the software necessary to run the HIRES PRV pipeline remotely from Python

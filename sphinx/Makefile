@@ -23,3 +23,4 @@ github:
 	@make html
 	@cp -v ../Jupyter/*.ipynb ./tutorials/
 	@cp -rv _build/html/* ../docs/
+	@cp -v ./tutorials/*.ipynb ../docs/_static/

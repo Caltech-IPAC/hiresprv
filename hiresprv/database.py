@@ -9,6 +9,8 @@ import urllib.parse
 import requests
 import http.cookiejar
 
+import pandas as pd
+
 
 class Database(object):
     """
@@ -456,6 +458,39 @@ class Database(object):
         retval['msg'] = self.msg
 
         return retval
+
+    def rv_observations(self, target):
+        """
+        Return metadata for all RV observations associated with a given target
+
+        Args:
+            target (string): target name
+
+
+        """
+
+        url = self.search(sql="SELECT * from FILES WHERE TARGET like '{}' AND OBTYPE like 'RV observation'".format(target))
+
+        return url
+
+    @staticmethod
+    def to_pandas(url):
+        """
+        Convert URL for HTML table into a Pandas DataFrame
+
+        Args:
+            url (string): database search url (produced by Database methods like `search` or `target_info`)
+
+        Returns:
+            DataFrame
+        """
+
+        assert "format=html" in url, "Must request table in HTML format"
+
+        try:
+            return pd.read_html(url, header=0)[0]
+        except ImportError:  # html5lib error raised if empty result
+            return pd.DataFrame([])
 
     def __submit_request(self, url):
 

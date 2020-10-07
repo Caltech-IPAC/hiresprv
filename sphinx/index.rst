@@ -14,15 +14,17 @@ processing environment to the `GitHub issue tracker <https://github.com/Caltech-
 
 News
 ====
-Version 2.0 released!
+Historical data processed!
 ---------------------
-v2.0 enables the following features:
+All HIRESprv compatible HIRES data going back to the CCD upgrade in August of 2004 has been pre-processed and will automatically be included in your user workspace upon initialization.
+This enables the following capabilities:
 
-* processing archival HIRES data collected in the correct configuration
-* access to your workspace directory structure and the ability to download any file within it
-* activate/deactive specific files/observations
+* ~60k RVs are available to download from your user workspace as soon as you log in. See `data reduction tutorial <tutorials/HIRES_PRV_Service.html>`_ to access data products.
+* New data collected on a previously-observed star can be appended to the existing dataset without incurring an arbitrary RV offset. In order for this to work you must collect new observations using the same target name as used for the historical data.
+* Pre-processed templates are available for over 1600 stars. Check the database before collecting new template observations since you may be able to save yourself signficant telescope time.
 
-See the `advanced usage <tutorials/Advanced_Usage.html>`_ tutorial to see how to use the new features.
+Have a look around and check for existing RV and/or template observations for your target stars before collecting new observations!
+
 
 Installation Instructions
 =========================
@@ -47,7 +49,8 @@ summarized below can be processed properly within the NExScI HIRES-PRV environme
 * The echelle and cross disperser angles must be set at specific angles as part of the :ref:`afternoon setup <alignment>` and must not be changed during the night.
 * A minimum of three PRV observations with the iodine cell inserted on a given target are required before any PRVs will be produced.
 * The minimum signal-to-noise ratio per pixel for each iodine-in RV observation must be at least 70 with the optimal SNR being 200.
-* One high SNR (at least 100 per pixel) :ref:`template observation <template>` of the target without the iodine cell must be collected before any PRVs can be measured.
+* Login and check the user workspace for existing observations of your target and be sure to schedule your observations using exactly the same target name.
+* One high SNR (at least 100 per pixel) :ref:`template observation <template>` of the target without the iodine cell must be collected before any PRVs can be measured (an approptiate template for your target may already exist in your user workspace).
 * High SNR observations of B stars should be the first and last observations of the night
 * The optimal SNR for the iodine-out template is 2x the typical iodine-in observation.
 * Each iodine-out template observation must be bracketed by 2-5 exposures of :ref:`bright, rapidly-rotating stars <bstars>` with the iodine cell in for calibration.

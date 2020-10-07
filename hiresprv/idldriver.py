@@ -8,6 +8,8 @@ import json
 import requests
 import http.cookiejar
 
+from hiresprv.database import Database
+
 
 class Idldriver:
     """
@@ -191,6 +193,24 @@ class Idldriver:
         print('msg= %s' % self.msg)
 
         return
+
+    @staticmethod
+    def create_rvscript(target, db):
+        """
+        Create script to prcess all RV files associated with a given target
+
+        Args:
+            target (string): target string
+            db (hiresprv.database.Database): Database object from your workspace
+
+        Returns:
+            string
+        """
+        df = Database.to_pandas(db.rv_observations(target))
+
+        run_lines = list(df.FILENAME.apply(lambda x: "rv {} {}".format(target.replace("HD", ""), x)))
+
+        return '\n'.join(run_lines)
 
     # TODO: Technically shouldn't use camel case in a function or method name
     def __submitScript(self):

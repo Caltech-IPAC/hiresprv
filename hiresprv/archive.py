@@ -38,7 +38,7 @@ class Archive:
     msg = ''
     
     def __init__(self, cookiepath, **kwargs):
-        self.project = 'hiresprv' 
+        self.project = 'hiresprv'
         self.instrument = 'hires' 
         self.param = dict()
 

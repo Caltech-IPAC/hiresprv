@@ -15,7 +15,7 @@ processing environment to the `GitHub issue tracker <https://github.com/Caltech-
 News
 ====
 Historical data processed!
----------------------
+--------------------------
 All HIRESprv compatible HIRES data going back to the CCD upgrade in August of 2004 has been pre-processed and will automatically be included in your user workspace upon initialization.
 This enables the following capabilities:
 

@@ -12,6 +12,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Observing Instructions" href="setup.html" /> 
@@ -48,15 +49,16 @@ source code for the Python package is on <a class="reference external" href="htt
 processing environment to the <a class="reference external" href="https://github.com/Caltech-IPAC/hiresprv/issues">GitHub issue tracker</a>.</p>
 <div class="section" id="news">
 <h2>News<a class="headerlink" href="#news" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="version-2-0-released">
-<h3>Version 2.0 released!<a class="headerlink" href="#version-2-0-released" title="Permalink to this headline">¶</a></h3>
-<p>v2.0 enables the following features:</p>
+<div class="section" id="historical-data-processed">
+<h3>Historical data processed!<a class="headerlink" href="#historical-data-processed" title="Permalink to this headline">¶</a></h3>
+<p>All HIRESprv compatible HIRES data going back to the CCD upgrade in August of 2004 has been pre-processed and will automatically be included in your user workspace upon initialization.
+This enables the following capabilities:</p>
 <ul class="simple">
-<li><p>processing archival HIRES data collected in the correct configuration</p></li>
-<li><p>access to your workspace directory structure and the ability to download any file within it</p></li>
-<li><p>activate/deactive specific files/observations</p></li>
+<li><p>~60k RVs are available to download from your user workspace as soon as you log in. See <a class="reference external" href="tutorials/HIRES_PRV_Service.html">data reduction tutorial</a> to access data products.</p></li>
+<li><p>New data collected on a previously-observed star can be appended to the existing dataset without incurring an arbitrary RV offset. In order for this to work you must collect new observations using the same target name as used for the historical data.</p></li>
+<li><p>Pre-processed templates are available for over 1600 stars. Check the database before collecting new template observations since you may be able to save yourself signficant telescope time.</p></li>
 </ul>
-<p>See the <a class="reference external" href="tutorials/Advanced_Usage.html">advanced usage</a> tutorial to see how to use the new features.</p>
+<p>Have a look around and check for existing RV and/or template observations for your target stars before collecting new observations!</p>
 </div>
 </div>
 <div class="section" id="installation-instructions">
@@ -78,7 +80,8 @@ summarized below can be processed properly within the NExScI HIRES-PRV environme
 <li><p>The echelle and cross disperser angles must be set at specific angles as part of the <a class="reference internal" href="setup.html#alignment"><span class="std std-ref">afternoon setup</span></a> and must not be changed during the night.</p></li>
 <li><p>A minimum of three PRV observations with the iodine cell inserted on a given target are required before any PRVs will be produced.</p></li>
 <li><p>The minimum signal-to-noise ratio per pixel for each iodine-in RV observation must be at least 70 with the optimal SNR being 200.</p></li>
-<li><p>One high SNR (at least 100 per pixel) <a class="reference internal" href="setup.html#template"><span class="std std-ref">template observation</span></a> of the target without the iodine cell must be collected before any PRVs can be measured.</p></li>
+<li><p>Login and check the user workspace for existing observations of your target and be sure to schedule your observations using exactly the same target name.</p></li>
+<li><p>One high SNR (at least 100 per pixel) <a class="reference internal" href="setup.html#template"><span class="std std-ref">template observation</span></a> of the target without the iodine cell must be collected before any PRVs can be measured (an approptiate template for your target may already exist in your user workspace).</p></li>
 <li><p>High SNR observations of B stars should be the first and last observations of the night</p></li>
 <li><p>The optimal SNR for the iodine-out template is 2x the typical iodine-in observation.</p></li>
 <li><p>Each iodine-out template observation must be bracketed by 2-5 exposures of <a class="reference internal" href="setup.html#bstars"><span class="std std-ref">bright, rapidly-rotating stars</span></a> with the iodine cell in for calibration.</p></li>
@@ -92,8 +95,8 @@ summarized below can be processed properly within the NExScI HIRES-PRV environme
 </dd>
 </dl>
 </div>
-<div class="section" id="data-reduction-tutorial">
-<h2>Data Reduction Tutorial<a class="headerlink" href="#data-reduction-tutorial" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h2>Data Reduction Tutorial<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <dl class="simple">
 <dt>The reduction of HIRES PRV data consists of four basic steps.</dt><dd><ol class="arabic simple">
 <li><p>Transfer files from the <a class="reference external" href="https://koa.ipac.caltech.edu">Keck Observatory Archive (KOA)</a> and extract into 1D spectra.</p></li>
@@ -242,7 +245,7 @@ those same observations. We find consistent results and comparable precision.</p
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
-      Last updated on Oct 14, 2019.
+      Last updated on Oct 09, 2020.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
     </div>
   </body>

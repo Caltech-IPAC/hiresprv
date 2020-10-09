@@ -12,6 +12,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Python API" href="hiresprv.html" />
@@ -45,11 +46,11 @@
 <span id="performance"></span><h1>Velocity Precision<a class="headerlink" href="#velocity-precision" title="Permalink to this headline">¶</a></h1>
 <p>Consult the plot below when considering exposure times needed to achieve a desired RV precision. This does not
 factor in any additional sources of instrumental and/or astrophysical noise.</p>
-<div class="figure align-center" id="id2">
+<div class="figure align-center" id="id3">
 <a class="reference internal image-reference" href="_images/snr_vs_err.png"><img alt="radial velocity fit" src="_images/snr_vs_err.png" style="width: 50%;" /></a>
 <p class="caption"><span class="caption-text">Photon-limited single measurement precision as a function of exposure meter setting and signal to noise ratio.
 The red line traces the lower 30th percentile of the individual measurements shown in grey. Signal to noise ratios
-below 70 (indicated with grey shading) are not officially supported by the pipeline and may produce erratic results.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+below 70 (indicated with grey shading) are not officially supported by the pipeline and may produce erratic results.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="rv-standard-stars">
@@ -59,25 +60,43 @@ is the RMS of the velocities of standard stars collected over several months or 
 chosen for the plot below are known to show little to no radial velocity variation on these timescales.
 The observed scatter in the velocities encompasses most sources of pipeline, instrumental,
 and astrophysical noise. Velocities produced by the NExScI PRV processing environment show
-scatter of less than 2.0 m/s for the most well-behaved targets.</p>
-<div class="figure align-center" id="id3">
+scatter of ~2 m/s for the most well-behaved targets.</p>
+<div class="figure align-center" id="id4">
 <a class="reference internal image-reference" href="_images/rv_standards.png"><img alt="radial velocity standard stars" src="_images/rv_standards.png" style="width: 40%;" /></a>
 <p class="caption"><span class="caption-text">Radial velocity timeseries of several RV standard stars. The names of the stars and the RMS of the velocities are annotated
-in the figure. The plotted uncertainties do not include instrumental or astrophysical jitter.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+in the figure. The plotted uncertainties do not include instrumental or astrophysical jitter.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="comparison-with-california-planet-search-pipeline">
 <h1>Comparison with California Planet Search Pipeline<a class="headerlink" href="#comparison-with-california-planet-search-pipeline" title="Permalink to this headline">¶</a></h1>
 <p>The PRV processing environment at NExScI is closely related to the <a class="reference external" href="https://exoplanets.caltech.edu">California Planet Search (CPS)</a>
-pipeline so it is useful to compare the RVs produced by both pipelines. The mean difference between the RVs for
-tau Ceti is -0.04 m/s and the scatter is 0.8 m/s. This scatter is significantly smaller than the typical single
-measurement uncertainty (1.2 m/s).</p>
-<div class="figure align-center" id="id4">
-<a class="reference internal image-reference" href="_images/one_to_one.png"><img alt="CPS" src="_images/one_to_one.png" style="width: 40%;" /></a>
-<p class="caption"><span class="caption-text">Comparison of the velocities produced by the NExScI PRV processing environment to the RVs produced by the
-California Planet Search version of the pipeline.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+pipeline so it is useful to compare the RVs produced by both pipelines. Here we perform a series of comparisons with the RVs soon to be published
+in Rosenthal et al. (2020, submitted) (hereafter, CLS I).</p>
+<p>Each star may show a small constant offset relative to the same RV timeseries from CLS I. These offsets are an arbitrary artifact of the pipeline
+and are subtracted here before performing the comparisons. We use the BJD timestamps to cross match the NExScI RVs with the CLS I RVs and find ~60k
+overlapping observations. The scatter between the CLS I and NExScI RVs is dominated by a few large outliers with large uncertainties in both datasets.
+These are low-snr, and/or rapidly-rotating, hot stars for which it is extremely difficult to measure precise RVs. The scatter between the two sets of
+RVs where the agreement is no worse than 100 m/s is 4.3 m/s. The difference betwen the RVs is caused by small (&lt;0.2 m/s) differences in the barycentric
+corrections used as initial guesses in the doppler modeling which come from using updated Gaia coordinates for all stars in the NExScI reduction. Those
+small differences in initial guesses propogate to larger differences in the final RVs. This is especially problematic where the RV is poorly constrained
+in the final fit and much more dependent on the initial guess. However, when we normalize the residuals by their uncertainties we find that 82% of the RVs
+are less than 1 sigma descrepant between the NExScI and CLS I reductions.</p>
+<div class="figure align-center" id="id5">
+<a class="reference internal image-reference" href="_static/nex_vs_cls.png"><img alt="CLS" src="_static/nex_vs_cls.png" style="width: 40%;" /></a>
+<p class="caption"><span class="caption-text">Comparison of the velocities produced by the NExScI PRV processing environment to the RVs published in CLS I produced by the
+California Planet Search version of the pipeline.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </div>
-<p>A more detailed comparison with the CPS data products is available <a class="reference external" href="_static/dopcode-diff.pdf">here</a>.</p>
+<div class="figure align-center" id="id6">
+<a class="reference internal image-reference" href="_static/cls_dist.png"><img alt="CLS" src="_static/cls_dist.png" style="width: 40%;" /></a>
+<p class="caption"><span class="caption-text">Distribution of RV differences between the NExScI and CLS I reductions normalized by their uncertainties. 82% of the RVs show agreement to better
+than 1-sigma.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+<p>We repeat this comparison to the RVs published in <a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2017AJ....153..208B/abstract">Butler et al. (2018)</a> (LCES hereafter).
+Although the LCES pipeline was ultimately the prgenetor to both the CPS and NExScI versions of the pipelines they have diverged signficantly. We find
+a scatter of 5.0 m/s in the difference between the LCES and NExScI RVs after correcting for arbitrary offsets and 50% of the RVs are in agreement to within 1-sigma.</p>
+<p>See <a class="reference external" href="_static/dopcode-diff.pdf">here</a> for more discussion and comparisons with the lower-level CPS data products.
+A more detailed comparison with the CLS and LCES data products will be availble in an upcoming publication.
+.. A more detailed comparison with the CLS and LCES data products is available <a class="reference external" href="_static/dopcode-diff.pdf">here</a>.</p>
 </div>
 <div class="section" id="known-planet-recovery">
 <h1>Known Planet Recovery<a class="headerlink" href="#known-planet-recovery" title="Permalink to this headline">¶</a></h1>
@@ -86,11 +105,11 @@ on the star HD 7924 in addition to the sample nights referenced in the <a class=
 This star is known to host three small planets (<a class="reference external" href="http://adsabs.harvard.edu/cgi-bin/nph-data_query?bibcode=2009ApJ...696...75H&amp;db_key=AST&amp;link_type=ABSTRACT">Howard et al. 2009</a>;
 <a class="reference external" href="http://adsabs.harvard.edu/cgi-bin/bib_query?arXiv:1504.06629">Fulton et al. 2015</a>). We use <a class="reference external" href="http://radvel.readthedocs.io">RadVel</a>
 to fit the data, seeding the fit with the known orbital periods. We can successfully recover the correct velocity
-semi-amplitude (K) and mass for planet b with only ~75% of the data presented in
-<a class="reference external" href="http://adsabs.harvard.edu/cgi-bin/nph-data_query?bibcode=2009ApJ...696...75H&amp;db_key=AST&amp;link_type=ABSTRACT">Howard et al. (2009)</a>.</p>
-<div class="figure align-center" id="id5">
+semi-amplitude (K) and mass for planets b, c, d, and the long-period signal caused by stellar activity with only a fraction of the data presented in
+<a class="reference external" href="http://adsabs.harvard.edu/cgi-bin/bib_query?arXiv:1504.06629">Fulton et al. 2015</a>.</p>
+<div class="figure align-center" id="id7">
 <a class="reference internal image-reference" href="_images/HD7924_rv_multipanel.png"><img alt="radial velocity fit" src="_images/HD7924_rv_multipanel.png" style="width: 50%;" /></a>
-<p class="caption"><span class="caption-text">Fit results for HD 7924.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">Fit results for HD 7924.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 
@@ -151,7 +170,7 @@ semi-amplitude (K) and mass for planet b with only ~75% of the data presented in
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
-      Last updated on Oct 14, 2019.
+      Last updated on Oct 09, 2020.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
     </div>
   </body>

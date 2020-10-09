@@ -12,6 +12,7 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
   </head><body>
@@ -44,6 +45,8 @@
 
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">http.cookiejar</span>
+
+<span class="kn">from</span> <span class="nn">hiresprv.database</span> <span class="k">import</span> <span class="n">Database</span>
 
 
 <div class="viewcode-block" id="Idldriver"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.idldriver.Idldriver">[docs]</a><span class="k">class</span> <span class="nc">Idldriver</span><span class="p">:</span>
@@ -229,6 +232,24 @@
 
         <span class="k">return</span></div>
 
+<div class="viewcode-block" id="Idldriver.create_rvscript"><a class="viewcode-back" href="../../hiresprv.html#hiresprv.idldriver.Idldriver.create_rvscript">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_rvscript</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create script to prcess all RV files associated with a given target</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            target (string): target string</span>
+<span class="sd">            db (hiresprv.database.Database): Database object from your workspace</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">Database</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">rv_observations</span><span class="p">(</span><span class="n">target</span><span class="p">))</span>
+
+        <span class="n">run_lines</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">FILENAME</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;rv </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;HD&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="n">x</span><span class="p">)))</span>
+
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">run_lines</span><span class="p">)</span></div>
+
     <span class="c1"># TODO: Technically shouldn&#39;t use camel case in a function or method name</span>
     <span class="k">def</span> <span class="nf">__submitScript</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
    
@@ -334,7 +355,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
-      Last updated on Oct 14, 2019.
+      Last updated on Oct 09, 2020.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
     </div>
   </body>

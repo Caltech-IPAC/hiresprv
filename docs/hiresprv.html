@@ -12,6 +12,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Velocity Precision" href="performance.html" /> 
@@ -344,6 +345,31 @@ on the disk.</p>
 </dl>
 </dd></dl>
 
+<dl class="method">
+<dt id="hiresprv.database.Database.rv_observations">
+<code class="sig-name descname">rv_observations</code><span class="sig-paren">(</span><em class="sig-param">target</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/database.html#Database.rv_observations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.database.Database.rv_observations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return metadata for all RV observations associated with a given target</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>target</strong> (<em>string</em>) – target name</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hiresprv.database.Database.to_pandas">
+<em class="property">static </em><code class="sig-name descname">to_pandas</code><span class="sig-paren">(</span><em class="sig-param">url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/database.html#Database.to_pandas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.database.Database.to_pandas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert URL for HTML table into a Pandas DataFrame</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>url</strong> (<em>string</em>) – database search url (produced by Database methods like <cite>search</cite> or <cite>target_info</cite>)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -416,6 +442,23 @@ containing the script lines.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>scriptfile</strong> (<em>string</em>) – path to plain text file that will be read as a continuous string
 and used as input to the <a class="reference internal" href="#hiresprv.idldriver.Idldriver.run_script" title="hiresprv.idldriver.Idldriver.run_script"><code class="xref py py-meth docutils literal notranslate"><span class="pre">hiresprv.idldriver.Idldriver.run_script()</span></code></a> method.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hiresprv.idldriver.Idldriver.create_rvscript">
+<em class="property">static </em><code class="sig-name descname">create_rvscript</code><span class="sig-paren">(</span><em class="sig-param">target</em>, <em class="sig-param">db</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hiresprv/idldriver.html#Idldriver.create_rvscript"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hiresprv.idldriver.Idldriver.create_rvscript" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create script to prcess all RV files associated with a given target</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> (<em>string</em>) – target string</p></li>
+<li><p><strong>db</strong> (<a class="reference internal" href="#hiresprv.database.Database" title="hiresprv.database.Database"><em>hiresprv.database.Database</em></a>) – Database object from your workspace</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>string</p>
 </dd>
 </dl>
 </dd></dl>
@@ -583,7 +626,7 @@ comma or new line; must match entries in the ‘FILENAME’ column in the worksp
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
-      Last updated on Oct 14, 2019.
+      Last updated on Oct 09, 2020.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
     </div>
   </body>

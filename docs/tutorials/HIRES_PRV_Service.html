@@ -12,6 +12,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Advanced usage tutorial" href="Advanced_Usage.html" />
@@ -247,15 +248,14 @@ div.rendered_html tbody tr:hover {
 <p>This notebook is meant to be a template to set up your own processing using the code snippets provided here. The notebook may not run exactly as presented if you attempt to run the full notebook directly. The code has not been rigorously tested from within a notebook environemnt.</p>
 <p>This notebook introduces the Keck HIRES Precision Radial Velocity (PRV) pipeline service and works through one specific example. There are number of variations, mostly having to do with planning processing, which will be covered in more detail by other notebooks but here you will see all the basics.</p>
 <p>The notebook is kept with the HIRES PRV Python access toolkit in GitHub: <a class="reference external" href="https://github.com/Caltech-IPAC/hiresprv">https://github.com/Caltech-IPAC/hiresprv</a></p>
-<p>You can download and interact with your own copy of this notebook <a class="reference external" href="../_static/HIRES_PRV_Service.ipynb">here</a></p>
 <div class="section" id="Login">
 <h2>Login<a class="headerlink" href="#Login" title="Permalink to this headline">¶</a></h2>
-<p>Logging in the first time creates a workspace for the user and associates it with a KOA account.</p>
+<p>Logging in the first time creates a workspace for the user and associates it with a KOA account. This workspace is initialized containing pre-processed products for all HIRESprv compatible data in the archive. Please have a look around and search for existing observations of your target stars before collecting new observations.</p>
 <p>Users of this service must have Keck Observatory Archive (KOA) accounts and use that login here to gain access to their data. Even researchers planning to use only public data will need a KOA login as this service is maintaining persistent storage under that ID.</p>
 <p>The login is persisted through the use of HTTP cookies and logging in from multiple clients will connect the user to the same account, storage, and processing history. This environment (user workspace) is permanent as we expect some on-going research to span years. The login for a give client machine need only be done once, assuming the cookie file in the local storage is not deleted. If it is, logging in again will reconstruct it.</p>
 <p>The cookie file, processing state information, and downloaded results like 1D spectra and RV curve tables will be kept locally in the same space as this notebook. If you wish to change that, simply add in whatever directory management and navigation you like.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -270,18 +270,16 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-KOA userid: koaadmin
-KOA Password: ········
-Successful login as koaadmin
+Successful login as bfulton
 </pre></div></div>
 </div>
 </div>
 <div class="section" id="KOA-Data-Retrieval">
 <h2>KOA Data Retrieval<a class="headerlink" href="#KOA-Data-Retrieval" title="Permalink to this headline">¶</a></h2>
-<p>The PRV workspace first needs to be populated with data from KOA. This can be done all at once, if the data exists, or incrementally as the data are taken/identified.</p>
+<p>The PRV workspace first needs to be populated with your data from KOA. This can be done all at once, if the data exists, or incrementally as the data are taken/identified. If the requested night is already contained in the pre-processed dataset or if you have already processed the night it will be skipped over.</p>
 <p>This step is more than a simple data transfer. “Raw reduction” of the data, which converts the 2D CCD echelle images to 1D spectra, is done up-front as the data are retrieved a night at a time. The UT dates you give here are actually shifted a few hours to catch any calibration data collected in the afternoon of the same (Hawaii-local) day.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -289,10 +287,13 @@ Successful login as koaadmin
 
 <span class="n">koa</span> <span class="o">=</span> <span class="n">Archive</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
 
-<span class="n">rtn</span> <span class="o">=</span> <span class="n">koa</span><span class="o">.</span><span class="n">by_dates</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;2009-12-31</span>
-<span class="s2">2013-06-29</span>
-<span class="s2">2013-09-12</span>
-<span class="s2">2015-06-06&quot;&quot;&quot;</span><span class="p">)</span>
+<span class="c1"># These nights are known to work, but were not included in the pre-processed dataset</span>
+<span class="n">rtn</span> <span class="o">=</span> <span class="n">koa</span><span class="o">.</span><span class="n">by_dates</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;2018-09-02</span>
+<span class="s2">2018-09-03</span>
+<span class="s2">2018-09-04</span>
+<span class="s2">2018-09-05</span>
+<span class="s2">2018-09-22</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
 
 </pre></div>
 </div>
@@ -315,7 +316,7 @@ Successful login as koaadmin
 <h3>PRV Processing Monitor<a class="headerlink" href="#PRV-Processing-Monitor" title="Permalink to this headline">¶</a></h3>
 <p>Some steps in the PRV processing can take quite a long time (hours) and we do not want to tie up this notebook page waiting for it to finish. Below we show how to retrieve a snapshot of the status (and you would have to poll manually to track the progress of the job) but the preferred approach is to start a real-time monitor in a custom page/tab which uses Javascript and an HTTP Event stream. Run the next cell to generate a link to this monitor:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -331,7 +332,7 @@ Successful login as koaadmin
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -352,7 +353,7 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 <p>Note that metadata retrieval can’t be done while the system is “busy” (downloading additional data or further reducing data in the workspace). Otherwise, metadata downloads can be done at any time.</p>
 <p>Also note that the client-side file will become out-of-date once new data download or processing requests are submitted. It is up to the user to re-request the new metadata.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -361,7 +362,9 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 
 <span class="n">state</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">search</span><span class="p">()</span>
+<span class="c1"># We limit to 100 entries so that the query returns quickly in this tutorial</span>
+<span class="n">search_string</span> <span class="o">=</span> <span class="s2">&quot;select * from FILES LIMIT 100;&quot;</span>
+<span class="n">url</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">sql</span><span class="o">=</span><span class="n">search_string</span><span class="p">)</span>
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_html</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
@@ -369,7 +372,7 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -741,7 +744,7 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 <p/><p>select DATE, OBTYPE, FILENAME, TARGET, BJD, BCVEL from FILES where TARGET like ‘HD185144’;</p>
 <p>The resulting records are shown below.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -755,7 +758,7 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -858,6 +861,69 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
       <td>2.455197e+06</td>
       <td>-4621.597</td>
     </tr>
+    <tr>
+      <th>8</th>
+      <td>20150606</td>
+      <td>RV observation</td>
+      <td>r20150606.145</td>
+      <td>HD185144</td>
+      <td>2.457180e+06</td>
+      <td>3189.795</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>20150606</td>
+      <td>RV observation</td>
+      <td>r20150606.146</td>
+      <td>HD185144</td>
+      <td>2.457180e+06</td>
+      <td>3189.328</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>20150606</td>
+      <td>RV observation</td>
+      <td>r20150606.147</td>
+      <td>HD185144</td>
+      <td>2.457180e+06</td>
+      <td>3188.863</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>20080516</td>
+      <td>RV observation</td>
+      <td>r20080516.177</td>
+      <td>HD185144</td>
+      <td>2.454603e+06</td>
+      <td>2061.135</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>20080517</td>
+      <td>RV observation</td>
+      <td>r20080517.181</td>
+      <td>HD185144</td>
+      <td>2.454604e+06</td>
+      <td>2124.858</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>20080617</td>
+      <td>RV observation</td>
+      <td>r20080617.132</td>
+      <td>HD185144</td>
+      <td>2.454635e+06</td>
+      <td>3884.757</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>20080617</td>
+      <td>RV observation</td>
+      <td>r20080617.133</td>
+      <td>HD185144</td>
+      <td>2.454635e+06</td>
+      <td>3884.242</td>
+    </tr>
   </tbody>
 </table>
 </div></div>
@@ -869,7 +935,7 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 <p/><p>select DATE, OBTYPE, FILENAME, TARGET, BJD from FILES where OBTYPE like ‘TEMPLATE’ or OBTYPE like ‘B Star’;</p>
 <p>The resulting records are shown below.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -883,7 +949,7 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1046,9 +1112,133 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 <pre>template 185144 20091231</pre><p>To reduce an RV measurement, we have to refer to this template (the target name is enough) and specify which file to reduce. For example:</p>
 <pre>rv 185144 r20091231.7</pre><p>Finally, once we have a set of RV measurements for an object, we a generate an RV curve (the pipeline finds all the appropriate RV measurements):</p>
 <pre>rvcurve 185144</pre><p>As long as we follow the general rules that we need a template before we can reduce an RV measurement and we need at least three RV measurements before we can generate an RV curve, we can otherwise scripte things in whatever order we wish (e.g. all the templates first).</p>
-<p>All of this is submitted to the pipeline as a text script:</p>
+<p>All of this is submitted to the pipeline as a text script, but first lets figure out which observations need to be processed.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">search_string</span> <span class="o">=</span> <span class="s2">&quot;select * from FILES where TARGET like &#39;HD185144&#39; and DATE = &#39;20180922&#39;;&quot;</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">sql</span><span class="o">=</span><span class="n">search_string</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_html</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>DATE</th>
+      <th>DEACTIVATED</th>
+      <th>OBTYPE</th>
+      <th>FILENAME</th>
+      <th>TARGET</th>
+      <th>MJD</th>
+      <th>BJD</th>
+      <th>BCVEL</th>
+      <th>RADVEL</th>
+      <th>RA</th>
+      <th>DEC</th>
+      <th>EPOCH</th>
+      <th>HRANG</th>
+      <th>RA_MOTION</th>
+      <th>DEC_MOTION</th>
+      <th>PARALLAX</th>
+      <th>ORIGFILENAME</th>
+      <th>KOAID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>20180922</td>
+      <td>0</td>
+      <td>RV observation</td>
+      <td>r20180922.60</td>
+      <td>HD185144</td>
+      <td>2.458384e+06</td>
+      <td>2.458384e+06</td>
+      <td>2405.133</td>
+      <td>26580.0</td>
+      <td>19 32 23.37</td>
+      <td>+69 39 13.00</td>
+      <td>2015.5</td>
+      <td>-1.023</td>
+      <td>0.5979</td>
+      <td>-1.7383</td>
+      <td>0.17324</td>
+      <td>j3040160.fits</td>
+      <td>HI.20180922.17329.fits</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>20180922</td>
+      <td>0</td>
+      <td>RV observation</td>
+      <td>r20180922.61</td>
+      <td>HD185144</td>
+      <td>2.458384e+06</td>
+      <td>2.458384e+06</td>
+      <td>2404.570</td>
+      <td>26580.0</td>
+      <td>19 32 23.37</td>
+      <td>+69 39 13.00</td>
+      <td>2015.5</td>
+      <td>-1.009</td>
+      <td>0.5979</td>
+      <td>-1.7383</td>
+      <td>0.17324</td>
+      <td>j3040161.fits</td>
+      <td>HI.20180922.17378.fits</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>20180922</td>
+      <td>0</td>
+      <td>RV observation</td>
+      <td>r20180922.62</td>
+      <td>HD185144</td>
+      <td>2.458384e+06</td>
+      <td>2.458384e+06</td>
+      <td>2404.007</td>
+      <td>26580.0</td>
+      <td>19 32 23.37</td>
+      <td>+69 39 13.00</td>
+      <td>2015.5</td>
+      <td>-0.996</td>
+      <td>0.5979</td>
+      <td>-1.7383</td>
+      <td>0.17324</td>
+      <td>j3040162.fits</td>
+      <td>HI.20180922.17427.fits</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1056,7 +1246,9 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 
 <span class="n">idl</span> <span class="o">=</span> <span class="n">Idldriver</span><span class="p">(</span><span class="s1">&#39;prv.cookies&#39;</span><span class="p">)</span>
 
-<span class="n">rtn</span> <span class="o">=</span> <span class="n">idl</span><span class="o">.</span><span class="n">run_script</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="c1"># This example would create the template, reduce the RV observations, and then construct the</span>
+<span class="c1"># RV time series</span>
+<span class="n">full_example</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">template 185144 20091231</span>
 <span class="s2">rv 185144 r20091231.72</span>
 <span class="s2">rv 185144 r20091231.73</span>
@@ -1065,7 +1257,17 @@ Launch <a href="http://hiresprv.ipac.caltech.edu/applications/prvMonitor/monitor
 <span class="s2">rv 185144 r20150606.146</span>
 <span class="s2">rv 185144 r20150606.147</span>
 <span class="s2">rvcurve 185144</span>
-<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># Since the template for HD185144 has already been created in the pre-processed dataset</span>
+<span class="c1"># we can start by calculating the RVs only for the new observations.</span>
+<span class="n">new_rvs</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">rv 185144 r20180922.60</span>
+<span class="s2">rv 185144 r20180922.61</span>
+<span class="s2">rv 185144 r20180922.62</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">rtn</span> <span class="o">=</span> <span class="n">idl</span><span class="o">.</span><span class="n">run_script</span><span class="p">(</span><span class="n">new_rvs</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">rtn</span><span class="p">)</span>
 </pre></div>
@@ -1187,7 +1389,7 @@ BJD_TDB,RV,RV_ERR,BC,ADU,CHI2
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
-      Last updated on Oct 14, 2019.
+      Last updated on Oct 09, 2020.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
     </div>
   </body>

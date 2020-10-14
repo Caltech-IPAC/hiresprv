@@ -60,7 +60,7 @@ are less than 1 sigma descrepant between the NExScI and CLS I reductions.
     Comparison of the velocities produced by the NExScI PRV processing environment to the RVs published in CLS I produced by the
     California Planet Search version of the pipeline.
 
-.. figure:: _static/cls_dist.png
+.. figure:: _static/cls_hist.png
     :width: 40%
     :align: center
     :alt: CLS
@@ -74,7 +74,6 @@ a scatter of 5.0 m/s in the difference between the LCES and NExScI RVs after cor
 
 See `here <_static/dopcode-diff.pdf>`_ for more discussion and comparisons with the lower-level CPS data products.
 A more detailed comparison with the CLS and LCES data products will be availble in an upcoming publication.
-.. A more detailed comparison with the CLS and LCES data products is available `here <_static/dopcode-diff.pdf>`_.
 
 Known Planet Recovery
 =====================

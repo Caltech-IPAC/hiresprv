@@ -4,6 +4,12 @@
 
 ##### [Documentation](https://caltech-ipac.github.io/hiresprv)
 
+
+#### Version 3.0 released!
+
+v3.0 presents minor changes to the code and functionality but your workspace initializes with all compatible HIRES data since the 2004 CCD upgrade already pre-processed.
+
+
 #### Version 2.0 released!
 
 v2.0 enables the following features:

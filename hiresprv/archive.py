@@ -4,6 +4,7 @@ user workspace on the server and the reduction from 2D CCD images to 1D spectra.
 """
 import logging
 import requests
+from datetime import datetime
 import http.cookiejar
 
 
@@ -122,6 +123,8 @@ class Archive:
             logging.debug('')
             logging.debug('Enter by_dates: dates= %s' % dates)
 
+        self._check_dates(dates)
+
         self.param['project'] = self.project
         self.param['instrument'] = self.instrument
         self.param['time'] = dates
@@ -175,6 +178,7 @@ class Archive:
                 logging.debug('')
             
             dates = fp.read()
+            self._check_dates(dates)
 
         if self.debug:
             logging.debug('datefile= %s' % datefile)
@@ -211,6 +215,12 @@ class Archive:
         retval['msg'] = self.msg
 
         return retval
+
+    @staticmethod
+    def _check_dates(dates_string):
+        dates = dates_string.split('\n')
+        for date in dates:
+            dt = datetime.strptime(date, '%Y-%m-%d')
 
     def __send_post(self):
 

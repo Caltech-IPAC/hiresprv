@@ -8,9 +8,7 @@ processing environment.
 A Python API provides a convenient way to interact with the service running on `NExScI <http://nexsci.caltech.edu>`_ servers. The
 source code for the Python package is on `GitHub <https://github.com/Caltech-IPAC/hiresprv>`_.
 
-Please post any questions regarding the HIRES-PRV configuration or the NExScI PRV
-processing environment to the `GitHub issue tracker <https://github.com/Caltech-IPAC/hiresprv/issues>`_.
-
+**If you need help** with the HIRES PRV pipeline, please contact `the Keck Observatory Archive Help Desk https://koa.ipac.caltech.edu/cgi-bin/Helpdesk/nph-genTicketForm?projname=KOA`_.
 
 News
 ====

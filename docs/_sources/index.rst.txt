@@ -1,16 +1,14 @@
 Documentation for the HIRES Radial Velocity Processing Environment
 ******************************************************************
 
-This is a radial velocity processing environment that can be used to transform raw `Keck/HIRES <https://www2.keck.hawaii.edu/inst/hires/>`_ spectra into
+This is a radial velocity processing environment produced by the `NASA Exoplanet Science Institute <https://nexsci.caltech.edu>`_ which can be used to transform raw `Keck/HIRES <https://www2.keck.hawaii.edu/inst/hires/>`_ spectra into
 publication-ready precision radial velocities (PRVs). Data collected only in the prescribed :ref:`HIRES-PRV configuration <setup>` will be compatible with this PRV
 processing environment.
 
 A Python API provides a convenient way to interact with the service running on `NExScI <http://nexsci.caltech.edu>`_ servers. The
 source code for the Python package is on `GitHub <https://github.com/Caltech-IPAC/hiresprv>`_.
 
-Please post any questions regarding the HIRES-PRV configuration or the NExScI PRV
-processing environment to the `GitHub issue tracker <https://github.com/Caltech-IPAC/hiresprv/issues>`_.
-
+**If you need help** with the HIRES PRV pipeline, please contact `the Keck Observatory Archive Help Desk <https://koa.ipac.caltech.edu/cgi-bin/Helpdesk/nph-genTicketForm?projname=KOA>`_.
 
 News
 ====
@@ -38,6 +36,7 @@ The HIRES-PRV Python package can be installed from PyPI:
 
     $ pip install hiresprv
 
+Note our system can only support 4 simultaneous users. Please contact `the Keck Observatory Archive Help Desk <https://koa.ipac.caltech.edu/cgi-bin/Helpdesk/nph-genTicketForm?projname=KOA>`_ if you need to support a larger group of simultaneous users (e.g. in a classroom setting).
 
 Planning and Conducting Observations
 ====================================

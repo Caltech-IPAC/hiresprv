@@ -32,7 +32,7 @@ scatter of ~2 m/s for the most well-behaved targets.
     :alt: radial velocity standard stars
 
     Radial velocity timeseries of several RV standard stars. The names of the stars and the RMS of the velocities are annotated
-    in the figure. The plotted uncertainties do not include instrumental or astrophysical jitter.
+    in the figure. Velocities for the same stars from CLS I (Rosenthal et al. 2020) and LCES (`Butler et al. 2017 <https://ui.adsabs.harvard.edu/abs/2017AJ....153..208B/abstract>`_) are overplotted in blue and red respectively. The plotted uncertainties do not include instrumental or astrophysical jitter.
 
 
 Comparison with California Planet Search Pipeline

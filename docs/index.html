@@ -40,13 +40,12 @@
             
   <div class="section" id="documentation-for-the-hires-radial-velocity-processing-environment">
 <h1>Documentation for the HIRES Radial Velocity Processing Environment<a class="headerlink" href="#documentation-for-the-hires-radial-velocity-processing-environment" title="Permalink to this headline">¶</a></h1>
-<p>This is a radial velocity processing environment that can be used to transform raw <a class="reference external" href="https://www2.keck.hawaii.edu/inst/hires/">Keck/HIRES</a> spectra into
+<p>This is a radial velocity processing environment produced by the <a class="reference external" href="https://nexsci.caltech.edu">NASA Exoplanet Science Institute</a> which can be used to transform raw <a class="reference external" href="https://www2.keck.hawaii.edu/inst/hires/">Keck/HIRES</a> spectra into
 publication-ready precision radial velocities (PRVs). Data collected only in the prescribed <a class="reference internal" href="setup.html#setup"><span class="std std-ref">HIRES-PRV configuration</span></a> will be compatible with this PRV
 processing environment.</p>
 <p>A Python API provides a convenient way to interact with the service running on <a class="reference external" href="http://nexsci.caltech.edu">NExScI</a> servers. The
 source code for the Python package is on <a class="reference external" href="https://github.com/Caltech-IPAC/hiresprv">GitHub</a>.</p>
-<p>Please post any questions regarding the HIRES-PRV configuration or the NExScI PRV
-processing environment to the <a class="reference external" href="https://github.com/Caltech-IPAC/hiresprv/issues">GitHub issue tracker</a>.</p>
+<p><strong>If you need help</strong> with the HIRES PRV pipeline, please contact <a class="reference external" href="https://koa.ipac.caltech.edu/cgi-bin/Helpdesk/nph-genTicketForm?projname=KOA">the Keck Observatory Archive Help Desk</a>.</p>
 <div class="section" id="news">
 <h2>News<a class="headerlink" href="#news" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="historical-data-processed">
@@ -69,6 +68,7 @@ This enables the following capabilities:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install hiresprv
 </pre></div>
 </div>
+<p>Note our system can only support 4 simultaneous users. Please contact <a class="reference external" href="https://koa.ipac.caltech.edu/cgi-bin/Helpdesk/nph-genTicketForm?projname=KOA">the Keck Observatory Archive Help Desk</a> if you need to support a larger group of simultaneous users (e.g. in a classroom setting).</p>
 </div>
 <div class="section" id="planning-and-conducting-observations">
 <h2>Planning and Conducting Observations<a class="headerlink" href="#planning-and-conducting-observations" title="Permalink to this headline">¶</a></h2>
@@ -95,8 +95,8 @@ summarized below can be processed properly within the NExScI HIRES-PRV environme
 </dd>
 </dl>
 </div>
-<div class="section" id="id1">
-<h2>Data Reduction Tutorial<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h2>Data Reduction Tutorial<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <dl class="simple">
 <dt>The reduction of HIRES PRV data consists of four basic steps.</dt><dd><ol class="arabic simple">
 <li><p>Transfer files from the <a class="reference external" href="https://koa.ipac.caltech.edu">Keck Observatory Archive (KOA)</a> and extract into 1D spectra.</p></li>
@@ -245,7 +245,7 @@ those same observations. We find consistent results and comparable precision.</p
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, CALTECH.
-      Last updated on Oct 29, 2020.
+      Last updated on Nov 23, 2020.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
     </div>
   </body>

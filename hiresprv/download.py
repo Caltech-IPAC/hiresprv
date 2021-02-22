@@ -6,6 +6,8 @@ import logging
 import json
 import os
 
+from urllib import parse
+
 import requests
 import http.cookiejar
 
@@ -281,7 +283,7 @@ class Download(object):
 
         self.filepath = './vst' + objname + '.csv'
 
-        url = self.url + '&cmd=rvcurve&objname=' + objname + '&debug=1'
+        url = self.url + '&cmd=rvcurve&objname=' + parse.quote(objname) + '&debug=1'
 
         if self.debug:
             logging.debug('')

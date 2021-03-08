@@ -265,6 +265,7 @@ class Download(object):
         Returns:
             JSON structure: structure indicating the status of the submission
         """
+        objname = objname.lower()
 
         if self.debug:
             logging.debug('')

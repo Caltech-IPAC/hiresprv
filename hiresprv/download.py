@@ -279,7 +279,7 @@ class Download(object):
 
             return retval
 
-        self.filepath = './vst' + objname + '.csv'
+        self.filepath = './vst' + objname.lower() + '.csv'
 
         url = self.url + '&cmd=rvcurve&objname=' + objname + '&debug=1'
 

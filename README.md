@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://nexsci.caltech.edu">
-    <img src="https://github.com/Caltech-IPAC/hiresprv/blob/master/sphinx/_static/hiresprv_logoh.png?raw=true" width="500" align="center">
+    <img src="https://github.com/Caltech-IPAC/hiresprv/blob/main/sphinx/_static/hiresprv_logoh.png?raw=true" width="500" align="center">
   </a>
 </p>
 

@@ -220,7 +220,8 @@ class Archive:
     def _check_dates(dates_string):
         dates = dates_string.split('\n')
         for date in dates:
-            dt = datetime.strptime(date, '%Y-%m-%d')
+            if date != '':
+                dt = datetime.strptime(date, '%Y-%m-%d')
 
     def __send_post(self):
 
